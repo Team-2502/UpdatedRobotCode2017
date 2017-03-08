@@ -27,15 +27,15 @@ public final class Log
     public static void createLogger(boolean debug) { createLogger(debug, "[timestamp] [type] [caller_class]: msg", "hh:mm:ss"); }
 
     public static void createLogger(boolean debug,
-                                    @NotNull("Passed a null value to parameter[2] at `logger.Log#createLogger(boolean, java.lang.String, java.lang.String, java.lang.String)`") String format,
-                                    @NotNull("Passed a null value to parameter[3] at `logger.Log#createLogger(boolean, java.lang.String, java.lang.String, java.lang.String)`") String timeFormat)
+                                     String format,
+                                     String timeFormat)
     {
         pf = new PrintFormat(format, timeFormat);
         setDebugMode(debug || (System.getProperty("debug") != null));
     }
 
-    public static <T> void log(@NotNull("Passed a null value to parameter[0] at `logger.<T>Log#log(logger.Log$LogType, T, int") LogType type,
-                                  @NotNull("Passed a null value to parameter[1] at `logger.<T>Log#log(logger.Log.LogType, T, int") T msg, int depth)
+    public static <T> void log( LogType type,
+                                   T msg, int depth)
     {
         if((type == LogType.DEBUG) && !debug) { return; }
         if(pf == null) { createLogger(); }
@@ -45,21 +45,21 @@ public final class Log
         type.output.flush();
     }
 
-    public static <T> void log(@NotNull("Passed a null value to parameter[0] at `logger.<T>Log#log(logger.Log$LogType, T)") LogType type,
-                                  @NotNull("Passed a null value to parameter[1] at `logger.<T>Log#log(logger.Log.LogType, T)") T msg)
+    public static <T> void log( LogType type,
+                                   T msg)
     { log(type, msg, 0); }
 
-    static <T> void out(@NotNull("Passed a null value to parameter[0] at `logger.<T>Log#out(T)`") T msg) { log(LogType.STD_OUT, msg); }
+    static <T> void out( T msg) { log(LogType.STD_OUT, msg); }
 
-    static <T> void err(@NotNull("Passed a null value to parameter[0] at `logger.<T>Log#err(T)`") T msg) { log(LogType.STD_ERR, msg); }
+    static <T> void err( T msg) { log(LogType.STD_ERR, msg); }
 
-    public static <T> void info(@NotNull("Passed a null value to parameter[0] at `logger.<T>Log#info(T)`") T msg) { log(LogType.INFO, msg); }
+    public static <T> void info( T msg) { log(LogType.INFO, msg); }
 
-    public static <T> void warn(@NotNull("Passed a null value to parameter[0] at `logger.<T>Log#warn(T)`") T msg) { log(LogType.WARN, msg); }
+    public static <T> void warn( T msg) { log(LogType.WARN, msg); }
 
-    public static <T> void error(@NotNull("Passed a null value to parameter[0] at `logger.<T>Log#error(T)`") T msg) { log(LogType.ERROR, msg); }
+    public static <T> void error( T msg) { log(LogType.ERROR, msg); }
 
-    public static <T> void trace(@NotNull("Passed a null value to parameter[0] at `logger.<T>Log#trace(T)`") T msg) { log(LogType.TRACE, msg); }
+    public static <T> void trace( T msg) { log(LogType.TRACE, msg); }
 
     public static void trace(@NotNull StackTraceElement[] e)
     {
@@ -68,17 +68,17 @@ public final class Log
         trace(sb.toString());
     }
 
-    public static <T> void trace(@NotNull("Passed a null value to parameter[0] at `logger.<T>Log#trace(java.lang.Exception, T)`") Exception e,
-                                 @NotNull("Passed a null value to parameter[1] at `logger.<T>Log#trace(java.lang.Exception, T)`") T msg)
+    public static <T> void trace( Exception e,
+                                  T msg)
     {
         trace(msg);
         trace(e.toString());
         trace(e.getStackTrace());
     }
 
-    public static void trace(@NotNull("Passed a null value to parameter[0] at `logger.Log#trace(java.lang.Exception)`") Exception e) { trace(e, ""); }
+    public static void trace(){}
 
-    public static <T> void debug(@NotNull("Passed a null value to parameter[0] at `logger.<T>Log#debug(T)`") T msg) { log(LogType.DEBUG, msg); }
+    public static <T> void debug( T msg) { log(LogType.DEBUG, msg); }
 
     public enum LogType
     {
@@ -93,7 +93,7 @@ public final class Log
         @NotNull
         public final PrintStream output;
 
-        LogType(@NotNull("Created a LogType without specifying a `java.io.PrintStream`") PrintStream output) { this.output = output; }
+        LogType( PrintStream output) { this.output = output; }
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -103,7 +103,7 @@ public final class Log
 
         private static final int BASE_DEPTH = 4;
 
-        @NotNull("Error getting the stacktrace at `logger.Log$ClassGetter#getCallerClassName(int)")
+        
         public static String getCallerClassName(int depth)
         {
             StackTraceElement[] elements = Thread.currentThread().getStackTrace();
@@ -113,7 +113,7 @@ public final class Log
             return element.getClassName();
         }
 
-        @NotNull("Error getting the stacktrace at `logger.Log$ClassGetter#getCallerClassName()")
+        
         public static String getCallerClassName() { return getCallerClassName(0); }
     }
 
