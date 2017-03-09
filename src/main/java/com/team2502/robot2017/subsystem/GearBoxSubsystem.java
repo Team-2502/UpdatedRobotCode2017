@@ -59,15 +59,21 @@ public class GearBoxSubsystem extends Subsystem
 //        {
 //        	moveTop.set(RobotMap.Solenoid.GEARBOX_SOLENOID0 = !);
 //        }
+    	
+    	if(OI.JOYSTICK_FUNCTION.getRawButton(12) && !buttonPressed0)
+        {
+            topMoved = !topMoved;
+        }
+        buttonPressed1 = OI.JOYSTICK_FUNCTION.getRawButton(12);
 
-    	switchTop();
+        lever.set(topMoved);
     	
         // If button 3 on right joystick, toggles solenoid
         if(OI.JOYSTICK_FUNCTION.getRawButton(9) && !buttonPressed1)
         {
             mode1 = !mode1;
         }
-        buttonPressed1 = OI.JOYSTICK_FUNCTION.getRawButton(3);
+        buttonPressed1 = OI.JOYSTICK_FUNCTION.getRawButton(9);
 
         lever.set(mode1);
 
@@ -76,7 +82,7 @@ public class GearBoxSubsystem extends Subsystem
         {
             mode2 = !mode2;
         }
-        buttonPressed2 = OI.JOYSTICK_FUNCTION.getRawButton(5);
+        buttonPressed2 = OI.JOYSTICK_FUNCTION.getRawButton(11);
 
         pushGear.set(mode2);
         
@@ -85,7 +91,7 @@ public class GearBoxSubsystem extends Subsystem
         {
             mode3 = !mode3;
         }
-        buttonPressed2 = OI.JOYSTICK_FUNCTION.getRawButton(2);
+        buttonPressed2 = OI.JOYSTICK_FUNCTION.getRawButton(7);
 
         slideBox.set(mode3);
     }
