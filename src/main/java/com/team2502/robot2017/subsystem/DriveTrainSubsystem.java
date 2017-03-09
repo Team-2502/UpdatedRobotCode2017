@@ -27,6 +27,9 @@ public class DriveTrainSubsystem extends Subsystem
     private double lastRight;
     public double leftSpeed;
     public double rightSpeed;
+    public boolean negative = false;
+    public boolean isNegativePressed = false;
+    public boolean negMode = false;
 
     public int millisecondsToRunTL = 1000;
     public int millisecondsToRunTR = 1000;
@@ -50,6 +53,8 @@ public class DriveTrainSubsystem extends Subsystem
         setTalonSettings(leftTalon1);
         setTalonSettings(rightTalon0);
         setTalonSettings(rightTalon1);
+        
+        negative = false; 
     }
 
     private void setTalonSettings(CANTalon talon)
@@ -172,9 +177,23 @@ public class DriveTrainSubsystem extends Subsystem
     {
         Pair<Double, Double> speed = DashboardData.getDriveType() == DriveTypes.DUAL_STICK ? getSpeed()
                                                                                            : getSpeedArcade();
+        if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(1) && !isNegativePressed)
+        {
+            negMode = !negMode;
+        }
+        isNegativePressed = OI.JOYSTICK_FUNCTION.getRawButton(1);
         
+        if(negMode) { negative = true; }
+        else { negative = true; }
         
-        drive.tankDrive(speed.left, speed.right, true);
+        if (negative)
+        {
+        	drive.tankDrive(-speed.left, -speed.right, true);
+        }
+        else
+        {
+        	drive.tankDrive(speed.left, speed.right, true);
+        }
     }
 
     private static final double DELAY_TIME = 5.77D + 43902.0D / 9999900.0D;
