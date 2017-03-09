@@ -125,10 +125,17 @@ public class DriveTrainSubsystem extends Subsystem
      * @return the speed of the robot
      */
     private Pair<Double, Double> getSpeed(Pair<Double, Double> out)
-    {
+    {	
+    	double joystickLevel;
         // Get the base speed of the robot
-        double joystickLevel = -OI.JOYSTICK_DRIVE_LEFT.getY();
-
+        if(negative)
+        {
+    	joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
+        }
+        else
+        {
+        	joystickLevel = -OI.JOYSTICK_DRIVE_LEFT.getY();
+        }
         // Only increase the speed by a small amount
         double diff = joystickLevel - lastLeft;
         if(diff > 0.1D)
@@ -142,9 +149,16 @@ public class DriveTrainSubsystem extends Subsystem
         lastLeft = joystickLevel;
 
         out.left = joystickLevel;
-
-        joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
-
+        
+        if(negative)
+        {
+        	joystickLevel = -OI.JOYSTICK_DRIVE_LEFT.getY();	
+        }
+        else
+        {
+        	joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
+        }
+        
         diff = joystickLevel - lastRight;
         if(diff > 0.1D)
         {
@@ -181,10 +195,10 @@ public class DriveTrainSubsystem extends Subsystem
         {
             negMode = !negMode;
         }
-        isNegativePressed = OI.JOYSTICK_FUNCTION.getRawButton(1);
+        isNegativePressed = OI.JOYSTICK_DRIVE_LEFT.getRawButton(1);
         
         if(negMode) { negative = true; }
-        else { negative = true; }
+        else { negative = false; }
         
         if (negative)
         {
