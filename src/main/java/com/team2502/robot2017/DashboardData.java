@@ -5,6 +5,7 @@ import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import com.team2502.robot2017.command.autonomous.AutoCommandG1;
 import com.team2502.robot2017.command.autonomous.AutonomousCommand;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import logger.Log;
 
@@ -16,7 +17,7 @@ import java.io.InputStreamReader;
 public final class DashboardData
 {
 
-    public static final TypeSendableChooser<AutonomousCommand> AUTONOMOUS_SELECTOR = new TypeSendableChooser<AutonomousCommand>();
+    public static final TypeSendableChooser<Command> AUTONOMOUS_SELECTOR = new TypeSendableChooser<Command>();
     
     public static final TypeSendableChooser<DriveTrainSubsystem.DriveTypes> DRIVE_CONTROL_SELECTOR = new TypeSendableChooser<DriveTrainSubsystem.DriveTypes>();
 
@@ -63,7 +64,7 @@ public final class DashboardData
         } catch(Exception e) { Log.error("Could not get version."); }
     }
 
-    public static AutonomousCommand getAutonomous()
+    public static Command getAutonomous()
     {
         return AUTONOMOUS_SELECTOR.getSelectedT();
     }

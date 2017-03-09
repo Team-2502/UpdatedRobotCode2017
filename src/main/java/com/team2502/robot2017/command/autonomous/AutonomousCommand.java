@@ -23,6 +23,11 @@ public class AutonomousCommand extends Command
         visionSubsystem = Robot.VISION;
         shooterSubsystem = Robot.SHOOTER;
     }
+    
+    public enum AutoGroup
+    {
+    	AutoG1,AutoG2,AutoG3,AutoG4;
+    }
 
     @Override
     protected void initialize() 
