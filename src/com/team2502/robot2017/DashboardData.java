@@ -93,8 +93,8 @@ public final class DashboardData
         SmartDashboard.putNumber("FW: Loop Error", Robot.SHOOTER.getError());
         SmartDashboard.putNumber("FW: Motor Output", Robot.SHOOTER.getMotorOutput());
         
-        SmartDashboard.putNumber("aDT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
-        SmartDashboard.putNumber("aDT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
+//        SmartDashboard.putNumber("aDT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
+//        SmartDashboard.putNumber("aDT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
         
 //        SmartDashboard.putNumber("NavX: Pitch", Robot.NAVX.getPitch());
 //        SmartDashboard.putNumber("NavX: Roll", Robot.NAVX.getRoll());
