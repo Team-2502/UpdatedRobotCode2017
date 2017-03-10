@@ -1,8 +1,6 @@
 package com.team2502.robot2017.chooser;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import org.jetbrains.annotations.Nullable;
-
 
 @SuppressWarnings({ "unchecked", "SameParameterValue", "SpellCheckingInspection" })
 public class TypeSendableChooser<T> extends SendableChooser
@@ -18,7 +16,6 @@ public class TypeSendableChooser<T> extends SendableChooser
     }
 
     @SuppressWarnings("unchecked")
-    @Nullable
     public T getSelectedT()
     {
         return (T) getSelected();
