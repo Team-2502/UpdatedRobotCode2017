@@ -26,7 +26,7 @@ public class EncDriveBackwardsCommand extends Command
     @Override
     protected void execute()
     {   
-//        currentDist = driveTrain.getEncLeftPosition();
+        currentDist = driveTrain.getEncLeftPosition();
         driveTrain.leftTalon0.set(targetDist/2);
         driveTrain.rightTalon0.set(-targetDist/2);
 //     gearBox.setGear(on);

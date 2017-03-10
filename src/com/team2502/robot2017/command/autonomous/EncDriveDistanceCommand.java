@@ -26,7 +26,7 @@ public class EncDriveDistanceCommand extends Command
     @Override
     protected void execute()
     {   
-//        currentDist = DriveTrain.getEncLeftPosition();
+        currentDist = DriveTrain.getEncLeftPosition();
         DriveTrain.leftTalon0.set(-targetDist);
         DriveTrain.rightTalon0.set(targetDist);
 //     gearBox.setGear(on);

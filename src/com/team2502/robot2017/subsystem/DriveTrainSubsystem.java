@@ -19,10 +19,10 @@ public class DriveTrainSubsystem extends Subsystem
 {
     private static final Pair<Double, Double> SPEED_CONTAINER = new Pair<Double, Double>();
 
-    public final CANTalon leftTalon0;
+    public final CANTalon leftTalon0; //enc
     public final CANTalon leftTalon1;
     public final CANTalon rightTalon0;
-    public final CANTalon rightTalon1;
+    public final CANTalon rightTalon1; //enc
     private final RobotDrive drive;
     private double lastLeft;
     private double lastRight;
@@ -75,6 +75,14 @@ public class DriveTrainSubsystem extends Subsystem
     public double getPostition(CANTalon talon)
     {
         return talon.getPosition();
+    }
+    public double getEncLeftPosition()
+    {
+		return leftTalon0.getPosition();
+    }
+    public double getEncRightPosition()
+    {
+		return rightTalon1.getPosition();
     }
 
     @Override

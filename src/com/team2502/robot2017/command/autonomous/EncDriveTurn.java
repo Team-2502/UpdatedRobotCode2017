@@ -33,7 +33,7 @@ public class EncDriveTurn extends Command
     @Override
     protected void execute()
     {  
-//        currentDist = DriveTrain.getEncLeftPosition();
+        currentDist = DriveTrain.getEncLeftPosition();
         DriveTrain.leftTalon0.set(-rotateDist*leftDirection);
         DriveTrain.rightTalon0.set(rotateDist*rightDirection);
 //     gearBox.setGear(on);
