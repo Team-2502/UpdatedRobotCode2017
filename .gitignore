@@ -1,8 +1,8 @@
 *.class
-/JDK8/
+JDK8/
 
 # Package Files #
-# DO NOT PUT *.jar - Breaks Travis CI
+# --- IGNORE --- DO NOT PUT *.jar - Breaks Travis CI
 *.war
 *.ear
 
@@ -27,3 +27,7 @@ build/
 
 ## Gradle
 .gradle/
+/gradle
+#gradlew.bat
+#gradlew
+deploy.sh

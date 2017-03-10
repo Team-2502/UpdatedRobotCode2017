@@ -1,7 +1,5 @@
 package logger;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,14 +11,11 @@ public class PrintFormat
     private static final Pattern CALLER_CLASS = Pattern.compile("caller_class", Pattern.LITERAL);
     private static final Pattern MSG = Pattern.compile("msg", Pattern.LITERAL);
 
-    @NotNull
     private String format;
-    @NotNull
     private int[] timeOrganizer;
-    @NotNull
     private Timer timer;
 
-    public PrintFormat(@NotNull String format, @NotNull String timeFormat)
+    public PrintFormat(String format, String timeFormat)
     {
         this.format = format;
         this.timeOrganizer = new int[] { 0, 0, 0, 0, 0 };
@@ -35,20 +30,13 @@ public class PrintFormat
         timer = new Timer();
     }
 
-    @NotNull
-    public <T> String getPrintString(@NotNull String type, @NotNull String caller, @NotNull T msg) { return MSG.matcher(CALLER_CLASS.matcher(TYPE.matcher(TIMESTAMP.matcher(format).replaceAll(Matcher.quoteReplacement(timer.getTime()))).replaceAll(Matcher.quoteReplacement(type))).replaceAll(Matcher.quoteReplacement(caller))).replaceAll(Matcher.quoteReplacement(String.valueOf((Object) msg))); }
+    public <T> String getPrintString(String type, String caller, T msg) { return MSG.matcher(CALLER_CLASS.matcher(TYPE.matcher(TIMESTAMP.matcher(format).replaceAll(Matcher.quoteReplacement(timer.getTime()))).replaceAll(Matcher.quoteReplacement(type))).replaceAll(Matcher.quoteReplacement(caller))).replaceAll(Matcher.quoteReplacement(String.valueOf((Object) msg))); }
 
     protected class Timer
     {
-        @NotNull
         protected long[] times;
-
-        @NotNull
         protected long[] lastTimes;
-
-        @NotNull
         protected String[] stringTimes;
-
         protected final long startTime;
 
         private Timer()
@@ -59,7 +47,6 @@ public class PrintFormat
             startTime = System.currentTimeMillis();
         }
 
-        @NotNull
         protected String formatTime()
         {
             StringBuilder out = new StringBuilder();
@@ -73,7 +60,6 @@ public class PrintFormat
             return out.toString().substring(0, out.length() - 1);
         }
 
-        @NotNull
         protected String getTime()
         {
             times[0] = System.currentTimeMillis() - startTime;
