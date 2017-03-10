@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import logger.Log;
 
-
 @SuppressWarnings({ "WeakerAccess", "unused" })
 public final class Robot extends IterativeRobot
 {
