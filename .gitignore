@@ -27,7 +27,7 @@ build/
 
 ## Gradle
 .gradle/
-/gradle
+#/gradle
 #gradlew.bat
 #gradlew
 deploy.sh
