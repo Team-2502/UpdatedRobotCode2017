@@ -12,7 +12,7 @@ public class DriveTrainTransmissionSubsystem extends Subsystem
     private static Solenoid switcher;
 
     // TODO: Change name to `lowGear` if applicable.
-    private static boolean highGear;
+    public boolean highGear;
 
     public DriveTrainTransmissionSubsystem()
     {

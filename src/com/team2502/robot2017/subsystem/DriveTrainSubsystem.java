@@ -18,7 +18,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveTrainSubsystem extends Subsystem
 {
     private static final Pair<Double, Double> SPEED_CONTAINER = new Pair<Double, Double>();
-
+    
+    public DriveTrainTransmissionSubsystem DTTS;
+    
     public final CANTalon leftTalon0; //enc
     public final CANTalon leftTalon1;
     public final CANTalon rightTalon0;
@@ -72,6 +74,7 @@ public class DriveTrainSubsystem extends Subsystem
         talon.changeControlMode(TalonControlMode.Voltage);
         talon.disableControl();        
     }
+    
     public double getPostition(CANTalon talon)
     {
         return talon.getPosition();
@@ -79,6 +82,10 @@ public class DriveTrainSubsystem extends Subsystem
     public double getEncLeftPosition()
     {
 		return leftTalon0.getPosition();
+    }
+    public double getRPM(CANTalon talon)
+    {	
+    	return talon.getSpeed();
     }
     public double getEncRightPosition()
     {
@@ -211,6 +218,19 @@ public class DriveTrainSubsystem extends Subsystem
     {
         Pair<Double, Double> speed = DashboardData.getDriveType() == DriveTypes.DUAL_STICK ? getSpeed()
                                                                                            : getSpeedArcade();
+        double RPM = getRPM(leftTalon0);
+       
+        if(!negative && RPM > 2)
+        {
+        	RPM = getRPM(leftTalon0);
+        	DTTS.setGear(true);
+        }
+        if(!negative && RPM < 2)
+        {	
+        	RPM = getRPM(leftTalon0);
+        	DTTS.setGear(false);
+        }
+        
         if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(1) && !isNegativePressed)
         {
             negMode = !negMode;
