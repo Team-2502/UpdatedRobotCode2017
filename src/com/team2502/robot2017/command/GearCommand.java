@@ -4,10 +4,10 @@ import com.team2502.robot2017.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import com.team2502.robot2017.subsystem.GearBoxSubsystem;
 
-public class GearCommandLever extends Command
+public class GearCommand extends Command
 {   
     private final GearBoxSubsystem GearBoxSubsystem;
-    public GearCommandLever()
+    public GearCommand()
     {
         requires(Robot.GEAR_BOX);
         GearBoxSubsystem = Robot.GEAR_BOX;   
@@ -15,13 +15,14 @@ public class GearCommandLever extends Command
     
     protected void initialize()
     {
+    	
 
     }
 
     @Override
     protected void execute()
     {
-        GearBoxSubsystem.switchReleased();
+        GearBoxSubsystem.switchGear();
     }
 
     @Override
