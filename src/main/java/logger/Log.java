@@ -1,16 +1,12 @@
 package logger;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.io.*;
+import java.io.PrintStream;
 
 @SuppressWarnings({ "WeakerAccess", "unused", "EmptyCatchBlock", "SameParameterValue" })
 public final class Log
 {
     private static boolean debug = false;
 
-    @Nullable
     private static PrintFormat pf = null;
 
     public static boolean isDebugMode() { return debug; }
@@ -26,16 +22,13 @@ public final class Log
 
     public static void createLogger(boolean debug) { createLogger(debug, "[timestamp] [type] [caller_class]: msg", "hh:mm:ss"); }
 
-    public static void createLogger(boolean debug,
-                                     String format,
-                                     String timeFormat)
+    public static void createLogger(boolean debug, String format, String timeFormat)
     {
         pf = new PrintFormat(format, timeFormat);
         setDebugMode(debug || (System.getProperty("debug") != null));
     }
 
-    public static <T> void log( LogType type,
-                                   T msg, int depth)
+    public static <T> void log(LogType type, T msg, int depth)
     {
         if((type == LogType.DEBUG) && !debug) { return; }
         if(pf == null) { createLogger(); }
@@ -45,40 +38,39 @@ public final class Log
         type.output.flush();
     }
 
-    public static <T> void log( LogType type,
-                                   T msg)
-    { log(type, msg, 0); }
 
-    static <T> void out( T msg) { log(LogType.STD_OUT, msg); }
+    public static <T> void info(T msg) { log(LogType.INFO, msg); }
 
-    static <T> void err( T msg) { log(LogType.STD_ERR, msg); }
+    public static <T> void warn(T msg) { log(LogType.WARN, msg); }
 
-    public static <T> void info( T msg) { log(LogType.INFO, msg); }
+    public static <T> void error(T msg) { log(LogType.ERROR, msg); }
 
-    public static <T> void warn( T msg) { log(LogType.WARN, msg); }
+    public static <T> void trace(T msg) { log(LogType.TRACE, msg); }
 
-    public static <T> void error( T msg) { log(LogType.ERROR, msg); }
+    public static <T> void log(LogType type, T msg) { log(type, msg, 0); }
 
-    public static <T> void trace( T msg) { log(LogType.TRACE, msg); }
+    static <T> void out(T msg) { log(LogType.STD_OUT, msg); }
 
-    public static void trace(@NotNull StackTraceElement[] e)
+    static <T> void err(T msg) { log(LogType.STD_ERR, msg); }
+
+    public static void trace(StackTraceElement[] e)
     {
         StringBuilder sb = new StringBuilder();
         for(StackTraceElement el : e) { sb.append("\tat ").append(el.toString()).append('\n'); }
         trace(sb.toString());
     }
 
-    public static <T> void trace( Exception e,
-                                  T msg)
+    public static <T> void trace(Exception e, T msg)
     {
         trace(msg);
         trace(e.toString());
         trace(e.getStackTrace());
     }
 
-    public static void trace(){}
+    public static void trace(Exception e) { trace(e, ""); }
 
-    public static <T> void debug( T msg) { log(LogType.DEBUG, msg); }
+    public static <T> void debug(T msg) { log(LogType.DEBUG, msg); }
+
 
     public enum LogType
     {
@@ -90,10 +82,9 @@ public final class Log
         TRACE(System.err),
         DEBUG(System.out);
 
-        @NotNull
         public final PrintStream output;
 
-        LogType( PrintStream output) { this.output = output; }
+        LogType(PrintStream output) { this.output = output; }
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -103,7 +94,6 @@ public final class Log
 
         private static final int BASE_DEPTH = 4;
 
-        
         public static String getCallerClassName(int depth)
         {
             StackTraceElement[] elements = Thread.currentThread().getStackTrace();
@@ -113,7 +103,6 @@ public final class Log
             return element.getClassName();
         }
 
-        
         public static String getCallerClassName() { return getCallerClassName(0); }
     }
 
