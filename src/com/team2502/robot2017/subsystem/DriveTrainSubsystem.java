@@ -218,18 +218,18 @@ public class DriveTrainSubsystem extends Subsystem
     {
         Pair<Double, Double> speed = DashboardData.getDriveType() == DriveTypes.DUAL_STICK ? getSpeed()
                                                                                            : getSpeedArcade();
-        double RPM = getRPM(leftTalon0);
-       
-        if(!negative && RPM > 10)
-        {
-        	RPM = getRPM(leftTalon0);
-        	DTTS.setGear(true);
-        }
-        if(!negative && RPM < 10)
-        {	
-        	RPM = getRPM(leftTalon0);
-        	DTTS.setGear(false);
-        }
+//        double RPM = getRPM(leftTalon0);
+//       
+//        if(!negative && RPM > 10)
+//        {
+//        	RPM = getRPM(leftTalon0);
+//        	DTTS.setGear(true);
+//        }
+//        if(!negative && RPM < 10)
+//        {	
+//        	RPM = getRPM(leftTalon0);
+//        	DTTS.setGear(false);
+//        }
         
         if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(1) && !isNegativePressed)
         {
