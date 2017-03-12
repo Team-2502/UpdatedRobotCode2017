@@ -71,7 +71,7 @@ public class DriveTrainSubsystem extends Subsystem
     
     public void setTeleopSettings(CANTalon talon)
     {
-        talon.changeControlMode(TalonControlMode.Voltage);
+        talon.changeControlMode(TalonControlMode.PercentVbus);
         talon.disableControl();        
     }
     
@@ -85,7 +85,7 @@ public class DriveTrainSubsystem extends Subsystem
     }
     public double getRPM(CANTalon talon)
     {	
-    	return talon.getSpeed();
+    	return talon.getOutputVoltage();
     }
     public double getEncRightPosition()
     {
@@ -220,12 +220,12 @@ public class DriveTrainSubsystem extends Subsystem
                                                                                            : getSpeedArcade();
         double RPM = getRPM(leftTalon0);
        
-        if(!negative && RPM > 2)
+        if(!negative && RPM > 10)
         {
         	RPM = getRPM(leftTalon0);
         	DTTS.setGear(true);
         }
-        if(!negative && RPM < 2)
+        if(!negative && RPM < 10)
         {	
         	RPM = getRPM(leftTalon0);
         	DTTS.setGear(false);
