@@ -43,7 +43,7 @@ public class AutoVCommand extends Command
         while(!inFrontOfGear)
         {
             offset = VisionSubsystem.getOffset();
-            if(!(offset == 1023) && ((offset > 5) || (offset < -5)))
+            if(!(offset == 1023) && !(offset == -160) && ((offset > 5) || (offset < -5)))
             {
                 offset = offset / 100;
              // if reverse then go backwards 
