@@ -35,8 +35,8 @@ public final class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		 DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
 		 DRIVE_TRAIN = new DriveTrainSubsystem();
+		 DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
 		 PRESSURE_SENSOR = new PressureSensorSubsystem();
 		 VISION = new VisionSubsystem();
 		 COMPRESSOR = new Compressor();
