@@ -1,15 +1,13 @@
 package com.team2502.robot2017.command;
 
 import com.team2502.robot2017.Robot;
-import edu.wpi.first.wpilibj.command.Command;
 import com.team2502.robot2017.subsystem.GearBoxSubsystem;
+import edu.wpi.first.wpilibj.command.Command;
 
-public class GearCommandPushBox extends Command
+public class GearCommandTop extends Command
 {   
     private final GearBoxSubsystem GearBoxSubsystem;
-
-    
-    public GearCommandPushBox()
+    public GearCommandTop()
     {
         requires(Robot.GEAR_BOX);
         GearBoxSubsystem = Robot.GEAR_BOX;   
@@ -23,9 +21,7 @@ public class GearCommandPushBox extends Command
     @Override
     protected void execute()
     {
-        GearBoxSubsystem.switchPushBox();
-       
-        
+        GearBoxSubsystem.switchTop();
     }
 
     @Override

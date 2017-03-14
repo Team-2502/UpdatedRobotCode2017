@@ -1,23 +1,20 @@
 package com.team2502.robot2017.command;
 
 import com.team2502.robot2017.Robot;
-import com.team2502.robot2017.subsystem.DriveTrainTransmissionSubsystem;
 import com.team2502.robot2017.subsystem.GearBoxSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LeverCommand extends Command
-{
-    private final GearBoxSubsystem GearBox;
-    private final boolean on;
+public class GearCommandPushBox extends Command
+{   
+    private final GearBoxSubsystem GearBoxSubsystem;
 
-    public LeverCommand(boolean on)
+    
+    public GearCommandPushBox()
     {
         requires(Robot.GEAR_BOX);
-        GearBox = Robot.GEAR_BOX;
-        this.on = on;
+        GearBoxSubsystem = Robot.GEAR_BOX;   
     }
-
-    @Override
+    
     protected void initialize()
     {
 
@@ -26,7 +23,9 @@ public class LeverCommand extends Command
     @Override
     protected void execute()
     {
-       GearBox.setLever(on);
+        GearBoxSubsystem.switchPushBox();
+       
+        
     }
 
     @Override
@@ -38,7 +37,6 @@ public class LeverCommand extends Command
     @Override
     protected void end()
     {
-
     }
 
     @Override

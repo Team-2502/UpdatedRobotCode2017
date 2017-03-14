@@ -38,15 +38,7 @@ dependencies {
     compile talonSrx()
     compile talonSrxJni()
     compile navx()
-
-<<<<<<< HEAD
     compile "org.jetbrains:annotations:15.0" // Provides useful annotations like @NotNull & @Nullable
-//    compile files("${System.env.HOME}/wpilib/user/java/lib/navx_frc.jar")
-
-//    compile fileTree(dir: "C:\\Users\\Team2502\\wpilib\\user\\lib", include: '**/*.jar')
-=======
-//    compile "org.jetbrains:annotations:15.0" // Provides useful annotations like @NotNull & @Nullable
->>>>>>> develop-donovanMaas
 }
 
 def robotManifest = {

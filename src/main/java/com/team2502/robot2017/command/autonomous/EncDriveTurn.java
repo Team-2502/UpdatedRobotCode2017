@@ -2,40 +2,46 @@ package com.team2502.robot2017.command.autonomous;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
-import com.team2502.robot2017.subsystem.GearBoxSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class EncDriveBackwardsCommand extends Command
+public class EncDriveTurn extends Command
 {
-    public static DriveTrainSubsystem driveTrain;
-    public EncDriveBackwardsCommand()
+    public static DriveTrainSubsystem DriveTrain;
+    
+    int leftDirection;
+    int rightDirection;
+    
+    double rotateDist = 3.1;
+    
+    public EncDriveTurn(int leftDir, int rightDir)
     {
+        leftDirection = leftDir;
+        rightDirection = rightDir;
         requires(Robot.DRIVE_TRAIN);
-        driveTrain = Robot.DRIVE_TRAIN;
+        DriveTrain = Robot.DRIVE_TRAIN;
     }
     
-    double targetDist = 4.65;
     double currentDist;
     @Override
     protected void initialize()
     {
-        driveTrain.setAutonSettings(driveTrain.rightTalon0);
-        driveTrain.setAutonSettings(driveTrain.leftTalon0);
+        DriveTrain.setAutonSettings(DriveTrain.rightTalon0);
+        DriveTrain.setAutonSettings(DriveTrain.leftTalon0);
     }
 
     @Override
     protected void execute()
-    {   
-        currentDist = driveTrain.getEncLeftPosition();
-        driveTrain.leftTalon0.set(targetDist/2);
-        driveTrain.rightTalon0.set(-targetDist/2);
+    {  
+        currentDist = DriveTrain.getEncLeftPosition();
+        DriveTrain.leftTalon0.set(-rotateDist*leftDirection);
+        DriveTrain.rightTalon0.set(rotateDist*rightDirection);
 //     gearBox.setGear(on);
     }
 
     @Override
     protected boolean isFinished()
     {
-        return currentDist <= -2.2;
+        return false;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.team2502.robot2017.command;
 
 import com.team2502.robot2017.Robot;
-import edu.wpi.first.wpilibj.command.Command;
 import com.team2502.robot2017.subsystem.ClimberSubsystem;
+import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberCommand extends Command
 {   
@@ -10,7 +10,7 @@ public class ClimberCommand extends Command
     public ClimberCommand()
     {
         requires(Robot.CLIMBER);
-        ClimberSubsystem = Robot.CLIMBER;   
+        ClimberSubsystem = Robot.CLIMBER;
     }
     
     protected void initialize()
