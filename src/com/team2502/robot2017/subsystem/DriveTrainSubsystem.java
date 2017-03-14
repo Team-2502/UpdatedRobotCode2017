@@ -221,26 +221,32 @@ public class DriveTrainSubsystem extends Subsystem
     {
         Pair<Double, Double> speed = DashboardData.getDriveType() == DriveTypes.DUAL_STICK ? getSpeed()
                                                                                            : getSpeedArcade();
-        double RPML = Math.abs(getRPM(leftTalon0));
-       
-        if(RPML > 10)
+        double RPMLeft = Math.abs(getRPM(leftTalon0));
+        double RPMRight = Math.abs(getRPM(rightTalon0));
+        double RPMAverage = ((RPMLeft + RPMRight)/2);
+        //Adds auto shifting 
+        if(RPMAverage > 10)
         {
-        	RPML = Math.abs(getRPM(leftTalon0));
+        	RPMLeft = Math.abs(getRPM(leftTalon0));
+            RPMRight = Math.abs(getRPM(rightTalon0));
+            RPMAverage = ((RPMLeft + RPMRight)/2);
         	if(DTTS.getGear() == false)
         	{
         		DTTS.setGear(true);
         	}
         }
-        if(RPML < 10)
+        if(RPMAverage < 10)
         {	
-        	RPML = Math.abs(getRPM(leftTalon0));
+        	RPMLeft = Math.abs(getRPM(leftTalon0));
+            RPMRight = Math.abs(getRPM(rightTalon0));
+            RPMAverage = ((RPMLeft + RPMRight)/2);
         	if(DTTS.getGear() == true)
         	{
         		DTTS.setGear(false);
         	}
         }
       
-        
+        //reverse drive
         if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(1) && !isNegativePressed)
         {
             negMode = !negMode;
