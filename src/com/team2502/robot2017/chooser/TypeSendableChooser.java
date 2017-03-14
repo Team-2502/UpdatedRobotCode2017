@@ -1,10 +1,7 @@
 package com.team2502.robot2017.chooser;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-<<<<<<< HEAD:src/com/team2502/robot2017/chooser/TypeSendableChooser.java
 
-=======
->>>>>>> develop-donovanMaas:src/main/java/com/team2502/robot2017/chooser/TypeSendableChooser.java
 
 @SuppressWarnings({ "unchecked", "SameParameterValue", "SpellCheckingInspection" })
 public class TypeSendableChooser<T> extends SendableChooser

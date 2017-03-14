@@ -22,10 +22,6 @@ public final class OI
     static
     {
         SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
-        TOP_GEAR_BOX.whenPressed(new GearCommandTop()); // looks functional ish
-        LEVER.whenPressed(new GearCommandLever());
-        MOVE_BOX.whenPressed(new GearCommandPushBox());
-        Kick_Gear.whenPressed(new GearCommandPushGear());
         CLIMBER.whenPressed(new ClimberCommand());
 //        ONLY_AGITATOR.whileHeld(new OnlyAgitatorCommand());
     }
