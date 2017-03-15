@@ -3,13 +3,31 @@ package com.team2502.robot2017.subsystem;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.team2502.robot2017.DashboardData;
 import com.team2502.robot2017.OI;
 import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.command.FlywheelCommand;
+import com.team2502.robot2017.subsystem.DriveTrainSubsystem.DriveTypes;
+import com.team2502.robot2017.subsystem.DriveTrainSubsystem.Pair;
+
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem
-{
+{	
+	
+	
+
+	   private double lastLeft;
+	
+	   public double leftSpeed;
+
+	   public boolean negative = false;
+	   public boolean isNegativePressed = false;
+	   public boolean negMode = false;
+	   
+	   public ShooterSubsystem ShooterSubsystem;
+	
     private final CANTalon flywheelTalon;
     private final CANTalon feederTalon0; //coleson
     private final CANTalon feederTalon1;  //banebot
@@ -26,6 +44,9 @@ public class ShooterSubsystem extends Subsystem
 
     public ShooterSubsystem()
     {
+    	lastLeft = 0.0D;
+ 
+        
         flywheelTalon = new CANTalon(RobotMap.Motor.FLYWHEEL_TALON_0);
         feederTalon0 = new CANTalon(RobotMap.Motor.FEEDER_TALON_0);
         feederTalon1 = new CANTalon(RobotMap.Motor.FEEDER_TALON_1);
@@ -57,7 +78,7 @@ public class ShooterSubsystem extends Subsystem
      *
      * @return The current velocity of the flywheel.
      */
-    public int getSpeed()
+    public int getFlywheelSpeed()
     {
         return flywheelTalon.getEncVelocity();
     }
@@ -86,9 +107,9 @@ public class ShooterSubsystem extends Subsystem
     }
     public void feed()
     {
-        feederTalon0.set(1);
-        feederTalon1.set(-1);
-        feederTalon2.set(.75);
+        feederTalon0.set(1);//1
+        feederTalon1.set(-1);//-1
+        feederTalon2.set(.75);//.75
     }
 
     public double getTargetSpeed()
@@ -108,6 +129,28 @@ public class ShooterSubsystem extends Subsystem
         if(newError > error) { error = newError; }
 
         return error;
+    }
+    private double getSpeed()
+    {	
+    	double joystickLevel;
+        // Get the base speed of the robot
+    	joystickLevel = -OI.JOYSTICK_FUNCTION.getY();
+        
+        // Only increase the speed by a small amount
+        double diff = joystickLevel - lastLeft;
+        if(diff > 0.1D)
+        {
+            joystickLevel = lastLeft + 0.1D;
+        }
+        else if(diff < 0.1D)
+        {
+            joystickLevel = lastLeft - 0.1D;
+        }
+        lastLeft = joystickLevel;
+
+        double out = joystickLevel;
+        
+		return out;
     }
 
     public void flywheelDrive()
@@ -155,6 +198,7 @@ public class ShooterSubsystem extends Subsystem
             feederTalon1.set(0);
             feederTalon2.set(0);
         }
+        feederTalon0.set(getSpeed());
     }
     
     

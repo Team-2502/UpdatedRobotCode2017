@@ -79,7 +79,7 @@ public final class DashboardData
 //    	SmartDashboard.putNumber("NavX: Roll", Robot.NAVX.getRoll());
 //    	SmartDashboard.putNumber("NavX: Pitch", Robot.NAVX.getPitch());
 //    	SmartDashboard.putNumber("NavX: Angle", Robot.NAVX.getAngle());
-        SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getSpeed());
+        SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getFlywheelSpeed());
         SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getTargetSpeed());
         SmartDashboard.putNumber("FW: Loop Error", Robot.SHOOTER.getError());
         SmartDashboard.putNumber("FW: Motor Output", Robot.SHOOTER.getMotorOutput());
@@ -87,8 +87,8 @@ public final class DashboardData
 
     private static void updatePressure()
     {
-    	
-        SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getSpeed());
+//    	
+        SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getFlywheelSpeed());
         SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getTargetSpeed());
         SmartDashboard.putNumber("FW: Loop Error", Robot.SHOOTER.getError());
         SmartDashboard.putNumber("FW: Motor Output", Robot.SHOOTER.getMotorOutput());
