@@ -8,19 +8,25 @@ import edu.wpi.first.wpilibj.command.Command;
 public class EncDriveDistanceCommand extends Command
 {
     public static DriveTrainSubsystem DriveTrain;
-    public EncDriveDistanceCommand()
+    double targetDist;
+    double currentDist;
+    
+    public EncDriveDistanceCommand(double TargetDist)
     {
         requires(Robot.DRIVE_TRAIN);
         DriveTrain = Robot.DRIVE_TRAIN;
+        targetDist = TargetDist;
     }
     
-    double targetDist = 4.65;
-    double currentDist;
+
     @Override
     protected void initialize()
     {
         DriveTrain.setAutonSettings(DriveTrain.rightTalon0);
         DriveTrain.setAutonSettings(DriveTrain.leftTalon0);
+        DriveTrain.setAutonSettings(DriveTrain.rightTalon1);
+        DriveTrain.setAutonSettings(DriveTrain.leftTalon1);
+        
     }
 
     @Override
@@ -28,21 +34,23 @@ public class EncDriveDistanceCommand extends Command
     {   
         currentDist = DriveTrain.getEncLeftPosition();
         DriveTrain.leftTalon0.set(-targetDist);
-        DriveTrain.rightTalon0.set(targetDist);
+        DriveTrain.rightTalon1.set(targetDist);
 //     gearBox.setGear(on);
     }
 
     @Override
     protected boolean isFinished()
     {
-        return currentDist <= -4.4;
+        return currentDist <= 4.4;
     }
 
     @Override
     protected void end()
     {
-//        DriveTrain.setTeleopSettings(DriveTrain.leftTalon0);
-//        DriveTrain.setTeleopSettings(DriveTrain.rightTalon0);
+        DriveTrain.setTeleopSettings(DriveTrain.leftTalon0);
+        DriveTrain.setTeleopSettings(DriveTrain.rightTalon0);
+        DriveTrain.setTeleopSettings(DriveTrain.leftTalon1);
+        DriveTrain.setTeleopSettings(DriveTrain.rightTalon1);
 //        DriveTrain.stopDriveS();
     }
 

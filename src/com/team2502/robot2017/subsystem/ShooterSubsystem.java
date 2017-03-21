@@ -199,6 +199,8 @@ public class ShooterSubsystem extends Subsystem
             feederTalon2.set(0);
         }
         feederTalon0.set(getSpeed());
+        feederTalon1.set(-getSpeed());//-1
+        feederTalon2.set((getSpeed())*.75);//.75
     }
     
     

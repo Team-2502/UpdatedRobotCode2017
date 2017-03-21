@@ -20,7 +20,7 @@ public class AutoCommandG2 extends CommandGroup
       addSequential(new ShootCommand(5.0D, true));
       addSequential(new EncDriveTurn(1, -1));
 //      addSequential(new NavXMoveCommand(-90,2D));
-      addSequential(new EncDriveDistanceCommand());
+      addSequential(new EncDriveDistanceCommand(4.65));
     }
 }
     
