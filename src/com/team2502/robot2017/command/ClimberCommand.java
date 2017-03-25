@@ -7,10 +7,20 @@ import com.team2502.robot2017.subsystem.ClimberSubsystem;
 public class ClimberCommand extends Command
 {   
     private final ClimberSubsystem ClimberSubsystem;
+    boolean stopped;
     public ClimberCommand()
     {
         requires(Robot.CLIMBER);
         ClimberSubsystem = Robot.CLIMBER;   
+        
+    }
+    public boolean stopped()
+    {
+        return stopped;
+    }
+    public void setStopped(boolean Stopped)
+    {
+        stopped = Stopped;
     }
     
     protected void initialize()
@@ -20,9 +30,13 @@ public class ClimberCommand extends Command
 
     @Override
     protected void execute()
-    {
+    {     
+        if(stopped)
+        {
         ClimberSubsystem.switchBrake();
+        }
     }
+    
 
     @Override
     protected boolean isFinished()

@@ -27,10 +27,5 @@ public class ClimberSubsystem extends Subsystem
     public void setBrake(boolean brake)
     {
         climber.set(this.isBraked = brake);
-    }
-    public void doStuff()
-    {
-
-    }
-    
+    }   
 }

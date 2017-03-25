@@ -7,7 +7,7 @@ public class AutoCommandG1 extends CommandGroup
 {
     public AutoCommandG1()
     {
-        addSequential(new EncDriveDistanceCommand(4.5));
+        addSequential(new EncDriveDistanceCommand(3.5));
         addSequential(new WaitCommand(1D));
 //        addSequential(new PushGearCommand(true));
 //        addSequential(new WaitCommand(1D));
