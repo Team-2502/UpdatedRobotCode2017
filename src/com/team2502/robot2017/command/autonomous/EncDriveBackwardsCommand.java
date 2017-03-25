@@ -8,14 +8,16 @@ import edu.wpi.first.wpilibj.command.Command;
 public class EncDriveBackwardsCommand extends Command
 {
     public static DriveTrainSubsystem driveTrain;
-    public EncDriveBackwardsCommand()
+    double targetDist = 4.65;
+    double currentDist;
+    public EncDriveBackwardsCommand(double TargetDist)
     {
         requires(Robot.DRIVE_TRAIN);
         driveTrain = Robot.DRIVE_TRAIN;
+        targetDist = TargetDist;
     }
     
-    double targetDist = 4.65;
-    double currentDist;
+
     @Override
     protected void initialize()
     {
@@ -35,15 +37,15 @@ public class EncDriveBackwardsCommand extends Command
     @Override
     protected boolean isFinished()
     {
-        return currentDist <= -2.2;
+        return currentDist <= targetDist;
     }
 
     @Override
     protected void end()
     {
-//        DriveTrain.setTeleopSettings(DriveTrain.leftTalon0);
-//        DriveTrain.setTeleopSettings(DriveTrain.rightTalon0);
-//        DriveTrain.stopDriveS();
+        driveTrain.setTeleopSettings(driveTrain.leftTalon0);
+        driveTrain.setTeleopSettings(driveTrain.rightTalon0);
+
     }
 
     @Override

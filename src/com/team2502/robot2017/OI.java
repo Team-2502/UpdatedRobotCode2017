@@ -20,7 +20,7 @@ public final class OI
     {
         SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
         GEAR.whenPressed(new GearCommand());
-        CLIMBER.whenPressed(new ClimberCommandG());
+        CLIMBER.whenPressed(new ClimberCommand());
 //        ONLY_AGITATOR.whileHeld(new OnlyAgitatorCommand());
     }
 

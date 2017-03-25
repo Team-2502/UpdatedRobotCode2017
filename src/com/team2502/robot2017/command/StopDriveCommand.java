@@ -21,7 +21,7 @@ public class StopDriveCommand extends Command
     @Override
     protected void execute()
     {
-        DriveTrain.stop();
+        DriveTrain.stopDriveS();
     }
 
     @Override

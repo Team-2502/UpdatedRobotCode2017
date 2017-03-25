@@ -9,7 +9,9 @@ public class EncDriveDistanceCommand extends Command
 {
     public static DriveTrainSubsystem DriveTrain;
     double targetDist;
-    double currentDist;
+    double currentDistL;
+    double currentDistR;
+    double currentDistAvg;
     
     public EncDriveDistanceCommand(double TargetDist)
     {
@@ -32,16 +34,18 @@ public class EncDriveDistanceCommand extends Command
     @Override
     protected void execute()
     {   
-        currentDist = DriveTrain.getEncLeftPosition();
-        DriveTrain.leftTalon0.set(-targetDist);
-        DriveTrain.rightTalon1.set(targetDist);
+        currentDistL = DriveTrain.getEncLeftPosition();
+        currentDistR = DriveTrain.getEncRightPosition();
+        currentDistAvg = ((currentDistR + currentDistL)/2);
+        DriveTrain.leftTalon0.set(targetDist);
+        DriveTrain.rightTalon0.set(-targetDist);
 //     gearBox.setGear(on);
     }
 
     @Override
     protected boolean isFinished()
     {
-        return currentDist <= 4.4;
+        return currentDistAvg >= targetDist;
     }
 
     @Override

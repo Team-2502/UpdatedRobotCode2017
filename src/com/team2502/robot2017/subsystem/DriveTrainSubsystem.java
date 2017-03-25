@@ -72,6 +72,8 @@ public class DriveTrainSubsystem extends Subsystem
         talon.setPID(0.5, 0, 0);
         talon.enableControl();
         talon.setEncPosition(0);
+        
+        
     }
     
     public void setTeleopSettings(CANTalon talon)
@@ -94,7 +96,7 @@ public class DriveTrainSubsystem extends Subsystem
     }
     public double getEncRightPosition()
     {
-		return rightTalon1.getPosition();
+		return rightTalon0.getPosition();
     }
 
     @Override
@@ -298,7 +300,7 @@ public class DriveTrainSubsystem extends Subsystem
         lastLeft = 0.0D;
         lastRight = 0.0D;
         drive.tankDrive(0.0D, 0.0D);
-        ClimberCommand.setStopped(true);
+//        ClimberCommand.setStopped(true);
         Timer.delay(0.3D);
     }
 
