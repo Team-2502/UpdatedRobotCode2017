@@ -75,7 +75,7 @@ public final class DashboardData
     
     private static void updateNavX()
     {
-//    	SmartDashboard.putNumber("NavX: Yaw", Robot.NAVX.getYaw());
+    	SmartDashboard.putNumber("NavX: Yaw", Robot.NAVX.getYaw());
 //    	SmartDashboard.putNumber("NavX: Roll", Robot.NAVX.getRoll());
 //    	SmartDashboard.putNumber("NavX: Pitch", Robot.NAVX.getPitch());
 //    	SmartDashboard.putNumber("NavX: Angle", Robot.NAVX.getAngle());
@@ -96,7 +96,7 @@ public final class DashboardData
 //        SmartDashboard.putNumber("aDT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
 //        SmartDashboard.putNumber("aDT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
         
-//        SmartDashboard.putNumber("NavX: Pitch", Robot.NAVX.getPitch());
+        SmartDashboard.putNumber("NavX: Pitch", Robot.NAVX.getPitch());
 //        SmartDashboard.putNumber("NavX: Roll", Robot.NAVX.getRoll());
 //        SmartDashboard.putNumber("NavX: Yaw", Robot.NAVX.getYaw());
 //        SmartDashboard.putNumber("NavX: Raw Accel X", Robot.NAVX.getRawAccelX());

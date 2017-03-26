@@ -35,7 +35,7 @@ public class EncDriveDistanceCommand extends Command
     @Override
     protected boolean isFinished()
     {
-        return currentDist <= -4.4;
+        return currentDist <= -targetDist;
     }
 
     @Override

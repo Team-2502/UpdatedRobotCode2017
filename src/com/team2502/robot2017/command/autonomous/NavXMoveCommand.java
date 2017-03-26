@@ -21,7 +21,7 @@ public class NavXMoveCommand extends Command{
 	private double deadZone = 2;
 	private double targetTime;
 	private double speed;
-	
+	private double passedTime;
 //	private double targetXDisplace = 0;
 //	private boolean displacementDrive = false;
 //	private double targetYDisplace = 0;
@@ -81,20 +81,22 @@ public class NavXMoveCommand extends Command{
 
 		
 		currentYaw = Robot.NAVX.getYaw();
-		speed = getSpeed(currentYaw-targetYaw);
+		passedTime = System.currentTimeMillis() - startTime;
 		SmartDashboard.putNumber("NavX: Target yaw", targetYaw);
-
+		speed = getSpeed(passedTime);
 		if(Math.abs(currentYaw - targetYaw) > deadZone)
 		{	
 			// right = pos
 			// left = neg
 			if(currentYaw > targetYaw)
 			{
-				driveTrain.runMotors(-speed, -speed);
+//				driveTrain.runMotors(-speed, -speed);
+			    driveTrain.runMotors(0, -speed);
 			} 
 			else if(currentYaw < targetYaw)
 			{
-				driveTrain.runMotors(speed, speed);
+//				driveTrain.runMotors(speed, speed);
+			    driveTrain.runMotors(speed, 0);
 			}
 		}
 		else
@@ -133,14 +135,14 @@ public class NavXMoveCommand extends Command{
 	@Override
 	protected void interrupted() { end(); }
 	
-	protected double getSpeed(double offset) {
+	protected double getSpeed(double time) {
 		if(targetYaw == 0 || Math.abs(currentYaw - targetYaw) > deadZone){
 			return 0.5;
 		}
 		else
 		{
-//			return 1/(1+Math.pow(Math.E, time/2500))
-			return (-5)/(6 + (Math.pow(offset, 2)/3600));
+			return 1/(1+Math.pow(Math.E, time/2500));
+//			return (-5)/(6 + (Math.pow(offset, 2)/3600))/4;
 		}
 	}
 
