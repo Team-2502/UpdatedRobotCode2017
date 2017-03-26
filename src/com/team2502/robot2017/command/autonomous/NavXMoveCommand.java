@@ -15,16 +15,12 @@ public class NavXMoveCommand extends Command{
 	private AHRS navx;
 	private DistanceSensorSubsystem Sensor;
 	public double currentYaw;
-	private boolean forever = false;
-	public boolean done = false;;
-	private double revolutions;
+	private boolean angleOnly = false;
+	public boolean done = false;
 	private long startTime;
 	private double deadZone = 2;
 	private double targetTime;
 	private double speed;
-	private double revolutionsComplete;
-	private double encLeft;
-	private double encRight;
 	
 //	private double targetXDisplace = 0;
 //	private boolean displacementDrive = false;
@@ -40,11 +36,10 @@ public class NavXMoveCommand extends Command{
         
         navx.reset(); 
         targetYaw = 0;
-        forever = true;
         targetTime = 5000;
 	}
 	
-    public NavXMoveCommand(double time) 
+    public NavXMoveCommand(double angle) 
     {
     	// distance is distance in inches
 		requires(Robot.DRIVE_TRAIN);
@@ -54,8 +49,9 @@ public class NavXMoveCommand extends Command{
         Sensor = Robot.DISTANCE_SENSOR;
         
         navx.reset();
-        targetYaw = 0;
-		targetTime = (time*1000);
+        targetYaw = angle;
+        angleOnly = true;
+		
 	}
     
     public NavXMoveCommand(double angle, double time)
@@ -94,11 +90,11 @@ public class NavXMoveCommand extends Command{
 			// left = neg
 			if(currentYaw > targetYaw)
 			{
-				driveTrain.runMotors(0, -1 * speed);
+				driveTrain.runMotors(-speed, -speed);
 			} 
 			else if(currentYaw < targetYaw)
 			{
-				driveTrain.runMotors(speed, 0);
+				driveTrain.runMotors(speed, speed);
 			}
 		}
 		else
@@ -112,7 +108,15 @@ public class NavXMoveCommand extends Command{
 		// Will end if time elapsed while at targetYaw or at appropriate distance\
 		if(Math.abs(currentYaw - targetYaw) > deadZone)
 		{
-			return System.currentTimeMillis() - startTime > targetTime; // time
+		    if(angleOnly)
+		    {
+		        return true;
+		    }
+		    else
+		    {
+		        return System.currentTimeMillis() - startTime > targetTime; // time
+		    }
+			
 		}
 		else
 		{

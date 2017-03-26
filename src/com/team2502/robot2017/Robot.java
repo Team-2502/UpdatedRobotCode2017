@@ -72,9 +72,8 @@ public final class Robot extends IterativeRobot {
 	 * chooser code above (like the commented example) or additional comparisons
 	 * to the switch structure below with additional strings and commands.
 	 */
-	public void autonomousInit() {
-		DRIVE_TRAIN.rightTalon1.setEncPosition(0);
-		DRIVE_TRAIN.leftTalon0.setEncPosition(0);
+	public void autonomousInit() 
+	{
 //		Scheduler.getInstance().add(DashboardData.getAutonomous());
 	Scheduler.getInstance().add(new GearAutoCenter());
 	}

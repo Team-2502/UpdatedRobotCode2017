@@ -30,7 +30,7 @@ public final class DashboardData
     {
 //        AUTONOMOUS_SELECTOR.addDefaultT("Gear", new AutoCommandG1());
 //        AUTONOMOUS_SELECTOR.addDefaultT("Shoot", new AutoCommandG2());
-        AUTONOMOUS_SELECTOR.addDefaultT("Drive Backwards", new AutoCommandG3());
+//        AUTONOMOUS_SELECTOR.addDefaultT("Drive Backwards", new AutoCommandG3());
 
         DRIVE_CONTROL_SELECTOR.addDefaultT("Dual Stick Drive Control", DriveTrainSubsystem.DriveTypes.DUAL_STICK);
         DRIVE_CONTROL_SELECTOR.addObjectT("Arcade Drive Control", DriveTrainSubsystem.DriveTypes.ARCADE);
