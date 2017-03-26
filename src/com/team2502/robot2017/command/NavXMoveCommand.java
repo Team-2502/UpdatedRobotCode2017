@@ -38,7 +38,7 @@ public class NavXMoveCommand extends Command{
         requires(Robot.DISTANCE_SENSOR);
         Sensor = Robot.DISTANCE_SENSOR;
         
-        navx.reset();
+        navx.reset(); 
         targetYaw = 0;
         forever = true;
 		this.revolutions = 36/(Math.PI*4); 
@@ -79,6 +79,9 @@ public class NavXMoveCommand extends Command{
 
         driveTrain.setAutonSettings(driveTrain.rightTalon1);
         driveTrain.setAutonSettings(driveTrain.leftTalon0);
+        driveTrain.rightTalon1.setEncPosition(0);
+        driveTrain.leftTalon0.setEncPosition(0);
+        
 	}
 
 	@Override

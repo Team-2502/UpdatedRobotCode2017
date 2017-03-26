@@ -73,8 +73,10 @@ public final class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings and commands.
 	 */
 	public void autonomousInit() {
+		DRIVE_TRAIN.rightTalon1.setEncPosition(0);
+		DRIVE_TRAIN.leftTalon0.setEncPosition(0);
 //		Scheduler.getInstance().add(DashboardData.getAutonomous());
-		Scheduler.getInstance().add(new AutoCommandNavXTest());
+	Scheduler.getInstance().add(new AutoCommandNavXTest());
 	}
 
 	/**

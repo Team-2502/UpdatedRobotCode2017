@@ -38,7 +38,7 @@ public class DriveTimeCommand extends Command
     @Override
     protected void execute()
     {
-        driveTrain.runMotors(-1.0D, 1.0D);
+        driveTrain.runMotors(0.5D, -0.5D);
     }
 
     @Override
