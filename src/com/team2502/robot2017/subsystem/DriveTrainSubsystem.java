@@ -1,6 +1,7 @@
 package com.team2502.robot2017.subsystem;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.team2502.robot2017.DashboardData;
 import com.team2502.robot2017.OI;
@@ -10,7 +11,6 @@ import com.team2502.robot2017.command.DriveCommand;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-//import logger.Log;
 
 /**
  * Example Implementation, Many changes needed.
@@ -61,21 +61,21 @@ public class DriveTrainSubsystem extends Subsystem
 
     public void setAutonSettings(CANTalon talon)
     {
-    	talon.changeControlMode(TalonControlMode.Position);
-        talon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+        talon.changeControlMode(TalonControlMode.Position);
+        talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
         talon.configEncoderCodesPerRev(256);
         talon.reverseSensor(false);
         talon.configNominalOutputVoltage(0.0D, -0.0D);
         talon.configPeakOutputVoltage(12.0D, -12.0D);
-        talon.setPID(0.5, 0, 0);
+        talon.setPID(1, 0, 0);
         talon.enableControl();
         talon.setEncPosition(0);
     }
     
     public void setTeleopSettings(CANTalon talon)
     {
-        talon.changeControlMode(TalonControlMode.PercentVbus);
-        talon.disableControl();        
+        talon.changeControlMode(TalonControlMode.Voltage);
+        talon.disableControl();
     }
     
     public double getPostition(CANTalon talon)
@@ -93,6 +93,10 @@ public class DriveTrainSubsystem extends Subsystem
     public double getEncRightPosition()
     {
 		return rightTalon1.getPosition();
+    }
+    public double getEncAveg()
+    {
+        return (getEncRightPosition() + getEncLeftPosition())/2;
     }
 
     @Override
