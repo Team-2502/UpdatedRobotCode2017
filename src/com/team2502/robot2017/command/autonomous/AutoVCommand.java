@@ -21,6 +21,7 @@ public class AutoVCommand extends Command
     double deadLeft = -1;
     double startTime = 0;
     double targetElapsed = 15;
+
     public AutoVCommand(double runtime)
     {
     	requires(Robot.DRIVE_TRAIN);
@@ -32,7 +33,7 @@ public class AutoVCommand extends Command
 
     @Override
     protected void interrupted() { end(); }
-    
+        
     @Override
     protected void initialize() 
     {
@@ -45,15 +46,16 @@ public class AutoVCommand extends Command
         offset = vision.getOffset();
         if(offset > 0.25)
         {
-        	dt.runMotors(0.325D, 0D);
+        	dt.runMotors(0.4D, -0.325/2);
         }
         else if(offset < -0.25)
         {
-        	dt.runMotors(0, -0.325D);
+        	dt.runMotors(0.325/2, -0.4D);
         }
         else
         {
-        	dt.runMotors(.75D, -.75D);
+        	dt.runMotors(.5D, -.5D);
+
         }
     
         
@@ -68,6 +70,5 @@ public class AutoVCommand extends Command
     }
 
     protected void end() { dt.stop(); }
-    
-    
 }
+

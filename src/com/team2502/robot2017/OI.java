@@ -1,6 +1,7 @@
 package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -14,14 +15,17 @@ public final class OI
     public static final Button SWITCH_DRIVE_TRANSMISSION = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.SWITCH_DRIVE_TRANSMISSION);
     public static final Button GEAR = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.GEAR);
     public static final Button CLIMBER = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.CLIMBER);
+    public static final Button RESET_ENC_POSITION = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.RESET_ENC_POS);
 
-    
     static
     {
         SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
         GEAR.whenPressed(new GearCommand());
         CLIMBER.whenPressed(new ClimberCommand());
 //        ONLY_AGITATOR.whileHeld(new OnlyAgitatorCommand());
+		RESET_ENC_POSITION.whenPressed(new ResetEncodersCommand()); 
+		/* the purpose of this is to reset the encoders and then manually push the robot to the destination. 
+		 * this lets us figure out how far the robot needs to go*/ 
     }
 
     public static void init() {}

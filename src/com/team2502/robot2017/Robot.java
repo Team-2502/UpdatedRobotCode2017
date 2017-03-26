@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import sun.rmi.runtime.Log;
 
 @SuppressWarnings({ "WeakerAccess", "unused" })
 public final class Robot extends IterativeRobot {
@@ -72,9 +71,10 @@ public final class Robot extends IterativeRobot {
 	 * chooser code above (like the commented example) or additional comparisons
 	 * to the switch structure below with additional strings and commands.
 	 */
-	public void autonomousInit() {
+	public void autonomousInit() 
+	{
 //		Scheduler.getInstance().add(DashboardData.getAutonomous());
-	    Scheduler.getInstance().add(DashboardData.getAutonomous());
+	Scheduler.getInstance().add(new GearAutoLeft());
 	}
 
 	/**
@@ -85,7 +85,8 @@ public final class Robot extends IterativeRobot {
 		DashboardData.update();
 	}
 
-//	public void teleopInit() { Log.info("Good Luck out there! -- the programmers");}
+
+	public void teleopInit() { }
 
 	/**
 	 * This function is called periodically during operator control

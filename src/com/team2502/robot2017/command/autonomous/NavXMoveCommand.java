@@ -1,4 +1,4 @@
-package com.team2502.robot2017.command;
+package com.team2502.robot2017.command.autonomous;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.team2502.robot2017.Robot;
@@ -17,37 +17,35 @@ public class NavXMoveCommand extends Command{
 	public double currentYaw;
 	private boolean forever = false;
 	public boolean done = false;;
-	private double revolutions;
+	private double runTime;
 	private long startTime;
 	private double deadZone = 2;
 	private double elapsedTime;
 	private double speed;
-	private double revolutionsComplete;
-	private double encLeft;
-	private double encRight;
 	
 //	private double targetXDisplace = 0;
 //	private boolean displacementDrive = false;
 //	private double targetYDisplace = 0;
 //	private double displaceDeadzone = 0.006;
 	
-	public NavXMoveCommand(){
+	public NavXMoveCommand()
+  {
 		requires(Robot.DRIVE_TRAIN);
-        driveTrain = Robot.DRIVE_TRAIN;
-        navx = Robot.NAVX;
-        requires(Robot.DISTANCE_SENSOR);
-        Sensor = Robot.DISTANCE_SENSOR;
+    driveTrain = Robot.DRIVE_TRAIN;
+    navx = Robot.NAVX;
+    requires(Robot.DISTANCE_SENSOR);
+    Sensor = Robot.DISTANCE_SENSOR;
         
-        navx.reset();
-        targetYaw = 0;
-        forever = true;
-		this.revolutions = 36/(Math.PI*4); 
+    navx.reset();
+    targetYaw = 0;
+    forever = true;
+    
+		this.runTime = (long)  5000;
 	}
 	
-    public NavXMoveCommand(double distance) 
+    public NavXMoveCommand(double angle) 
     {
-    	// distance is distance in inches
-		requires(Robot.DRIVE_TRAIN);
+	    	requires(Robot.DRIVE_TRAIN);
         driveTrain = Robot.DRIVE_TRAIN;
         navx = Robot.NAVX;
         requires(Robot.DISTANCE_SENSOR);
@@ -55,43 +53,45 @@ public class NavXMoveCommand extends Command{
         
         navx.reset();
         targetYaw = 0;
-		this.revolutions = distance/(Math.PI*4);
-	}
+	
+	  }
     
-    public NavXMoveCommand(double angle, double distance)
+    public NavXMoveCommand(double angle, double runTime)
     {
-    	// distance is distance in inches
-    	requires(Robot.DRIVE_TRAIN);
+        requires(Robot.DRIVE_TRAIN);
         driveTrain = Robot.DRIVE_TRAIN;
         navx = Robot.NAVX;
         requires(Robot.DISTANCE_SENSOR);
         Sensor = Robot.DISTANCE_SENSOR;
     	
         navx.reset();
-		targetYaw = angle;
-		this.revolutions = distance/(Math.PI*4);
+	    targetYaw = angle;
+	    this.runTime = (runTime*1000);
     }
+//    public NavXMoveCommand(double angle, double targetXDisplace, double targetYDisplace){
+//    	targetXDisplace = targetXDisplace;
+//    	targetYDisplace = targetYDisplace;
+//    	navx.resetDisplacement();
+//    	navx.reset();
+//    	targetYaw = Math.toDegrees(Math.atan(targetYDisplace/targetXDisplace));
+//    }
+ 
 
 	@Override
 	protected void initialize() 
 	{
 		startTime = System.currentTimeMillis();
-
-        driveTrain.setAutonSettings(driveTrain.rightTalon1);
-        driveTrain.setAutonSettings(driveTrain.leftTalon0);
 	}
 
 	@Override
 	protected void execute() 
 	{
-		encLeft = driveTrain.getEncLeftPosition();
-		encRight = driveTrain.getEncRightPosition();
-		
-		
-		currentYaw = Robot.NAVX.getYaw();
-		speed = getSpeed(currentYaw-targetYaw);
+		elapsedTime = System.currentTimeMillis() - startTime;
+		speed = getSpeed(elapsedTime);
+		currentYaw = Robot.NAVX.getAngle();
 		SmartDashboard.putNumber("NavX: Target yaw", targetYaw);
-
+//		if (Sensor.getSensorDistance() > 14)
+//		{ 
 		if(Math.abs(currentYaw - targetYaw) > deadZone)
 		{	
 			// right = pos
@@ -109,38 +109,52 @@ public class NavXMoveCommand extends Command{
 		{	
 				driveTrain.runMotors(0.5, -0.5);
 		}	
-	}	
+	}
+	
+//		else
+//		{
+//			startTime = System.currentTimeMillis();
+//		}
+		
+				
+		
+		
 
 	@Override
 	protected boolean isFinished() {
 		// Will end if time elapsed while at targetYaw or at appropriate distance\
-		if(Math.abs(currentYaw - targetYaw) > deadZone)
+		if(forever)
 		{
-			return (encLeft + encRight)/2 > revolutions;
+			return Math.abs(currentYaw - targetYaw) > deadZone;
 		}
 		else
 		{
-			return false;
+		if(Math.abs(currentYaw - targetYaw) > deadZone)
+			{
+				return System.currentTimeMillis() - startTime > runTime;
+			}
+		else
+			{
+				return false;
+			}
 		}
 	}
 
 	@Override
-	protected void end() {
-		driveTrain.setTeleopSettings(driveTrain.rightTalon0);
-        driveTrain.setTeleopSettings(driveTrain.leftTalon0);
-	}
+	protected void end() {}
 
 	@Override
-	protected void interrupted() { end(); }
+	protected void interrupted() {}
 	
-	protected double getSpeed(double offset) {
-		if(targetYaw == 0 || Math.abs(currentYaw - targetYaw) > deadZone){
+	protected double getSpeed(double time) {
+		if(targetYaw == 0){
 			return 0.5;
 		}
 		else
 		{
-//			return 1/(1+Math.pow(Math.E, time/2500))
-			return (-5)/(6 + (Math.pow(offset, 2)/3600));
+
+			return 1/(1+Math.pow(Math.E, time/2500));
+//			return 4000/((time * time) + 4000);
 		}
 	}
 

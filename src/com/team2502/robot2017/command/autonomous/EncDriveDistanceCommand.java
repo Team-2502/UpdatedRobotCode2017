@@ -2,65 +2,50 @@ package com.team2502.robot2017.command.autonomous;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
-import com.team2502.robot2017.subsystem.GearBoxSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
+@SuppressWarnings("WeakerAccess")
 public class EncDriveDistanceCommand extends Command
 {
-    public static DriveTrainSubsystem DriveTrain;
-    double targetDist;
-    double currentDistL;
-    double currentDistR;
-    double currentDistAvg;
-    double StartTime;
-    double runTime;
-    
-    public EncDriveDistanceCommand(double TargetDist, double Time)
+
+    private DriveTrainSubsystem driveTrain;
+    private long runTime;
+    private long startTime;
+
+    /**
+     * @param runTime Time to run for in seconds.
+     */
+    public EncDriveDistanceCommand()
     {
-        requires(Robot.DRIVE_TRAIN);
-        DriveTrain = Robot.DRIVE_TRAIN;
-        targetDist = TargetDist;
-        runTime = (Time * 1000);
-        
+    	driveTrain = Robot.DRIVE_TRAIN;
+    	requires(driveTrain);
     }
-    
 
     @Override
     protected void initialize()
     {
-        DriveTrain.setAutonSettings(DriveTrain.rightTalon0);
-        DriveTrain.setAutonSettings(DriveTrain.leftTalon0);
-        DriveTrain.setAutonSettings(DriveTrain.rightTalon1);
-        DriveTrain.setAutonSettings(DriveTrain.leftTalon1);
-        StartTime = System.currentTimeMillis();
-        
+        driveTrain.setAutonSettings(driveTrain.leftTalon0);
+        driveTrain.setAutonSettings(driveTrain.rightTalon1);
+
     }
 
     @Override
     protected void execute()
-    {   
-        currentDistL = DriveTrain.getEncLeftPosition();
-        currentDistR = DriveTrain.getEncRightPosition();
-        currentDistAvg = ((currentDistR + currentDistL)/2);
-        DriveTrain.leftTalon0.set(targetDist);
-        DriveTrain.rightTalon0.set(-targetDist);
-//     gearBox.setGear(on);
+    {
+    	driveTrain.leftTalon0.set(-4.6);
+        driveTrain.rightTalon1.set(4.6);
     }
 
     @Override
     protected boolean isFinished()
     {
-        return currentDistAvg >= targetDist ||  System.currentTimeMillis() - StartTime > runTime;
+        return false;
     }
 
     @Override
     protected void end()
     {
-        DriveTrain.setTeleopSettings(DriveTrain.leftTalon0);
-        DriveTrain.setTeleopSettings(DriveTrain.rightTalon0);
-        DriveTrain.setTeleopSettings(DriveTrain.leftTalon1);
-        DriveTrain.setTeleopSettings(DriveTrain.rightTalon1);
-//        DriveTrain.stopDriveS();
+        driveTrain.stop();
     }
 
     @Override
