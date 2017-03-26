@@ -33,6 +33,7 @@ public final class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		 DRIVE_TRAIN = new DriveTrainSubsystem();
+		 DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
 		 PRESSURE_SENSOR = new PressureSensorSubsystem();
 		 VISION = new VisionSubsystem();
 		 COMPRESSOR = new Compressor();
@@ -40,7 +41,6 @@ public final class Robot extends IterativeRobot {
 		 DISTANCE_SENSOR = new DistanceSensorSubsystem();
 		 ACTIVE = new ActiveIntakeSubsystem();
 		 GEAR_BOX = new GearBoxSubsystem();
-		 DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
 		 CLIMBER = new ClimberSubsystem();
 
 		DashboardData.setup();
