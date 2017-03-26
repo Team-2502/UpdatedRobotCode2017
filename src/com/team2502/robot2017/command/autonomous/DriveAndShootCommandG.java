@@ -8,7 +8,7 @@ public class DriveAndShootCommandG extends CommandGroup
 {
     public DriveAndShootCommandG()
     {
-        addSequential(new DriveTimeCommand(1.2));
+        addSequential(new DriveTimeCommand(1.2, .5 ));
         addSequential(new FlywheelCommand());
     }
 }

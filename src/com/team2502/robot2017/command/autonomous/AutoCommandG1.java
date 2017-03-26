@@ -13,7 +13,7 @@ public class AutoCommandG1 extends CommandGroup
         addSequential(new PushGearCommand(true));
         addSequential(new WaitCommand(1D));
         addSequential(new PushGearCommand(false));
-        addSequential(new DriveTimeCommand(1D));
+//        addSequential(new DriveTimeCommand(1D));
         
 
     }

@@ -6,7 +6,7 @@ public class AutoCommandG3 extends CommandGroup
 {
     public AutoCommandG3()
     {
-        addSequential(new DriveTimeCommand(3D));
+        addSequential(new DriveTimeCommand(3D, .75));
     }
 }
     

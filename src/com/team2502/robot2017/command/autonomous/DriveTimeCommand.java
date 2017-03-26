@@ -8,27 +8,25 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveTimeCommand extends Command
 {
     private DriveTrainSubsystem driveTrain;
-    private long runTime;
+    private double runTime;
     private long startTime;
+    double speed;
 
     /**
-     * @param runTime Time to run for in milliseconds.
+     * @param RunTime Time to run for in milliseconds.
      */
-    public DriveTimeCommand(long runTime)
+    public DriveTimeCommand(double RunTime, double Speed)
     {
         requires(Robot.DRIVE_TRAIN);
         driveTrain = Robot.DRIVE_TRAIN;
-        this.runTime = runTime;
+        this.runTime = RunTime * 1000;
+        speed = Speed;
     }
 
     /**
      * @param runTime Time to run for in seconds.
      */
-    public DriveTimeCommand(double runTime)
-    {
-        this((long) (runTime * 1000));
-    }
-
+ 
     @Override
     protected void initialize()
     {
@@ -38,7 +36,7 @@ public class DriveTimeCommand extends Command
     @Override
     protected void execute()
     {
-        driveTrain.runMotors(0.5D, -0.5D);
+        driveTrain.runMotors(speed, -speed);
     }
 
     @Override
