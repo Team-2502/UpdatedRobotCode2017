@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import logger.Log;
+
 
 @SuppressWarnings({ "WeakerAccess", "unused" })
 public final class Robot extends IterativeRobot {
@@ -87,7 +87,7 @@ public final class Robot extends IterativeRobot {
 		DashboardData.update();
 	}
 
-	public void teleopInit() { Log.info("Good Luck out there! -- the programmers");}
+	public void teleopInit() { }
 
 	/**
 	 * This function is called periodically during operator control
