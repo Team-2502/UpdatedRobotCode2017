@@ -19,33 +19,41 @@ public class AutoVCommand extends Command
     public VisionSubsystem vision = Robot.VISION;
     double deadRight = 1;
     double deadLeft = -1;
-    double startTime = System.currentTimeMillis();
+    double startTime = 0;
     double targetElapsed = 15;
-    public AutoVCommand()
+    public AutoVCommand(double runtime)
     {
     	requires(Robot.DRIVE_TRAIN);
     	dt = Robot.DRIVE_TRAIN;
+    	targetElapsed = (runtime * 1000);
+    	
        
     }
 
     @Override
     protected void interrupted() { end(); }
-
+    
+    @Override
+    protected void initialize() 
+    {
+    	startTime = System.currentTimeMillis();
+    }
+    
     @Override
     protected void execute()
     {
         offset = vision.getOffset();
-        if(offset > 0)
+        if(offset > 0.25)
         {
-        	dt.runMotors(0.2D, 0D);
+        	dt.runMotors(0.325D, 0D);
         }
-        else if(offset < 0)
+        else if(offset < -0.25)
         {
-        	dt.runMotors(0, -0.2D);
+        	dt.runMotors(0, -0.325D);
         }
-        else if(offset == 0)
+        else
         {
-        	dt.runMotors(0.5D, -0.5D);
+        	dt.runMotors(.75D, -.75D);
         }
     
         
@@ -55,14 +63,13 @@ public class AutoVCommand extends Command
     @Override
     protected boolean isFinished()
     {
-//        return (System.currentTimeMillis() - startTime > targetElapsed);
-    	return false;
+        return System.currentTimeMillis() - startTime > targetElapsed;
+//    	return false;
     }
 
     protected void end() { dt.stop(); }
     
-    @Override
-    protected void initialize() {}
+    
 }
 
 

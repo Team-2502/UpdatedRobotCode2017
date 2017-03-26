@@ -9,7 +9,7 @@ public class VisionAutoCommandGroup extends CommandGroup {
 
 	public VisionAutoCommandGroup() {
 //		addSequential(new DriveTimeCommand(1D));
-		addSequential(new AutoVCommand());
+		addSequential(new AutoVCommand(10));
 	}
 	
 }
