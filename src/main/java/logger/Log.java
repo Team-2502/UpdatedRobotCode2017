@@ -38,11 +38,6 @@ public final class Log
         type.output.flush();
     }
 
-    public static <T> void log(LogType type, T msg) { log(type, msg, 0); }
-
-    static <T> void out(T msg) { log(LogType.STD_OUT, msg); }
-
-    static <T> void err(T msg) { log(LogType.STD_ERR, msg); }
 
     public static <T> void info(T msg) { log(LogType.INFO, msg); }
 
@@ -51,6 +46,12 @@ public final class Log
     public static <T> void error(T msg) { log(LogType.ERROR, msg); }
 
     public static <T> void trace(T msg) { log(LogType.TRACE, msg); }
+
+    public static <T> void log(LogType type, T msg) { log(type, msg, 0); }
+
+    static <T> void out(T msg) { log(LogType.STD_OUT, msg); }
+
+    static <T> void err(T msg) { log(LogType.STD_ERR, msg); }
 
     public static void trace(StackTraceElement[] e)
     {
@@ -69,6 +70,7 @@ public final class Log
     public static void trace(Exception e) { trace(e, ""); }
 
     public static <T> void debug(T msg) { log(LogType.DEBUG, msg); }
+
 
     public enum LogType
     {

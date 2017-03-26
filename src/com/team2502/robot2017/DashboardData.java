@@ -30,7 +30,7 @@ public final class DashboardData
     {
 //        AUTONOMOUS_SELECTOR.addDefaultT("Gear", new AutoCommandG1());
 //        AUTONOMOUS_SELECTOR.addDefaultT("Shoot", new AutoCommandG2());
-        AUTONOMOUS_SELECTOR.addDefaultT("Drive Backwards", new AutoCommandG3());
+//        AUTONOMOUS_SELECTOR.addDefaultT("Drive Backwards", new AutoCommandG3());
 
         DRIVE_CONTROL_SELECTOR.addDefaultT("Dual Stick Drive Control", DriveTrainSubsystem.DriveTypes.DUAL_STICK);
         DRIVE_CONTROL_SELECTOR.addObjectT("Arcade Drive Control", DriveTrainSubsystem.DriveTypes.ARCADE);
@@ -75,11 +75,11 @@ public final class DashboardData
     
     private static void updateNavX()
     {
-//    	SmartDashboard.putNumber("NavX: Yaw", Robot.NAVX.getYaw());
+    	SmartDashboard.putNumber("NavX: Yaw", Robot.NAVX.getYaw());
 //    	SmartDashboard.putNumber("NavX: Roll", Robot.NAVX.getRoll());
 //    	SmartDashboard.putNumber("NavX: Pitch", Robot.NAVX.getPitch());
 //    	SmartDashboard.putNumber("NavX: Angle", Robot.NAVX.getAngle());
-        SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getSpeed());
+        SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getFlywheelSpeed());
         SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getTargetSpeed());
         SmartDashboard.putNumber("FW: Loop Error", Robot.SHOOTER.getError());
         SmartDashboard.putNumber("FW: Motor Output", Robot.SHOOTER.getMotorOutput());
@@ -87,17 +87,18 @@ public final class DashboardData
 
     private static void updatePressure()
     {
-    	
-        SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getSpeed());
+//    	
+        SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getFlywheelSpeed());
         SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getTargetSpeed());
         SmartDashboard.putNumber("FW: Loop Error", Robot.SHOOTER.getError());
         SmartDashboard.putNumber("FW: Motor Output", Robot.SHOOTER.getMotorOutput());
         
-//        SmartDashboard.putNumber("aDT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
-//        SmartDashboard.putNumber("aDT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
+        SmartDashboard.putNumber("aDT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
+        SmartDashboard.putNumber("aDT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
+        SmartDashboard.putNumber("aDT: DriveTrainAveg", Robot.DRIVE_TRAIN.getEncAveg());
         
-//        SmartDashboard.putNumber("NavX: Pitch", Robot.NAVX.getPitch());
-//        SmartDashboard.putNumber("NavX: Roll", Robot.NAVX.getRoll());
+        SmartDashboard.putNumber("NavX: Angle", Robot.NAVX.getAngle());
+        SmartDashboard.putNumber("NavX: Compass Reading", Robot.NAVX.getCompassHeading());
 //        SmartDashboard.putNumber("NavX: Yaw", Robot.NAVX.getYaw());
 //        SmartDashboard.putNumber("NavX: Raw Accel X", Robot.NAVX.getRawAccelX());
 

@@ -15,11 +15,12 @@ public class LoggerPrintStream extends PrintStream
         depth = 0;
     }
 
-    public void outputln(String s) { super.println(s); }
+    public void outputln( String s) { super.println(s); }
 
 
     @Override
-    public void println(String msg)
+    public void println( String msg)
+
     {
         if(isOutputStream) { Log.log(Log.LogType.STD_OUT, msg, 1 + depth); }
         else { Log.log(Log.LogType.STD_ERR, msg, 1 + depth); }
