@@ -17,11 +17,14 @@ public class NavXMoveCommand extends Command{
 	public double currentYaw;
 	private boolean forever = false;
 	public boolean done = false;;
-	private long runTime;
+	private double revolutions;
 	private long startTime;
 	private double deadZone = 2;
 	private double elapsedTime;
 	private double speed;
+	private double revolutionsComplete;
+	private double encLeft;
+	private double encRight;
 	
 //	private double targetXDisplace = 0;
 //	private boolean displacementDrive = false;
@@ -38,11 +41,12 @@ public class NavXMoveCommand extends Command{
         navx.reset();
         targetYaw = 0;
         forever = true;
-		this.runTime = (long)  5000;
+		this.revolutions = 36/(Math.PI*4); 
 	}
 	
-    public NavXMoveCommand(double runTime) 
+    public NavXMoveCommand(double distance) 
     {
+    	// distance is distance in inches
 		requires(Robot.DRIVE_TRAIN);
         driveTrain = Robot.DRIVE_TRAIN;
         navx = Robot.NAVX;
@@ -51,11 +55,12 @@ public class NavXMoveCommand extends Command{
         
         navx.reset();
         targetYaw = 0;
-		this.runTime = (long) runTime*1000;
+		this.revolutions = distance/(Math.PI*4);
 	}
     
-    public NavXMoveCommand(double angle, double runTime)
+    public NavXMoveCommand(double angle, double distance)
     {
+    	// distance is distance in inches
     	requires(Robot.DRIVE_TRAIN);
         driveTrain = Robot.DRIVE_TRAIN;
         navx = Robot.NAVX;
@@ -64,32 +69,29 @@ public class NavXMoveCommand extends Command{
     	
         navx.reset();
 		targetYaw = angle;
-		this.runTime = (long) runTime*1000;
+		this.revolutions = distance/(Math.PI*4);
     }
-//    public NavXMoveCommand(double angle, double targetXDisplace, double targetYDisplace){
-//    	targetXDisplace = targetXDisplace;
-//    	targetYDisplace = targetYDisplace;
-//    	navx.resetDisplacement();
-//    	navx.reset();
-//    	targetYaw = Math.toDegrees(Math.atan(targetYDisplace/targetXDisplace));
-//    }
- 
 
 	@Override
 	protected void initialize() 
 	{
 		startTime = System.currentTimeMillis();
+
+        driveTrain.setAutonSettings(driveTrain.rightTalon1);
+        driveTrain.setAutonSettings(driveTrain.leftTalon0);
 	}
 
 	@Override
 	protected void execute() 
 	{
-		elapsedTime = System.currentTimeMillis() - startTime;
-		speed = getSpeed(elapsedTime);
+		encLeft = driveTrain.getEncLeftPosition();
+		encRight = driveTrain.getEncRightPosition();
+		
+		
 		currentYaw = Robot.NAVX.getYaw();
+		speed = getSpeed(currentYaw-targetYaw);
 		SmartDashboard.putNumber("NavX: Target yaw", targetYaw);
-//		if (Sensor.getSensorDistance() > 14)
-//		{ 
+
 		if(Math.abs(currentYaw - targetYaw) > deadZone)
 		{	
 			// right = pos
@@ -105,35 +107,16 @@ public class NavXMoveCommand extends Command{
 		}
 		else
 		{	
-//			if(displacementDrive){
-//				if(Math.abs(navx.getDisplacementX() - targetXDisplace) <= displaceDeadzone && Math.abs(navx.getDisplacementY() - targetYDisplace) <= displaceDeadzone){
-//					driveTrain.runMotors(0, 0);
-//				}
-//				else if(navx.getDisplacementX() < targetXDisplace && navx.getDisplacementY() < targetYDisplace){
-//					driveTrain.runMotors(-0.5, 0.5);
-//				}
-//			}
-//			else{
 				driveTrain.runMotors(0.5, -0.5);
-//			}
 		}	
-	}
-	
-//		else
-//		{
-//			startTime = System.currentTimeMillis();
-//		}
-		
-				
-		
-		
+	}	
 
 	@Override
 	protected boolean isFinished() {
 		// Will end if time elapsed while at targetYaw or at appropriate distance\
 		if(Math.abs(currentYaw - targetYaw) > deadZone)
 		{
-			return System.currentTimeMillis() - startTime > runTime;
+			return (encLeft + encRight)/2 > revolutions;
 		}
 		else
 		{
@@ -142,19 +125,22 @@ public class NavXMoveCommand extends Command{
 	}
 
 	@Override
-	protected void end() {}
+	protected void end() {
+		driveTrain.setTeleopSettings(driveTrain.rightTalon0);
+        driveTrain.setTeleopSettings(driveTrain.leftTalon0);
+	}
 
 	@Override
-	protected void interrupted() {}
+	protected void interrupted() { end(); }
 	
-	protected double getSpeed(double time) {
+	protected double getSpeed(double offset) {
 		if(targetYaw == 0 || Math.abs(currentYaw - targetYaw) > deadZone){
 			return 0.5;
 		}
 		else
 		{
-//			return Math.pow(Math.E, (-1 * time / 10000));
-			return 1/(1+Math.pow(Math.E, time/2500));
+//			return 1/(1+Math.pow(Math.E, time/2500))
+			return (-1 * 5)/(6 + (Math.pow(offset, 2)/3600));
 		}
 	}
 

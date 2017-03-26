@@ -1,12 +1,14 @@
 package com.team2502.robot2017;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.team2502.robot2017.command.autonomous.*;
 import com.team2502.robot2017.subsystem.*;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import logger.Log;
 
 @SuppressWarnings({ "WeakerAccess", "unused" })
 public final class Robot extends IterativeRobot {
@@ -24,11 +26,6 @@ public final class Robot extends IterativeRobot {
 
 	// NavX Subsystem
 	 public static final AHRS NAVX = new AHRS(SPI.Port.kMXP);
-
-	static {
-		/* I don't know why but this prevents problems. */
-//		DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
-	}
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -55,8 +52,7 @@ public final class Robot extends IterativeRobot {
 	 * You can use it to reset any subsystem information you want to clear when
 	 * the robot is disabled.
 	 */
-	public void disabledInit() {
-	}
+	public void disabledInit() {}
 
 	public void disabledPeriodic() {
 
@@ -77,7 +73,8 @@ public final class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings and commands.
 	 */
 	public void autonomousInit() {
-		Scheduler.getInstance().add(DashboardData.getAutonomous());
+//		Scheduler.getInstance().add(DashboardData.getAutonomous());
+		Scheduler.getInstance().add(new AutoCommandNavXTest());
 	}
 
 	/**
@@ -88,8 +85,7 @@ public final class Robot extends IterativeRobot {
 		DashboardData.update();
 	}
 
-	public void teleopInit() {
-	}
+	public void teleopInit() { Log.info("Good Luck out there! -- the programmers");}
 
 	/**
 	 * This function is called periodically during operator control
