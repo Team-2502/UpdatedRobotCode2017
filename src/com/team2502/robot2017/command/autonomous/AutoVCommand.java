@@ -51,15 +51,15 @@ public class AutoVCommand extends Command
         offset = vision.getOffset();
         if(offset > 0.25)
         {
-        	dt.runMotors(0.325D, -0.325/2);
+        	dt.runMotors(0.4D, -0.325/2);
         }
         else if(offset < -0.25)
         {
-        	dt.runMotors(0.325/2, -0.325D);
+        	dt.runMotors(0.325/2, -0.4D);
         }
         else
         {
-        	dt.runMotors(.75D, -.75D);
+        	dt.runMotors(.5D, -.5D);
         }
     
         
