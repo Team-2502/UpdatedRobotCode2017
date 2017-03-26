@@ -1,21 +1,22 @@
 package com.team2502.robot2017.command;
 
 import edu.wpi.first.wpilibj.command.Command;
+
+import com.kauailabs.navx.frc.AHRS;
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 
 public class ResetEncodersCommand extends Command {
-	private DriveTrainSubsystem dt;
+	private AHRS dt;
 	
 	public ResetEncodersCommand() {
-		dt = Robot.DRIVE_TRAIN;
-		requires(Robot.DRIVE_TRAIN);
+		dt = Robot.NAVX;
+	
 	}
 	
 	@Override
 	protected void execute() {
-		dt.leftTalon0.setEncPosition(0);
-		dt.rightTalon1.setEncPosition(0);
+		dt.reset();
 	}
 	@Override
 	protected boolean isFinished() {
