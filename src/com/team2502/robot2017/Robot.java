@@ -76,7 +76,7 @@ public final class Robot extends IterativeRobot {
 		DRIVE_TRAIN.rightTalon1.setEncPosition(0);
 		DRIVE_TRAIN.leftTalon0.setEncPosition(0);
 //		Scheduler.getInstance().add(DashboardData.getAutonomous());
-	Scheduler.getInstance().add(new VisionAutoCommandGroup());
+	Scheduler.getInstance().add(new GearAutoCenter());
 	}
 
 	/**

@@ -13,7 +13,7 @@ public class AutoCommandNavXTest extends CommandGroup
 //    	addSequential(new NavXMoveCommand());
 //    	addSequential(new WaitCommand(1));
 //    	addSequential(new NavXMoveCommand(18));
-    	addSequential(new NavXMoveCommand(90,0));
+    	addSequential(new NavXMoveCommand(90,0)); // turns left
     }
 }
     

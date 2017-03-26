@@ -187,11 +187,7 @@ public class ShooterSubsystem extends Subsystem
             feederTalon1.set(-1);
             feederTalon2.set(.75);
         }
-//		else if(OI.JOYSTICK_FUNCTION.getTrigger() /*&& (Math.abs(flywheelTalon.getEncVelocity()) < Math.abs(targetSpeed - 500))*/)
-//		{
-//			feederTalon0.set(1);
-//			feederTalon1.set(0);
-//		}
+
         else
         {
             feederTalon0.set(0);
