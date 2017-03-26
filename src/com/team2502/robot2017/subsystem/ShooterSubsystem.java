@@ -130,28 +130,28 @@ public class ShooterSubsystem extends Subsystem
 
         return error;
     }
-    private double getSpeed()
-    {	
-    	double joystickLevel;
-        // Get the base speed of the robot
-    	joystickLevel = -OI.JOYSTICK_FUNCTION.getY();
-        
-        // Only increase the speed by a small amount
-        double diff = joystickLevel - lastLeft;
-        if(diff > 0.1D)
-        {
-            joystickLevel = lastLeft + 0.1D;
-        }
-        else if(diff < 0.1D)
-        {
-            joystickLevel = lastLeft - 0.1D;
-        }
-        lastLeft = joystickLevel;
-
-        double out = joystickLevel;
-        
-		return out;
-    }
+//    private double getSpeed()
+//    {	
+//    	double joystickLevel;
+//        // Get the base speed of the robot
+//    	joystickLevel = -OI.JOYSTICK_FUNCTION.getY();
+//        
+//        // Only increase the speed by a small amount
+//        double diff = joystickLevel - lastLeft;
+//        if(diff > 0.1D)
+//        {
+//            joystickLevel = lastLeft + 0.1D;
+//        }
+//        else if(diff < 0.1D)
+//        {
+//            joystickLevel = lastLeft - 0.1D;
+//        }
+//        lastLeft = joystickLevel;
+//
+//        double out = joystickLevel;
+//        
+//		return out;
+//    }
 
     public void flywheelDrive()
     {
@@ -198,9 +198,7 @@ public class ShooterSubsystem extends Subsystem
             feederTalon1.set(0);
             feederTalon2.set(0);
         }
-//        feederTalon0.set(getSpeed());
-//        feederTalon1.set(-getSpeed());//-1
-//        feederTalon2.set((getSpeed())*.75);//.75
+
     }
     
     
