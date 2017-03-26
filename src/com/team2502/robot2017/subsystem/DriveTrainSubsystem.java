@@ -8,6 +8,7 @@ import com.team2502.robot2017.OI;
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.command.DriveCommand;
+import com.team2502.robot2017.command.ClimberCommand;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -21,6 +22,7 @@ public class DriveTrainSubsystem extends Subsystem
     private static final Pair<Double, Double> SPEED_CONTAINER = new Pair<Double, Double>();
     
     public DriveTrainTransmissionSubsystem DTTS;
+    public ClimberCommand ClimberCommand;
     
     public final CANTalon leftTalon0; //enc
     public final CANTalon leftTalon1;
@@ -70,6 +72,8 @@ public class DriveTrainSubsystem extends Subsystem
         talon.setPID(1, 0, 0);
         talon.enableControl();
         talon.setEncPosition(0);
+        
+        
     }
     
     public void setTeleopSettings(CANTalon talon)
@@ -92,7 +96,7 @@ public class DriveTrainSubsystem extends Subsystem
     }
     public double getEncRightPosition()
     {
-		return rightTalon1.getPosition();
+		return rightTalon0.getPosition();
     }
     public double getEncAveg()
     {
@@ -300,6 +304,7 @@ public class DriveTrainSubsystem extends Subsystem
         lastLeft = 0.0D;
         lastRight = 0.0D;
         drive.tankDrive(0.0D, 0.0D);
+//        ClimberCommand.setStopped(true);
         Timer.delay(0.3D);
     }
 

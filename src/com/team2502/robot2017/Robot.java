@@ -76,6 +76,7 @@ public final class Robot extends IterativeRobot {
 	{
 //		Scheduler.getInstance().add(DashboardData.getAutonomous());
 	Scheduler.getInstance().add(new GearAutoLeft());
+
 	}
 
 	/**
@@ -86,7 +87,9 @@ public final class Robot extends IterativeRobot {
 		DashboardData.update();
 	}
 
+
 	public void teleopInit() { }
+
 
 	/**
 	 * This function is called periodically during operator control
