@@ -12,12 +12,6 @@ public class AutoCommandG1 extends CommandGroup
     {
         addSequential(new DriveTimeCommand(1.35D));//1.5
         addSequential(new WaitCommand(1D));
-//        addSequential(new NavXMoveCommand(90,1D));
-//        addSequential(new DriveTimeCommand(1));
-//        addSequential(new PushGearCommand(true));
-//        addSequential(new WaitCommand(1D));
-//        addSequential(new PushGearCommand(false));
-//        addSequential(new DriveTimeCommand(1D));
         
     }
 }

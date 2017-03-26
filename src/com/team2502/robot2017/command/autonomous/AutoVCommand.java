@@ -6,6 +6,7 @@ import com.team2502.robot2017.subsystem.VisionSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 
+
 @SuppressWarnings("WeakerAccess")
 public class AutoVCommand extends Command
 {
@@ -14,77 +15,59 @@ public class AutoVCommand extends Command
     public double leftSpeed;
     public double rightSpeed;
     public boolean inFrontOfGear = false;
-    public boolean Reverse;
-
-    public AutoVCommand(boolean RevorFor)
+    public boolean Reverse = false;
+    public VisionSubsystem vision = Robot.VISION;
+    double deadRight = 1;
+    double deadLeft = -1;
+    double startTime = 0;
+    double targetElapsed = 15;
+    public AutoVCommand(double runtime)
     {
-        dt = new DriveTrainSubsystem();
-        leftSpeed = 0.5;
-        rightSpeed = -0.5;
+    	requires(Robot.DRIVE_TRAIN);
+    	dt = Robot.DRIVE_TRAIN;
+    	targetElapsed = (runtime * 1000);
+    	
        
     }
 
     @Override
-    protected void initialize()
-    {
-
-    }
-
-
+    protected void interrupted() { end(); }
+    
     @Override
-    protected void interrupted()
+    protected void initialize() 
     {
-
+    	startTime = System.currentTimeMillis();
     }
-
+    
     @Override
     protected void execute()
     {
-        while(!inFrontOfGear)
+        offset = vision.getOffset();
+        if(offset > 0.25)
         {
-            offset = VisionSubsystem.getOffset();
-            if(!(offset == 1023) && !(offset == -160) && ((offset > 5) || (offset < -5)))
-            {
-                offset = offset / 100;
-             // if reverse then go backwards 
-                if (Reverse)
-                {
-                	leftSpeed += -offset;
-                	rightSpeed += -offset;
-                }
-                else 
-                {
-                	leftSpeed += offset;
-                	rightSpeed += offset;
-                }
-                dt.runMotors(leftSpeed, rightSpeed);
-            }
-            else if((offset > -5) || (offset < 5))
-            {
-                leftSpeed = 0.5;
-                rightSpeed = -0.5;
-                dt.runMotors(leftSpeed, rightSpeed);
-
-                if(Robot.DISTANCE_SENSOR.getSensorDistance()< 12D)
-                {
-                    inFrontOfGear = true;
-                }
-            }
-            // change in front of gear somewhere
+        	dt.runMotors(0.325D, 0D);
         }
+        else if(offset < -0.25)
+        {
+        	dt.runMotors(0, -0.325D);
+        }
+        else
+        {
+        	dt.runMotors(.75D, -.75D);
+        }
+    
+        
+
     }
 
     @Override
     protected boolean isFinished()
     {
-        return inFrontOfGear;
+        return System.currentTimeMillis() - startTime > targetElapsed;
+//    	return false;
     }
 
-    protected void end()
-    {
-        dt.stop();
-    }
+    protected void end() { dt.stop(); }
+    
+    
 }
-
-
-
