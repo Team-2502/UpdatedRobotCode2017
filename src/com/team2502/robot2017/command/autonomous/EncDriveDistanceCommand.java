@@ -12,12 +12,16 @@ public class EncDriveDistanceCommand extends Command
     double currentDistL;
     double currentDistR;
     double currentDistAvg;
+    double StartTime;
+    double runTime;
     
-    public EncDriveDistanceCommand(double TargetDist)
+    public EncDriveDistanceCommand(double TargetDist, double Time)
     {
         requires(Robot.DRIVE_TRAIN);
         DriveTrain = Robot.DRIVE_TRAIN;
         targetDist = TargetDist;
+        runTime = (Time * 1000);
+        
     }
     
 
@@ -28,6 +32,7 @@ public class EncDriveDistanceCommand extends Command
         DriveTrain.setAutonSettings(DriveTrain.leftTalon0);
         DriveTrain.setAutonSettings(DriveTrain.rightTalon1);
         DriveTrain.setAutonSettings(DriveTrain.leftTalon1);
+        StartTime = System.currentTimeMillis();
         
     }
 
@@ -45,7 +50,7 @@ public class EncDriveDistanceCommand extends Command
     @Override
     protected boolean isFinished()
     {
-        return currentDistAvg >= targetDist;
+        return currentDistAvg >= targetDist ||  System.currentTimeMillis() - StartTime > runTime;
     }
 
     @Override
