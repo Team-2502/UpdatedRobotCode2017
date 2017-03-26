@@ -20,7 +20,7 @@ public class NavXMoveCommand extends Command{
 	private double revolutions;
 	private long startTime;
 	private double deadZone = 2;
-	private double elapsedTime;
+	private double targetTime;
 	private double speed;
 	private double revolutionsComplete;
 	private double encLeft;
@@ -41,10 +41,10 @@ public class NavXMoveCommand extends Command{
         navx.reset(); 
         targetYaw = 0;
         forever = true;
-		this.revolutions = 36/(Math.PI*4); 
+        targetTime = 5000;
 	}
 	
-    public NavXMoveCommand(double distance) 
+    public NavXMoveCommand(double time) 
     {
     	// distance is distance in inches
 		requires(Robot.DRIVE_TRAIN);
@@ -55,10 +55,10 @@ public class NavXMoveCommand extends Command{
         
         navx.reset();
         targetYaw = 0;
-		this.revolutions = distance/(Math.PI*4);
+		targetTime = (time*1000);
 	}
     
-    public NavXMoveCommand(double angle, double distance)
+    public NavXMoveCommand(double angle, double time)
     {
     	// distance is distance in inches
     	requires(Robot.DRIVE_TRAIN);
@@ -69,27 +69,20 @@ public class NavXMoveCommand extends Command{
     	
         navx.reset();
 		targetYaw = angle;
-		this.revolutions = distance/(Math.PI*4);
+		targetTime = (time*1000);
     }
 
 	@Override
 	protected void initialize() 
 	{
 		startTime = System.currentTimeMillis();
-
-        driveTrain.setAutonSettings(driveTrain.rightTalon1);
-        driveTrain.setAutonSettings(driveTrain.leftTalon0);
-        driveTrain.rightTalon1.setEncPosition(0);
-        driveTrain.leftTalon0.setEncPosition(0);
         
 	}
 
 	@Override
 	protected void execute() 
 	{
-		encLeft = driveTrain.getEncLeftPosition();
-		encRight = driveTrain.getEncRightPosition();
-		
+
 		
 		currentYaw = Robot.NAVX.getYaw();
 		speed = getSpeed(currentYaw-targetYaw);
@@ -119,7 +112,7 @@ public class NavXMoveCommand extends Command{
 		// Will end if time elapsed while at targetYaw or at appropriate distance\
 		if(Math.abs(currentYaw - targetYaw) > deadZone)
 		{
-			return (encLeft + encRight)/2 > revolutions;
+			return System.currentTimeMillis() - startTime > targetTime; // time
 		}
 		else
 		{
@@ -128,9 +121,9 @@ public class NavXMoveCommand extends Command{
 	}
 
 	@Override
-	protected void end() {
-		driveTrain.setTeleopSettings(driveTrain.rightTalon0);
-        driveTrain.setTeleopSettings(driveTrain.leftTalon0);
+	protected void end() 
+	{
+
 	}
 
 	@Override
