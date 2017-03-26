@@ -3,9 +3,9 @@ package com.team2502.robot2017.command.autonomous;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class AutoCommandG1 extends CommandGroup
+public class BackupGearAutoCommand extends CommandGroup
 {
-    public AutoCommandG1()
+    public BackupGearAutoCommand()
     {
 
         addSequential(new DriveTimeCommand(1.35D, .7));//1.5

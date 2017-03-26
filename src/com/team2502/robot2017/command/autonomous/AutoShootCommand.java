@@ -1,10 +1,10 @@
-package com.team2502.robot2017.command;
+package com.team2502.robot2017.command.autonomous;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.ShooterSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShootCommand extends Command
+public class AutoShootCommand extends Command
 {
     public ShooterSubsystem shooterSubsystem;
     private long runTime;
@@ -14,7 +14,7 @@ public class ShootCommand extends Command
     /**
      * @param runTime Time to run for in milliseconds.
      */
-    public ShootCommand(long runTime, boolean both)
+    public AutoShootCommand(long runTime, boolean both)
     {
         this.runTime = runTime;
         requires(Robot.SHOOTER);
@@ -25,7 +25,7 @@ public class ShootCommand extends Command
     /**
      * @param runTime Time to run for in seconds.
      */
-    public ShootCommand(double runTime, boolean both)
+    public AutoShootCommand(double runTime, boolean both)
     {
         this((long) (runTime * 1000), both);
     }

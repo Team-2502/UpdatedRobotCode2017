@@ -30,7 +30,7 @@ public final class DashboardData
     {
 //        AUTONOMOUS_SELECTOR.addDefaultT("MiddleGearBackup", new AutoCommandG1());
 //      AUTONOMOUS_SELECTOR.addDefaultT("MiddleGear", new AutoVCommand(12D));
-        AUTONOMOUS_SELECTOR.addDefaultT("LeftGear", new AutoCommandG2());
+        AUTONOMOUS_SELECTOR.addDefaultT("LeftGear", new ShootAutoCommand());
 //        AUTONOMOUS_SELECTOR.addDefaultT("RightGear", new AutoCommandG3());
 //        AUTONOMOUS_SELECTOR.addDefaultT("DriveForwards", new AutoCommandG4());
 
