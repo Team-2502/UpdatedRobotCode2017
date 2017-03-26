@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class VisionAutoCommandGroup extends CommandGroup {
 
 	public VisionAutoCommandGroup() {
-		addSequential(new DriveTimeCommand(1D));
+//		addSequential(new DriveTimeCommand(1D));
 		addSequential(new AutoVCommand());
 	}
 	

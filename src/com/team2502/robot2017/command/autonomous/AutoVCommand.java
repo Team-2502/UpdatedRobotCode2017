@@ -4,6 +4,7 @@ import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import com.team2502.robot2017.subsystem.VisionSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
+import logger.Log;
 
 
 @SuppressWarnings("WeakerAccess")
@@ -16,8 +17,10 @@ public class AutoVCommand extends Command
     public boolean inFrontOfGear = false;
     public boolean Reverse = false;
     public VisionSubsystem vision = Robot.VISION;
-    double deadRight = 2;
+    double deadRight = 1;
     double deadLeft = -1;
+    double startTime = System.currentTimeMillis();
+    double targetElapsed = 15;
     public AutoVCommand()
     {
     	requires(Robot.DRIVE_TRAIN);
@@ -32,21 +35,18 @@ public class AutoVCommand extends Command
     protected void execute()
     {
         offset = vision.getOffset();
-        
-    	dt.runMotors(0, 0);
-    	if(offset > 0.1){
-//        	
-        	dt.runMotors(0.2, 0);
+        if(offset > 0)
+        {
+        	dt.runMotors(0.2D, 0D);
         }
-    	else if(offset < -0.1){
-        	
-        	dt.runMotors(0, -0.2);
-//        	dt.stop();
+        else if(offset < 0)
+        {
+        	dt.runMotors(0, -0.2D);
         }
-    	else{
-    		
-    	}
-    	
+        else if(offset == 0)
+        {
+        	dt.runMotors(0.5D, -0.5D);
+        }
     
         
 
@@ -55,7 +55,8 @@ public class AutoVCommand extends Command
     @Override
     protected boolean isFinished()
     {
-        return false;
+//        return (System.currentTimeMillis() - startTime > targetElapsed);
+    	return false;
     }
 
     protected void end() { dt.stop(); }

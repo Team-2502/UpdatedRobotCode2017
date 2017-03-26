@@ -143,7 +143,7 @@ public class NavXMoveCommand extends Command{
 		else
 		{
 //			return 1/(1+Math.pow(Math.E, time/2500))
-			return (-1 * 5)/(6 + (Math.pow(offset, 2)/3600));
+			return (-5)/(6 + (Math.pow(offset, 2)/3600));
 		}
 	}
 
