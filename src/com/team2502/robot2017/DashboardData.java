@@ -28,10 +28,10 @@ public final class DashboardData
 
     public static void setup()
     {
-        AUTONOMOUS_SELECTOR.addDefaultT("Gear", new AutoCommandG1());
-//        AUTONOMOUS_SELECTOR.addDefaultT("Shoot", new AutoCommandG2());
-//        AUTONOMOUS_SELECTOR.addDefaultT("Drive Backwards", new AutoCommandG3());
-//        AUTONOMOUS_SELECTOR.addDefaultT("LeftGear", new AutoCommandG4());
+//        AUTONOMOUS_SELECTOR.addDefaultT("MiddleGear", new AutoCommandG1());
+        AUTONOMOUS_SELECTOR.addDefaultT("LeftGear", new AutoCommandG2());
+//        AUTONOMOUS_SELECTOR.addDefaultT("RightGear", new AutoCommandG3());
+//        AUTONOMOUS_SELECTOR.addDefaultT("DriveForwards", new AutoCommandG4());
 
         DRIVE_CONTROL_SELECTOR.addDefaultT("Dual Stick Drive Control", DriveTrainSubsystem.DriveTypes.DUAL_STICK);
         DRIVE_CONTROL_SELECTOR.addObjectT("Arcade Drive Control", DriveTrainSubsystem.DriveTypes.ARCADE);
