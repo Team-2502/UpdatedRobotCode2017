@@ -107,9 +107,9 @@ public class ShooterSubsystem extends Subsystem
     }
     public void feed()
     {
-        feederTalon0.set(1);//1
-        feederTalon1.set(-1);//-1
-        feederTalon2.set(.75);//.75
+        feederTalon0.set(1);
+        feederTalon1.set(-1);
+        feederTalon2.set(.75);
     }
 
     public double getTargetSpeed()

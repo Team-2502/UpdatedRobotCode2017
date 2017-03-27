@@ -7,16 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutoShootCommand extends Command
 {
     public ShooterSubsystem shooterSubsystem;
-    private long runTime;
+    private double runTime;
     private long startTime;
     public boolean both = false;
 
     /**
      * @param runTime Time to run for in milliseconds.
      */
-    public AutoShootCommand(long runTime, boolean both)
+    public AutoShootCommand(double runTime, boolean both)
     {
-        this.runTime = runTime;
+        this.runTime = runTime*1000;
         requires(Robot.SHOOTER);
         this.shooterSubsystem = Robot.SHOOTER;
         this.both = both;
@@ -25,10 +25,7 @@ public class AutoShootCommand extends Command
     /**
      * @param runTime Time to run for in seconds.
      */
-    public AutoShootCommand(double runTime, boolean both)
-    {
-        this((long) (runTime * 1000), both);
-    }
+
 
     @Override
     protected void initialize()
@@ -42,8 +39,13 @@ public class AutoShootCommand extends Command
         if(both)
         {
             shooterSubsystem.feed();
+            shooterSubsystem.turnOnFlywheel(); 
+            
         }
+        else        
+        {
         shooterSubsystem.turnOnFlywheel(); 
+        }
         
     }
 

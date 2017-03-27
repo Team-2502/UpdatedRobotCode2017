@@ -8,7 +8,7 @@ public class ShootAutoCommand extends CommandGroup
     public ShootAutoCommand()
     {
         addSequential(new AutoShootCommand(1, false));
-        addSequential(new AutoShootCommand(2, true));
+        addSequential(new AutoShootCommand(9, true));
     }
 }
     
