@@ -20,10 +20,7 @@ public class RobotMap
         {
             public static final int SWITCH_DRIVE_TRANSMISSION = 1;
             public static final int SHOOTER_TOGGLE = 5;
-            public static final int MOVE_BOX = 10;
-            public static final int KICK_GEAR = 9;
-            public static final int LEVER = 11;
-            public static final int MOVE_TOP = 12;
+             public static final int GEAR = 11;
             public static final int CLIMBER =  8;
             public static final int ONLY_AGITATOR = 6;
 //            public static final int 
