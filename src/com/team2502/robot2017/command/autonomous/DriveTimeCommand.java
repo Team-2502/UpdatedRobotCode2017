@@ -19,8 +19,9 @@ public class DriveTimeCommand extends Command
     {
         requires(Robot.DRIVE_TRAIN);
         driveTrain = Robot.DRIVE_TRAIN;
-        this.runTime = RunTime * 1000;
         speed = Speed;
+        this.runTime = RunTime * 1000;
+        
     }
 
     /**
