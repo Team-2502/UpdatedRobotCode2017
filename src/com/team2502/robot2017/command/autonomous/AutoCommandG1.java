@@ -8,10 +8,6 @@ public class AutoCommandG1 extends CommandGroup
 {
     public AutoCommandG1()
     {
-        addSequential(new EncDriveDistanceCommand());
-
-//        addSequential(new DriveTimeCommand(1D));
-        
-
+        addSequential(new EncDriveDistanceCommand());       
     }
 }
