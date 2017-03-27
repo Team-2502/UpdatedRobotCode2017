@@ -26,7 +26,7 @@ public final class Robot extends IterativeRobot {
 
 	// NavX Subsystem
 	 public static final AHRS NAVX = new AHRS(SPI.Port.kMXP);
-
+	 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
