@@ -55,17 +55,17 @@ public class AutoVCommand extends Command
         offset = vision.getOffset();
         if(offset > 0)
         {
-        	dt.runMotors(0.3D, 0);
+        	dt.runMotors(0.3D, 0.3/2);
 //        	dt.runMotors(slowspeed, 0);
         }
         else if(offset < 0)
         {
-        	dt.runMotors(0, -0.3D);
+        	dt.runMotors(-0/3/2, -0.3D);
 //        	dt.runMotors(0, -slowspeed);
         }
         else if((offset == 0) && !alignOnly)
         {
-        	dt.runMotors(.75D, -.75D);
+        	dt.runMotors(.5D, -.5D);
 //        	dt.runMotors(slowspeed, -slowspeed);
         }
     
