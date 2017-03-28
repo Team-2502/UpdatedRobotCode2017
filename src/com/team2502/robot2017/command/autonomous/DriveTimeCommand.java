@@ -12,11 +12,13 @@ public class DriveTimeCommand extends Command
     private long startTime;
     double speed;
 
-    /**
-     * @param RunTime Time to run for in milliseconds.
-     */
+
     public DriveTimeCommand(double RunTime, double Speed)
     {
+        /**
+         * @param RunTime Time to run for in milliseconds.
+         * @param Speed RobotSpeed
+         */
         requires(Robot.DRIVE_TRAIN);
         driveTrain = Robot.DRIVE_TRAIN;
         speed = Speed;

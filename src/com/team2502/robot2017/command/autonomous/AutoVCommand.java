@@ -21,6 +21,8 @@ public class AutoVCommand extends Command
     double deadLeft = -1;
     double startTime = System.currentTimeMillis();
     double targetElapsed = 15;
+    boolean alignOnly = false;
+    
     public AutoVCommand(double runTime)
     {
         requires(Robot.DRIVE_TRAIN);
@@ -28,14 +30,13 @@ public class AutoVCommand extends Command
         targetElapsed = runTime*1000;
 
     }
+    
+    public AutoVCommand(double runTime, boolean align)
+    {
+        this(runTime);
+        alignOnly = align;
 
-    /**
-     * @param runTime Time to run for in seconds.
-     */
-//    public AutoVCommand(double runTime)
-//    {
-//        this((long) (runTime * 1000));
-//    }
+    }
 
     @Override
     protected void interrupted() { end(); }
@@ -46,22 +47,26 @@ public class AutoVCommand extends Command
     	startTime = System.currentTimeMillis();
     }
     
-
+    double slowspeed = 0.2;
     @Override
     protected void execute()
     {
+    	
         offset = vision.getOffset();
         if(offset > 0)
         {
-        	dt.runMotors(0.4D, -0.325/2);
+        	dt.runMotors(0.3D, 0);
+//        	dt.runMotors(slowspeed, 0);
         }
         else if(offset < 0)
         {
-        	dt.runMotors(0.325/2, -0.4D);
+        	dt.runMotors(0, -0.3D);
+//        	dt.runMotors(0, -slowspeed);
         }
-        else if(offset == 0)
+        else if((offset == 0) && !alignOnly)
         {
         	dt.runMotors(.75D, -.75D);
+//        	dt.runMotors(slowspeed, -slowspeed);
         }
     
         
@@ -71,8 +76,17 @@ public class AutoVCommand extends Command
     @Override
     protected boolean isFinished()
     {
-        return (System.currentTimeMillis() - startTime > targetElapsed);
-//    	return false;
+    	if(System.currentTimeMillis() - startTime > targetElapsed){
+    		if(alignOnly){
+            	return Math.abs(offset) < 0;
+            }
+            else{
+            	return true;
+            }
+    	}
+    	else{
+    		return false;
+    	}
     }
 
     protected void end() { dt.stop(); }

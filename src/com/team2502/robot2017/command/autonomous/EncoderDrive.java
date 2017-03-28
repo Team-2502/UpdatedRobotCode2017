@@ -17,14 +17,12 @@ public class EncoderDrive extends Command {
 	
 	public EncoderDrive(double revolutions) {
 		
-		super();
-		targetRotLeft = -1 * revolutions;
-		targetRotRight = revolutions;
+		this(revolutions, -revolutions);
 	}
 	
 	public EncoderDrive(double revLeft, double revRight) {
 		
-		super();
+		this();
 		if((revLeft > 0 && revRight > 0) || (revLeft < 0 && revRight < 0)){
 			Log.warn("Warning: EncoderDrive.java will cause the robot to turn");
 		}
@@ -42,14 +40,14 @@ public class EncoderDrive extends Command {
 	
 	@Override
 	protected void execute(){
-		dt.rightTalon1.setPosition(targetRotRight);
-		dt.leftTalon0.setPosition(targetRotLeft);
+		dt.rightTalon1.set(targetRotRight);
+		dt.leftTalon0.set(targetRotLeft);
 	}
 
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return false;
+		return Math.abs(dt.rightTalon1.getPosition()) >= Math.abs(targetRotRight) && Math.abs(dt.leftTalon0.getPosition()) >= Math.abs(targetRotLeft);
 	}
 	
 	@Override

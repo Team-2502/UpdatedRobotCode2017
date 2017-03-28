@@ -7,10 +7,13 @@ public class GearAutoLeft extends CommandGroup {
 
 	public GearAutoLeft() 
 	{
-		addSequential(new EncDriveDistanceCommand());
+//		addSequential(new EncoderDrive(1));
+//		addSequential(new DriveTimeCommand(.90, 0.75));
 //		addSequential(new WaitCommand(1));
-//		addSequential(new NavXMoveCommand(60, 4));
-//		addSequential(new AutoVCommand(2));
+//		addSequential(new NavXMoveCommand(60, 2));
+//		addSequential(new WaitCommand(1D));
+		addSequential(new AutoVCommand(2, false));
+//		addSequential(new AutoVCommand(200, false));
 	}
 	
 }
