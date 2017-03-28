@@ -2,6 +2,7 @@ package com.team2502.robot2017;
 
 import com.team2502.robot2017.chooser.TypeSendableChooser;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
+import com.team2502.robot2017.subsystem.DriveTrainTransmissionSubsystem;
 import com.team2502.robot2017.command.autonomous.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,13 +14,13 @@ import java.io.InputStreamReader;
 @SuppressWarnings({ "WeakerAccess" })
 public final class DashboardData
 {
-
+    
     public static final TypeSendableChooser<Command> AUTONOMOUS_SELECTOR = new TypeSendableChooser<Command>();
     
     public static final TypeSendableChooser<DriveTrainSubsystem.DriveTypes> DRIVE_CONTROL_SELECTOR = new TypeSendableChooser<DriveTrainSubsystem.DriveTypes>();
 
     private DashboardData() {}
-
+    
     public static void update()
     {
         updatePressure();
@@ -34,6 +35,9 @@ public final class DashboardData
 
         DRIVE_CONTROL_SELECTOR.addDefaultT("Dual Stick Drive Control", DriveTrainSubsystem.DriveTypes.DUAL_STICK);
         DRIVE_CONTROL_SELECTOR.addObjectT("Arcade Drive Control", DriveTrainSubsystem.DriveTypes.ARCADE);
+        
+//        DRIVE_CONTROL_SELECTOR.addObjectT("Dual Stick Drive Control", DriveTrainSubsystem.DriveTypes.DUAL_STICK);
+//        DRIVE_CONTROL_SELECTOR.addDefaultT("Arcade Drive Control", DriveTrainSubsystem.DriveTypes.ARCADE);
 
         if(Enabler.AUTONOMOUS.enabler[0])
         {
@@ -71,6 +75,7 @@ public final class DashboardData
     public static DriveTrainSubsystem.DriveTypes getDriveType()
     {
         return DRIVE_CONTROL_SELECTOR.getSelectedT();
+     
     }
     
     private static void updateNavX()

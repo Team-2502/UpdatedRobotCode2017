@@ -12,7 +12,7 @@ public class RightGearAutoBackupG extends CommandGroup {
         addSequential(new NavXMoveCommand(-60, 2));
         addSequential(new WaitCommand(1D));
         addSequential(new AutoVCommand(2, false));
-        addSequential(new AutoVCommand(200, false));   
+        addSequential(new AutoVCommand(2, false));   
     }
     
 }
