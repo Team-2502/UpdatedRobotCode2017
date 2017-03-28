@@ -33,7 +33,7 @@ public class DriveTrainSubsystem extends Subsystem
     public double rightSpeed;
     public boolean negative = false;
     public boolean isNegativePressed = false;
-    public boolean negMode = false;
+//    public boolean negMode = false;
 
     public int millisecondsToRunTL = 1000;
     public int millisecondsToRunTR = 1000;
@@ -74,8 +74,8 @@ public class DriveTrainSubsystem extends Subsystem
     
     public void setTeleopSettings(CANTalon talon)
     {
-        talon.changeControlMode(TalonControlMode.Voltage);
-        talon.disableControl();
+        talon.changeControlMode(TalonControlMode.PercentVbus);
+        talon.disableControl(); // needed if switching from auton settings
     }
     
     public double getPostition(CANTalon talon)
@@ -143,6 +143,8 @@ public class DriveTrainSubsystem extends Subsystem
         return out;
     }
 
+    long counter = 0;
+    
     private Pair<Double, Double> getSpeedArcade()
     {
         return getSpeedArcade(SPEED_CONTAINER);
@@ -151,11 +153,8 @@ public class DriveTrainSubsystem extends Subsystem
     /**
      * Used to gradually increase the speed of the robot.
      *
-<<<<<<< HEAD
      * @param isLeftSide Whether or not it is the left joystick/side
-=======
      * @param out The object to store the data in
->>>>>>> master
      * @return the speed of the robot
      */
     private Pair<Double, Double> getSpeed(Pair<Double, Double> out)
@@ -164,7 +163,7 @@ public class DriveTrainSubsystem extends Subsystem
         // Get the base speed of the robot
         if(negative)
         {
-    	joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
+        	joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
         }
         else
         {
@@ -181,7 +180,7 @@ public class DriveTrainSubsystem extends Subsystem
             joystickLevel = lastLeft - 0.1D;
         }
         lastLeft = joystickLevel;
-
+        
         out.left = joystickLevel;
         
         if(negative)
@@ -204,15 +203,27 @@ public class DriveTrainSubsystem extends Subsystem
         }
         lastRight = joystickLevel;
 
+        out.right = joystickLevel;
+        
         // Sets the speed to 0 if the speed is less than 0.05 or larger than
         // -0.05
-        if(Math.abs(joystickLevel) < 0.05D)
+        if(Math.abs(out.left) < 0.05D)
         {
-            joystickLevel = 0.0D;
+        	out.left = 0.0D;
+        }
+        if(Math.abs(out.right) < 0.05D)
+        {
+        	out.right = 0.0D;
         }
 
-        out.right = joystickLevel;
-
+        if(counter % 100 == 0)
+        {
+               System.out.println("joystickLevel: \t" + joystickLevel);
+               System.out.println("out.left: \t\t" + out.left);
+               System.out.println("out.right: \t\t" + out.right);
+               System.out.println("diff: " + diff);
+        }
+        ++counter;
         return out;
     }
 
@@ -225,40 +236,14 @@ public class DriveTrainSubsystem extends Subsystem
     {
         Pair<Double, Double> speed = DashboardData.getDriveType() == DriveTypes.DUAL_STICK ? getSpeed()
                                                                                            : getSpeedArcade();
-//        double RPMLeft = Math.abs(getRPM(leftTalon0));
-//        double RPMRight = Math.abs(getRPM(rightTalon0));
-//        double RPMAverage = ((RPMLeft + RPMRight)/2);
-//        //Adds auto shifting 
-//        if(RPMAverage > 10)
-//        {
-//        	RPMLeft = Math.abs(getRPM(leftTalon0));
-//            RPMRight = Math.abs(getRPM(rightTalon0));
-//            RPMAverage = ((RPMLeft + RPMRight)/2);
-//        	if(DTTS.getGear() == false)
-//        	{
-//        		DTTS.setGear(true);
-//        	}
-//        }
-//        if(RPMAverage < 10)
-//        {	
-//        	RPMLeft = Math.abs(getRPM(leftTalon0));
-//            RPMRight = Math.abs(getRPM(rightTalon0));
-//            RPMAverage = ((RPMLeft + RPMRight)/2);
-//        	if(DTTS.getGear() == true)
-//        	{
-//        		DTTS.setGear(false);
-//        	}
-//        }
+
       
         //reverse drive
         if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(1) && !isNegativePressed)
         {
-            negMode = !negMode;
+        	negative = !negative;
         }
         isNegativePressed = OI.JOYSTICK_DRIVE_LEFT.getRawButton(1);
-        
-        if(negMode) { negative = true; }
-        else { negative = false; }
         
         if (negative)
         {
