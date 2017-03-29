@@ -86,7 +86,6 @@ public class AutoVCommand extends Command
         if(offset > 0)
         {
         	dt.runMotors(highSpeed, lowSpeed);
-//        	dt.runMotors(slowspeed, 0);
         }
         else if(offset < 0)
         {
@@ -95,7 +94,7 @@ public class AutoVCommand extends Command
         }
         else if((offset == 0) && !alignOnly)
         {
-        	dt.runMotors(.75D, -.75D);
+        	dt.runMotors(.5D, -.5D);
 //        	dt.runMotors(slowspeed, -slowspeed);
         }
     
