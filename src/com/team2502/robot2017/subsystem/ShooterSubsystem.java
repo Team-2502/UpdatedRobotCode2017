@@ -40,6 +40,9 @@ public class ShooterSubsystem extends Subsystem
     private boolean shooterMode = false;
     private boolean isTriggerPressed = false;
 
+    /**
+     * Initialize shooter subsystem
+     */
     public ShooterSubsystem()
     {
     	lastLeft = 0.0D;
@@ -49,6 +52,9 @@ public class ShooterSubsystem extends Subsystem
         agitator = new CANTalon(RobotMap.Motor.AGITATOR);
     }
 
+    /**
+     * Set FPID, encoder settings, talon settings, and the default command.
+     */
     @Override
     protected void initDefaultCommand()
     {
@@ -83,6 +89,10 @@ public class ShooterSubsystem extends Subsystem
     {
         return flywheelTalon.getOutputVoltage() / flywheelTalon.getBusVoltage();
     }
+    
+    /**
+     * Turn on the flywheel. Sets appropriate talon settings and FPID in the process.
+     */
     public void turnOnFlywheel()
     {
         flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
@@ -101,6 +111,10 @@ public class ShooterSubsystem extends Subsystem
         
         flywheelTalon.set(1670);
     }
+    
+    /**
+     * Feed balls into flywheel
+     */
     public void feed()
     {
         colsonFeeder.set(1);
@@ -108,16 +122,25 @@ public class ShooterSubsystem extends Subsystem
         agitator.set(.75);
     }
 
+    /**
+     * @return the target speed
+     */
     public double getTargetSpeed()
     {
         return targetSpeed;
     }
 
+    /**
+     * @return Error calculated in the flywheel FPID
+     */
     public int getError()
     {
         return flywheelTalon.getClosedLoopError();
     }
 
+    /**
+     * @return The error at the beginning of running the flywheel because that is always the biggest error
+     */
     public int getTopError()
     {
         int newError = getError();
@@ -126,7 +149,10 @@ public class ShooterSubsystem extends Subsystem
 
         return error;
     }
-
+    
+    /**
+     * Allow Poorva to press buttons on the joystick to activate the flywheel
+     */
     public void flywheelDrive()
     {
         /* This line initializes the flywheel talon so that the speed
@@ -171,7 +197,9 @@ public class ShooterSubsystem extends Subsystem
     }
     
     
-
+    /**
+     * Kill flywheel by setting talons to 0
+     */
     public void stop()
     {
         flywheelTalon.set(0.0D);

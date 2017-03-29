@@ -6,7 +6,7 @@ public class GearAutoCenter extends CommandGroup {
 
 	public GearAutoCenter() {
 		addSequential(new DriveTimeCommand(1D, .65));
-		addSequential(new AutoVCommand(7));
+		addSequential(new AutoVCommand(10, false, -.1, .3));
 	}
 	
 }

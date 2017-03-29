@@ -12,7 +12,7 @@ public class GearAutoLeft extends CommandGroup {
 		addSequential(new DriveTimeCommand(1, 0.66));
 		addSequential(new NavXMoveCommand(62, 1.25));
 	    addSequential(new WaitCommand(1));
-		addSequential(new AutoVCommand(10, false, -.1, .3));
+		addSequential(new AutoVCommand(5, false, -.1, .3));
 
 	}
 	
