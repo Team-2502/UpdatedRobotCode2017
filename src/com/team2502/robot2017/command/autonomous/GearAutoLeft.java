@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class GearAutoLeft extends CommandGroup {
-
+    /**
+     * Gets the reft gear in autonomous 
+     */
 	public GearAutoLeft() 
 	{
 //		addSequential(new EncoderDrive(1));

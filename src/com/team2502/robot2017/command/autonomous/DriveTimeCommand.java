@@ -12,7 +12,11 @@ public class DriveTimeCommand extends Command
     private long startTime;
     double speed;
 
-
+    /**
+     * This the main way of movement
+     * @param RunTime
+     * @param Speed
+     */
     public DriveTimeCommand(double RunTime, double Speed)
     {
         /**

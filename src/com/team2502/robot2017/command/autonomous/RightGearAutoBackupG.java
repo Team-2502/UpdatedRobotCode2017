@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class RightGearAutoBackupG extends CommandGroup {
-
+    /**
+     * BackUp - Gets the right gear in autonomous 
+     */
     public RightGearAutoBackupG() 
     {
         addSequential(new DriveTimeCommand(1, 0.66));

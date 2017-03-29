@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutoCommandG2 extends CommandGroup
 {
+    /** 
+     * For shooting
+     */
     public AutoCommandG2()
     {
       addSequential(new ShootCommand(2D,false));
