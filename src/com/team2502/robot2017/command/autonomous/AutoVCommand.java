@@ -40,7 +40,9 @@ public class AutoVCommand extends Command
     
     /**
      * Automatic vision-based alignment with shiny objects
-     * 
+     * <br>
+     * Wiggly Butt - the closer lowSpeed approaches highSpeed the more of a wiggle.
+     *  
      * @param runTime How long vision should run for
      * @param align   if it should be in align-only mode
      */
@@ -52,12 +54,17 @@ public class AutoVCommand extends Command
     }
     
     /**
-     * Automatic vision-based alignment with shiny objects
+     * Automatic vision-based alignment with shiny objects.
+     * <br>
+     * Wiggly Butt - the closer lowSpeed approaches highSpeed the more of a wiggle.
      * 
      * @param runTime   How long vision should run for
      * @param align     if it should be in align-only mode
      * @param lowSpeed  The lower speed for turning
      * @param highSpeed The higher speed for turning
+     * 
+     * 
+     * 
      */
     public AutoVCommand(double runTime, boolean align, double lowSpeed, double highSpeed)
     {
