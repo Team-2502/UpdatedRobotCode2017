@@ -22,7 +22,14 @@ public class AutoVCommand extends Command
     double startTime = System.currentTimeMillis();
     double targetElapsed = 15;
     boolean alignOnly = false;
+    double highSpeed = 0.3;
+    double lowSpeed = highSpeed/2;
     
+    /**
+     * Automatic vision-based alignment with shiny objects
+     * 
+     * @param runTime How long vision should run for
+     */
     public AutoVCommand(double runTime)
     {
         requires(Robot.DRIVE_TRAIN);
@@ -31,11 +38,34 @@ public class AutoVCommand extends Command
 
     }
     
+    /**
+     * Automatic vision-based alignment with shiny objects
+     * 
+     * @param runTime How long vision should run for
+     * @param align   if it should be in align-only mode
+     */
     public AutoVCommand(double runTime, boolean align)
     {
         this(runTime);
         alignOnly = align;
 
+    }
+    
+    /**
+     * Automatic vision-based alignment with shiny objects
+     * 
+     * @param runTime   How long vision should run for
+     * @param align     if it should be in align-only mode
+     * @param lowSpeed  The lower speed for turning
+     * @param highSpeed The higher speed for turning
+     */
+    public AutoVCommand(double runTime, boolean align, double lowSpeed, double highSpeed)
+    {
+        this(runTime, align);
+        this.lowSpeed = lowSpeed;
+        this.highSpeed = highSpeed;
+       
+        
     }
 
     @Override
@@ -55,12 +85,12 @@ public class AutoVCommand extends Command
         offset = vision.getOffset();
         if(offset > 0)
         {
-        	dt.runMotors(0.3D, 0);
+        	dt.runMotors(highSpeed, lowSpeed);
 //        	dt.runMotors(slowspeed, 0);
         }
         else if(offset < 0)
         {
-        	dt.runMotors(0, -0.3D);
+        	dt.runMotors(-lowSpeed, -highSpeed);
 //        	dt.runMotors(0, -slowspeed);
         }
         else if((offset == 0) && !alignOnly)
