@@ -18,6 +18,7 @@ public class DriveTimeCommand extends Command
         /**
          * @param RunTime Time to run for in milliseconds.
          * @param Speed RobotSpeed
+         * @return
          */
         requires(Robot.DRIVE_TRAIN);
         driveTrain = Robot.DRIVE_TRAIN;

@@ -29,15 +29,20 @@ public final class DashboardData
 
     public static void setup()
     {
-//        AUTONOMOUS_SELECTOR.addDefaultT("Gear", new AutoCommandG1());
+//        AUTONOMOUS_SELECTOR.addDefaultT("LeftGear", new GearAutoLeft());
+//        AUTONOMOUS_SELECTOR.addDefaultT("RightGear", new GearAutoRight());
+//        AUTONOMOUS_SELECTOR.addDefaultT("CenterGear", new GearAutoCenter());
 //        AUTONOMOUS_SELECTOR.addDefaultT("Shoot", new AutoCommandG2());
-//        AUTONOMOUS_SELECTOR.addDefaultT("Drive Backwards", new AutoCommandG3());
+//        AUTONOMOUS_SELECTOR.addDefaultT("CrossBaseLine", new DriveTimeCommand(3, 1));
+//        AUTONOMOUS_SELECTOR.addDefaultT("Test", new AutoCommandG1());
+//        AUTONOMOUS_SELECTOR.addDefaultT("NavXTest", new AutoCommandNavXTest());
+
+        
 
         DRIVE_CONTROL_SELECTOR.addDefaultT("Dual Stick Drive Control", DriveTrainSubsystem.DriveTypes.DUAL_STICK);
         DRIVE_CONTROL_SELECTOR.addObjectT("Arcade Drive Control", DriveTrainSubsystem.DriveTypes.ARCADE);
         
-//        DRIVE_CONTROL_SELECTOR.addObjectT("Dual Stick Drive Control", DriveTrainSubsystem.DriveTypes.DUAL_STICK);
-//        DRIVE_CONTROL_SELECTOR.addDefaultT("Arcade Drive Control", DriveTrainSubsystem.DriveTypes.ARCADE);
+
 
         if(Enabler.AUTONOMOUS.enabler[0])
         {

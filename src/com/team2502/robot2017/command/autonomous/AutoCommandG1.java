@@ -8,6 +8,9 @@ public class AutoCommandG1 extends CommandGroup
 {
     public AutoCommandG1()
     {
+        /**
+         * For testing 
+         */
         addSequential(new EncDriveDistanceCommand());       
     }
 }
