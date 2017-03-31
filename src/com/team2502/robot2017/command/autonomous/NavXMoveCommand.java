@@ -21,7 +21,8 @@ public class NavXMoveCommand extends Command{
 	private double deadZone = 2;
 	private double elapsedTime;
 	private double speed;
-	
+	public boolean manualSpeedB;
+	public double manualSpeed;
 	/**
 	 * Drive in a straight line for 5 seconds according to the navx.
 	 */
@@ -59,6 +60,21 @@ public class NavXMoveCommand extends Command{
 	    targetYaw = angle;
 	    this.runTime = (runTime*1000);
     } 
+    /**
+     * Turns angle for a curtain amount of time and curtain speed
+     * @param angle - turn a curtain amount
+     * @param runTime - runs for a curtain amount
+     * @param speed - sets curtain amount of speed
+     */
+    public NavXMoveCommand(double angle, double runTime, double speed)
+    {
+        this();
+        targetYaw = angle;
+        this.runTime = (runTime*1000);
+        manualSpeedB = true;
+        manualSpeed = speed;
+        
+    }
 
 	@Override
 	protected void initialize() 
@@ -70,7 +86,8 @@ public class NavXMoveCommand extends Command{
 	protected void execute() 
 	{
 		elapsedTime = System.currentTimeMillis() - startTime;
-		speed = getSpeed(elapsedTime);
+		if(manualSpeedB){ speed = manualSpeed;}
+		else{speed = getSpeed(elapsedTime);}
 		currentYaw = Robot.NAVX.getAngle();
 		SmartDashboard.putNumber("NavX: Target yaw", targetYaw);
 		if(Math.abs(currentYaw - targetYaw) > deadZone)
@@ -79,17 +96,17 @@ public class NavXMoveCommand extends Command{
 			// left = neg
 			if(currentYaw > targetYaw)
 			{
-				driveTrain.runMotors(0, -1 * speed);
+				driveTrain.runMotors(-speed, -speed);
 			} 
 			else if(currentYaw < targetYaw)
 			{
-				driveTrain.runMotors(speed, 0);
+				driveTrain.runMotors(speed, speed);
 			}
 		}
-		else
-		{	
-				driveTrain.runMotors(0.5, -0.5);
-		}	
+//		else
+//		{	
+//				driveTrain.runMotors(0.5, -0.5);
+//		}	
 	}
 
 				

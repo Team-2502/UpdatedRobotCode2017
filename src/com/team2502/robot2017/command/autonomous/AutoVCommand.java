@@ -90,11 +90,11 @@ public class AutoVCommand extends Command
     {
     	
         offset = vision.getOffset();
-        if(offset > 0)
+        if(offset > 0.1)
         {
         	dt.runMotors(highSpeed, lowSpeed);
         }
-        else if(offset < 0)
+        else if(offset < 0.1)
         {
         	dt.runMotors(-lowSpeed, -highSpeed);
 //        	dt.runMotors(0, -slowspeed);
