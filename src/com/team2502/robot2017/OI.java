@@ -22,6 +22,10 @@ public final class OI
     {
         SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
         GEAR.whenPressed(new GearCommand());
+<<<<<<< HEAD
+=======
+//		SHOOTER.whileHeld(new ShootCommand(1, false));
+>>>>>>> develop-ritikm
 		RESET_ENC_POSITION.whenPressed(new ResetEncodersCommand()); 
 		/* the purpose of this is to reset the encoders and then manually push the robot to the destination. 
 		 * this lets us figure out how far the robot needs to go*/ 

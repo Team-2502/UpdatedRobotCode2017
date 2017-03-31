@@ -35,13 +35,16 @@ public class DriveTrainSubsystem extends Subsystem
     public double rightSpeed;
     public boolean negative = false;
     public boolean isNegativePressed = false;
-    public boolean negMode = false;
+//    public boolean negMode = false;
 
     public int millisecondsToRunTL = 1000;
     public int millisecondsToRunTR = 1000;
 
     public int m = 1000;
 
+    /**
+     * Initialize the drive train subsystem
+     */
     public DriveTrainSubsystem()
     {	
         lastLeft = 0.0D;
@@ -61,6 +64,10 @@ public class DriveTrainSubsystem extends Subsystem
         setTeleopSettings(rightTalon1);
     }
 
+    /**
+     * Set the appropriate settings for autonomous
+     * @param talon the talon to set the settings of
+     */
     public void setAutonSettings(CANTalon talon)
     {
         talon.changeControlMode(TalonControlMode.Position);
@@ -76,28 +83,53 @@ public class DriveTrainSubsystem extends Subsystem
         
     }
     
+    /**
+     * Set a talon back to teleoperated settings 
+     * @param talon the talon in question
+     */
     public void setTeleopSettings(CANTalon talon)
     {
-        talon.changeControlMode(TalonControlMode.Voltage);
-        talon.disableControl();
+        talon.changeControlMode(TalonControlMode.PercentVbus);
+        talon.disableControl(); // needed if switching from auton settings
     }
     
+    /**
+     * @param talon A talon with an encoder attached to it
+     * @return the position of the encoder
+     */
     public double getPostition(CANTalon talon)
     {
         return talon.getPosition();
     }
+    
+    /**
+     * @return the position of the left side of the drivetrain
+     */
     public double getEncLeftPosition()
     {
 		return leftTalon0.getPosition();
     }
+    
+    /**
+     * Get the RPM of a talon with an encoder on it
+     * @param talon the talon in question
+     * @return the RPM of the talon
+     */
     public double getRPM(CANTalon talon)
     {	
     	return talon.getEncVelocity();
     }
+    
+    /**
+     * @return the position of the right side of the drivetrain
+     */
     public double getEncRightPosition()
     {
 		return rightTalon0.getPosition();
     }
+    /**
+     * @return the average position between the left and right side of the drivetrain
+     */
     public double getEncAveg()
     {
         return (getEncRightPosition() + getEncLeftPosition())/2;
@@ -121,6 +153,7 @@ public class DriveTrainSubsystem extends Subsystem
     private Pair<Double, Double> getSpeedArcade(Pair<Double, Double> out)
     {
         // Get the base speed of the robot
+        
         double yLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
         double leftSpeed = yLevel;
         double rightSpeed = yLevel;
@@ -147,6 +180,8 @@ public class DriveTrainSubsystem extends Subsystem
         return out;
     }
 
+    long counter = 0;
+    
     private Pair<Double, Double> getSpeedArcade()
     {
         return getSpeedArcade(SPEED_CONTAINER);
@@ -155,11 +190,8 @@ public class DriveTrainSubsystem extends Subsystem
     /**
      * Used to gradually increase the speed of the robot.
      *
-<<<<<<< HEAD
      * @param isLeftSide Whether or not it is the left joystick/side
-=======
      * @param out The object to store the data in
->>>>>>> master
      * @return the speed of the robot
      */
     private Pair<Double, Double> getSpeed(Pair<Double, Double> out)
@@ -168,7 +200,7 @@ public class DriveTrainSubsystem extends Subsystem
         // Get the base speed of the robot
         if(negative)
         {
-    	joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
+        	joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
         }
         else
         {
@@ -185,7 +217,7 @@ public class DriveTrainSubsystem extends Subsystem
             joystickLevel = lastLeft - 0.1D;
         }
         lastLeft = joystickLevel;
-
+        
         out.left = joystickLevel;
         
         if(negative)
@@ -208,15 +240,27 @@ public class DriveTrainSubsystem extends Subsystem
         }
         lastRight = joystickLevel;
 
+        out.right = joystickLevel;
+        
         // Sets the speed to 0 if the speed is less than 0.05 or larger than
         // -0.05
-        if(Math.abs(joystickLevel) < 0.05D)
+        if(Math.abs(out.left) < 0.05D)
         {
-            joystickLevel = 0.0D;
+        	out.left = 0.0D;
+        }
+        if(Math.abs(out.right) < 0.05D)
+        {
+        	out.right = 0.0D;
         }
 
-        out.right = joystickLevel;
-
+        if(counter % 100 == 0)
+        {
+               System.out.println("joystickLevel: \t" + joystickLevel);
+               System.out.println("out.left: \t\t" + out.left);
+               System.out.println("out.right: \t\t" + out.right);
+               System.out.println("diff: " + diff);
+        }
+        ++counter;
         return out;
     }
 
@@ -229,40 +273,14 @@ public class DriveTrainSubsystem extends Subsystem
     {
         Pair<Double, Double> speed = DashboardData.getDriveType() == DriveTypes.DUAL_STICK ? getSpeed()
                                                                                            : getSpeedArcade();
-//        double RPMLeft = Math.abs(getRPM(leftTalon0));
-//        double RPMRight = Math.abs(getRPM(rightTalon0));
-//        double RPMAverage = ((RPMLeft + RPMRight)/2);
-//        //Adds auto shifting 
-//        if(RPMAverage > 10)
-//        {
-//        	RPMLeft = Math.abs(getRPM(leftTalon0));
-//            RPMRight = Math.abs(getRPM(rightTalon0));
-//            RPMAverage = ((RPMLeft + RPMRight)/2);
-//        	if(DTTS.getGear() == false)
-//        	{
-//        		DTTS.setGear(true);
-//        	}
-//        }
-//        if(RPMAverage < 10)
-//        {	
-//        	RPMLeft = Math.abs(getRPM(leftTalon0));
-//            RPMRight = Math.abs(getRPM(rightTalon0));
-//            RPMAverage = ((RPMLeft + RPMRight)/2);
-//        	if(DTTS.getGear() == true)
-//        	{
-//        		DTTS.setGear(false);
-//        	}
-//        }
+
       
         //reverse drive
         if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(1) && !isNegativePressed)
         {
-            negMode = !negMode;
+        	negative = !negative;
         }
         isNegativePressed = OI.JOYSTICK_DRIVE_LEFT.getRawButton(1);
-        
-        if(negMode) { negative = true; }
-        else { negative = false; }
         
         if (negative)
         {
@@ -276,6 +294,13 @@ public class DriveTrainSubsystem extends Subsystem
 
     private static final double DELAY_TIME = 5.77D + 43902.0D / 9999900.0D;
 
+    /**
+     * Drive the robot. The equation x=-y must be true for the robot to drive straight.
+     * <br>
+     * Make sure to set the motors according to the control mode. In auton, it's position. In teleop, it's percent voltage.
+     * @param x Units for the left side of drivetrain
+     * @param y Units for the right side of drivetrain
+     */
     public void runMotors(double x, double y) // double z
     {	
 
@@ -291,6 +316,9 @@ public class DriveTrainSubsystem extends Subsystem
 //        SmartDashboard.putNumber("Autonomous", Robot.AUTO.getTimerStraight());
     }
 
+    /**
+     * Stop driving by setting talons to 0
+     */
     public void stopDriveS()
     {
         leftTalon0.set(0);
@@ -299,6 +327,9 @@ public class DriveTrainSubsystem extends Subsystem
         rightTalon1.set(0);
     }
 
+    /**
+     * Stop driving
+     */
     public void stop()
     {
         lastLeft = 0.0D;
