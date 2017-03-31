@@ -194,12 +194,6 @@ public class ShooterSubsystem extends Subsystem
             banebotFeeder.set(0);
             agitator.set(0);
         }
-<<<<<<< HEAD
-//        feederTalon0.set(getSpeed());
-//        feederTalon1.set(-getSpeed());//-1
-//        feederTalon2.set((getSpeed())*.75);//.75
-=======
->>>>>>> develop-ritikm
     }
     
     

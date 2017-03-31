@@ -21,9 +21,6 @@ public class AutoVCommand extends Command
     double deadLeft = -1;
     double startTime = System.currentTimeMillis();
     double targetElapsed = 15;
-<<<<<<< HEAD
-    
-=======
     boolean alignOnly = false;
     double highSpeed = 0.3;
     double lowSpeed = highSpeed/2;
@@ -33,7 +30,6 @@ public class AutoVCommand extends Command
      * 
      * @param runTime How long vision should run for
      */
->>>>>>> develop-ritikm
     public AutoVCommand(double runTime)
     {
         requires(Robot.DRIVE_TRAIN);
@@ -97,32 +93,17 @@ public class AutoVCommand extends Command
         offset = vision.getOffset();
         if(offset > 0.1)
         {
-<<<<<<< HEAD
-
-        	dt.runMotors(0.325D, 0D);
-=======
         	dt.runMotors(highSpeed, lowSpeed);
->>>>>>> develop-ritikm
         }
         else if(offset < 0.1)
         {
-<<<<<<< HEAD
-        	dt.runMotors(0, -0.325D);
-=======
         	dt.runMotors(-lowSpeed, -highSpeed);
 //        	dt.runMotors(0, -slowspeed);
->>>>>>> develop-ritikm
         }
         else if((offset == 0) && !alignOnly)
         {
-<<<<<<< HEAD
-        	dt.runMotors(.75D, -.75D);
-
-        	
-=======
         	dt.runMotors(.5D, -.5D);
 //        	dt.runMotors(slowspeed, -slowspeed);
->>>>>>> develop-ritikm
         }
     
         
