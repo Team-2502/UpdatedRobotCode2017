@@ -1,6 +1,7 @@
 package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
+import com.team2502.robot2017.command.setup.SwitchAutonomousCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -13,12 +14,16 @@ public final class OI
     public static final Joystick JOYSTICK_FUNCTION = new Joystick(RobotMap.Joystick.JOYSTICK_FUNCTION);
     public static final Button SWITCH_DRIVE_TRANSMISSION = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.SWITCH_DRIVE_TRANSMISSION);
     public static final Button GEAR = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.GEAR);
+    public static final Button SET_AUTO = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.AUTO_SELECT);
+    public static final Button SET_DRIVE = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.DRIVE_SELECT);
 
-    
+
     static
     {
         SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
         GEAR.whenPressed(new GearCommand());
+        SET_AUTO.whenPressed(new SwitchAutonomousCommand());
+        SET_DRIVE.whenPressed(new SwitchDriveTransmissionCommand());
 //        ONLY_AGITATOR.whileHeld(new OnlyAgitatorCommand());
     }
 
