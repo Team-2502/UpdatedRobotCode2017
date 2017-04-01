@@ -11,7 +11,7 @@ public class GearAutoCenter extends CommandGroup
     public GearAutoCenter() 
     {
 		addSequential(new DriveTimeCommand(1D, .65));
-		addSequential(new AutoVCommand(5, false, -.1, .3));
+		addSequential(new AutoVCommand(5, false, -.2, .3));
 //		addSequential(new DriveTimeCommand(.55, -.2));
 		addSequential(new NavXMoveCommand(10, 1, .2));
 		addSequential(new WaitCommand(1));
