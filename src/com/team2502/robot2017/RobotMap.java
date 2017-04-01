@@ -23,8 +23,8 @@ public class RobotMap
             public static final int GEAR = 11;
             public static final int CLIMBER = 8;
             public static final int ONLY_AGITATOR = 6;
-            public static final int AUTO_SELECT = UNDEFINED;
-            public static final int DRIVE_SELECT = UNDEFINED;
+            public static final int AUTO_SELECT = 11;
+            public static final int DRIVE_SELECT = 12;
 
             private Button() {}
         }
