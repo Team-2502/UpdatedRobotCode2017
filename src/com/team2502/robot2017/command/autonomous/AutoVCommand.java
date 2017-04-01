@@ -19,23 +19,61 @@ public class AutoVCommand extends Command
     public VisionSubsystem vision = Robot.VISION;
     double deadRight = 1;
     double deadLeft = -1;
-    double startTime = 0;
+    double startTime = System.currentTimeMillis();
     double targetElapsed = 15;
+    boolean alignOnly = false;
+    double highSpeed = 0.3;
+    double lowSpeed = highSpeed/2;
     
+    /**
+     * Automatic vision-based alignment with shiny objects
+     * 
+     * @param runTime How long vision should run for
+     */
     public AutoVCommand(double runTime)
     {
         requires(Robot.DRIVE_TRAIN);
         dt = Robot.DRIVE_TRAIN;
         targetElapsed = runTime*1000;
-    }
 
+    }
+    
     /**
-     * @param runTime Time to run for in seconds.
+     * Automatic vision-based alignment with shiny objects
+     * <br>
+     * Wiggly Butt - the closer lowSpeed approaches highSpeed the more of a wiggle.
+     *  
+     * @param runTime How long vision should run for
+     * @param align   if it should be in align-only mode
      */
-//    public AutoVCommand(double runTime)
-//    {
-//        this((long) (runTime * 1000));
-//    }
+    public AutoVCommand(double runTime, boolean align)
+    {
+        this(runTime);
+        alignOnly = align;
+
+    }
+    
+    /**
+     * Automatic vision-based alignment with shiny objects.
+     * <br>
+     * Wiggly Butt - the closer lowSpeed approaches highSpeed the more of a wiggle.
+     * 
+     * @param runTime   How long vision should run for
+     * @param align     if it should be in align-only mode
+     * @param lowSpeed  The lower speed for turning
+     * @param highSpeed The higher speed for turning
+     * 
+     * 
+     * 
+     */
+    public AutoVCommand(double runTime, boolean align, double lowSpeed, double highSpeed)
+    {
+        this(runTime, align);
+        this.lowSpeed = lowSpeed;
+        this.highSpeed = highSpeed;
+       
+        
+    }
 
     @Override
     protected void interrupted() { end(); }
@@ -47,24 +85,25 @@ public class AutoVCommand extends Command
     	startTime = System.currentTimeMillis();
     }
     
+    double slowspeed = 0.2;
     @Override
     protected void execute()
     {
+    	
         offset = vision.getOffset();
-        if(offset > 0.25)
+        if(offset > 0.1)
         {
-
-        	dt.runMotors(0.325D, 0D);
+        	dt.runMotors(highSpeed, lowSpeed);
         }
-        else if(offset < -0.25)
+        else if(offset < 0.1)
         {
-        	dt.runMotors(0, -0.325D);
+        	dt.runMotors(-lowSpeed, -highSpeed);
+//        	dt.runMotors(0, -slowspeed);
         }
-        else
+        else if((offset == 0) && !alignOnly)
         {
-        	dt.runMotors(.75D, -.75D);
-
-        	
+        	dt.runMotors(.5D, -.5D);
+//        	dt.runMotors(slowspeed, -slowspeed);
         }
     
         
@@ -74,8 +113,17 @@ public class AutoVCommand extends Command
     @Override
     protected boolean isFinished()
     {
-        return System.currentTimeMillis() - startTime > targetElapsed;
-//    	return false;
+    	if(System.currentTimeMillis() - startTime > targetElapsed){
+    		if(alignOnly){
+            	return Math.abs(offset) < 0;
+            }
+            else{
+            	return true;
+            }
+    	}
+    	else{
+    		return false;
+    	}
     }
 
     protected void end() { dt.stop(); }

@@ -7,12 +7,11 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class AutoCommandG1 extends CommandGroup
 {
+    /**
+     * For testing 
+     */
     public AutoCommandG1()
     {
-
-        addSequential(new DriveTimeCommand(1.35D, .7));//1.5
-        addSequential(new WaitCommand(1D));
-
-        
+        addSequential(new EncDriveDistanceCommand());       
     }
 }

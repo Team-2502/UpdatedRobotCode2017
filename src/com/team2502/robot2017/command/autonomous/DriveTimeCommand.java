@@ -13,14 +13,22 @@ public class DriveTimeCommand extends Command
     double speed;
 
     /**
-     * @param RunTime Time to run for in milliseconds.
+     * This the main way of movement
+     * @param RunTime
+     * @param Speed
      */
     public DriveTimeCommand(double RunTime, double Speed)
     {
+        /**
+         * @param RunTime Time to run for in milliseconds.
+         * @param Speed RobotSpeed
+         * @return
+         */
         requires(Robot.DRIVE_TRAIN);
         driveTrain = Robot.DRIVE_TRAIN;
-        this.runTime = RunTime * 1000;
         speed = Speed;
+        this.runTime = RunTime * 1000;
+        
     }
 
     /**

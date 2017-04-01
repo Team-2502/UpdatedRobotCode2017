@@ -4,6 +4,7 @@ import com.team2502.robot2017.RobotMap;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+@Deprecated
 public class DistanceSensorSubsystem extends Subsystem
 {
 	private double distScaleFactor = 6.5231750;
@@ -16,10 +17,7 @@ public class DistanceSensorSubsystem extends Subsystem
     }
 
     @Override
-    protected void initDefaultCommand()
-    {
-        /* NO-OP */
-    }
+    protected void initDefaultCommand() {}
 
    
     public double getSensorDistance()
