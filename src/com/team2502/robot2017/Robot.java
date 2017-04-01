@@ -75,7 +75,7 @@ public final class Robot extends IterativeRobot {
 	public void autonomousInit() 
 	{
 //		Scheduler.getInstance().add(DashboardData.getAutonomous());
-		Scheduler.getInstance().add(new GearAutoLeft());
+		Scheduler.getInstance().add(new GearAutoRight());
 	}
 
 	/**
