@@ -34,3 +34,4 @@ deploy.sh
 
 ## Deploy artifact
 dist/FRCUserProgram.jar
+dist/
