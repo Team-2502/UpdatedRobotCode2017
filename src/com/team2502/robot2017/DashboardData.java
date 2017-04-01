@@ -1,8 +1,8 @@
 package com.team2502.robot2017;
 
-import com.team2502.robot2017.chooser.TypeSendableChooser;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import com.team2502.robot2017.command.autonomous.*;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,9 +14,9 @@ import java.io.InputStreamReader;
 public final class DashboardData
 {
 
-    public static final TypeSendableChooser<Command> AUTONOMOUS_SELECTOR = new TypeSendableChooser<Command>();
+    public static final SendableChooser<Command> AUTONOMOUS_SELECTOR = new SendableChooser<Command>();
     
-    public static final TypeSendableChooser<DriveTrainSubsystem.DriveTypes> DRIVE_CONTROL_SELECTOR = new TypeSendableChooser<DriveTrainSubsystem.DriveTypes>();
+    public static final SendableChooser<DriveTrainSubsystem.DriveTypes> DRIVE_CONTROL_SELECTOR = new SendableChooser<DriveTrainSubsystem.DriveTypes>();
 
     private DashboardData() {}
 
@@ -28,12 +28,12 @@ public final class DashboardData
 
     public static void setup()
     {
-//        AUTONOMOUS_SELECTOR.addDefaultT("Gear", new AutoCommandG1());
-//        AUTONOMOUS_SELECTOR.addDefaultT("Shoot", new AutoCommandG2());
-        AUTONOMOUS_SELECTOR.addDefaultT("Drive Backwards", new AutoCommandG3());
+//        AUTONOMOUS_SELECTOR.addDefault("Gear", new AutoCommandG1());
+//        AUTONOMOUS_SELECTOR.addDefault("Shoot", new AutoCommandG2());
+        AUTONOMOUS_SELECTOR.addDefault("Drive Backwards", new AutoCommandG3());
 
-        DRIVE_CONTROL_SELECTOR.addDefaultT("Dual Stick Drive Control", DriveTrainSubsystem.DriveTypes.DUAL_STICK);
-        DRIVE_CONTROL_SELECTOR.addObjectT("Arcade Drive Control", DriveTrainSubsystem.DriveTypes.ARCADE);
+        DRIVE_CONTROL_SELECTOR.addDefault("Dual Stick Drive Control", DriveTrainSubsystem.DriveTypes.DUAL_STICK);
+        DRIVE_CONTROL_SELECTOR.addObject("Arcade Drive Control", DriveTrainSubsystem.DriveTypes.ARCADE);
 
         if(Enabler.AUTONOMOUS.enabler[0])
         {
@@ -65,12 +65,12 @@ public final class DashboardData
 
     public static Command getAutonomous()
     {
-        return AUTONOMOUS_SELECTOR.getSelectedT();
+        return AUTONOMOUS_SELECTOR.getSelected();
     }
 
     public static DriveTrainSubsystem.DriveTypes getDriveType()
     {
-        return DRIVE_CONTROL_SELECTOR.getSelectedT();
+        return DRIVE_CONTROL_SELECTOR.getSelected();
     }
     
     private static void updateNavX()
@@ -110,10 +110,7 @@ public final class DashboardData
             if(Enabler.PRESSURE.enabler[2]) { SmartDashboard.putBoolean("Is Compressor Enabled", Robot.COMPRESSOR.enabled()); }
             if(Enabler.PRESSURE.enabler[3]) { SmartDashboard.putBoolean("Is Compressor Low", Robot.COMPRESSOR.getPressureSwitchValue()); }
             if(Enabler.PRESSURE.enabler[4]) { SmartDashboard.putNumber("Current Air Compression Rate", Robot.COMPRESSOR.getCompressorCurrent()); }
-
-
         }
-
     }
 
     private enum Enabler
