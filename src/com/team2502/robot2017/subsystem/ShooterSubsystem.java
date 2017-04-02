@@ -99,6 +99,21 @@ public class ShooterSubsystem extends Subsystem
         return flywheelTalon.getOutputVoltage() / flywheelTalon.getBusVoltage();
     }
     
+    public double getAgitatorTargetSpeed()
+    {
+    	return agitatorSpeed;
+    }
+    
+    public double getColsonTargetSpeed()
+    {
+    	return colsonSpeed;
+    }
+    
+    public double getBanebotTargetSpeed()
+    {
+    	return banebotSpeed;
+    }
+    
     /**
      * Turn on the flywheel. Sets appropriate talon settings and FPID in the process.
      */
