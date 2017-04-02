@@ -20,10 +20,10 @@ public class RobotMap
         {
             public static final int SWITCH_DRIVE_TRANSMISSION = 1;
             public static final int SHOOTER_TOGGLE = 5;
-             public static final int GEAR = 11;
+            public static final int GEAR = 11;
             public static final int CLIMBER =  8;
-            public static final int ONLY_AGITATOR = 6;
-//            public static final int 
+            public static final int SHOOTER = 1;
+            public static final int RESET_ENC_POS = 9; // temporary and only exists for auton development
 
             private Button() {}
         }
@@ -43,9 +43,9 @@ public class RobotMap
         public static final int RIGHT_TALON_0 = 1;
         public static final int RIGHT_TALON_1 = 3;
         public static final int FLYWHEEL_TALON_0 = 5;
-        public static final int FEEDER_TALON_0 = 6; //colson
+        public static final int FEEDER_TALON_0 = 8; //colson
         public static final int FEEDER_TALON_1 = 7; //banebot
-        public static final int ACTIVE_INTAKE = 8;
+        public static final int ACTIVE_INTAKE = 6;
         public static final int AGITATOR = 9;
       
       	private Motor() {}	

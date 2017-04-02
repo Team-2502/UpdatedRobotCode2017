@@ -1,33 +1,32 @@
 package com.team2502.robot2017.command.autonomous;
 
 import com.team2502.robot2017.Robot;
-import com.team2502.robot2017.subsystem.ShooterSubsystem;
+import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShootCommand extends Command
+@SuppressWarnings("WeakerAccess")
+public class DriveTimeBackwards extends Command
 {
-    public ShooterSubsystem shooterSubsystem;
+    private DriveTrainSubsystem driveTrain;
     private long runTime;
     private long startTime;
-    public boolean both = false;
 
     /**
      * @param runTime Time to run for in milliseconds.
      */
-    public ShootCommand(long runTime, boolean both)
+    public DriveTimeBackwards(long runTime)
     {
+        requires(Robot.DRIVE_TRAIN);
+        driveTrain = Robot.DRIVE_TRAIN;
         this.runTime = runTime;
-        requires(Robot.SHOOTER);
-        this.shooterSubsystem = Robot.SHOOTER;
-        this.both = both;
     }
 
     /**
      * @param runTime Time to run for in seconds.
      */
-    public ShootCommand(double runTime, boolean both)
+    public DriveTimeBackwards(double runTime)
     {
-        this((long) (runTime * 1000), both);
+        this((long) (runTime * 1000));
     }
 
     @Override
@@ -38,26 +37,20 @@ public class ShootCommand extends Command
 
     @Override
     protected void execute()
-    {   
-        if(both)
-        {
-            
-            shooterSubsystem.feed();
-        }
-        shooterSubsystem.turnOnFlywheel(); 
-        
+    {
+        driveTrain.runMotors(-.65D, .65D);
     }
 
     @Override
     protected boolean isFinished()
     {
-        return (System.currentTimeMillis() - startTime > runTime);
+        return System.currentTimeMillis() - startTime > runTime;
     }
 
     @Override
     protected void end()
     {
-        shooterSubsystem.stop();
+        driveTrain.stop();
     }
 
     @Override

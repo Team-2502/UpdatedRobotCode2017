@@ -4,41 +4,47 @@ import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-
 @SuppressWarnings("WeakerAccess")
-public class EncDriveDistanceCommand extends Command
+public class DriveTimeCommand extends Command
 {
     private DriveTrainSubsystem driveTrain;
-    private long runTime;
+    private double runTime;
     private long startTime;
+    double speed;
+
+    /**
+     * @param RunTime Time to run for in milliseconds.
+     */
+    public DriveTimeCommand(double RunTime, double Speed)
+    {
+        requires(Robot.DRIVE_TRAIN);
+        driveTrain = Robot.DRIVE_TRAIN;
+        this.runTime = RunTime * 1000;
+        speed = Speed;
+    }
 
     /**
      * @param runTime Time to run for in seconds.
      */
-    public EncDriveDistanceCommand()
-    {
-        driveTrain = Robot.DRIVE_TRAIN;
-        requires(driveTrain);
-    }
-
+ 
     @Override
     protected void initialize()
     {
-        driveTrain.setAutonSettings(driveTrain.leftTalon0);
-        driveTrain.setAutonSettings(driveTrain.rightTalon1);
+        startTime = System.currentTimeMillis();
     }
 
     @Override
     protected void execute()
     {
-        driveTrain.leftTalon0.set(-4.6);
-        driveTrain.rightTalon1.set(4.6);
+
+        driveTrain.runMotors(.65D, -.65D);
+
     }
 
     @Override
     protected boolean isFinished()
     {
-        return false;
+        return System.currentTimeMillis() - startTime > runTime;
     }
 
     @Override
