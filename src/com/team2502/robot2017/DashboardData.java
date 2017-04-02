@@ -2,6 +2,7 @@ package com.team2502.robot2017;
 
 import com.team2502.robot2017.chooser.TypeSendableChooser;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
+import com.team2502.robot2017.subsystem.DriveTrainTransmissionSubsystem;
 import com.team2502.robot2017.command.autonomous.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,13 +14,13 @@ import java.io.InputStreamReader;
 @SuppressWarnings({ "WeakerAccess" })
 public final class DashboardData
 {
-
+    
     public static final TypeSendableChooser<Command> AUTONOMOUS_SELECTOR = new TypeSendableChooser<Command>();
     
     public static final TypeSendableChooser<DriveTrainSubsystem.DriveTypes> DRIVE_CONTROL_SELECTOR = new TypeSendableChooser<DriveTrainSubsystem.DriveTypes>();
 
     private DashboardData() {}
-
+    
     public static void update()
     {
         updatePressure();
@@ -28,16 +29,17 @@ public final class DashboardData
 
     public static void setup()
     {
-
-//        AUTONOMOUS_SELECTOR.addDefaultT("MiddleGearBackup", new AutoCommandG1());
-//      AUTONOMOUS_SELECTOR.addDefaultT("MiddleGear", new AutoVCommand(12D));
-        AUTONOMOUS_SELECTOR.addDefaultT("LeftGear", new AutoCommandG2());
-//        AUTONOMOUS_SELECTOR.addDefaultT("RightGear", new AutoCommandG3());
-//        AUTONOMOUS_SELECTOR.addDefaultT("DriveForwards", new AutoCommandG4());
-
-
+//        AUTONOMOUS_SELECTOR.addDefaultT("LeftGear", new GearAutoLeft());
+//        AUTONOMOUS_SELECTOR.addDefaultT("RightGear", new GearAutoRight());
+//        AUTONOMOUS_SELECTOR.addDefaultT("CenterGear", new GearAutoCenter());
+//        AUTONOMOUS_SELECTOR.addDefaultT("Shoot", new AutoCommandG2());
+//        AUTONOMOUS_SELECTOR.addDefaultT("CrossBaseLine", new DriveTimeCommand(3, 1));
+//        AUTONOMOUS_SELECTOR.addDefaultT("Test", new AutoCommandG1());
+//        AUTONOMOUS_SELECTOR.addDefaultT("NavXTest", new AutoCommandNavXTest());
         DRIVE_CONTROL_SELECTOR.addDefaultT("Dual Stick Drive Control", DriveTrainSubsystem.DriveTypes.DUAL_STICK);
         DRIVE_CONTROL_SELECTOR.addObjectT("Arcade Drive Control", DriveTrainSubsystem.DriveTypes.ARCADE);
+        
+
 
         if(Enabler.AUTONOMOUS.enabler[0])
         {
@@ -75,6 +77,7 @@ public final class DashboardData
     public static DriveTrainSubsystem.DriveTypes getDriveType()
     {
         return DRIVE_CONTROL_SELECTOR.getSelectedT();
+     
     }
     
     private static void updateNavX()
@@ -83,17 +86,20 @@ public final class DashboardData
 //    	SmartDashboard.putNumber("NavX: Roll", Robot.NAVX.getRoll());
 //    	SmartDashboard.putNumber("NavX: Pitch", Robot.NAVX.getPitch());
 //    	SmartDashboard.putNumber("NavX: Angle", Robot.NAVX.getAngle());
-        SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getFlywheelSpeed());
-        SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getTargetSpeed());
+        SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getSpeedFlywheel());
+        SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getTargetSpeedFlywheel());
         SmartDashboard.putNumber("FW: Loop Error", Robot.SHOOTER.getError());
         SmartDashboard.putNumber("FW: Motor Output", Robot.SHOOTER.getMotorOutput());
+        SmartDashboard.putNumber("BB: Current Feeder Speed", Robot.SHOOTER.getSpeedFeeder());
+        SmartDashboard.putNumber("BB: Target Speed", Robot.SHOOTER.getTargetSpeedFeeder());
+        SmartDashboard.putNumber("BB: Loop Error", Robot.SHOOTER.getErrorFeeder());
     }
 
     private static void updatePressure()
     {
 //    	
-        SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getFlywheelSpeed());
-        SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getTargetSpeed());
+        SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getSpeedFlywheel());
+        SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getTargetSpeedFlywheel());
         SmartDashboard.putNumber("FW: Loop Error", Robot.SHOOTER.getError());
         SmartDashboard.putNumber("FW: Motor Output", Robot.SHOOTER.getMotorOutput());
         

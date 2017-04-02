@@ -13,117 +13,113 @@ public class NavXMoveCommand extends Command{
 	public double targetYaw;
 	private DriveTrainSubsystem driveTrain;
 	private AHRS navx;
-	private DistanceSensorSubsystem Sensor;
 	public double currentYaw;
-	private boolean forever = false;
+	private boolean angleOnly = false;
 	public boolean done = false;;
 	private double runTime;
 	private long startTime;
 	private double deadZone = 2;
 	private double elapsedTime;
 	private double speed;
-	
-//	private double targetXDisplace = 0;
-//	private boolean displacementDrive = false;
-//	private double targetYDisplace = 0;
-//	private double displaceDeadzone = 0.006;
-	
+	public boolean manualSpeedB;
+	public double manualSpeed;
+	/**
+	 * Drive in a straight line for 5 seconds according to the navx.
+	 */
 	public NavXMoveCommand()
-  {
+    {
 		requires(Robot.DRIVE_TRAIN);
-    driveTrain = Robot.DRIVE_TRAIN;
-    navx = Robot.NAVX;
-    requires(Robot.DISTANCE_SENSOR);
-    Sensor = Robot.DISTANCE_SENSOR;
-        
-    navx.reset();
-    targetYaw = 0;
-    forever = true;
-    
-		this.runTime = (long)  5000;
+	    driveTrain = Robot.DRIVE_TRAIN;
+	    navx = Robot.NAVX;    
+//        navx.reset();
+	    targetYaw = 0;
+	    
+	    this.runTime = (long)  5000;
 	}
 	
+	/**
+	 * Turn to an angle, and immediately end once turned.
+	 * 
+	 * @param angle the angle to turn to.
+	 */
     public NavXMoveCommand(double angle) 
     {
-	    	requires(Robot.DRIVE_TRAIN);
-        driveTrain = Robot.DRIVE_TRAIN;
-        navx = Robot.NAVX;
-        requires(Robot.DISTANCE_SENSOR);
-        Sensor = Robot.DISTANCE_SENSOR;
-        
-        navx.reset();
-        targetYaw = 0;
+	    this();
+        angleOnly = true;
+        targetYaw = angle;
+//        navx.reset();
 	
 	  }
-    
+    /**
+     * Turn to an angle, and drive on it for some time
+     * @param angle   the angle to turn to
+     * @param runTime the time to drive for
+     */
     public NavXMoveCommand(double angle, double runTime)
     {
-        requires(Robot.DRIVE_TRAIN);
-        driveTrain = Robot.DRIVE_TRAIN;
-        navx = Robot.NAVX;
-        requires(Robot.DISTANCE_SENSOR);
-        Sensor = Robot.DISTANCE_SENSOR;
-    	
-        navx.reset();
+        this();
 	    targetYaw = angle;
 	    this.runTime = (runTime*1000);
+//	    navx.reset();
+    } 
+    /**
+     * Turns angle for a curtain amount of time and curtain speed
+     * @param angle - turn a curtain amount
+     * @param runTime - runs for a curtain amount
+     * @param speed - sets curtain amount of speed
+     */
+    public NavXMoveCommand(double angle, double runTime, double speed)
+    {
+        this();
+        targetYaw = angle;
+        this.runTime = (runTime*1000);
+        manualSpeedB = true;
+        manualSpeed = speed;
+//        navx.reset();
     }
-//    public NavXMoveCommand(double angle, double targetXDisplace, double targetYDisplace){
-//    	targetXDisplace = targetXDisplace;
-//    	targetYDisplace = targetYDisplace;
-//    	navx.resetDisplacement();
-//    	navx.reset();
-//    	targetYaw = Math.toDegrees(Math.atan(targetYDisplace/targetXDisplace));
-//    }
- 
 
 	@Override
 	protected void initialize() 
 	{
 		startTime = System.currentTimeMillis();
+	    navx.reset();
 	}
 
 	@Override
 	protected void execute() 
 	{
 		elapsedTime = System.currentTimeMillis() - startTime;
-		speed = getSpeed(elapsedTime);
+		if(manualSpeedB){ speed = manualSpeed;}
+		else{speed = getSpeed(elapsedTime);}
 		currentYaw = Robot.NAVX.getAngle();
 		SmartDashboard.putNumber("NavX: Target yaw", targetYaw);
-//		if (Sensor.getSensorDistance() > 14)
-//		{ 
 		if(Math.abs(currentYaw - targetYaw) > deadZone)
 		{	
 			// right = pos
 			// left = neg
 			if(currentYaw > targetYaw)
 			{
-				driveTrain.runMotors(0, -1 * speed);
+				driveTrain.runMotors(-speed, -speed);
 			} 
 			else if(currentYaw < targetYaw)
 			{
-				driveTrain.runMotors(speed, 0);
+				driveTrain.runMotors(speed, speed);
 			}
 		}
-		else
-		{	
-				driveTrain.runMotors(0.5, -0.5);
-		}	
-	}
-	
 //		else
-//		{
-//			startTime = System.currentTimeMillis();
-//		}
-		
+//		{	
+//				driveTrain.runMotors(0.5, -0.5);
+//		}	
+	}
+
 				
 		
 		
 
 	@Override
 	protected boolean isFinished() {
-		// Will end if time elapsed while at targetYaw or at appropriate distance\
-		if(forever)
+		// Will end if time elapsed while at targetYaw or at appropriate distance
+		if(angleOnly)
 		{
 			return Math.abs(currentYaw - targetYaw) > deadZone;
 		}
@@ -135,25 +131,29 @@ public class NavXMoveCommand extends Command{
 			}
 		else
 			{
-				return false;
+		        return false;
 			}
 		}
 	}
 
 	@Override
-	protected void end() {}
+	protected void end() { driveTrain.stop(); }
 
 	@Override
-	protected void interrupted() {}
+	protected void interrupted() { end(); }
 	
-	protected double getSpeed(double time) {
+	
+	/**
+	 * @param  x seconds that have passed since you started turning/
+	 * @return the speed one side of the drive train should go at
+	 */
+	protected double getSpeed(double x) {
 		if(targetYaw == 0){
 			return 0.5;
 		}
 		else
 		{
-			return 1/(1+Math.pow(Math.E, time/2500));
-//			return 4000/((time * time) + 4000);
+			return 1/(1+Math.pow(Math.E, x/2500));
 		}
 	}
 

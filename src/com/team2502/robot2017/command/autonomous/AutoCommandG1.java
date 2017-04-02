@@ -16,8 +16,12 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class AutoCommandG1 extends CommandGroup
 {
+    /**
+     * For testing 
+     */
     public AutoCommandG1()
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
         addSequential(new EncDriveDistanceCommand());
         addSequential(new WaitCommand(1D));
@@ -39,5 +43,8 @@ public class AutoCommandG1 extends CommandGroup
 >>>>>>> origin/Develop
 
         
+=======
+        addSequential(new EncDriveDistanceCommand());       
+>>>>>>> origin/Develop
     }
 }

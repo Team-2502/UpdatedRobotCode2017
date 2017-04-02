@@ -26,8 +26,12 @@ public final class OI
 =======
         GEAR.whenPressed(new GearCommand());
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/Develop
 =======
+=======
+//		SHOOTER.whileHeld(new ShootCommand(1, false));
+>>>>>>> origin/Develop
 		RESET_ENC_POSITION.whenPressed(new ResetEncodersCommand()); 
 		/* the purpose of this is to reset the encoders and then manually push the robot to the destination. 
 		 * this lets us figure out how far the robot needs to go*/ 
