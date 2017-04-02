@@ -18,7 +18,6 @@ public final class Robot extends IterativeRobot {
 	public static VisionSubsystem VISION;
 	public static Compressor COMPRESSOR;
 	public static ShooterSubsystem SHOOTER;
-	public static DistanceSensorSubsystem DISTANCE_SENSOR;
 	public static ActiveIntakeSubsystem ACTIVE;
 	public static GearBoxSubsystem GEAR_BOX;
 	public static DriveTrainTransmissionSubsystem DRIVE_TRAIN_GEAR_SWITCH;
@@ -38,11 +37,11 @@ public final class Robot extends IterativeRobot {
 		 VISION = new VisionSubsystem();
 		 COMPRESSOR = new Compressor();
 		 SHOOTER = new ShooterSubsystem();
-		 DISTANCE_SENSOR = new DistanceSensorSubsystem();
 		 ACTIVE = new ActiveIntakeSubsystem();
 		 GEAR_BOX = new GearBoxSubsystem();
 		 CLIMBER = new ClimberSubsystem();
 
+		 Robot.CLIMBER.setBrake(false);
 		DashboardData.setup();
 		OI.init();
 	}

@@ -117,9 +117,6 @@ public final class DashboardData
 //        SmartDashboard.putNumber("NavX: Yaw", Robot.NAVX.getYaw());
 //        SmartDashboard.putNumber("NavX: Raw Accel X", Robot.NAVX.getRawAccelX());
 
-
-        SmartDashboard.putNumber ("DS:Current Distance (in)", Robot.DISTANCE_SENSOR.getSensorDistance());
-
         if(Enabler.PRESSURE.enabler[0])
         {
             if(Enabler.PRESSURE.enabler[1]) { SmartDashboard.putNumber("Current Tank Pressure", Robot.PRESSURE_SENSOR.getPressure()); }
