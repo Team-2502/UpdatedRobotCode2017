@@ -71,8 +71,7 @@ public class AutoVCommand extends Command
         this(runTime, align);
         this.lowSpeed = lowSpeed;
         this.highSpeed = highSpeed;
-       
-        
+          
     }
 
     @Override

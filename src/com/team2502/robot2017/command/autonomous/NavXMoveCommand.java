@@ -31,7 +31,7 @@ public class NavXMoveCommand extends Command{
 		requires(Robot.DRIVE_TRAIN);
 	    driveTrain = Robot.DRIVE_TRAIN;
 	    navx = Robot.NAVX;    
-	    navx.reset();
+//        navx.reset();
 	    targetYaw = 0;
 	    
 	    this.runTime = (long)  5000;
@@ -47,6 +47,7 @@ public class NavXMoveCommand extends Command{
 	    this();
         angleOnly = true;
         targetYaw = angle;
+//        navx.reset();
 	
 	  }
     /**
@@ -59,6 +60,7 @@ public class NavXMoveCommand extends Command{
         this();
 	    targetYaw = angle;
 	    this.runTime = (runTime*1000);
+//	    navx.reset();
     } 
     /**
      * Turns angle for a curtain amount of time and curtain speed
@@ -73,13 +75,14 @@ public class NavXMoveCommand extends Command{
         this.runTime = (runTime*1000);
         manualSpeedB = true;
         manualSpeed = speed;
-        
+//        navx.reset();
     }
 
 	@Override
 	protected void initialize() 
 	{
 		startTime = System.currentTimeMillis();
+	    navx.reset();
 	}
 
 	@Override
@@ -128,7 +131,7 @@ public class NavXMoveCommand extends Command{
 			}
 		else
 			{
-				return false;
+		        return false;
 			}
 		}
 	}
