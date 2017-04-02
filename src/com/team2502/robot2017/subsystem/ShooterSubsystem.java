@@ -22,8 +22,10 @@ public class ShooterSubsystem extends Subsystem
     private final CANTalon agitator;
     
     double targetSpeedFlywheel = 1650;
-    double targetSpeedFeeder = 1400;
     double autoTargetSpeed = targetSpeedFlywheel + 50;
+    double agitatorSpeed = 0.75;
+    double colsonSpeed = 0.7;
+    double banebotSpeed = 1400;
     int error = 0;
 
     public boolean isFlywheelActive;
@@ -122,7 +124,7 @@ public class ShooterSubsystem extends Subsystem
     public void feed()
     {
         colsonFeeder.set(1);
-        banebotFeeder.set(-targetSpeedFeeder);
+        banebotFeeder.set(-banebotSpeed);
         agitator.set(.75);
     }
 
@@ -135,7 +137,7 @@ public class ShooterSubsystem extends Subsystem
     }
     public double getTargetSpeedFeeder()
     {
-        return targetSpeedFeeder;
+        return banebotSpeed;
     }
 
     /**
@@ -148,6 +150,24 @@ public class ShooterSubsystem extends Subsystem
     public int getErrorFeeder()
     {
         return banebotFeeder.getClosedLoopError();
+    }
+    
+    public void changeSpeedAgitator(boolean isAdd)
+    {
+    	if(isAdd) { agitatorSpeed += 0.05; }
+    	if(!isAdd) { agitatorSpeed -= 0.05; }
+    }
+    
+    public void changeSpeedColson(boolean isAdd)
+    {
+    	if(isAdd) { colsonSpeed += 0.05; }
+    	if(!isAdd) { colsonSpeed -= 0.05; }
+    }
+    
+    public void changeSpeedBanebot(boolean isAdd)
+    {
+    	if(isAdd) { banebotSpeed += 50; }
+    	if(!isAdd) { banebotSpeed -= 50; }
     }
     
     /**
@@ -183,9 +203,9 @@ public class ShooterSubsystem extends Subsystem
         //Control for turning on/off the feeding mechanism.
         if(OI.JOYSTICK_FUNCTION.getTrigger() /*&& (Math.abs(flywheelTalon.getEncVelocity()) > Math.abs(targetSpeed - 500))*/)
         {
-            colsonFeeder.set(0.7);
-            banebotFeeder.set(-targetSpeedFeeder);
-            agitator.set(.75);
+            colsonFeeder.set(colsonSpeed);
+            banebotFeeder.set(-banebotSpeed);
+            agitator.set(agitatorSpeed);
         }
 
         else
@@ -194,6 +214,42 @@ public class ShooterSubsystem extends Subsystem
             banebotFeeder.set(0);
             agitator.set(0);
         }
+        
+//        // Control for adding/subtracting target speeds for the Agitator, Colson feeder wheels,
+//        // and Banebot feeder wheels
+//        
+//        // AGITATOR SPEED
+//        if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(6)) 
+//        {
+//        	
+//        }
+//        
+//        if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(7))
+//        {
+//        	
+//        }
+//        
+//        // COLSON SPEED
+//        if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(8))
+//        {
+//        	
+//        }
+//        
+//        if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(9))
+//        {
+//        	
+//        }
+//        
+//        // BANEBOT SPEED
+//        if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(11))
+//        {
+//        	
+//        }
+//        
+//        if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(10))
+//        {
+//        	
+//        }
     }
     
     

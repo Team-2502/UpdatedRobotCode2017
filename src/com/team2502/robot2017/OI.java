@@ -12,12 +12,18 @@ public final class OI
     public static final Joystick JOYSTICK_DRIVE_LEFT = new Joystick(RobotMap.Joystick.JOYSTICK_DRIVE_LEFT);
     public static final Joystick JOYSTICK_DRIVE_RIGHT = new Joystick(RobotMap.Joystick.JOYSTICK_DRIVE_RIGHT);
     public static final Joystick JOYSTICK_FUNCTION = new Joystick(RobotMap.Joystick.JOYSTICK_FUNCTION);
+    
     public static final Button SWITCH_DRIVE_TRANSMISSION = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.SWITCH_DRIVE_TRANSMISSION);
     public static final Button GEAR = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.GEAR);
     public static final Button RESET_ENC_POSITION = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.RESET_ENC_POS);
-  
-
     public static final Button CLIMBER = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.CLIMBER);
+    public static final Button ADD_AGITATOR_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.ADD_AGITATOR_SPEED);
+    public static final Button SUB_AGITATOR_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.SUB_AGITATOR_SPEED);
+    public static final Button ADD_COLSON_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.ADD_COLSON_SPEED);
+    public static final Button SUB_COLSON_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.SUB_COLSON_SPEED);
+    public static final Button ADD_BANEBOT_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.ADD_BANEBOT_SPEED);
+    public static final Button SUB_BANEBOT_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.SUB_BANEBOT_SPEED);
+    
     static
     {
         SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
@@ -28,6 +34,12 @@ public final class OI
 		 * this lets us figure out how far the robot needs to go*/ 
         CLIMBER.whenPressed(new ClimberCommand());
 //        ONLY_AGITATOR.whileHeld(new OnlyAgitatorCommand());
+        ADD_AGITATOR_SPEED.whenPressed(new ChangeSpeedAgitatorCommand(true));
+        SUB_AGITATOR_SPEED.whenPressed(new ChangeSpeedAgitatorCommand(false));
+        ADD_COLSON_SPEED.whenPressed(new ChangeSpeedColsonCommand(true));
+        SUB_COLSON_SPEED.whenPressed(new ChangeSpeedColsonCommand(false));
+        ADD_BANEBOT_SPEED.whenPressed(new ChangeSpeedBanebotCommand(true));
+        SUB_BANEBOT_SPEED.whenPressed(new ChangeSpeedBanebotCommand(false));
     }
 
     public static void init() {}

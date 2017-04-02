@@ -24,6 +24,14 @@ public class RobotMap
             public static final int CLIMBER =  8;
             public static final int SHOOTER = 1;
             public static final int RESET_ENC_POS = 9; // temporary and only exists for auton development
+            
+            // For increasing/decreasing the feed rates on various portions of the shooter. Good4Tuning
+            public static final int ADD_AGITATOR_SPEED = 6;
+            public static final int SUB_AGITATOR_SPEED = 7;
+            public static final int ADD_COLSON_SPEED = 8;
+            public static final int SUB_COLSON_SPEED = 9;
+            public static final int ADD_BANEBOT_SPEED = 11;
+            public static final int SUB_BANEBOT_SPEED = 10;
 
             private Button() {}
         }

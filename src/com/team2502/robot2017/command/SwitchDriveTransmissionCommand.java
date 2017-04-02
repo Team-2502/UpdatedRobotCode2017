@@ -15,32 +15,17 @@ public class SwitchDriveTransmissionCommand extends Command
     }
 
     @Override
-    protected void initialize()
-    {
-
-    }
+    protected void initialize() { }
 
     @Override
-    protected void execute()
-    {
-        driveTrainTransmissionSubsystem.switchGear();
-    }
+    protected void execute() { driveTrainTransmissionSubsystem.switchGear(); }
 
     @Override
-    protected boolean isFinished()
-    {
-        return true;
-    }
+    protected boolean isFinished() { return true; }
 
     @Override
-    protected void end()
-    {
-
-    }
+    protected void end() { }
 
     @Override
-    protected void interrupted()
-    {
-
-    }
+    protected void interrupted() { }
 }
