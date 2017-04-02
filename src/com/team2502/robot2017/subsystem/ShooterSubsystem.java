@@ -66,7 +66,7 @@ public class ShooterSubsystem extends Subsystem
         flywheelTalon.reverseSensor(false);
 
         flywheelTalon.configNominalOutputVoltage(0.0D, -0.0D);
-        flywheelTalon.configPeakOutputVoltage(12.0D, -12.0D);
+        flywheelTalon.configPeakOutputVoltage(12.0D, -2.0D);
 
         flywheelTalon.setProfile(0);
         flywheelTalon.setF(0.21765900);
