@@ -1,22 +1,13 @@
 package com.team2502.robot2017.subsystem;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
-import com.ctre.CANTalon.FeedbackDevice;
-import com.team2502.robot2017.DashboardData;
 import com.team2502.robot2017.OI;
 import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.command.FlywheelCommand;
-import com.team2502.robot2017.subsystem.DriveTrainSubsystem.DriveTypes;
-import com.team2502.robot2017.subsystem.DriveTrainSubsystem.Pair;
-
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem
 {
-	
-    private double lastLeft;
     public double leftSpeed;
 
     public boolean negative = false;
@@ -45,7 +36,6 @@ public class ShooterSubsystem extends Subsystem
      */
     public ShooterSubsystem()
     {
-    	lastLeft = 0.0D;
         flywheelTalon = new CANTalon(RobotMap.Motor.FLYWHEEL_TALON_0);
         colsonFeeder = new CANTalon(RobotMap.Motor.FEEDER_TALON_0);
         banebotFeeder = new CANTalon(RobotMap.Motor.FEEDER_TALON_1);
@@ -212,6 +202,8 @@ public class ShooterSubsystem extends Subsystem
      */
     public void stop()
     {
+    	shooterMode = false;
+    	
         flywheelTalon.set(0.0D);
         colsonFeeder.set(0.0D);
         banebotFeeder.set(0.0D);
