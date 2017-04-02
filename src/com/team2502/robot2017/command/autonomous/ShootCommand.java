@@ -7,27 +7,23 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShootCommand extends Command
 {
     public ShooterSubsystem shooterSubsystem;
-    private long runTime;
+    private double runTime;
     private long startTime;
     public boolean both = false;
 
     /**
      * @param runTime Time to run for in milliseconds.
      */
-    public ShootCommand(long runTime, boolean both)
-    {
-        this.runTime = runTime;
-        requires(Robot.SHOOTER);
-        this.shooterSubsystem = Robot.SHOOTER;
-        this.both = both;
-    }
 
     /**
      * @param runTime Time to run for in seconds.
      */
     public ShootCommand(double runTime, boolean both)
     {
-        this((long) (runTime * 1000), both);
+        this.runTime = runTime*1000;
+        requires(Robot.SHOOTER);
+        this.shooterSubsystem = Robot.SHOOTER;
+        this.both = both;
     }
 
     @Override
