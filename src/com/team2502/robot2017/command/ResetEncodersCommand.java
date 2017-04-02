@@ -13,6 +13,12 @@ public class ResetEncodersCommand extends Command {
 	}
 	
 	@Override
+	protected void initialize() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
 	protected void execute() {
 		dt.leftTalon0.setEncPosition(0);
 		dt.rightTalon1.setEncPosition(0);
@@ -24,12 +30,6 @@ public class ResetEncodersCommand extends Command {
 
 	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void initialize() {
 		// TODO Auto-generated method stub
 		
 	}
