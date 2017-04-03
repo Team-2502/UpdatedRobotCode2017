@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem
 {
-	
     private double lastLeft;
     public double leftSpeed;
 
@@ -98,10 +97,12 @@ public class ShooterSubsystem extends Subsystem
     {
         return flywheelTalon.getEncVelocity();
     }
+    
     public int getSpeedFeeder()
     {
         return banebotFeeder.getEncVelocity();
     }
+    
     public double getMotorOutput()
     {
         return flywheelTalon.getOutputVoltage() / flywheelTalon.getBusVoltage();
@@ -143,6 +144,7 @@ public class ShooterSubsystem extends Subsystem
     {
         return targetSpeedFlywheel;
     }
+    
     public double getTargetSpeedFeeder()
     {
         return targetSpeedFeeder;
@@ -190,7 +192,6 @@ public class ShooterSubsystem extends Subsystem
             targetSpeedFlywheel -= 10;
         }
 
-
         //Control for turning on/off the feeding mechanism.
         if(OI.JOYSTICK_FUNCTION.getTrigger() /*&& (Math.abs(flywheelTalon.getEncVelocity()) > Math.abs(targetSpeed - 500))*/)
         {
@@ -207,7 +208,6 @@ public class ShooterSubsystem extends Subsystem
         }
     }
     
-    
     /**
      * Kill flywheel by setting talons to 0
      */
@@ -222,5 +222,3 @@ public class ShooterSubsystem extends Subsystem
         isFeederActive = false;
     }
 }
-
-    

@@ -23,6 +23,7 @@ public class EncDriveTurn extends Command
     }
     
     double currentDist;
+    
     @Override
     protected void initialize()
     {
@@ -40,10 +41,7 @@ public class EncDriveTurn extends Command
     }
 
     @Override
-    protected boolean isFinished()
-    {
-        return false;
-    }
+    protected boolean isFinished() { return false; }
 
     @Override
     protected void end()
@@ -54,8 +52,5 @@ public class EncDriveTurn extends Command
     }
 
     @Override
-    protected void interrupted()
-    {
-        end();
-    }
+    protected void interrupted() { end(); }
 }

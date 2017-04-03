@@ -4,7 +4,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class LeftGearAutoBackupG extends CommandGroup
-{   /**
+{   
+	/**
      * BackUp - Gets the left gear in autonomous 
      */
     public LeftGearAutoBackupG()
@@ -15,4 +16,3 @@ public class LeftGearAutoBackupG extends CommandGroup
         addSequential(new AutoVCommand(10, false, .0, .3));
     }
 }
-    

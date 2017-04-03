@@ -13,13 +13,10 @@ public class GearBoxSubsystem extends Subsystem
     // States for debounce code. For moveTop Solenoid.
 
     private boolean GearMoved = false;
-    
-
-    
+        
     public GearBoxSubsystem()
     {
         this.Gear = new Solenoid(RobotMap.Solenoid.GEARBOX_SOLENOID0);
-
     }
 
     @Override
@@ -35,4 +32,3 @@ public class GearBoxSubsystem extends Subsystem
     	Gear.set(this.GearMoved = GearMoved);
     }
 }
-  

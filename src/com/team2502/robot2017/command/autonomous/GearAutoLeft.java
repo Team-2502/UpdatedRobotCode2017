@@ -3,7 +3,8 @@ package com.team2502.robot2017.command.autonomous;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class GearAutoLeft extends CommandGroup {
+public class GearAutoLeft extends CommandGroup
+{
     /**
      * Gets the left gear in autonomous 
      */
@@ -16,9 +17,7 @@ public class GearAutoLeft extends CommandGroup {
         addSequential(new NavXMoveCommand(10, 1, .2));
         addSequential(new WaitCommand(.5));
         addSequential(new NavXMoveCommand(-10, 1, .3));
-//        addSequential(new NavXMoveCommand(10, 1, .2));
+//      addSequential(new NavXMoveCommand(10, 1, .2));
         addSequential(new DriveTimeCommand(.5, .2));
-	    
 	}
-	
 }

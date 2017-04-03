@@ -38,7 +38,6 @@ public final class Log
         type.output.flush();
     }
 
-
     public static <T> void info(T msg) { log(LogType.INFO, msg); }
 
     public static <T> void warn(T msg) { log(LogType.WARN, msg); }
@@ -70,7 +69,6 @@ public final class Log
     public static void trace(Exception e) { trace(e, ""); }
 
     public static <T> void debug(T msg) { log(LogType.DEBUG, msg); }
-
 
     public enum LogType
     {

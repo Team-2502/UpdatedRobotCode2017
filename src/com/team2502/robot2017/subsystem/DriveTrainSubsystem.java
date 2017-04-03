@@ -56,7 +56,7 @@ public class DriveTrainSubsystem extends Subsystem
         rightTalon1 = new CANTalon(RobotMap.Motor.RIGHT_TALON_1); 
 
         drive = new RobotDrive(leftTalon0, leftTalon1, rightTalon0, rightTalon1);
-        drive.setExpiration(0.1D);
+        drive.setSafetyEnabled(false);
         
         DTTS = Robot.DRIVE_TRAIN_GEAR_SWITCH;
         
@@ -79,8 +79,6 @@ public class DriveTrainSubsystem extends Subsystem
         talon.setPID(1, 0, 0);
         talon.enableControl();
         talon.setEncPosition(0);
-        
-        
     }
     
     /**
@@ -140,7 +138,6 @@ public class DriveTrainSubsystem extends Subsystem
     {
         setDefaultCommand(new DriveCommand());
     }
-
 
 //    private static void debugSpeed(String format, Object... args)
 //    {
@@ -252,7 +249,6 @@ public class DriveTrainSubsystem extends Subsystem
         {
         	out.right = 0.0D;
         }
-
         if(counter % 100 == 0)
         {
                System.out.println("joystickLevel: \t" + joystickLevel);
@@ -274,7 +270,6 @@ public class DriveTrainSubsystem extends Subsystem
         Pair<Double, Double> speed = DashboardData.getDriveType() == DriveTypes.DUAL_STICK ? getSpeed()
                                                                                            : getSpeedArcade();
 
-      
         //reverse drive
         if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(1) && !isNegativePressed)
         {
@@ -302,8 +297,7 @@ public class DriveTrainSubsystem extends Subsystem
      * @param y Units for the right side of drivetrain
      */
     public void runMotors(double x, double y) // double z
-    {	
-
+    {
     	leftSpeed = x;
     	rightSpeed = y;
         leftTalon0.set(x);
@@ -313,7 +307,7 @@ public class DriveTrainSubsystem extends Subsystem
         // Timer.delay(DELAY_TIME);
         // Scheduler.getInstance().add(new WaitCommand(DELAY_TIME));
         // stopDriveS();
-//        SmartDashboard.putNumber("Autonomous", Robot.AUTO.getTimerStraight());
+        //SmartDashboard.putNumber("Autonomous", Robot.AUTO.getTimerStraight());
     }
 
     /**
@@ -361,9 +355,7 @@ public class DriveTrainSubsystem extends Subsystem
             this.nameR = right.getClass().getSimpleName();
         }
 
-        public Pair()
-        {
-        }
+        public Pair() {}
 
         @Override
         public String toString()
