@@ -2,9 +2,9 @@ package com.team2502.robot2017.command.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ShootAndBaseLineAuto extends CommandGroup
+public class ShootAndBaseLineBlue extends CommandGroup
 {
-    public ShootAndBaseLineAuto()
+    public ShootAndBaseLineBlue()
     {
 
     	addSequential(new ShootAutoBase("blue"));

@@ -235,7 +235,7 @@ public class ShooterSubsystem extends Subsystem
      */
     public void flywheelDrive()
     {
-        // lets us tell the flywheel go a certain RPMf
+        // lets us tell the flywheel go a certain RPM
         flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
 
         // Toggle mode for flywheel. It is bound to button 5 on the Function stick.
@@ -249,11 +249,15 @@ public class ShooterSubsystem extends Subsystem
         else { flywheelTalon.set(0); }
 
         //Control for turning on/off the feeding mechanism.
-        if(OI.JOYSTICK_FUNCTION.getTrigger() /*&& (Math.abs(flywheelTalon.getEncVelocity()) > Math.abs(targetSpeed - 500))*/)
+        if(OI.JOYSTICK_FUNCTION.getTrigger())
         {
             colsonFeeder.set(colsonSpeed);
             banebotFeeder.set(-banebotSpeed);
             agitator.set(agitatorSpeed);
+        }
+        else if(OI.JOYSTICK_FUNCTION.getRawButton(12))
+        {
+        	agitator.set(-agitatorSpeed);
         }
 
         else

@@ -29,8 +29,8 @@ public final class OI
     public static final Button ADD_BANEBOT_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.ADD_BANEBOT_SPEED);
     public static final Button SUB_BANEBOT_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.SUB_BANEBOT_SPEED);
     
-    public static final Button ADD_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.ADD_FLYWHEEL_SPEED);
-    public static final Button SUB_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.SUB_FLYWHEEL_SPEED);
+    public static final Button ADD_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.ADD_FLYWHEEL_SPEED);
+    public static final Button SUB_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.SUB_FLYWHEEL_SPEED);
     
     public static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.VISION_ALIGN);
     
