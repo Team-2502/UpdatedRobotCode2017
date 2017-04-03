@@ -27,6 +27,14 @@ public class AutoVCommand extends Command
     
     /**
      * Automatic vision-based alignment with shiny objects
+     * <br>
+     * Runs for 2 seconds
+     */
+    public AutoVCommand(){
+    	this(2);
+    }
+    /**
+     * Automatic vision-based alignment with shiny objects
      * 
      * @param runTime How long vision should run for
      */

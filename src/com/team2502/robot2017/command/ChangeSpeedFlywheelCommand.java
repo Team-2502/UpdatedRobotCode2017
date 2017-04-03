@@ -11,6 +11,10 @@ public class ChangeSpeedFlywheelCommand extends Command
     
     private boolean checkIsAdd;
 
+    /**
+     * Manually change the flywheel speed
+     * @param isAdd Boolean to indicate whether to increase or decrease the flywheel speed
+     */
     public ChangeSpeedFlywheelCommand(boolean isAdd)
     {
         requires(Robot.SHOOTER);
@@ -23,7 +27,7 @@ public class ChangeSpeedFlywheelCommand extends Command
     protected void initialize() { }
 
     @Override
-    protected void execute() { shooterSubsystem.changeSpeedColson(checkIsAdd); }
+    protected void execute() { shooterSubsystem.changeSpeedFlywheel(checkIsAdd); }
 
     @Override
     protected boolean isFinished() { return true; }

@@ -113,11 +113,11 @@ public final class DashboardData
     {
     	SmartDashboard.putNumber("NavX: Yaw", Robot.NAVX.getYaw());
         SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getSpeedFlywheel());
-        SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getTargetSpeedFlywheel());
+        SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getFlywheelTargetSpeed());
         SmartDashboard.putNumber("FW: Loop Error", Robot.SHOOTER.getError());
         SmartDashboard.putNumber("FW: Motor Output", Robot.SHOOTER.getMotorOutput());
         SmartDashboard.putNumber("BB: Current Feeder Speed", Robot.SHOOTER.getSpeedFeeder());
-        SmartDashboard.putNumber("BB: Target Speed", Robot.SHOOTER.getTargetSpeedFeeder());
+        SmartDashboard.putNumber("BB: Target Speed", Robot.SHOOTER.getBanebotTargetSpeed());
         SmartDashboard.putNumber("BB: Loop Error", Robot.SHOOTER.getErrorFeeder());
     }
 
@@ -125,7 +125,7 @@ public final class DashboardData
     {
 //    	
         SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getSpeedFlywheel());
-        SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getTargetSpeedFlywheel());
+        SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getFlywheelTargetSpeed());
         SmartDashboard.putNumber("FW: Loop Error", Robot.SHOOTER.getError());
         SmartDashboard.putNumber("FW: Motor Output", Robot.SHOOTER.getMotorOutput());
         

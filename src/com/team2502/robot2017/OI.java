@@ -1,6 +1,7 @@
 package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
+import com.team2502.robot2017.command.autonomous.AutoVCommand;
 import com.team2502.robot2017.command.setup.SwitchAutonomousCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -21,11 +22,18 @@ public final class OI
     
     public static final Button ADD_AGITATOR_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.ADD_AGITATOR_SPEED);
     public static final Button SUB_AGITATOR_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.SUB_AGITATOR_SPEED);
+    
     public static final Button ADD_COLSON_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.ADD_COLSON_SPEED);
     public static final Button SUB_COLSON_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.SUB_COLSON_SPEED);
+    
     public static final Button ADD_BANEBOT_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.ADD_BANEBOT_SPEED);
     public static final Button SUB_BANEBOT_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.SUB_BANEBOT_SPEED);
-
+    
+    public static final Button ADD_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.ADD_FLYWHEEL_SPEED);
+    public static final Button SUB_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.SUB_FLYWHEEL_SPEED);
+    
+    public static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.VISION_ALIGN);
+    
     public static final Button SET_AUTO = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.AUTO_SELECT);
 
     static
@@ -46,6 +54,13 @@ public final class OI
         
         ADD_BANEBOT_SPEED.whenPressed(new ChangeSpeedBanebotCommand(true));
         SUB_BANEBOT_SPEED.whenPressed(new ChangeSpeedBanebotCommand(false));
+        
+        ADD_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(true));
+        SUB_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(false));
+        
+        VISION_ALIGN.toggleWhenPressed(new AutoVCommand(2));
+        
+        
     }
 
     public static void init() {}
