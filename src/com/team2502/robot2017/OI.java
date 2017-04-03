@@ -21,12 +21,22 @@ public final class OI
     static
     {
         SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
+<<<<<<< HEAD
+        CLIMBER.whenPressed(new ClimberCommand());
+=======
         GEAR.whenPressed(new GearCommand());
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/Develop
+=======
+=======
 //		SHOOTER.whileHeld(new ShootCommand(1, false));
+>>>>>>> origin/Develop
 		RESET_ENC_POSITION.whenPressed(new ResetEncodersCommand()); 
 		/* the purpose of this is to reset the encoders and then manually push the robot to the destination. 
 		 * this lets us figure out how far the robot needs to go*/ 
         CLIMBER.whenPressed(new ClimberCommand());
+>>>>>>> origin/Develop
 //        ONLY_AGITATOR.whileHeld(new OnlyAgitatorCommand());
     }
 
