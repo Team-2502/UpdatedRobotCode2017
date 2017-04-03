@@ -22,8 +22,11 @@ public final class DashboardData
     
     public static void update()
     {
-        updatePressure();
+    	updateDriveTrain();
         updateNavX();
+    	updateFeeder();
+    	updateFlywheel();
+        updatePressure();
     }
 
     public static void setup()
@@ -64,32 +67,41 @@ public final class DashboardData
 
     public static DriveTrainSubsystem.DriveTypes getDriveType() { return DRIVE_CONTROL_SELECTOR.getSelectedT(); }
     
+    private static void updateDriveTrain()
+    {
+    	SmartDashboard.putNumber("aDT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
+        SmartDashboard.putNumber("aDT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
+        SmartDashboard.putNumber("aDT: DriveTrainAveg", Robot.DRIVE_TRAIN.getEncAveg());
+    }
+    
     private static void updateNavX()
     {
     	SmartDashboard.putNumber("NavX: Yaw", Robot.NAVX.getYaw());
-
+        SmartDashboard.putNumber("NavX: Angle", Robot.NAVX.getAngle());
+        SmartDashboard.putNumber("NavX: Compass Reading", Robot.NAVX.getCompassHeading());
+    }
+    
+    private static void updateFeeder()
+    {
+    SmartDashboard.putNumber("BB: Current Feeder Speed", Robot.SHOOTER.getSpeedFeeder());
+    SmartDashboard.putNumber("BB: Target Speed", Robot.SHOOTER.getTargetSpeedFeeder());
+    SmartDashboard.putNumber("BB: Loop Error", Robot.SHOOTER.getErrorFeeder());
+    }
+    
+    private static void updateFlywheel()
+    {
+    	SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getSpeedFlywheel());
+        SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getTargetSpeedFlywheel());
+        SmartDashboard.putNumber("FW: Loop Error", Robot.SHOOTER.getError());
+        SmartDashboard.putNumber("FW: Motor Output", Robot.SHOOTER.getMotorOutput());
         SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getSpeedFlywheel());
         SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getTargetSpeedFlywheel());
         SmartDashboard.putNumber("FW: Loop Error", Robot.SHOOTER.getError());
         SmartDashboard.putNumber("FW: Motor Output", Robot.SHOOTER.getMotorOutput());
-        SmartDashboard.putNumber("BB: Current Feeder Speed", Robot.SHOOTER.getSpeedFeeder());
-        SmartDashboard.putNumber("BB: Target Speed", Robot.SHOOTER.getTargetSpeedFeeder());
-        SmartDashboard.putNumber("BB: Loop Error", Robot.SHOOTER.getErrorFeeder());
     }
 
     private static void updatePressure()
     {
-        SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getSpeedFlywheel());
-        SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getTargetSpeedFlywheel());
-        SmartDashboard.putNumber("FW: Loop Error", Robot.SHOOTER.getError());
-        SmartDashboard.putNumber("FW: Motor Output", Robot.SHOOTER.getMotorOutput());
-        
-        SmartDashboard.putNumber("aDT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
-        SmartDashboard.putNumber("aDT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
-        SmartDashboard.putNumber("aDT: DriveTrainAveg", Robot.DRIVE_TRAIN.getEncAveg());
-        SmartDashboard.putNumber("NavX: Angle", Robot.NAVX.getAngle());
-        SmartDashboard.putNumber("NavX: Compass Reading", Robot.NAVX.getCompassHeading());
-
         if(Enabler.PRESSURE.enabler[0])
         {
             if(Enabler.PRESSURE.enabler[1]) { SmartDashboard.putNumber("Current Tank Pressure", Robot.PRESSURE_SENSOR.getPressure()); }
