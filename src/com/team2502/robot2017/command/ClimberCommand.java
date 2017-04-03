@@ -14,6 +14,7 @@ public class ClimberCommand extends Command
         ClimberSubsystem = Robot.CLIMBER;   
         
     }
+    
     public boolean getstopped()
     {
         return stopped;
@@ -23,10 +24,7 @@ public class ClimberCommand extends Command
         stopped = Stopped;
     }
     
-    protected void initialize()
-    {
-      ClimberSubsystem.switchBrake();
-    }
+    protected void initialize() {}
 
     @Override
     protected void execute()
@@ -44,13 +42,8 @@ public class ClimberCommand extends Command
     }
 
     @Override
-    protected void end()
-    {
-    }
+    protected void end() {}
 
     @Override
-    protected void interrupted()
-    {
-
-    }
+    protected void interrupted() { end(); }
 }

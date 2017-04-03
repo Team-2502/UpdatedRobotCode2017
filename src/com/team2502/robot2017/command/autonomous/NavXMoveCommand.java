@@ -88,9 +88,9 @@ public class NavXMoveCommand extends Command{
 	protected void execute() 
 	{
 		elapsedTime = System.currentTimeMillis() - startTime;
-		if(manualSpeedB){ speed = manualSpeed;}
-		else{speed = getSpeed(elapsedTime);}
 		currentYaw = Robot.NAVX.getAngle();
+		if(manualSpeedB){ speed = manualSpeed;}
+		else{speed = getSpeed(currentYaw - targetYaw);}
 		SmartDashboard.putNumber("NavX: Target yaw", targetYaw);
 		if(Math.abs(currentYaw - targetYaw) > deadZone)
 		{	
@@ -152,7 +152,7 @@ public class NavXMoveCommand extends Command{
 		}
 		else
 		{
-			return 1/(1+Math.pow(Math.E, x/2500));
+			return (-0.5/(1+Math.pow(x, 2)/2000))+0.5;
 		}
 	}
 

@@ -12,6 +12,20 @@ public class DriveTimeCommand extends Command
     private long startTime;
     double speed;
 
+
+    /**
+     * This the main way of movement
+     * @param RunTime
+     */
+    public DriveTimeCommand(double RunTime)
+    {
+        requires(Robot.DRIVE_TRAIN);
+        driveTrain = Robot.DRIVE_TRAIN;
+        speed = 0.65;
+        this.runTime = RunTime * 1000;
+        
+    }
+    
     /**
      * This the main way of movement
      * @param RunTime
@@ -19,16 +33,8 @@ public class DriveTimeCommand extends Command
      */
     public DriveTimeCommand(double RunTime, double Speed)
     {
-        /**
-         * @param RunTime Time to run for in milliseconds.
-         * @param Speed RobotSpeed
-         * @return
-         */
-        requires(Robot.DRIVE_TRAIN);
-        driveTrain = Robot.DRIVE_TRAIN;
+    	this(RunTime);
         speed = Speed;
-        this.runTime = RunTime * 1000;
-        
     }
 
     /**
@@ -45,7 +51,7 @@ public class DriveTimeCommand extends Command
     protected void execute()
     {
 
-        driveTrain.runMotors(.65D, -.65D);
+        driveTrain.runMotors(speed, -speed);
 
     }
 

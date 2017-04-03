@@ -185,6 +185,13 @@ public class ShooterSubsystem extends Subsystem
     	if(!isAdd) { banebotSpeed -= 50; }
     }
     
+    public void changeFlywheelBanebot(boolean isAdd)
+    {
+    	if(isAdd) { banebotSpeed += 50; }
+    	if(!isAdd) { banebotSpeed -= 50; }
+    }
+    
+    
     /**
      * Allow Poorva to press buttons on the joystick to activate the flywheel
      */

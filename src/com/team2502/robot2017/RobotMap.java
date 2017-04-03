@@ -20,7 +20,7 @@ public class RobotMap
         {
             public static final int SWITCH_DRIVE_TRANSMISSION = 1;
             public static final int SHOOTER_TOGGLE = 5;
-            public static final int GEAR = 11;
+
             public static final int CLIMBER =  8;
             public static final int SHOOTER = 1;
             public static final int RESET_ENC_POS = 9; // temporary and only exists for auton development
@@ -33,13 +33,21 @@ public class RobotMap
             public static final int ADD_BANEBOT_SPEED = 11;
             public static final int SUB_BANEBOT_SPEED = 10;
 
+            public static final int ADD_FLYWHEEL_SPEED = 10;
+            public static final int SUB_FLYWHEEL_SPEED = 9;
+            
+            public static final int AUTO_SELECT = 11;
+            
+
+
             private Button() {}
         }
     }
 
     public static final class Electrical
     {
-    	  private Electrical() {}
+        private Electrical() {}
+
         public static final int PRESSURE_SENSOR = 0;
         public static final int DISTANCE_SENSOR = 1;
     }
@@ -55,22 +63,18 @@ public class RobotMap
         public static final int FEEDER_TALON_1 = 7; //banebot
         public static final int ACTIVE_INTAKE = 8;
         public static final int AGITATOR = 9;
-      
-      	private Motor() {}	
+
+        private Motor() {}
     }
 
     public static final class Solenoid
     {
 
-    	// TRANSMISSION is for shifting drivetrain gear ratio.
+        // TRANSMISSION is for shifting drivetrain gear ratio.
         public static final int TRANSMISSION_SWITCH = 0;
 
         // GEARBOX is for the actual box that carries gears.
-        public static final int GEARBOX_SOLENOID0 = 1;
-        public static final int GEARBOX_SOLENOID1 = 2;
-        public static final int GEARBOX_SOLENOID2 = 3;
-        public static final int GEARBOX_SOLENOID3 = 4;
-        public static final int CLIMBER_SOLENOID = 5;
+        public static final int CLIMBER_SOLENOID = 1;
 
         private Solenoid() {}
     }

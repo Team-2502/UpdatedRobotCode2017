@@ -9,19 +9,26 @@ public class ShootAndGearAutoBlue extends CommandGroup
     {
 
       addSequential(new ShootCommand(1, false));  
-      addSequential(new ShootCommand(3.5, true));
-      addSequential(new NavXMoveCommand(-15, .75, .75));//-15,1,.5
-      addSequential(new WaitCommand(1));
-      addSequential(new DriveTimeCommand(.2, -1));
-      addSequential(new NavXMoveCommand(90, 1, .5));//90,1,.5
-      addSequential(new DriveTimeCommand(.85, 1));//this is for distance of 114.3 in
-      addSequential(new NavXMoveCommand(60, 1, .5));
-      addSequential(new AutoVCommand(3, false, -.2, .3));
-//    addSequential(new DriveTimeCommand(.55, -.2));
+      addSequential(new ShootCommand(3, true));
+      
+//      addSequential(new NavXMoveCommand(-15, .75, .15)); // turn against the boiler
+      addSequential(new DriveTimeCommand(1, 1));
+    	
+      addSequential(new WaitCommand(0.25));
+      
+      addSequential(new DriveTimeCommand(.5/3, -1));
+      
+      addSequential(new NavXMoveCommand(140, 1.5));
+      addSequential(new DriveTimeCommand(.85/1.5, 1));  //this is for distance of 114.3 in
+      addSequential(new NavXMoveCommand(75, 1));
+      
+      addSequential(new DriveTimeCommand(0.25, 0.7));
+      addSequential(new AutoVCommand(2, false, -.2, .3));
+//      
+//      
       addSequential(new NavXMoveCommand(10, 1, .2));
       addSequential(new WaitCommand(.5));
       addSequential(new NavXMoveCommand(-10, 1, .3));
-//      addSequential(new NavXMoveCommand(10, 1, .2));
       addSequential(new DriveTimeCommand(.5, .2));
         
 
