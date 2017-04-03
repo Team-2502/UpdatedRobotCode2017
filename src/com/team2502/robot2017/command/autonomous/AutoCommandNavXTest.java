@@ -1,5 +1,4 @@
 package com.team2502.robot2017.command.autonomous;
- 
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -17,4 +16,3 @@ public class AutoCommandNavXTest extends CommandGroup
     	addSequential(new NavXMoveCommand(90,0)); // turns left
     }
 }
-    

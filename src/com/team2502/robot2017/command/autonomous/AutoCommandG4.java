@@ -7,9 +7,5 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutoCommandG4 extends CommandGroup
 {
-    public AutoCommandG4()
-    {
-        addSequential(new DriveTimeCommand(3D,.7));
-    }
+	public AutoCommandG4() { addSequential(new DriveTimeCommand(3D,.7)); }
 }
-    

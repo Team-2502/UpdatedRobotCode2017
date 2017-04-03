@@ -18,4 +18,3 @@ public class AutoCommandG2 extends CommandGroup
       addSequential(new EncDriveDistanceCommand());
     }
 }
-    

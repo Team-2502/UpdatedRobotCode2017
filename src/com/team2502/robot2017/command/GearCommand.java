@@ -13,32 +13,17 @@ public class GearCommand extends Command
         GearBoxSubsystem = Robot.GEAR_BOX;   
     }
     
-    protected void initialize()
-    {
-    	
-
-    }
+    protected void initialize() {}
 
     @Override
-    protected void execute()
-    {
-        GearBoxSubsystem.switchGear();
-    }
+    protected void execute() { GearBoxSubsystem.switchGear(); }
 
     @Override
-    protected boolean isFinished()
-    {
-        return true;
-    }
+    protected boolean isFinished() { return true; }
 
     @Override
-    protected void end()
-    {
-    }
+    protected void end() {}
 
     @Override
-    protected void interrupted()
-    {
-
-    }
+    protected void interrupted() {}
 }

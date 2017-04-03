@@ -15,28 +15,17 @@ public final class OI
     public static final Button SWITCH_DRIVE_TRANSMISSION = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.SWITCH_DRIVE_TRANSMISSION);
     public static final Button GEAR = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.GEAR);
     public static final Button RESET_ENC_POSITION = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.RESET_ENC_POS);
-  
-
     public static final Button CLIMBER = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.CLIMBER);
+
     static
     {
         SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
-<<<<<<< HEAD
-        CLIMBER.whenPressed(new ClimberCommand());
-=======
         GEAR.whenPressed(new GearCommand());
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/Develop
-=======
-=======
 //		SHOOTER.whileHeld(new ShootCommand(1, false));
->>>>>>> origin/Develop
 		RESET_ENC_POSITION.whenPressed(new ResetEncodersCommand()); 
 		/* the purpose of this is to reset the encoders and then manually push the robot to the destination. 
 		 * this lets us figure out how far the robot needs to go*/ 
         CLIMBER.whenPressed(new ClimberCommand());
->>>>>>> origin/Develop
 //        ONLY_AGITATOR.whileHeld(new OnlyAgitatorCommand());
     }
 

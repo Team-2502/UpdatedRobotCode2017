@@ -23,6 +23,5 @@ public class ShootAndGearAutoBlue extends CommandGroup
       addSequential(new NavXMoveCommand(-10, 1, .3));
 //      addSequential(new NavXMoveCommand(10, 1, .2));
       addSequential(new DriveTimeCommand(.5, .2));
-
     }
 }

@@ -14,30 +14,17 @@ public class StopDriveCommand extends Command
         DriveTrain = Robot.DRIVE_TRAIN;   
     }
     
-    protected void initialize()
-    {
-    }
+    protected void initialize() {}
 
     @Override
-    protected void execute()
-    {
-        DriveTrain.stopDriveS();
-    }
+    protected void execute() { DriveTrain.stopDriveS(); }
 
     @Override
-    protected boolean isFinished()
-    {
-        return true;
-    }
+    protected boolean isFinished() { return true; }
 
     @Override
-    protected void end()
-    {
-    }
+    protected void end() {}
 
     @Override
-    protected void interrupted()
-    {
-
-    }
+    protected void interrupted() {}
 }

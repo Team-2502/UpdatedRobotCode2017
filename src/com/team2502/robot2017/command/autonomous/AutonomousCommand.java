@@ -23,16 +23,10 @@ public class AutonomousCommand extends Command
         visionSubsystem = Robot.VISION;
         shooterSubsystem = Robot.SHOOTER;
     }
-    public enum autoGroup
-    {
-        AutoCommandG1, AutoCommandG2;
-    }
+    public enum autoGroup { AutoCommandG1, AutoCommandG2; }
 
     @Override
-    protected void initialize() 
-    {
-    	Scheduler.getInstance().add(new AutoCommandG2());
-    }
+    protected void initialize() { Scheduler.getInstance().add(new AutoCommandG2()); }
 
     @Override
     protected void execute() {}
@@ -48,8 +42,5 @@ public class AutonomousCommand extends Command
     }
 
     @Override
-    protected void interrupted()
-    {
-        end();
-    }
+    protected void interrupted() { end(); }
 }

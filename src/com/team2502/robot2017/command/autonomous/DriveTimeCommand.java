@@ -28,42 +28,23 @@ public class DriveTimeCommand extends Command
         driveTrain = Robot.DRIVE_TRAIN;
         speed = Speed;
         this.runTime = RunTime * 1000;
-        
     }
 
     /**
      * @param runTime Time to run for in seconds.
      */
- 
     @Override
-    protected void initialize()
-    {
-        startTime = System.currentTimeMillis();
-    }
+    protected void initialize() { startTime = System.currentTimeMillis(); }
 
     @Override
-    protected void execute()
-    {
-
-        driveTrain.runMotors(.65D, -.65D);
-
-    }
+    protected void execute() { driveTrain.runMotors(.65D, -.65D); }
 
     @Override
-    protected boolean isFinished()
-    {
-        return System.currentTimeMillis() - startTime > runTime;
-    }
+    protected boolean isFinished() { return System.currentTimeMillis() - startTime > runTime; }
 
     @Override
-    protected void end()
-    {
-        driveTrain.stop();
-    }
+    protected void end() { driveTrain.stop(); }
 
     @Override
-    protected void interrupted()
-    {
-        end();
-    }
+    protected void interrupted() { end(); }
 }
