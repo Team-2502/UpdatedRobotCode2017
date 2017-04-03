@@ -90,8 +90,6 @@ public final class DashboardData
         SmartDashboard.putNumber("NavX: Angle", Robot.NAVX.getAngle());
         SmartDashboard.putNumber("NavX: Compass Reading", Robot.NAVX.getCompassHeading());
 
-        SmartDashboard.putNumber ("DS:Current Distance (in)", Robot.DISTANCE_SENSOR.getSensorDistance());
-
         if(Enabler.PRESSURE.enabler[0])
         {
             if(Enabler.PRESSURE.enabler[1]) { SmartDashboard.putNumber("Current Tank Pressure", Robot.PRESSURE_SENSOR.getPressure()); }
