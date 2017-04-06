@@ -41,6 +41,9 @@ public final class DashboardData
 //      AUTONOMOUS_SELECTOR.addDefault("Gear", new AutoCommandG1());
 //      AUTONOMOUS_SELECTOR.addDefault("Shoot", new AutoCommandG2());
     	
+    	AUTONOMOUS_SELECTOR.add(new ShootAndGearAutoRed());
+        AUTO_NAMES.add("Shoot and Gear Auto for Red");
+        
     	AUTONOMOUS_SELECTOR.add(new GearAutoCenter());
         AUTO_NAMES.add("GearAutoCenter");
         
@@ -52,6 +55,8 @@ public final class DashboardData
         
         AUTONOMOUS_SELECTOR.add(new ShootAndGearAutoBlue());
         AUTO_NAMES.add("Shoot and Gear Auto for Blue");
+        
+        
         
         
         
