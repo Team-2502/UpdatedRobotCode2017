@@ -17,7 +17,7 @@ public class NavXMoveCommand extends Command{
 	public boolean done = false;;
 	private double runTime;
 	private long startTime;
-	private double deadZone = 2;
+	private double deadZone = 1;
 	private double elapsedTime;
 	private double speed;
 	public boolean manualSpeedB;
