@@ -2,7 +2,7 @@ package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
 import com.team2502.robot2017.command.autonomous.AutoVCommand;
-import com.team2502.robot2017.command.setup.SwitchAutonomousCommand;
+import com.team2502.robot2017.subsystem.AutoSwitcherSubsystem;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -33,8 +33,6 @@ public final class OI
     public static final Button SUB_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.SUB_FLYWHEEL_SPEED);
     
     public static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.VISION_ALIGN);
-    
-    public static final Button SET_AUTO = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.AUTO_SELECT);
 
     static
     {
@@ -43,8 +41,6 @@ public final class OI
 		RESET_ENC_POSITION.whenPressed(new ResetEncodersCommand()); 
 		
         CLIMBER.whenPressed(new ClimberCommand());
-
-        SET_AUTO.whenPressed(new SwitchAutonomousCommand());
 
         ADD_AGITATOR_SPEED.whenPressed(new ChangeSpeedAgitatorCommand(true));
         SUB_AGITATOR_SPEED.whenPressed(new ChangeSpeedAgitatorCommand(false));

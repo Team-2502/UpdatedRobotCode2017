@@ -4,6 +4,7 @@ import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import com.team2502.robot2017.subsystem.DriveTrainTransmissionSubsystem;
 import com.team2502.robot2017.command.autonomous.*;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.BufferedReader;
@@ -18,6 +19,8 @@ public final class DashboardData
     public static final List<String> AUTO_NAMES = new ArrayList<>();
     public static final List<DriveTrainSubsystem.DriveTypes> DRIVE_CONTROL_SELECTOR = new ArrayList<>();
 
+    public static SendableChooser<Command> autoSelector = new SendableChooser<Command>();
+    
     public static int SELECTED_AUTONOMOUS = 0;
     public static int SELECTED_DRIVE_TYPE = 0;
 
@@ -40,6 +43,18 @@ public final class DashboardData
 
 //      AUTONOMOUS_SELECTOR.addDefault("Gear", new AutoCommandG1());
 //      AUTONOMOUS_SELECTOR.addDefault("Shoot", new AutoCommandG2());
+    	
+//    	autoSelector = new SendableChooser<Command>();
+//    	
+//    	autoSelector.addDefault("Center", new GearAutoCenter());
+//    	autoSelector.addObject("Left", new GearAutoLeft());
+//    	autoSelector.addObject("Right", new GearAutoRight());
+//    	autoSelector.addObject("Shoot and Gear Blue", new ShootAndGearAutoBlue());
+//    	autoSelector.addObject("Shoot and Gear Red", new ShootAndGearAutoRed());
+//    	autoSelector.addObject("Baseline", new DriveTimeCommand(3));
+    	
+    	SmartDashboard.putData("Auton Selector", autoSelector);
+    	
     	
     	AUTONOMOUS_SELECTOR.add(new ShootAndGearAutoRed());
         AUTO_NAMES.add("Shoot and Gear Auto for Red");
