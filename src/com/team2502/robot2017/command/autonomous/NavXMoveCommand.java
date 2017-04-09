@@ -98,32 +98,24 @@ public class NavXMoveCommand extends Command
 		{	
 			// right = pos
 			// left = neg
-			if(currentYaw > targetYaw)
-			{
-				driveTrain.runMotors(-speed, -speed);
-			} 
-			else if(currentYaw < targetYaw)
-			{
-				driveTrain.runMotors(speed, speed);
-			}
+			if(currentYaw > targetYaw) { driveTrain.runMotors(-speed, -speed); } 
+			else if(currentYaw < targetYaw) { driveTrain.runMotors(speed, speed); }
 		}
-		else
-		{
-			driveTrain.runMotors(speed, -speed);
-		}
+		else { driveTrain.runMotors(speed, -speed); }
 	}
 
 	@Override
 	protected boolean isFinished()
 	{
 		// Will end if time elapsed while at targetYaw or at appropriate distance
-		if(angleOnly)
-		{ return Math.abs(currentYaw - targetYaw) > deadZone; }
+		if(angleOnly) { return Math.abs(currentYaw - targetYaw) > deadZone; }
 		else
-		{
-		if(Math.abs(currentYaw - targetYaw) > deadZone)
-		{ return System.currentTimeMillis() - startTime > runTime; }
-		else { return false; }
+		{ 
+		    if(Math.abs(currentYaw - targetYaw) > deadZone)
+		    {
+		    return System.currentTimeMillis() - startTime > runTime;
+		    }
+		    else { return false; }
 		}
 	}
 
@@ -137,13 +129,9 @@ public class NavXMoveCommand extends Command
 	 * @param  x seconds that have passed since you started turning/
 	 * @return the speed one side of the drive train should go at
 	 */
-	protected double getSpeed(double x) {
-		if(targetYaw == 0){
-			return manualSpeed;
-		}
-		else
-		{
-			return (-0.5/(1+Math.pow(x, 2)/2000))+0.5;
-		}
+	protected double getSpeed(double x)
+	{
+		if(targetYaw == 0){ return manualSpeed; }
+		else { return (-0.5/(1+Math.pow(x, 2)/2000))+0.5; }
 	}
 }

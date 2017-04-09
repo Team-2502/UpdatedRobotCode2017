@@ -10,7 +10,6 @@ public class VisionSubsystem extends Subsystem
     static NetworkTable visionTable;
     
     private Relay visionLight = new Relay(0);
-    
 
     double offset;
     double width;
@@ -37,14 +36,7 @@ public class VisionSubsystem extends Subsystem
      */
     public double getFPS() { return visionTable.getNumber("fps", 1023); }
     
-    public void turnOffVisionLight()
-    {
-    	visionLight.set(Relay.Value.kOff);    	
-    }
+    public void turnOffVisionLight() { visionLight.set(Relay.Value.kOff); }
     
-    public void turnOnVisionLight()
-    {
-    	visionLight.set(Relay.Value.kOn);    	
-    }
-
+    public void turnOnVisionLight() { visionLight.set(Relay.Value.kOn); }
 }
