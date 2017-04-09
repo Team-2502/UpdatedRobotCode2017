@@ -1,11 +1,13 @@
 package com.team2502.robot2017;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.team2502.robot2017.command.ClimberCommand;
 import com.team2502.robot2017.command.autonomous.*;
 import com.team2502.robot2017.subsystem.*;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -19,9 +21,9 @@ public final class Robot extends IterativeRobot
 	public static Compressor COMPRESSOR;
 	public static ShooterSubsystem SHOOTER;
 	public static ActiveIntakeSubsystem ACTIVE;
-	public static GearBoxSubsystem GEAR_BOX;
 	public static DriveTrainTransmissionSubsystem DRIVE_TRAIN_GEAR_SWITCH;
 	public static ClimberSubsystem CLIMBER;
+	public static AutoSwitcherSubsystem AUTOSWITCHER;
 
 	// NavX Subsystem
 	public static final AHRS NAVX = new AHRS(SPI.Port.kMXP);
@@ -30,6 +32,7 @@ public final class Robot extends IterativeRobot
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
+
 	public void robotInit()
 	{
 		DRIVE_TRAIN = new DriveTrainSubsystem();
@@ -39,11 +42,16 @@ public final class Robot extends IterativeRobot
 		COMPRESSOR = new Compressor();
 		SHOOTER = new ShooterSubsystem();
 		ACTIVE = new ActiveIntakeSubsystem();
-		GEAR_BOX = new GearBoxSubsystem();
 		CLIMBER = new ClimberSubsystem();
+		AUTOSWITCHER = new AutoSwitcherSubsystem();
+		
+		AutoSwitcherSubsystem.putToSmartDashboard();
 
+		Robot.CLIMBER.setBrake(true); // when the climber is out the brake is off
 		DashboardData.setup();
 		OI.init();
+		
+		NAVX.resetDisplacement();
 	}
 
 	/**
@@ -73,8 +81,9 @@ public final class Robot extends IterativeRobot
 	 */
 	public void autonomousInit() 
 	{
-//		Scheduler.getInstance().add(DashboardData.getAutonomous());
-		Scheduler.getInstance().add(new ShootAndGearAutoBlue());
+//		Scheduler.getInstance().add(new GearAutoCenter());
+		Scheduler.getInstance().add(AutoSwitcherSubsystem.getAutoInstance());
+		VISION.turnOnVisionLight();
 	}
 
 	/**
@@ -85,8 +94,11 @@ public final class Robot extends IterativeRobot
 		Scheduler.getInstance().run();
 		DashboardData.update();
 	}
-
-	public void teleopInit() {}
+	
+	public void teleopInit() 
+	{
+		VISION.turnOffVisionLight();
+	}
 
 	/**
 	 * This function is called periodically during operator control

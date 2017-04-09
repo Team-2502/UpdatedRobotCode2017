@@ -68,3 +68,14 @@ javadoc.onlyIf { project.hasProperty('runJavadoc') }
 task wrapper(type: Wrapper) {
     gradleVersion = '3.2.1'
 }
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
