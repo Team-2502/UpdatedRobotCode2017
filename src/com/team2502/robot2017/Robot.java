@@ -43,11 +43,13 @@ public final class Robot extends IterativeRobot {
 		CLIMBER = new ClimberSubsystem();
 		AUTOSWITCHER = new AutoSwitcherSubsystem();
 		
-		AUTOSWITCHER.putToSmartDashboard();
+		AutoSwitcherSubsystem.putToSmartDashboard();
 
 		Robot.CLIMBER.setBrake(true); // when the climber is out the brake is off
 		DashboardData.setup();
 		OI.init();
+		
+		NAVX.resetDisplacement();
 	}
 
 	/**
@@ -78,7 +80,8 @@ public final class Robot extends IterativeRobot {
 	public void autonomousInit() 
 	{
 //		Scheduler.getInstance().add(new GearAutoCenter());
-		Scheduler.getInstance().add(AUTOSWITCHER.getAutoInstance());
+		Scheduler.getInstance().add(AutoSwitcherSubsystem.getAutoInstance());
+		VISION.turnOnVisionLight();
 	}
 
 	/**
@@ -89,9 +92,9 @@ public final class Robot extends IterativeRobot {
 		DashboardData.update();
 	}
 
-
 	public void teleopInit() 
 	{
+		VISION.turnOffVisionLight();
 	}
 
 

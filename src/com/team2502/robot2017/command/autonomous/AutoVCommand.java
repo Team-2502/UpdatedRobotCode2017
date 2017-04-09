@@ -16,7 +16,7 @@ public class AutoVCommand extends Command
     public double rightSpeed;
     public boolean inFrontOfGear = false;
     public boolean Reverse = false;
-    public VisionSubsystem vision = Robot.VISION;
+    public VisionSubsystem vision;
     double startTime = System.currentTimeMillis();
     double targetElapsed = 15;
     boolean alignOnly = false;
@@ -40,6 +40,9 @@ public class AutoVCommand extends Command
     public AutoVCommand(double runTime)
     {
         requires(Robot.DRIVE_TRAIN);
+        requires(Robot.VISION);
+        
+        vision = Robot.VISION;
         dt = Robot.DRIVE_TRAIN;
         targetElapsed = runTime*1000;
 
@@ -102,6 +105,7 @@ public class AutoVCommand extends Command
 
     protected void initialize() 
     {
+    	vision.turnOnVisionLight();
     	startTime = System.currentTimeMillis();
     }
     
@@ -172,7 +176,10 @@ public class AutoVCommand extends Command
     	}
     }
 
-    protected void end() { dt.stop(); }
+    protected void end() {
+    	dt.stop();
+    	vision.turnOffVisionLight();
+    }
     
     private double getSpeed(double x)
     {

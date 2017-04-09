@@ -35,6 +35,7 @@ public class DriveTrainSubsystem extends Subsystem
     public double rightSpeed;
     public boolean negative = false;
     public boolean isNegativePressed = false;
+    private boolean isClimbMode = false;
 //    public boolean negMode = false;
 
     public int millisecondsToRunTL = 1000;
@@ -70,6 +71,7 @@ public class DriveTrainSubsystem extends Subsystem
      */
     public void setAutonSettings(CANTalon talon)
     {
+    	isClimbMode = false;
         talon.changeControlMode(TalonControlMode.Position);
         talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
         talon.configEncoderCodesPerRev(256);
@@ -89,10 +91,33 @@ public class DriveTrainSubsystem extends Subsystem
      */
     public void setTeleopSettings(CANTalon talon)
     {
+    	isClimbMode = false;
+        talon.configNominalOutputVoltage(0.0D, -0.0D);
+        talon.configPeakOutputVoltage(12.0D, -12.0D);
         talon.changeControlMode(TalonControlMode.PercentVbus);
         talon.disableControl(); // needed if switching from auton settings
     }
     
+    public void switchClimbSettings()
+    {
+    	if(isClimbMode)
+    	{
+    		isClimbMode = false;
+    		setTeleopSettings(leftTalon0);
+    		setTeleopSettings(leftTalon1);
+    		setTeleopSettings(rightTalon0);
+    		setTeleopSettings(rightTalon1);
+    	}
+    	else if(!isClimbMode)
+    	{
+    		isClimbMode = true;
+    		leftTalon0.configPeakOutputVoltage(-8.0D, 8.0D);
+        	rightTalon0.configPeakOutputVoltage(-8.0D, 8.0D);
+        	leftTalon1.configPeakOutputVoltage(-8.0D, 8.0D);
+        	rightTalon1.configPeakOutputVoltage(-8.0D, 8.0D);
+    	}
+    	
+    }
     /**
      * @param talon A talon with an encoder attached to it
      * @return the position of the encoder
@@ -271,8 +296,7 @@ public class DriveTrainSubsystem extends Subsystem
 
     public void drive()
     {
-        Pair<Double, Double> speed = DashboardData.getDriveType() == DriveTypes.DUAL_STICK ? getSpeed()
-                                                                                           : getSpeedArcade();
+        Pair<Double, Double> speed = getSpeed();
 
       
         //reverse drive

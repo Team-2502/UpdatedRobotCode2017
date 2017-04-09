@@ -20,7 +20,7 @@ public class RobotMap
         {
             public static final int SWITCH_DRIVE_TRANSMISSION = 1;
             public static final int SHOOTER_TOGGLE = 5;
-            public static final int VISION_ALIGN = UNDEFINED; // Grantygrant said he wanted this but never told me which button
+            public static final int VISION_ALIGN = 3;
             
             public static final int CLIMBER =  8;
             public static final int SHOOTER = 1;
@@ -34,7 +34,8 @@ public class RobotMap
             public static final int ADD_BANEBOT_SPEED = 11;
             public static final int SUB_BANEBOT_SPEED = 10;
             public static final int ADD_FLYWHEEL_SPEED = 10;
-            public static final int SUB_FLYWHEEL_SPEED = 9;          
+            public static final int SUB_FLYWHEEL_SPEED = 9;
+			public static final int CLIMB_MODE = UNDEFINED;          
 
 
             private Button() {}

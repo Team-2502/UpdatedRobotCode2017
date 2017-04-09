@@ -11,6 +11,8 @@ public class ShootAutoBase extends CommandGroup {
 	 * <hr>
 	 * @param allianceColor The color of the alliance("red" or "blue"). If it is not either "red" or "blue", the robot will turn 180.
 	 */
+	private double angle = -60;
+	
 	public ShootAutoBase(String allianceColor)
 	{
 		// shoot balls into boiler
@@ -27,12 +29,12 @@ public class ShootAutoBase extends CommandGroup {
 	    if(allianceColor.toLowerCase() == "red")
 	    {
 	    	// Straighten
-	        addSequential(new NavXMoveCommand(-140, 1.5));
+	        addSequential(new NavXMoveCommand(-angle, 1.5));
 	    }
 	    else if(allianceColor.toLowerCase() == "blue")
 	    {
 	    	// Straighten
-	        addSequential(new NavXMoveCommand(140, 1.5));
+	        addSequential(new NavXMoveCommand(angle, 1.5));
 	    }
 	    else
 	    {

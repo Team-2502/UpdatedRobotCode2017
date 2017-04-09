@@ -20,12 +20,12 @@ public class AutoSwitcherSubsystem
 		BASELINE("Baseline only", DriveTimeCommand.class);
 		
 		
-		private Class<? extends Command> clazz;
+		private Class<? extends Command> autoCommand;
 		private String name;
 
-		AutoMode(String name, Class<? extends Command> clazz)
+		AutoMode(String name, Class<? extends Command> autoCommand)
 		{
-			this.clazz = clazz;
+			this.autoCommand = autoCommand;
 			this.name = name;
 		}
 		
@@ -33,7 +33,7 @@ public class AutoSwitcherSubsystem
 		{
 			Command instance;
 			try {
-				instance = clazz.newInstance();
+				instance = autoCommand.newInstance();
 			}
 			catch(InstantiationException | IllegalAccessException e)
 			{
