@@ -11,30 +11,15 @@ public class DistanceSensorSubsystem extends Subsystem
     private static final double INPUT_VOLTAGE = 5.0D;
     private AnalogInput distanceSensor;
 
-    public DistanceSensorSubsystem()
-    {
-        distanceSensor = new AnalogInput(RobotMap.Electrical.DISTANCE_SENSOR);
-    }
+    public DistanceSensorSubsystem() { distanceSensor = new AnalogInput(RobotMap.Electrical.DISTANCE_SENSOR); }
 
     @Override
     protected void initDefaultCommand() {}
 
-   
     public double getSensorDistance()
     {	
-    	if(distanceSensor.getVoltage()*distScaleFactor < 6)
-    	{
-    		return 20;
-    	}
-    	
-    	else if(distanceSensor.getVoltage()*distScaleFactor > 18 )
-    	{
-    		return 0;
-    	}
-    	
-    	else
-    	{
-        	return(distanceSensor.getVoltage()*distScaleFactor);
-    	}
+    	if(distanceSensor.getVoltage()*distScaleFactor < 6) { return 20; }
+    	else if(distanceSensor.getVoltage()*distScaleFactor > 18 ) { return 0; }
+    	else { return(distanceSensor.getVoltage()*distScaleFactor); }
     }
 }

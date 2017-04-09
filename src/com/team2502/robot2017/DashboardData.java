@@ -1,15 +1,12 @@
 package com.team2502.robot2017;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
 
 @SuppressWarnings({ "WeakerAccess" })
 public final class DashboardData
 {
-
     private DashboardData() {}
     
     public static void update()
@@ -17,7 +14,6 @@ public final class DashboardData
     	updatePressure();
     	updateDriveTrain();
         updateNavX();
-        updateDriveTrain();
         updateShooter();
     }
 
@@ -56,7 +52,6 @@ public final class DashboardData
         SmartDashboard.putNumber("FEED: Agitator Target Speed", Robot.SHOOTER.getAgitatorTargetSpeed());
         SmartDashboard.putNumber("FEED: Colson Target Speed", Robot.SHOOTER.getColsonTargetSpeed());
         SmartDashboard.putNumber("FEED: Banebot Target Speed", Robot.SHOOTER.getBanebotTargetSpeed());
-    	
     }
     
     private static void updateDriveTrain()
@@ -72,9 +67,6 @@ public final class DashboardData
     	SmartDashboard.putNumber("NavX: X Displacement", Robot.NAVX.getDisplacementX());
     	SmartDashboard.putNumber("NavX: Y Displacement", Robot.NAVX.getDisplacementY());
     	SmartDashboard.putNumber("NavX: Z Displacement", Robot.NAVX.getDisplacementZ());
-        
-    	
-
     }
 
     private static void updatePressure()

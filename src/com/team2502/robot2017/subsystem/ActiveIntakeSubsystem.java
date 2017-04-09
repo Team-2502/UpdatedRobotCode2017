@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ActiveIntakeSubsystem extends Subsystem
 {
     private CANTalon activeTalon;
+    
     /**
      * Constructor for the active intake subsystem
      */

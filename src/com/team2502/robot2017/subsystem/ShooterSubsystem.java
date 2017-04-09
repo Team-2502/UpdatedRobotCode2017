@@ -93,61 +93,41 @@ public class ShooterSubsystem extends Subsystem
      *
      * @return The current velocity of the flywheel.
      */
-    public int getSpeedFlywheel()
-    {
-        return flywheelTalon.getEncVelocity();
-    }
+    public int getSpeedFlywheel() { return flywheelTalon.getEncVelocity(); }
     
     /**
      * This information is pulled from the CANTalon class, NOT THE ENCODER CLASS!
      *
      * @return The current velocity of the banebot feeder.
      */
-    public int getSpeedFeeder()
-    {
-        return banebotFeeder.getEncVelocity();
-    }
+    public int getSpeedFeeder() { return banebotFeeder.getEncVelocity(); }
     
     /**
      * This information is pulled from the CANTalon class, NOT THE ENCODER CLASS!
      *
      * @return The output voltage of the flywheel talon divided by its bus voltage
      */
-    public double getMotorOutput()
-    {
-        return flywheelTalon.getOutputVoltage() / flywheelTalon.getBusVoltage();
-    }
+    public double getMotorOutput() { return flywheelTalon.getOutputVoltage() / flywheelTalon.getBusVoltage(); }
     
     /**
      * @return the agitator target speed
      */
-    public double getAgitatorTargetSpeed()
-    {
-    	return agitatorSpeed;
-    }
+    public double getAgitatorTargetSpeed() { return agitatorSpeed; }
+    
     /**
      * @return the colson target speed
      */
-    public double getColsonTargetSpeed()
-    {
-    	return colsonSpeed;
-    }
+    public double getColsonTargetSpeed() { return colsonSpeed; }
+    
     /**
      * @return the banebot target speed
      */
-    public double getBanebotTargetSpeed()
-    {
-    	return banebotSpeed;
-    }
-    
+    public double getBanebotTargetSpeed() { return banebotSpeed; }
     
     /**
      * @return the target speed of the flywheel
      */
-    public double getFlywheelTargetSpeed()
-    {
-        return targetSpeedFlywheel;
-    }
+    public double getFlywheelTargetSpeed() { return targetSpeedFlywheel; }
     
     /**
      * <b>Actually turns on the flywheel</b>. Sets appropriate talon settings and FPID in the process.
@@ -178,31 +158,20 @@ public class ShooterSubsystem extends Subsystem
         agitator.set(agitatorSpeed);
     }
 
-
     /**
      * @return the target speed
      */
-    public double getTargetSpeedFlywheel()
-    {
-        return targetSpeedFlywheel;
-    }
+    public double getTargetSpeedFlywheel() { return targetSpeedFlywheel; }
 
     /**
      * @return Error calculated in the flywheel FPID
      */
-    public int getError()
-    {
-        return flywheelTalon.getClosedLoopError();
-    }
-    
+    public int getError() { return flywheelTalon.getClosedLoopError(); }
     
     /**
      * @return Error calculated in the banebot FPID
      */
-    public int getErrorFeeder()
-    {
-        return banebotFeeder.getClosedLoopError();
-    }
+    public int getErrorFeeder() { return banebotFeeder.getClosedLoopError(); }
     
     /**
      * Change the speed of the agitator
@@ -251,13 +220,11 @@ public class ShooterSubsystem extends Subsystem
         flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
 
         // Toggle mode for flywheel. It is bound to button 5 on the Function stick.
-        if(OI.JOYSTICK_FUNCTION.getRawButton(5) && !isTriggerPressed)
-        {
-            shooterMode = !shooterMode;
-        }
+        if(OI.JOYSTICK_FUNCTION.getRawButton(5) && !isTriggerPressed) { shooterMode = !shooterMode; }
         isTriggerPressed = OI.JOYSTICK_FUNCTION.getRawButton(5);
 
         if(shooterMode) { flywheelTalon.set(targetSpeedFlywheel); }
+        
         else { flywheelTalon.set(0); }
 
         //Control for turning on/off the feeding mechanism.
@@ -268,10 +235,7 @@ public class ShooterSubsystem extends Subsystem
             agitator.set(agitatorSpeed);
         }
 
-        else if(OI.JOYSTICK_FUNCTION.getRawButton(12))
-        {
-        	agitator.set(-agitatorSpeed);
-        }
+        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(-agitatorSpeed); }
 
         else
         {
@@ -297,4 +261,3 @@ public class ShooterSubsystem extends Subsystem
         isFeederActive = false;
     }
 }
-
