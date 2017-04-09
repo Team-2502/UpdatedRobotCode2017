@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Relay;
 
-
 // Implementing ITableListener is necessary for having the listener work, do not remove!
 public class VisionSubsystem extends Subsystem
 {
@@ -47,6 +46,5 @@ public class VisionSubsystem extends Subsystem
     {
     	visionLight.set(Relay.Value.kOn);    	
     }
-
 
 }

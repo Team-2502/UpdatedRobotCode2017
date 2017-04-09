@@ -12,10 +12,6 @@ public class ShootCommand extends Command
     public boolean both = false;
 
     /**
-     * @param runTime Time to run for in milliseconds.
-     */
-
-    /**
      * @param runTime Time to run for in seconds.
      */
     public ShootCommand(double runTime, boolean both)
@@ -27,37 +23,17 @@ public class ShootCommand extends Command
     }
 
     @Override
-    protected void initialize()
-    {
-        startTime = System.currentTimeMillis();
-    }
+    protected void initialize() { startTime = System.currentTimeMillis(); }
 
     @Override
-    protected void execute()
-    {   
-        if(both)
-        {
-            shooterSubsystem.feed();
-        }
-        shooterSubsystem.turnOnFlywheel(); 
-        
-    }
+    protected void execute() { if(both) { shooterSubsystem.feed(); } shooterSubsystem.turnOnFlywheel(); }
 
     @Override
-    protected boolean isFinished()
-    {
-        return (System.currentTimeMillis() - startTime > runTime);
-    }
+    protected boolean isFinished() { return (System.currentTimeMillis() - startTime > runTime); }
 
     @Override
-    protected void end()
-    {
-        shooterSubsystem.stop();
-    }
+    protected void end() { shooterSubsystem.stop(); }
 
     @Override
-    protected void interrupted()
-    {
-        end();
-    }
+    protected void interrupted() { end(); }
 }

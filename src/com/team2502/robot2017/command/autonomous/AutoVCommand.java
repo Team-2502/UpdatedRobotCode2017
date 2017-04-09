@@ -5,8 +5,6 @@ import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import com.team2502.robot2017.subsystem.VisionSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-
-
 @SuppressWarnings("WeakerAccess")
 public class AutoVCommand extends Command
 {
@@ -45,7 +43,6 @@ public class AutoVCommand extends Command
         vision = Robot.VISION;
         dt = Robot.DRIVE_TRAIN;
         targetElapsed = runTime*1000;
-
     }
     
     /**
@@ -58,7 +55,6 @@ public class AutoVCommand extends Command
     {
         this(runTime);
         alignOnly = align;
-
     }
     
     /**
@@ -86,23 +82,18 @@ public class AutoVCommand extends Command
      * @param align     if it should be in align-only mode
      * @param lowSpeed  The lower speed for turning
      * @param highSpeed The higher speed for turning
-     * 
-     * 
-     * 
      */
     public AutoVCommand(double runTime, boolean align, double lowSpeed, double highSpeed)
     {
         this(runTime, align);
         this.lowSpeed = lowSpeed;
         this.highSpeed = highSpeed;
-        
     }
 
     @Override
     protected void interrupted() { end(); }
     
     @Override
-
     protected void initialize() 
     {
     	vision.turnOnVisionLight();
@@ -124,6 +115,7 @@ public class AutoVCommand extends Command
         {
         	dt.runMotors(.5D, -.5D);
         }
+    	
     }
     
     protected void smoothSpeed(double offset)
@@ -157,7 +149,6 @@ public class AutoVCommand extends Command
         	linearSpeed(offset);
         }
         
-
     }
 
     @Override
@@ -187,4 +178,3 @@ public class AutoVCommand extends Command
     }
 
 }
-

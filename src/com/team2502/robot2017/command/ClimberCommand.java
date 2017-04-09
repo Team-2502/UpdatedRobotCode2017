@@ -6,13 +6,14 @@ import com.team2502.robot2017.subsystem.ClimberSubsystem;
 
 public class ClimberCommand extends Command
 {   
+	
     private final ClimberSubsystem ClimberSubsystem;
     boolean stopped;
+    
     public ClimberCommand()
     {
         requires(Robot.CLIMBER);
-        ClimberSubsystem = Robot.CLIMBER;   
-        
+        ClimberSubsystem = Robot.CLIMBER;           
     }
     
     public boolean getstopped()
@@ -24,26 +25,19 @@ public class ClimberCommand extends Command
         stopped = Stopped;
     }
     
+    @Override
     protected void initialize() {}
 
     @Override
-    protected void execute()
-    {     
-   
-        ClimberSubsystem.switchBrake();
-
-    }
+    protected void execute() { ClimberSubsystem.switchBrake(); }
     
-
     @Override
-    protected boolean isFinished()
-    {
-        return true;
-    }
-
+    protected boolean isFinished() { return true; }
+    
     @Override
     protected void end() {}
 
     @Override
     protected void interrupted() { end(); }
+
 }

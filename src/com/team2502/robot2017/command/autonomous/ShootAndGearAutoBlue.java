@@ -26,7 +26,5 @@ public class ShootAndGearAutoBlue extends CommandGroup
       addSequential(new NavXMoveCommand(10, 0.1)); // wiggle
       addSequential(new NavXMoveCommand(-20, 0.1)); // woggle
       
-        
-
     }
 }

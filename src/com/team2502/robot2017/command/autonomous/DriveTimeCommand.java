@@ -14,5 +14,4 @@ public class DriveTimeCommand extends CommandGroup
 	{
 		addSequential(new NavXMoveCommand(0, runTime, speed, false));		
 	}
-	
 }

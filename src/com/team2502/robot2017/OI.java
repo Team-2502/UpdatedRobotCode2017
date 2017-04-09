@@ -36,6 +36,7 @@ public final class OI
     
     public static final Button CLIMB_MODE = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.CLIMB_MODE);
 
+
     static
     {
         SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());

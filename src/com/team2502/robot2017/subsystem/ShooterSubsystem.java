@@ -180,12 +180,22 @@ public class ShooterSubsystem extends Subsystem
 
 
     /**
+     * @return the target speed
+     */
+    public double getTargetSpeedFlywheel()
+    {
+        return targetSpeedFlywheel;
+    }
+
+    /**
      * @return Error calculated in the flywheel FPID
      */
     public int getError()
     {
         return flywheelTalon.getClosedLoopError();
     }
+    
+    
     /**
      * @return Error calculated in the banebot FPID
      */
@@ -193,6 +203,7 @@ public class ShooterSubsystem extends Subsystem
     {
         return banebotFeeder.getClosedLoopError();
     }
+    
     /**
      * Change the speed of the agitator
      * @param isAdd Should I increase the speed?
@@ -202,6 +213,7 @@ public class ShooterSubsystem extends Subsystem
     	if(isAdd) { agitatorSpeed += 0.05; }
     	if(!isAdd) { agitatorSpeed -= 0.05; }
     }
+    
     /**
      * Change the speed of the colson
      * @param isAdd Should I increase the speed?
@@ -255,6 +267,7 @@ public class ShooterSubsystem extends Subsystem
             banebotFeeder.set(-banebotSpeed);
             agitator.set(agitatorSpeed);
         }
+
         else if(OI.JOYSTICK_FUNCTION.getRawButton(12))
         {
         	agitator.set(-agitatorSpeed);
@@ -267,7 +280,6 @@ public class ShooterSubsystem extends Subsystem
             agitator.set(0);
         }
     }
-    
     
     /**
      * Kill flywheel by setting talons to 0
@@ -284,9 +296,5 @@ public class ShooterSubsystem extends Subsystem
         isFlywheelActive = false;
         isFeederActive = false;
     }
-
-
-	
 }
 
-    

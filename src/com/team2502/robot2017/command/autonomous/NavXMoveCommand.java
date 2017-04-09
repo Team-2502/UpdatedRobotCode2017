@@ -7,8 +7,8 @@ import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class NavXMoveCommand extends Command{
-
+public class NavXMoveCommand extends Command
+{
 	public double targetYaw;
 	private DriveTrainSubsystem driveTrain;
 	private AHRS navx;
@@ -47,8 +47,8 @@ public class NavXMoveCommand extends Command{
         angleOnly = true;
         targetYaw = angle;
 //        navx.reset();
-	
-	  }
+    }
+    
     /**
      * Turn to an angle, and drive on it for some time
      * @param angle   the angle to turn to
@@ -60,12 +60,14 @@ public class NavXMoveCommand extends Command{
 	    targetYaw = angle;
 	    this.runTime = (runTime*1000);
 //	    navx.reset();
-    } 
+    }
+    
     /**
      * Turns angle for a curtain amount of time and curtain speed
      * @param angle - turn a curtain amount
      * @param runTime - runs for a curtain amount
      * @param speed - sets curtain amount of speed
+     * @param speedIsForStraightOnly - linear turning or not?
      */
     public NavXMoveCommand(double angle, double runTime, double speed, boolean speedIsForStraightOnly)
     {
@@ -111,27 +113,17 @@ public class NavXMoveCommand extends Command{
 		}
 	}
 
-				
-		
-		
-
 	@Override
-	protected boolean isFinished() {
+	protected boolean isFinished()
+	{
 		// Will end if time elapsed while at targetYaw or at appropriate distance
 		if(angleOnly)
-		{
-			return Math.abs(currentYaw - targetYaw) > deadZone;
-		}
+		{ return Math.abs(currentYaw - targetYaw) > deadZone; }
 		else
 		{
 		if(Math.abs(currentYaw - targetYaw) > deadZone)
-			{
-				return System.currentTimeMillis() - startTime > runTime;
-			}
-		else
-			{
-		        return false;
-			}
+		{ return System.currentTimeMillis() - startTime > runTime; }
+		else { return false; }
 		}
 	}
 
@@ -140,7 +132,6 @@ public class NavXMoveCommand extends Command{
 
 	@Override
 	protected void interrupted() { end(); }
-	
 	
 	/**
 	 * @param  x seconds that have passed since you started turning/
@@ -155,5 +146,4 @@ public class NavXMoveCommand extends Command{
 			return (-0.5/(1+Math.pow(x, 2)/2000))+0.5;
 		}
 	}
-
 }

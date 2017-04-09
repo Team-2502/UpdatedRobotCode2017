@@ -9,15 +9,13 @@ import java.io.InputStreamReader;
 @SuppressWarnings({ "WeakerAccess" })
 public final class DashboardData
 {
-	
-    public static int SELECTED_AUTONOMOUS = 0;
-    public static int SELECTED_DRIVE_TYPE = 0;
 
     private DashboardData() {}
     
     public static void update()
     {
-        updatePressure();
+    	updatePressure();
+    	updateDriveTrain();
         updateNavX();
         updateDriveTrain();
         updateShooter();
@@ -25,7 +23,6 @@ public final class DashboardData
 
     public static void setup()
     {
-
         // versioning
         try
         {
@@ -81,7 +78,7 @@ public final class DashboardData
     }
 
     private static void updatePressure()
-    {       
+    {
         if(Enabler.PRESSURE.enabler[0])
         {
             if(Enabler.PRESSURE.enabler[1]) { SmartDashboard.putNumber("Current Tank Pressure", Robot.PRESSURE_SENSOR.getPressure()); }

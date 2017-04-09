@@ -16,7 +16,6 @@ public class EncDriveBackwardsCommand extends Command
         driveTrain = Robot.DRIVE_TRAIN;
         targetDist = TargetDist;
     }
-    
 
     @Override
     protected void initialize()
@@ -35,22 +34,15 @@ public class EncDriveBackwardsCommand extends Command
     }
 
     @Override
-    protected boolean isFinished()
-    {
-        return currentDist <= targetDist;
-    }
+    protected boolean isFinished() { return currentDist <= targetDist; }
 
     @Override
     protected void end()
     {
         driveTrain.setTeleopSettings(driveTrain.leftTalon0);
         driveTrain.setTeleopSettings(driveTrain.rightTalon0);
-
     }
 
     @Override
-    protected void interrupted()
-    {
-        end();
-    }
+    protected void interrupted() { end(); }
 }

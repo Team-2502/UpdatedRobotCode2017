@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-
 @SuppressWarnings({ "WeakerAccess", "unused" })
-public final class Robot extends IterativeRobot {
+public final class Robot extends IterativeRobot 
+{
 	// Makes all the stuff
 	public static DriveTrainSubsystem DRIVE_TRAIN;
 	public static PressureSensorSubsystem PRESSURE_SENSOR;
@@ -26,13 +26,15 @@ public final class Robot extends IterativeRobot {
 	public static AutoSwitcherSubsystem AUTOSWITCHER;
 
 	// NavX Subsystem
-	 public static final AHRS NAVX = new AHRS(SPI.Port.kMXP);
+	public static final AHRS NAVX = new AHRS(SPI.Port.kMXP);
 	 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
-	public void robotInit() {
+
+	public void robotInit()
+	{
 		DRIVE_TRAIN = new DriveTrainSubsystem();
 		DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
 		PRESSURE_SENSOR = new PressureSensorSubsystem();
@@ -59,8 +61,8 @@ public final class Robot extends IterativeRobot {
 	 */
 	public void disabledInit() {}
 
-	public void disabledPeriodic() {
-
+	public void disabledPeriodic()
+	{
 		Scheduler.getInstance().run();
 		DashboardData.update();
 		DRIVE_TRAIN.stop();
@@ -87,21 +89,22 @@ public final class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during autonomous
 	 */
-	public void autonomousPeriodic() {
+	public void autonomousPeriodic()
+	{
 		Scheduler.getInstance().run();
 		DashboardData.update();
 	}
-
+	
 	public void teleopInit() 
 	{
 		VISION.turnOffVisionLight();
 	}
 
-
 	/**
 	 * This function is called periodically during operator control
 	 */
-	public void teleopPeriodic() {
+	public void teleopPeriodic()
+	{
 		Scheduler.getInstance().run();
 		DashboardData.update();
 	}
@@ -109,7 +112,8 @@ public final class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during test mode
 	 */
-	public void testPeriodic() {
+	public void testPeriodic()
+	{
 		LiveWindow.run();
 		DashboardData.update();
 	}
