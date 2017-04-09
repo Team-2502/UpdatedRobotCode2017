@@ -29,25 +29,16 @@ public class DriveTrainTransmissionSubsystem extends Subsystem
     /**
      * Switch the gear from its current state
      */
-    public void switchGear()
-    {
-        setGear(highGear = !highGear);
-    }
+    public void switchGear() { setGear(highGear = !highGear); }
     
     /**
      * @return if we are in high gear
      */
-    public boolean getGear()
-    {
-        return highGear;
-    }
+    public boolean getGear() { return highGear; }
 
     /**
      * Set the transmission to a specific high gear or low gear
      * @param highGear Boolean saying "do you want to be in high gear?"
      */
-    public void setGear(boolean highGear)
-    {
-        switcher.set(this.highGear = highGear);
-    }
+    public void setGear(boolean highGear) { switcher.set(this.highGear = highGear); }
 }

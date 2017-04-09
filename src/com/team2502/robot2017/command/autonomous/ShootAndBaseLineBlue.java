@@ -6,10 +6,7 @@ public class ShootAndBaseLineBlue extends CommandGroup
 {
     public ShootAndBaseLineBlue()
     {
-
     	addSequential(new ShootAutoBase("blue"));
-    	
         addSequential(new DriveTimeCommand(1, 1));
-
     }
 }

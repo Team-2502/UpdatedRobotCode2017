@@ -26,22 +26,8 @@ public class ShootAutoBase extends CommandGroup {
 	    // Pull away from boiler
 	    addSequential(new DriveTimeCommand(.5/3, -1));
 	    
-	    if(allianceColor.toLowerCase() == "red")
-	    {
-	    	// Straighten
-	        addSequential(new NavXMoveCommand(-angle, 1.5));
-	    }
-	    else if(allianceColor.toLowerCase() == "blue")
-	    {
-	    	// Straighten
-	        addSequential(new NavXMoveCommand(angle, 1.5));
-	    }
-	    else
-	    {
-	    	//
-	    	addSequential(new NavXMoveCommand(180, 10));
-	    }
-
+	    if(allianceColor.toLowerCase() == "red") { addSequential(new NavXMoveCommand(-angle, 1.5)); }
+	    else if(allianceColor.toLowerCase() == "blue") { addSequential(new NavXMoveCommand(angle, 1.5)); }
+	    else { addSequential(new NavXMoveCommand(180, 10)); }
 	}
-
 }

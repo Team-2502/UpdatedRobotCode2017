@@ -2,8 +2,6 @@ package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
 import com.team2502.robot2017.command.autonomous.AutoVCommand;
-import com.team2502.robot2017.subsystem.AutoSwitcherSubsystem;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -36,7 +34,6 @@ public final class OI
     
     public static final Button CLIMB_MODE = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.CLIMB_MODE);
 
-
     static
     {
         SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
@@ -60,8 +57,6 @@ public final class OI
         VISION_ALIGN.toggleWhenPressed(new AutoVCommand(2));
         
         CLIMB_MODE.whenPressed(new ClimbModeCommand());
-        
-        
     }
 
     public static void init() {}

@@ -4,7 +4,6 @@ import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.ShooterSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-// TODO: Add proper implementation
 public class ChangeSpeedColsonCommand extends Command
 {
     private final ShooterSubsystem shooterSubsystem;
@@ -20,7 +19,7 @@ public class ChangeSpeedColsonCommand extends Command
     }
 
     @Override
-    protected void initialize() { }
+    protected void initialize() {}
 
     @Override
     protected void execute() { shooterSubsystem.changeSpeedColson(checkIsAdd); }
@@ -29,9 +28,8 @@ public class ChangeSpeedColsonCommand extends Command
     protected boolean isFinished() { return true; }
 
     @Override
-    protected void end() { }
+    protected void end() {}
 
     @Override
-    protected void interrupted() { }
+    protected void interrupted() {}
 }
-

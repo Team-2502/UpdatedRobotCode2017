@@ -36,7 +36,6 @@ public class RobotMap
             public static final int SUB_FLYWHEEL_SPEED = 9;
 			public static final int CLIMB_MODE = UNDEFINED;          
 
-
             private Button() {}
         }
     }

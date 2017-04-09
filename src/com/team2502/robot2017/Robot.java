@@ -95,10 +95,7 @@ public final class Robot extends IterativeRobot
 		DashboardData.update();
 	}
 	
-	public void teleopInit() 
-	{
-		VISION.turnOffVisionLight();
-	}
+	public void teleopInit() { VISION.turnOffVisionLight(); }
 
 	/**
 	 * This function is called periodically during operator control
