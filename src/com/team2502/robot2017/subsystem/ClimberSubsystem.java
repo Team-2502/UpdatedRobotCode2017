@@ -23,7 +23,7 @@ public class ClimberSubsystem extends Subsystem
     @Override
     protected void initDefaultCommand()
     {
-        climber.set(true);
+        climber.set(true); //
     }
     
     /**

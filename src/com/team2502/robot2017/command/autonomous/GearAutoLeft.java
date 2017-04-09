@@ -11,13 +11,7 @@ public class GearAutoLeft extends CommandGroup
 	public GearAutoLeft() 
 	{
 		addSequential(new DriveTimeCommand(1, .85));//this is for distance of 114.3 in
-		addSequential(new NavXMoveCommand(62, 1.25, .4));
+		addSequential(new NavXMoveCommand(62, 1.25, .4, false));
 		addSequential(new AutoVCommand(5, false, -.2, .3));
-//      addSequential(new DriveTimeCommand(.55, -.2));
-        addSequential(new NavXMoveCommand(10, 1, .2));
-        addSequential(new WaitCommand(.5));
-        addSequential(new NavXMoveCommand(-10, 1, .3));
-//      addSequential(new NavXMoveCommand(10, 1, .2));
-        addSequential(new DriveTimeCommand(.5, .2));
 	}
 }

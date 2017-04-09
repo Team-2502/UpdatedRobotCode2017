@@ -11,7 +11,7 @@ public class ShootAndBaseLineAuto extends CommandGroup
 //        addSequential(new ShootCommand(1, false));  
 //        addSequential(new ShootCommand(5, true));
         addSequential(new DriveTimeCommand(.25, -.5));
-        addSequential(new NavXMoveCommand(90, 1, .5));
+        addSequential(new NavXMoveCommand(90, 1, .5, false));
         addSequential(new DriveTimeCommand(1,1));
     }
 }
