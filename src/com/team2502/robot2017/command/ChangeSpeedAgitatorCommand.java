@@ -2,9 +2,9 @@ package com.team2502.robot2017.command;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.ShooterSubsystem;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 
-public class ChangeSpeedAgitatorCommand extends Command
+public class ChangeSpeedAgitatorCommand extends InstantCommand
 {
     private final ShooterSubsystem shooterSubsystem;
     
@@ -19,17 +19,6 @@ public class ChangeSpeedAgitatorCommand extends Command
     }
 
     @Override
-    protected void initialize() {}
+    protected void initialize() { shooterSubsystem.changeSpeedAgitator(checkIsAdd); }
 
-    @Override
-    protected void execute() { shooterSubsystem.changeSpeedAgitator(checkIsAdd);}
-
-    @Override
-    protected boolean isFinished() { return true; }
-
-    @Override
-    protected void end() {}
-
-    @Override
-    protected void interrupted() {}
 }

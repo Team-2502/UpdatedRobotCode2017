@@ -1,10 +1,10 @@
 package com.team2502.robot2017.command;
 
 import com.team2502.robot2017.Robot;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import com.team2502.robot2017.subsystem.ClimberSubsystem;
 
-public class ClimberCommand extends Command
+public class ClimberCommand extends InstantCommand
 {
     private final ClimberSubsystem ClimberSubsystem;
     boolean stopped;
@@ -15,22 +15,6 @@ public class ClimberCommand extends Command
         ClimberSubsystem = Robot.CLIMBER;           
     }
     
-    public boolean getstopped() { return stopped; }
-    
-    public void setStopped(boolean Stopped) { stopped = Stopped; }
-    
     @Override
-    protected void initialize() {}
-
-    @Override
-    protected void execute() { ClimberSubsystem.switchBrake(); }
-    
-    @Override
-    protected boolean isFinished() { return true; }
-    
-    @Override
-    protected void end() {}
-
-    @Override
-    protected void interrupted() { end(); }
+    protected void initialize() { ClimberSubsystem.switchBrake(); }
 }
