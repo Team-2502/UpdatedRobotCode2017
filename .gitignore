@@ -21,6 +21,7 @@ bin/
 ## Intellij Idea
 .idea/
 build/
+*.eml*
 *.iml*
 *.ipr*
 *.iws*
