@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-@SuppressWarnings({ "WeakerAccess" })
 public final class DashboardData
 {
     private DashboardData() {}

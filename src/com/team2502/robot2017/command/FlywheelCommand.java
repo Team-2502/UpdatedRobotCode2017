@@ -5,7 +5,6 @@ import com.team2502.robot2017.subsystem.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-@SuppressWarnings("WeakerAccess")
 public class FlywheelCommand extends Command
 {
     private final ShooterSubsystem shooterSubsystem;

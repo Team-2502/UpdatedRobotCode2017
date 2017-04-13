@@ -1,17 +1,13 @@
 package com.team2502.robot2017;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.team2502.robot2017.command.ClimberCommand;
-import com.team2502.robot2017.command.autonomous.*;
 import com.team2502.robot2017.subsystem.*;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-@SuppressWarnings({ "WeakerAccess", "unused" })
 public final class Robot extends IterativeRobot 
 {
 	// Makes all the stuff
