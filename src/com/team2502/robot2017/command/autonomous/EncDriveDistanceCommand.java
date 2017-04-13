@@ -5,7 +5,6 @@ import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 @Deprecated
-@SuppressWarnings("WeakerAccess")
 public class EncDriveDistanceCommand extends Command
 {
     private DriveTrainSubsystem driveTrain;
