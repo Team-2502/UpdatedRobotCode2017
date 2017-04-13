@@ -30,8 +30,6 @@ public final class OI
     public static final Button SUB_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.SUB_FLYWHEEL_SPEED);
     
     public static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.VISION_ALIGN);
-    
-    public static final Button CLIMB_MODE = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.CLIMB_MODE);
 
     static
     {
@@ -55,7 +53,6 @@ public final class OI
         
         VISION_ALIGN.toggleWhenPressed(new AutoVCommand(2));
         
-        CLIMB_MODE.whenPressed(new ClimbModeCommand());
     }
 
     public static void init() {}
