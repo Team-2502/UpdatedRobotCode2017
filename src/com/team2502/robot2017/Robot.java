@@ -8,46 +8,46 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-@SuppressWarnings({ "WeakerAccess", "unused" })
-public final class Robot extends IterativeRobot {
+public final class Robot extends IterativeRobot 
+{
 	// Makes all the stuff
 	public static DriveTrainSubsystem DRIVE_TRAIN;
 	public static PressureSensorSubsystem PRESSURE_SENSOR;
 	public static VisionSubsystem VISION;
 	public static Compressor COMPRESSOR;
 	public static ShooterSubsystem SHOOTER;
-	public static DistanceSensorSubsystem DISTANCE_SENSOR;
 	public static ActiveIntakeSubsystem ACTIVE;
-	public static GearBoxSubsystem GEAR_BOX;
 	public static DriveTrainTransmissionSubsystem DRIVE_TRAIN_GEAR_SWITCH;
 	public static ClimberSubsystem CLIMBER;
+	public static AutoSwitcherSubsystem AUTOSWITCHER;
 
 	// NavX Subsystem
-	 public static final AHRS NAVX = new AHRS(SPI.Port.kMXP);
-
-	static {
-		/* I don't know why but this prevents problems. */
-//		DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
-	}
-
+	public static final AHRS NAVX = new AHRS(SPI.Port.kMXP);
+	 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
-	public void robotInit() {
-		 DRIVE_TRAIN = new DriveTrainSubsystem();
-		 PRESSURE_SENSOR = new PressureSensorSubsystem();
-		 VISION = new VisionSubsystem();
-		 COMPRESSOR = new Compressor();
-		 SHOOTER = new ShooterSubsystem();
-		 DISTANCE_SENSOR = new DistanceSensorSubsystem();
-		 ACTIVE = new ActiveIntakeSubsystem();
-		 GEAR_BOX = new GearBoxSubsystem();
-		 DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
-		 CLIMBER = new ClimberSubsystem();
 
+	public void robotInit()
+	{
+		DRIVE_TRAIN = new DriveTrainSubsystem();
+		DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
+		PRESSURE_SENSOR = new PressureSensorSubsystem();
+		VISION = new VisionSubsystem();
+		COMPRESSOR = new Compressor();
+		SHOOTER = new ShooterSubsystem();
+		ACTIVE = new ActiveIntakeSubsystem();
+		CLIMBER = new ClimberSubsystem();
+		AUTOSWITCHER = new AutoSwitcherSubsystem();
+		
+		AutoSwitcherSubsystem.putToSmartDashboard();
+
+		Robot.CLIMBER.setBrake(true); // when the climber is out the brake is off
 		DashboardData.setup();
 		OI.init();
+		
+		NAVX.resetDisplacement();
 	}
 
 	/**
@@ -55,11 +55,10 @@ public final class Robot extends IterativeRobot {
 	 * You can use it to reset any subsystem information you want to clear when
 	 * the robot is disabled.
 	 */
-	public void disabledInit() {
-	}
+	public void disabledInit() {}
 
-	public void disabledPeriodic() {
-
+	public void disabledPeriodic()
+	{
 		Scheduler.getInstance().run();
 		DashboardData.update();
 		DRIVE_TRAIN.stop();
@@ -76,25 +75,29 @@ public final class Robot extends IterativeRobot {
 	 * chooser code above (like the commented example) or additional comparisons
 	 * to the switch structure below with additional strings and commands.
 	 */
-	public void autonomousInit() {
-		Scheduler.getInstance().add(DashboardData.getAutonomous());
+	public void autonomousInit() 
+	{
+//		Scheduler.getInstance().add(new GearAutoCenter());
+		Scheduler.getInstance().add(AutoSwitcherSubsystem.getAutoInstance());
+		VISION.turnOnVisionLight();
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
-	public void autonomousPeriodic() {
+	public void autonomousPeriodic()
+	{
 		Scheduler.getInstance().run();
 		DashboardData.update();
 	}
-
-	public void teleopInit() {
-	}
+	
+	public void teleopInit() { VISION.turnOffVisionLight(); }
 
 	/**
 	 * This function is called periodically during operator control
 	 */
-	public void teleopPeriodic() {
+	public void teleopPeriodic()
+	{
 		Scheduler.getInstance().run();
 		DashboardData.update();
 	}
@@ -102,7 +105,8 @@ public final class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during test mode
 	 */
-	public void testPeriodic() {
+	public void testPeriodic()
+	{
 		LiveWindow.run();
 		DashboardData.update();
 	}

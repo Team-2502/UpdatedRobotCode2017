@@ -2,20 +2,21 @@ package com.team2502.robot2017.command.autonomous;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
-import com.team2502.robot2017.subsystem.GearBoxSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
+@Deprecated
 public class EncDriveBackwardsCommand extends Command
 {
     public static DriveTrainSubsystem driveTrain;
-    public EncDriveBackwardsCommand()
+    double targetDist = 4.65;
+    double currentDist;
+    public EncDriveBackwardsCommand(double TargetDist)
     {
         requires(Robot.DRIVE_TRAIN);
         driveTrain = Robot.DRIVE_TRAIN;
+        targetDist = TargetDist;
     }
-    
-    double targetDist = 4.65;
-    double currentDist;
+
     @Override
     protected void initialize()
     {
@@ -33,22 +34,15 @@ public class EncDriveBackwardsCommand extends Command
     }
 
     @Override
-    protected boolean isFinished()
-    {
-        return currentDist <= -2.2;
-    }
+    protected boolean isFinished() { return currentDist <= targetDist; }
 
     @Override
     protected void end()
     {
-//        DriveTrain.setTeleopSettings(DriveTrain.leftTalon0);
-//        DriveTrain.setTeleopSettings(DriveTrain.rightTalon0);
-//        DriveTrain.stopDriveS();
+        driveTrain.setTeleopSettings(driveTrain.leftTalon0);
+        driveTrain.setTeleopSettings(driveTrain.rightTalon0);
     }
 
     @Override
-    protected void interrupted()
-    {
-        end();
-    }
+    protected void interrupted() { end(); }
 }
