@@ -28,7 +28,11 @@ build/
 
 ## Gradle
 .gradle/
-#/gradle
+/gradle
 #gradlew.bat
 #gradlew
 deploy.sh
+
+## Deploy artifact
+dist/FRCUserProgram.jar
+dist/
