@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * Example Implementation, Many changes needed.
  */
-@SuppressWarnings("FieldCanBeLocal")
+
 public class DriveTrainSubsystem extends Subsystem
 {
     private static final Pair<Double, Double> SPEED_CONTAINER = new Pair<Double, Double>();

@@ -5,7 +5,6 @@ import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import com.team2502.robot2017.subsystem.VisionSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-@SuppressWarnings("WeakerAccess")
 public class AutoVCommand extends Command
 {
     public static DriveTrainSubsystem dt;
@@ -13,7 +12,7 @@ public class AutoVCommand extends Command
     public double leftSpeed;
     public double rightSpeed;
     public boolean inFrontOfGear = false;
-    public boolean Reverse = false;
+    public boolean reverse = false;
     public VisionSubsystem vision;
     double startTime = System.currentTimeMillis();
     double targetElapsed = 15;

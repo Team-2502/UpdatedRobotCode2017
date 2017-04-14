@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 //import edu.wpi.first.wpilibj.DoubleSolenoid;
 
-@SuppressWarnings("WeakerAccess")
 public class DriveTrainTransmissionSubsystem extends Subsystem
 {
     private static Solenoid switcher;
