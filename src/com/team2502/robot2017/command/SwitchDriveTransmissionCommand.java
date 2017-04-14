@@ -2,9 +2,9 @@ package com.team2502.robot2017.command;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainTransmissionSubsystem;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 
-public class SwitchDriveTransmissionCommand extends Command
+public class SwitchDriveTransmissionCommand extends InstantCommand
 {
     private final DriveTrainTransmissionSubsystem driveTrainTransmissionSubsystem;
 
@@ -15,32 +15,5 @@ public class SwitchDriveTransmissionCommand extends Command
     }
 
     @Override
-    protected void initialize()
-    {
-
-    }
-
-    @Override
-    protected void execute()
-    {
-        driveTrainTransmissionSubsystem.switchGear();
-    }
-
-    @Override
-    protected boolean isFinished()
-    {
-        return true;
-    }
-
-    @Override
-    protected void end()
-    {
-
-    }
-
-    @Override
-    protected void interrupted()
-    {
-
-    }
+    protected void initialize() { driveTrainTransmissionSubsystem.switchGear(); }
 }

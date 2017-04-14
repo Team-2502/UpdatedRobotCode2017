@@ -1,60 +1,10 @@
 package com.team2502.robot2017.command.autonomous;
 
-import com.team2502.robot2017.Robot;
-import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
-@SuppressWarnings("WeakerAccess")
-public class DriveTimeCommand extends Command
+public class DriveTimeCommand extends CommandGroup
 {
-    private DriveTrainSubsystem driveTrain;
-    private double runTime;
-    private long startTime;
-    double speed;
-
-    /**
-     * @param RunTime Time to run for in milliseconds.
-     */
-    public DriveTimeCommand(double RunTime, double Speed)
-    {
-        requires(Robot.DRIVE_TRAIN);
-        driveTrain = Robot.DRIVE_TRAIN;
-        this.runTime = RunTime * 1000;
-        speed = Speed;
-    }
-
-    /**
-     * @param runTime Time to run for in seconds.
-     */
- 
-    @Override
-    protected void initialize()
-    {
-        startTime = System.currentTimeMillis();
-    }
-
-    @Override
-    protected void execute()
-    {
-        driveTrain.runMotors(speed, -speed);
-
-    }
-
-    @Override
-    protected boolean isFinished()
-    {
-        return System.currentTimeMillis() - startTime > runTime;
-    }
-
-    @Override
-    protected void end()
-    {
-        driveTrain.stop();
-    }
-
-    @Override
-    protected void interrupted()
-    {
-        end();
-    }
+	public DriveTimeCommand(double runTime) { addSequential(new NavXMoveCommand(0, runTime, 0.65, false)); }
+	
+	public DriveTimeCommand(double runTime, double speed) { addSequential(new NavXMoveCommand(0, runTime, speed, false)); }
 }

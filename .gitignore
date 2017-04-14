@@ -21,6 +21,7 @@ bin/
 ## Intellij Idea
 .idea/
 build/
+*.eml*
 *.iml*
 *.ipr*
 *.iws*
@@ -34,3 +35,4 @@ deploy.sh
 
 ## Deploy artifact
 dist/FRCUserProgram.jar
+dist/

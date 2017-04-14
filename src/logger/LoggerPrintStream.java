@@ -17,7 +17,6 @@ public class LoggerPrintStream extends PrintStream
 
     public void outputln( String s) { super.println(s); }
 
-
     @Override
     public void println( String msg)
 

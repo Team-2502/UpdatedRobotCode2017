@@ -4,40 +4,32 @@ import edu.wpi.first.wpilibj.command.Command;
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 
-public class ResetEncodersCommand extends Command {
+public class ResetEncodersCommand extends Command
+{
 	private DriveTrainSubsystem dt;
 	
-	public ResetEncodersCommand() {
+	public ResetEncodersCommand()
+	{
 		dt = Robot.DRIVE_TRAIN;
 		requires(Robot.DRIVE_TRAIN);
 	}
 	
 	@Override
-	protected void execute() {
+	protected void initialize() {}
+	
+	@Override
+	protected void execute()
+	{
 		dt.leftTalon0.setEncPosition(0);
 		dt.rightTalon1.setEncPosition(0);
 	}
+	
 	@Override
-	protected boolean isFinished() {
-		return true;
-	}
+	protected boolean isFinished() { return true; }
 
 	@Override
-	protected void end() {
-		// TODO Auto-generated method stub
-		
-	}
+	protected void end() {}
 
 	@Override
-	protected void initialize() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	protected void interrupted() {}
 }

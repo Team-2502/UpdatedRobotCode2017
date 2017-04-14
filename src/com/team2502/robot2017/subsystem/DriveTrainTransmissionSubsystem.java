@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 //import edu.wpi.first.wpilibj.DoubleSolenoid;
 
-@SuppressWarnings("WeakerAccess")
 public class DriveTrainTransmissionSubsystem extends Subsystem
 {
     private static Solenoid switcher;
@@ -14,6 +13,9 @@ public class DriveTrainTransmissionSubsystem extends Subsystem
     // TODO: Change name to `lowGear` if applicable.
     public boolean highGear;
 
+    /**
+     * Initialize transmission
+     */
     public DriveTrainTransmissionSubsystem()
     {
         switcher = new Solenoid(RobotMap.Solenoid.TRANSMISSION_SWITCH);
@@ -21,23 +23,21 @@ public class DriveTrainTransmissionSubsystem extends Subsystem
     }
 
     @Override
-    protected void initDefaultCommand()
-    {
-        /* NO-OP */
-    }
+    protected void initDefaultCommand() {}
 
-    public void switchGear()
-    {
-        setGear(highGear = !highGear);
-    }
+    /**
+     * Switch the gear from its current state
+     */
+    public void switchGear() { setGear(highGear = !highGear); }
+    
+    /**
+     * @return if we are in high gear
+     */
+    public boolean getGear() { return highGear; }
 
-    public boolean getGear()
-    {
-        return highGear;
-    }
-
-    public void setGear(boolean highGear)
-    {
-        switcher.set(this.highGear = highGear);
-    }
+    /**
+     * Set the transmission to a specific high gear or low gear
+     * @param highGear Boolean saying "do you want to be in high gear?"
+     */
+    public void setGear(boolean highGear) { switcher.set(this.highGear = highGear); }
 }

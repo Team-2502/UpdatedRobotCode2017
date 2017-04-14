@@ -1,13 +1,17 @@
 package com.team2502.robot2017.command.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class GearAutoRight extends CommandGroup {
-
-	public GearAutoRight() {
-		addSequential(new DriveTimeCommand(1.35D, .5)); // fine tune this and try to use encoders if possible
-		addSequential(new NavXMoveCommand(45, 3));
-		addSequential(new AutoVCommand(10));
+public class GearAutoRight extends CommandGroup
+{
+    /**
+     * Gets the right gear in autonomous 
+     */
+	public GearAutoRight() 
+	{
+	       addSequential(new DriveTimeCommand(1.35, .86));//this is for distance of 114.3 in
+	       addSequential(new NavXMoveCommand(62, 1.25, .4, false));
+		   addSequential(new AutoVCommand(5, false, 0, .3));
 	}
-	
 }

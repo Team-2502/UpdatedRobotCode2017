@@ -4,10 +4,9 @@ import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-@SuppressWarnings("WeakerAccess")
+@Deprecated
 public class EncDriveDistanceCommand extends Command
 {
-
     private DriveTrainSubsystem driveTrain;
     private long runTime;
     private long startTime;
@@ -17,8 +16,8 @@ public class EncDriveDistanceCommand extends Command
      */
     public EncDriveDistanceCommand()
     {
-    	driveTrain = Robot.DRIVE_TRAIN;
-    	requires(driveTrain);
+        driveTrain = Robot.DRIVE_TRAIN;
+        requires(driveTrain);
     }
 
     @Override
@@ -26,31 +25,22 @@ public class EncDriveDistanceCommand extends Command
     {
         driveTrain.setAutonSettings(driveTrain.leftTalon0);
         driveTrain.setAutonSettings(driveTrain.rightTalon1);
-
     }
 
     @Override
     protected void execute()
     {
-    	driveTrain.leftTalon0.set(-4.6);
+        driveTrain.leftTalon0.set(-4.6);
         driveTrain.rightTalon1.set(4.6);
     }
 
     @Override
-    protected boolean isFinished()
-    {
-        return false;
-    }
+
+    protected boolean isFinished() { return false; }
 
     @Override
-    protected void end()
-    {
-        driveTrain.stop();
-    }
+    protected void end() { driveTrain.stop(); }
 
     @Override
-    protected void interrupted()
-    {
-        end();
-    }
+    protected void interrupted() { end();}
 }

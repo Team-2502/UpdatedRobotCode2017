@@ -1,40 +1,31 @@
 package com.team2502.robot2017.subsystem;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
-import com.ctre.CANTalon.FeedbackDevice;
-import com.team2502.robot2017.DashboardData;
 import com.team2502.robot2017.OI;
 import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.command.FlywheelCommand;
-import com.team2502.robot2017.subsystem.DriveTrainSubsystem.DriveTypes;
-import com.team2502.robot2017.subsystem.DriveTrainSubsystem.Pair;
-
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem
-{	
-	
-	
+{
+    public double leftSpeed;
 
-	   private double lastLeft;
-	
-	   public double leftSpeed;
-
-	   public boolean negative = false;
-	   public boolean isNegativePressed = false;
-	   public boolean negMode = false;
-	   
-	   public ShooterSubsystem ShooterSubsystem;
+    public boolean negative = false;
+    public boolean isNegativePressed = false;
+    public boolean negMode = false;
+   
+    public ShooterSubsystem ShooterSubsystem;
 	
     private final CANTalon flywheelTalon;
-    private final CANTalon feederTalon0; //coleson
-    private final CANTalon feederTalon1;  //banebot
-    private final CANTalon feederTalon2; //agtator
+    private final CANTalon colsonFeeder;
+    private final CANTalon banebotFeeder;
+    private final CANTalon agitator;
     
-    double targetSpeed = 1540;
-    double autoTargetSpeed = targetSpeed + 50;
+    double targetSpeedFlywheel = 1650;
+    double autoTargetSpeed = targetSpeedFlywheel + 50;
+    double agitatorSpeed = 0.75;
+    double colsonSpeed = 0.7;
+    double banebotSpeed = 1400;
     int error = 0;
 
     public boolean isFlywheelActive;
@@ -42,35 +33,59 @@ public class ShooterSubsystem extends Subsystem
     private boolean shooterMode = false;
     private boolean isTriggerPressed = false;
 
+    /**
+     * Initialize shooter subsystem
+     */
     public ShooterSubsystem()
     {
-    	lastLeft = 0.0D;
- 
-        
         flywheelTalon = new CANTalon(RobotMap.Motor.FLYWHEEL_TALON_0);
-        feederTalon0 = new CANTalon(RobotMap.Motor.FEEDER_TALON_0);
-        feederTalon1 = new CANTalon(RobotMap.Motor.FEEDER_TALON_1);
-        feederTalon2 = new CANTalon(RobotMap.Motor.AGITATOR);
+        colsonFeeder = new CANTalon(RobotMap.Motor.FEEDER_TALON_0);
+        banebotFeeder = new CANTalon(RobotMap.Motor.FEEDER_TALON_1);
+        agitator = new CANTalon(RobotMap.Motor.AGITATOR);
     }
 
+    
+    /**
+     * Set FPID, encoder settings, talon settings, and the default command.
+     */
     @Override
     protected void initDefaultCommand()
     {
         this.setDefaultCommand(new FlywheelCommand());
-
+        
+        // Set talon and encoder settings
         flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
         flywheelTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
         flywheelTalon.configEncoderCodesPerRev(256);
         flywheelTalon.reverseSensor(false);
 
+        // Configure min and max voltages
         flywheelTalon.configNominalOutputVoltage(0.0D, -0.0D);
-        flywheelTalon.configPeakOutputVoltage(12.0D, -12.0D);
+        flywheelTalon.configPeakOutputVoltage(12.0D, -2.0D);
 
+        // Set more encoder settings
         flywheelTalon.setProfile(0);
         flywheelTalon.setF(0.21765900);
         flywheelTalon.setP(1.71312500);
         flywheelTalon.setI(0.0);
         flywheelTalon.setD(0.0);
+         
+        // Set banebot talon and encoder settings
+        banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
+        banebotFeeder.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+        banebotFeeder.configEncoderCodesPerRev(256);
+        banebotFeeder.reverseSensor(false);
+
+        // set banebot min and max voltages
+        banebotFeeder.configNominalOutputVoltage(0.0D, -0.0D);
+        banebotFeeder.configPeakOutputVoltage(12.0D, -12.0D);
+
+        // set fpid for the banebot
+        banebotFeeder.setProfile(0);
+        banebotFeeder.setF(0.0);
+        banebotFeeder.setP(0.7);
+        banebotFeeder.setI(0.0);
+        banebotFeeder.setD(0.0);
     }
 
     /**
@@ -78,137 +93,171 @@ public class ShooterSubsystem extends Subsystem
      *
      * @return The current velocity of the flywheel.
      */
-    public int getFlywheelSpeed()
-    {
-        return flywheelTalon.getEncVelocity();
-    }
-
-    public double getMotorOutput()
-    {
-        return flywheelTalon.getOutputVoltage() / flywheelTalon.getBusVoltage();
-    }
+    public int getSpeedFlywheel() { return flywheelTalon.getEncVelocity(); }
+    
+    /**
+     * This information is pulled from the CANTalon class, NOT THE ENCODER CLASS!
+     *
+     * @return The current velocity of the banebot feeder.
+     */
+    public int getSpeedFeeder() { return banebotFeeder.getEncVelocity(); }
+    
+    /**
+     * This information is pulled from the CANTalon class, NOT THE ENCODER CLASS!
+     *
+     * @return The output voltage of the flywheel talon divided by its bus voltage
+     */
+    public double getMotorOutput() { return flywheelTalon.getOutputVoltage() / flywheelTalon.getBusVoltage(); }
+    
+    /**
+     * @return the agitator target speed
+     */
+    public double getAgitatorTargetSpeed() { return agitatorSpeed; }
+    
+    /**
+     * @return the colson target speed
+     */
+    public double getColsonTargetSpeed() { return colsonSpeed; }
+    
+    /**
+     * @return the banebot target speed
+     */
+    public double getBanebotTargetSpeed() { return banebotSpeed; }
+    
+    /**
+     * @return the target speed of the flywheel
+     */
+    public double getFlywheelTargetSpeed() { return targetSpeedFlywheel; }
+    
+    /**
+     * <b>Actually turns on the flywheel</b>. Sets appropriate talon settings and FPID in the process.
+     */
     public void turnOnFlywheel()
     {
         flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
         flywheelTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
         flywheelTalon.configEncoderCodesPerRev(256);
         flywheelTalon.reverseSensor(false);
-
         flywheelTalon.configNominalOutputVoltage(0.0D, -0.0D);
         flywheelTalon.configPeakOutputVoltage(12.0D, -12.0D);
-
         flywheelTalon.setProfile(0);
         flywheelTalon.setF(0.21765900);
         flywheelTalon.setP(1.71312500);
         flywheelTalon.setI(0.0);
         flywheelTalon.setD(0.0);
-        
-        flywheelTalon.set(1670);
+        flywheelTalon.set(targetSpeedFlywheel);
     }
+    
+    /**
+     * Feed balls into flywheel according to the speeds set by the Drivers
+     */
     public void feed()
     {
-        feederTalon0.set(1);
-        feederTalon1.set(-1);
-        feederTalon2.set(.75);
+        colsonFeeder.set(colsonSpeed);
+        banebotFeeder.set(-banebotSpeed);
+        agitator.set(agitatorSpeed);
     }
 
-    public double getTargetSpeed()
+    /**
+     * @return the target speed
+     */
+    public double getTargetSpeedFlywheel() { return targetSpeedFlywheel; }
+
+    /**
+     * @return Error calculated in the flywheel FPID
+     */
+    public int getError() { return flywheelTalon.getClosedLoopError(); }
+    
+    /**
+     * @return Error calculated in the banebot FPID
+     */
+    public int getErrorFeeder() { return banebotFeeder.getClosedLoopError(); }
+    
+    /**
+     * Change the speed of the agitator
+     * @param isAdd Should I increase the speed?
+     */
+    public void changeSpeedAgitator(boolean isAdd)
     {
-        return targetSpeed;
+    	if(isAdd) { agitatorSpeed += 0.05; }
+    	if(!isAdd) { agitatorSpeed -= 0.05; }
     }
-
-    public int getError()
+    
+    /**
+     * Change the speed of the colson
+     * @param isAdd Should I increase the speed?
+     */
+    public void changeSpeedColson(boolean isAdd)
     {
-        return flywheelTalon.getClosedLoopError();
+    	if(isAdd) { colsonSpeed += 0.05; }
+    	if(!isAdd) { colsonSpeed -= 0.05; }
     }
-
-    public int getTopError()
+    /**
+     * Change the speed of the banebot
+     * @param isAdd Should I increase the speed?
+     */
+    public void changeSpeedBanebot(boolean isAdd)
     {
-        int newError = getError();
-
-        if(newError > error) { error = newError; }
-
-        return error;
+    	if(isAdd) { banebotSpeed += 50; }
+    	if(!isAdd) { banebotSpeed -= 50; }
     }
-//    private double getSpeed()
-//    {	
-//    	double joystickLevel;
-//        // Get the base speed of the robot
-//    	joystickLevel = -OI.JOYSTICK_FUNCTION.getY();
-//        
-//        // Only increase the speed by a small amount
-//        double diff = joystickLevel - lastLeft;
-//        if(diff > 0.1D)
-//        {
-//            joystickLevel = lastLeft + 0.1D;
-//        }
-//        else if(diff < 0.1D)
-//        {
-//            joystickLevel = lastLeft - 0.1D;
-//        }
-//        lastLeft = joystickLevel;
-//
-//        double out = joystickLevel;
-//        
-//		return out;
-//    }
-
+    /**
+     * Change the speed of the flywheel
+     * @param isAdd Should I increase the speed?
+     */
+    public void changeSpeedFlywheel(boolean isAdd)
+    {
+    	if(isAdd) { targetSpeedFlywheel += 10; }
+    	if(!isAdd) { targetSpeedFlywheel -= 10; }
+    }
+    
+    /**
+     * Allow Poorva to press buttons on the joystick to activate the flywheel
+     */
     public void flywheelDrive()
     {
-        /* This line initializes the flywheel talon so that the speed
-		   we give it is in RPM, not a scale of -1 to 1. */
+        // lets us tell the flywheel go a certain RPM
         flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
 
         // Toggle mode for flywheel. It is bound to button 5 on the Function stick.
-        if(OI.JOYSTICK_FUNCTION.getRawButton(5) && !isTriggerPressed)
-        {
-            shooterMode = !shooterMode;
-        }
+        if(OI.JOYSTICK_FUNCTION.getRawButton(5) && !isTriggerPressed) { shooterMode = !shooterMode; }
         isTriggerPressed = OI.JOYSTICK_FUNCTION.getRawButton(5);
 
-        if(shooterMode) { flywheelTalon.set(targetSpeed); }
+        if(shooterMode) { flywheelTalon.set(targetSpeedFlywheel); }
+        
         else { flywheelTalon.set(0); }
 
-        // For changing the flywheel speed.
-        if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(3))
-        {
-            targetSpeed += 10;
-        }
-        else if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(2))
-        {
-            targetSpeed -= 10;
-        }
-
-
         //Control for turning on/off the feeding mechanism.
-        if(OI.JOYSTICK_FUNCTION.getTrigger() /*&& (Math.abs(flywheelTalon.getEncVelocity()) > Math.abs(targetSpeed - 500))*/)
+        if(OI.JOYSTICK_FUNCTION.getTrigger())
         {
-            feederTalon0.set(1);
-            feederTalon1.set(-1);
-            feederTalon2.set(.75);
+            colsonFeeder.set(colsonSpeed);
+            banebotFeeder.set(-banebotSpeed);
+            agitator.set(agitatorSpeed);
         }
+
+        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(-agitatorSpeed); }
 
         else
         {
-            feederTalon0.set(0);
-            feederTalon1.set(0);
-            feederTalon2.set(0);
+            colsonFeeder.set(0);
+            banebotFeeder.set(0);
+            agitator.set(0);
         }
-
     }
     
-    
-
+    /**
+     * Kill flywheel by setting talons to 0
+     */
     public void stop()
     {
+    	shooterMode = false;
+    	
         flywheelTalon.set(0.0D);
-        feederTalon0.set(0.0D);
-        feederTalon1.set(0.0D);
-        feederTalon2.set(0.0D);
+        colsonFeeder.set(0.0D);
+        banebotFeeder.set(0.0D);
+        agitator.set(0.0D);
 
         isFlywheelActive = false;
         isFeederActive = false;
     }
 }
-
-    
