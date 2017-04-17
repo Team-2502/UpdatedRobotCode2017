@@ -15,7 +15,9 @@ public final class OI
     public static final Button SWITCH_DRIVE_TRANSMISSION = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.SWITCH_DRIVE_TRANSMISSION);
 
     public static final Button RESET_ENC_POSITION = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.RESET_ENC_POS);
-    public static final Button CLIMBER = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.CLIMBER);
+    
+    public static final Button CLIMBER_TOP = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.CLIMBER_TOP);
+    public static final Button CLIMBER_BOTTOM = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.CLIMBER_BOTTOM);
     
     public static final Button ADD_AGITATOR_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.ADD_AGITATOR_SPEED);
     public static final Button SUB_AGITATOR_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.SUB_AGITATOR_SPEED);
@@ -37,8 +39,6 @@ public final class OI
 
 		RESET_ENC_POSITION.whenPressed(new ResetEncodersCommand()); 
 		
-        CLIMBER.whenPressed(new ClimberCommand());
-
         ADD_AGITATOR_SPEED.whenPressed(new ChangeSpeedAgitatorCommand(true));
         SUB_AGITATOR_SPEED.whenPressed(new ChangeSpeedAgitatorCommand(false));
         

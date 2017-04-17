@@ -42,8 +42,7 @@ public final class Robot extends IterativeRobot
 		AUTOSWITCHER = new AutoSwitcherSubsystem();
 		
 		AutoSwitcherSubsystem.putToSmartDashboard();
-
-		Robot.CLIMBER.setBrake(true); // when the climber is out the brake is off
+		
 		DashboardData.setup();
 		OI.init();
 		

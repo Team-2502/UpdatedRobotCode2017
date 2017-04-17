@@ -7,7 +7,7 @@ import com.team2502.robot2017.OI;
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.command.DriveCommand;
-import com.team2502.robot2017.command.ClimberCommand;
+import com.team2502.robot2017.command.ClimberDrive;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -21,7 +21,7 @@ public class DriveTrainSubsystem extends Subsystem
     private static final Pair<Double, Double> SPEED_CONTAINER = new Pair<Double, Double>();
     
     public DriveTrainTransmissionSubsystem DTTS;
-    public ClimberCommand ClimberCommand;
+    public ClimberDrive ClimberCommand;
     
     public final CANTalon leftTalon0; //enc
     public final CANTalon leftTalon1;
