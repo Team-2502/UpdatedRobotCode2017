@@ -56,7 +56,7 @@ public class DriveTrainSubsystem extends Subsystem
         rightTalon1 = new CANTalon(RobotMap.Motor.RIGHT_TALON_1); 
 
         drive = new RobotDrive(leftTalon0, leftTalon1, rightTalon0, rightTalon1);
-        drive.setSafetyEnabled(false);
+        drive.setSafetyEnabled(true);
         
         DTTS = Robot.DRIVE_TRAIN_GEAR_SWITCH;
         

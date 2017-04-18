@@ -63,6 +63,7 @@ public final class DashboardData
 
     private static void updateNavX()
     {
+        SmartDashboard.putString("Good Luck Out There", "--Programmers");
     	SmartDashboard.putNumber("NavX: Yaw", Robot.NAVX.getYaw());
     	SmartDashboard.putNumber("NavX: X Displacement", Robot.NAVX.getDisplacementX());
     	SmartDashboard.putNumber("NavX: Y Displacement", Robot.NAVX.getDisplacementY());
