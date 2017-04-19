@@ -5,6 +5,7 @@ import com.team2502.robot2017.command.autonomous.AutoVCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import com.team2502.robot2017.subsystem.ClimberSubsystem.ClimberMode;
 
 public final class OI
 {
@@ -15,9 +16,6 @@ public final class OI
     public static final Button SWITCH_DRIVE_TRANSMISSION = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.SWITCH_DRIVE_TRANSMISSION);
 
     public static final Button RESET_ENC_POSITION = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.RESET_ENC_POS);
-    
-    public static final Button CLIMBER_TOP = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.CLIMBER_TOP);
-    public static final Button CLIMBER_BOTTOM = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.CLIMBER_BOTTOM);
     
     public static final Button ADD_AGITATOR_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.ADD_AGITATOR_SPEED);
     public static final Button SUB_AGITATOR_SPEED = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.SUB_AGITATOR_SPEED);
@@ -32,6 +30,9 @@ public final class OI
     public static final Button SUB_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.SUB_FLYWHEEL_SPEED);
     
     public static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.VISION_ALIGN);
+    
+    public static final Button CLIMBER = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.CLIMBER);
+    
 
     static
     {
@@ -52,6 +53,9 @@ public final class OI
         SUB_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(false));
         
         VISION_ALIGN.toggleWhenPressed(new AutoVCommand(2));
+        
+        CLIMBER.whileHeld(new ClimberCommand(ClimberMode.CLIMB));
+        CLIMBER.whenReleased(new ClimberCommand(ClimberMode.STOP));
         
     }
 

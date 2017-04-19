@@ -1,35 +1,27 @@
 package com.team2502.robot2017.command;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 
-public class ResetEncodersCommand extends Command
+public class ResetEncodersCommand extends InstantCommand
 {
 	private DriveTrainSubsystem dt;
-	
+
+	/**
+	 * Command for resetting the encoder values
+	 */
 	public ResetEncodersCommand()
 	{
 		dt = Robot.DRIVE_TRAIN;
 		requires(Robot.DRIVE_TRAIN);
 	}
-	
+
 	@Override
-	protected void initialize() {}
-	
-	@Override
-	protected void execute()
+	protected void initialize()
 	{
 		dt.leftTalon0.setEncPosition(0);
 		dt.rightTalon1.setEncPosition(0);
 	}
-	
-	@Override
-	protected boolean isFinished() { return true; }
 
-	@Override
-	protected void end() {}
-
-	@Override
-	protected void interrupted() {}
 }

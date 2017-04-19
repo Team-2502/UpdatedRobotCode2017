@@ -9,8 +9,12 @@ public class ChangeSpeedBanebotCommand extends InstantCommand
     private final ShooterSubsystem shooterSubsystem;
 
     private boolean checkIsAdd;
-    
-    public ChangeSpeedBanebotCommand(boolean isAdd)
+
+	/**
+	 * Instantiate the command that changes the banebot's target speed
+	 * @param isAdd Boolean that asks add or subtract?
+	 */
+	public ChangeSpeedBanebotCommand(boolean isAdd)
     {
         requires(Robot.SHOOTER);
         shooterSubsystem = Robot.SHOOTER;

@@ -8,11 +8,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem
 {
-    public double leftSpeed;
-
-    public boolean negative = false;
-    public boolean isNegativePressed = false;
-    public boolean negMode = false;
    
     public ShooterSubsystem ShooterSubsystem;
 	
@@ -232,10 +227,10 @@ public class ShooterSubsystem extends Subsystem
         {
             colsonFeeder.set(colsonSpeed);
             banebotFeeder.set(-banebotSpeed);
-            agitator.set(agitatorSpeed);
+            agitator.set(-agitatorSpeed);
         }
 
-        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(-agitatorSpeed); }
+        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(agitatorSpeed); }
 
         else
         {

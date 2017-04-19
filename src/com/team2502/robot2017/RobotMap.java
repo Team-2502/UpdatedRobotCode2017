@@ -20,8 +20,7 @@ public class RobotMap
             public static final int SHOOTER_TOGGLE = 5;
             public static final int VISION_ALIGN = 3;
             
-            public static final int CLIMBER_TOP =  8;
-            public static final int CLIMBER_BOTTOM = 9;
+            public static final int CLIMBER =  8;
             
             public static final int SHOOTER = 1;
             public static final int RESET_ENC_POS = 9; // temporary and only exists for auton development

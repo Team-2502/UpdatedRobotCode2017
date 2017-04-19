@@ -1,40 +1,27 @@
 package com.team2502.robot2017.command;
 
 import com.team2502.robot2017.Robot;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import com.team2502.robot2017.subsystem.ClimberSubsystem;
+import com.team2502.robot2017.subsystem.ClimberSubsystem.ClimberMode;
 
-public class ClimberDrive extends Command
+public class ClimberCommand extends InstantCommand
 {
-    private final ClimberSubsystem ClimberSubsystem;
-    boolean stopped;
+    private final ClimberSubsystem climber;
     
-    public ClimberDrive()
+    int mode = 0;
+    
+    public ClimberCommand(ClimberMode mode)
     {
         requires(Robot.CLIMBER);
-        ClimberSubsystem = Robot.CLIMBER;           
+        climber = Robot.CLIMBER;
+        this.mode = mode.val;
     }
     
     @Override
-    protected void initialize() {}
-    
-    @Override
-    protected void execute()
+    protected void initialize()
     {
-    	ClimberSubsystem.drive();
+    	climber.runMotors(mode);
     }
 
-	@Override
-	protected boolean isFinished() {
-		return false;
-	}
-	
-	@Override
-	protected void end()
-	{
-		ClimberSubsystem.stop();
-	}
-	
-	@Override
-	protected void interrupted() { end(); }
 }

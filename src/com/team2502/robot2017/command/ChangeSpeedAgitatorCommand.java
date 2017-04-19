@@ -10,7 +10,11 @@ public class ChangeSpeedAgitatorCommand extends InstantCommand
     
     private boolean checkIsAdd;
 
-    public ChangeSpeedAgitatorCommand(boolean isAdd)
+	/**
+	 * Instantiate the command that changes the agitator's target speed
+	 * @param isAdd Boolean that asks "add or subtract?"
+	 */
+	public ChangeSpeedAgitatorCommand(boolean isAdd)
     {
         requires(Robot.SHOOTER);
         shooterSubsystem = Robot.SHOOTER;
