@@ -85,9 +85,9 @@ public final class Robot extends IterativeRobot
 	public void autonomousPeriodic()
 	{
 		Scheduler.getInstance().run();
+		
 		DashboardData.update();
 	}
-	
 	public void teleopInit() { VISION.turnOffVisionLight(); }
 
 	/**
