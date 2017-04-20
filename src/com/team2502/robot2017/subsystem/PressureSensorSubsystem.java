@@ -9,10 +9,7 @@ public class PressureSensorSubsystem extends Subsystem
     private static final double INPUT_VOLTAGE = 5.0D;
     private AnalogInput pressureSensor;
 
-    public PressureSensorSubsystem()
-    {
-        pressureSensor = new AnalogInput(RobotMap.Electrical.PRESSURE_SENSOR);
-    }
+    public PressureSensorSubsystem() { pressureSensor = new AnalogInput(RobotMap.Electrical.PRESSURE_SENSOR); }
 
     @Override
     protected void initDefaultCommand() {}
@@ -22,8 +19,5 @@ public class PressureSensorSubsystem extends Subsystem
 	 *
 	 * @return Current Pressure
 	 */
-    public double getPressure()
-    {
-        return (250.0D * (pressureSensor.getAverageVoltage() / INPUT_VOLTAGE)) - 25.0D;
-    }
+    public double getPressure() { return (250.0D * (pressureSensor.getAverageVoltage() / INPUT_VOLTAGE)) - 25.0D; }
 }

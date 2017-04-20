@@ -2,14 +2,13 @@ package com.team2502.robot2017.command.autonomous;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.team2502.robot2017.Robot;
-import com.team2502.robot2017.subsystem.DistanceSensorSubsystem;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class NavXMoveCommand extends Command{
-
+public class NavXMoveCommand extends Command
+{
 	public double targetYaw;
 	private DriveTrainSubsystem driveTrain;
 	private AHRS navx;
@@ -18,11 +17,11 @@ public class NavXMoveCommand extends Command{
 	public boolean done = false;;
 	private double runTime;
 	private long startTime;
-	private double deadZone = 2;
+	private double deadZone = 1;
 	private double elapsedTime;
 	private double speed;
-	public boolean manualSpeedB;
-	public double manualSpeed;
+	private boolean ifManualSpeed;
+	public double manualSpeed = 0.5;
 	/**
 	 * Drive in a straight line for 5 seconds according to the navx.
 	 */
@@ -48,8 +47,8 @@ public class NavXMoveCommand extends Command{
         angleOnly = true;
         targetYaw = angle;
 //        navx.reset();
-	
-	  }
+    }
+    
     /**
      * Turn to an angle, and drive on it for some time
      * @param angle   the angle to turn to
@@ -61,19 +60,21 @@ public class NavXMoveCommand extends Command{
 	    targetYaw = angle;
 	    this.runTime = (runTime*1000);
 //	    navx.reset();
-    } 
+    }
+    
     /**
      * Turns angle for a curtain amount of time and curtain speed
      * @param angle - turn a curtain amount
      * @param runTime - runs for a curtain amount
      * @param speed - sets curtain amount of speed
+     * @param speedIsForStraightOnly - linear turning or not?
      */
-    public NavXMoveCommand(double angle, double runTime, double speed)
+    public NavXMoveCommand(double angle, double runTime, double speed, boolean speedIsForStraightOnly)
     {
         this();
         targetYaw = angle;
         this.runTime = (runTime*1000);
-        manualSpeedB = true;
+        ifManualSpeed = !speedIsForStraightOnly;
         manualSpeed = speed;
 //        navx.reset();
     }
@@ -89,50 +90,32 @@ public class NavXMoveCommand extends Command{
 	protected void execute() 
 	{
 		elapsedTime = System.currentTimeMillis() - startTime;
-		if(manualSpeedB){ speed = manualSpeed;}
-		else{speed = getSpeed(elapsedTime);}
 		currentYaw = Robot.NAVX.getAngle();
+		if(ifManualSpeed){ speed = manualSpeed;}
+		else{speed = getSpeed(currentYaw - targetYaw);}
 		SmartDashboard.putNumber("NavX: Target yaw", targetYaw);
 		if(Math.abs(currentYaw - targetYaw) > deadZone)
 		{	
 			// right = pos
 			// left = neg
-			if(currentYaw > targetYaw)
-			{
-				driveTrain.runMotors(-speed, -speed);
-			} 
-			else if(currentYaw < targetYaw)
-			{
-				driveTrain.runMotors(speed, speed);
-			}
+			if(currentYaw > targetYaw) { driveTrain.runMotors(-speed, -speed); } 
+			else if(currentYaw < targetYaw) { driveTrain.runMotors(speed, speed); }
 		}
-//		else
-//		{	
-//				driveTrain.runMotors(0.5, -0.5);
-//		}	
+		else { driveTrain.runMotors(speed, -speed); }
 	}
 
-				
-		
-		
-
 	@Override
-	protected boolean isFinished() {
+	protected boolean isFinished()
+	{
 		// Will end if time elapsed while at targetYaw or at appropriate distance
-		if(angleOnly)
-		{
-			return Math.abs(currentYaw - targetYaw) > deadZone;
-		}
+		if(angleOnly) { return Math.abs(currentYaw - targetYaw) > deadZone; }
 		else
-		{
-		if(Math.abs(currentYaw - targetYaw) > deadZone)
-			{
-				return System.currentTimeMillis() - startTime > runTime;
-			}
-		else
-			{
-		        return false;
-			}
+		{ 
+		    if(Math.abs(currentYaw - targetYaw) > deadZone)
+		    {
+		    return System.currentTimeMillis() - startTime > runTime;
+		    }
+		    else { return false; }
 		}
 	}
 
@@ -142,19 +125,13 @@ public class NavXMoveCommand extends Command{
 	@Override
 	protected void interrupted() { end(); }
 	
-	
 	/**
 	 * @param  x seconds that have passed since you started turning/
 	 * @return the speed one side of the drive train should go at
 	 */
-	protected double getSpeed(double x) {
-		if(targetYaw == 0){
-			return 0.5;
-		}
-		else
-		{
-			return 1/(1+Math.pow(Math.E, x/2500));
-		}
+	protected double getSpeed(double x)
+	{
+		if(targetYaw == 0){ return manualSpeed; }
+		else { return (-0.5/(1+Math.pow(x, 2)/2000))+0.5; }
 	}
-
 }

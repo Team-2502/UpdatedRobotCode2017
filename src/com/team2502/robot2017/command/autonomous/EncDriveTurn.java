@@ -2,9 +2,9 @@ package com.team2502.robot2017.command.autonomous;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
-import com.team2502.robot2017.subsystem.GearBoxSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
+@Deprecated
 public class EncDriveTurn extends Command
 {
     public static DriveTrainSubsystem DriveTrain;
@@ -23,6 +23,7 @@ public class EncDriveTurn extends Command
     }
     
     double currentDist;
+    
     @Override
     protected void initialize()
     {
@@ -40,10 +41,7 @@ public class EncDriveTurn extends Command
     }
 
     @Override
-    protected boolean isFinished()
-    {
-        return false;
-    }
+    protected boolean isFinished() { return false; }
 
     @Override
     protected void end()
@@ -54,8 +52,5 @@ public class EncDriveTurn extends Command
     }
 
     @Override
-    protected void interrupted()
-    {
-        end();
-    }
+    protected void interrupted() { end(); }
 }
