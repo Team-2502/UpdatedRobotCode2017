@@ -57,6 +57,8 @@ public class DriveTrainSubsystem extends Subsystem
 
         drive = new RobotDrive(leftTalon0, leftTalon1, rightTalon0, rightTalon1);
         drive.setSafetyEnabled(true);
+//        drive.setExpiration(.3);
+
         
         DTTS = Robot.DRIVE_TRAIN_GEAR_SWITCH;
         
