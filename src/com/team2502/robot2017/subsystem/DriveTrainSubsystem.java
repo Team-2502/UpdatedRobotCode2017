@@ -87,6 +87,8 @@ public class DriveTrainSubsystem extends Subsystem
      * Set a talon back to teleoperated settings 
      * @param talon the talon in question
      */
+    
+    //WHAT THE HECK IS GOING ON WITH THE ENCODERS???
     public void setTeleopSettings(CANTalon talon)
     {
     	isClimbMode = false;
