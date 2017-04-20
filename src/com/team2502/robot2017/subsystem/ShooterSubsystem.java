@@ -232,7 +232,7 @@ public class ShooterSubsystem extends Subsystem
         {
             colsonFeeder.set(colsonSpeed);
             banebotFeeder.set(-banebotSpeed);
-            agitator.set(agitatorSpeed);
+            agitator.set(-agitatorSpeed);
         }
 
         else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(-agitatorSpeed); }
