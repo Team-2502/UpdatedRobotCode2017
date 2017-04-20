@@ -51,7 +51,7 @@ public final class OI
         ADD_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(true));
         SUB_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(false));
         
-        VISION_ALIGN.toggleWhenPressed(new AutoVCommand(2));
+        VISION_ALIGN.whileHeld(new TeleopVisonCommand());
         
     }
 

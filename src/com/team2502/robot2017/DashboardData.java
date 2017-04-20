@@ -56,9 +56,9 @@ public final class DashboardData
     
     private static void updateDriveTrain()
     {
-    	SmartDashboard.putNumber("aDT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
-        SmartDashboard.putNumber("aDT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
-        SmartDashboard.putNumber("aDT: DriveTrainAveg", Robot.DRIVE_TRAIN.getEncAveg());
+    	SmartDashboard.putNumber("DT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
+        SmartDashboard.putNumber("DT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
+        SmartDashboard.putNumber("DT: DriveTrainAveg", Robot.DRIVE_TRAIN.getEncAveg());
     }
 
     private static void updateNavX()
