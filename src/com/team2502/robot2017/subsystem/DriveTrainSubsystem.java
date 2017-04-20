@@ -99,25 +99,25 @@ public class DriveTrainSubsystem extends Subsystem
         talon.disableControl(); // needed if switching from auton settings
     }
     
-    public void switchClimbSettings()
-    {
-    	if(isClimbMode)
-    	{
-    		isClimbMode = false;
-    		setTeleopSettings(leftTalon0);
-    		setTeleopSettings(leftTalon1);
-    		setTeleopSettings(rightTalon0);
-    		setTeleopSettings(rightTalon1);
-    	}
-    	else if(!isClimbMode)
-    	{
-    		isClimbMode = true;
-    		leftTalon0.configPeakOutputVoltage(-8.0D, 8.0D);
-        	rightTalon0.configPeakOutputVoltage(-8.0D, 8.0D);
-        	leftTalon1.configPeakOutputVoltage(-8.0D, 8.0D);
-        	rightTalon1.configPeakOutputVoltage(-8.0D, 8.0D);
-    	}
-    }
+//    public void switchClimbSettings()
+//    {
+//    	if(isClimbMode)
+//    	{
+//    		isClimbMode = false;
+//    		setTeleopSettings(leftTalon0);
+//    		setTeleopSettings(leftTalon1);
+//    		setTeleopSettings(rightTalon0);
+//    		setTeleopSettings(rightTalon1);
+//    	}
+//    	else if(!isClimbMode)
+//    	{
+//    		isClimbMode = true;
+//    		leftTalon0.configPeakOutputVoltage(-8.0D, 8.0D);
+//        	rightTalon0.configPeakOutputVoltage(-8.0D, 8.0D);
+//        	leftTalon1.configPeakOutputVoltage(-8.0D, 8.0D);
+//        	rightTalon1.configPeakOutputVoltage(-8.0D, 8.0D);
+//    	}
+//    }
     
     /**
      * @param talon A talon with an encoder attached to it
