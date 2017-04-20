@@ -19,7 +19,7 @@ public class ShootAndGearAutoBlue extends CommandGroup
       addSequential(new DriveTimeCommand(0.25, 0.7));
 
       // Stare at and intimidate the gear peg
-      addSequential(new AutoVCommand(2, false, -.2, .3));
+      addSequential(new AutoVisionCommand(2, -.2/.3));
       addSequential(new WaitCommand(1));
       addSequential(new NavXMoveCommand(10, 0.1)); // wiggle
       addSequential(new NavXMoveCommand(-20, 0.1)); // woggle

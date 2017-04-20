@@ -35,10 +35,7 @@ public class EncoderDrive extends Command
 	@Override
 	protected void initialize()
 	{
-		dt.setAutonSettings(dt.rightTalon0);
-		dt.setAutonSettings(dt.rightTalon1);
-		dt.setAutonSettings(dt.leftTalon0);
-		dt.setAutonSettings(dt.leftTalon1);
+		dt.setAutonSettings();
 	}
 	
 	@Override
@@ -51,16 +48,13 @@ public class EncoderDrive extends Command
 	@Override
 	protected boolean isFinished() 
 	{
-		return Math.abs(dt.rightTalon1.getPosition()) >= Math.abs(targetRotRight) && Math.abs(dt.leftTalon0.getPosition()) >= Math.abs(targetRotLeft);
+		return Math.abs(dt.getEncRightPosition()) >= Math.abs(targetRotRight) && Math.abs(dt.getEncLeftPosition()) >= Math.abs(targetRotLeft);
 	}
 	
 	@Override
 	protected void end()
 	{
-		dt.setTeleopSettings(dt.rightTalon0);
-		dt.setTeleopSettings(dt.rightTalon1);
-		dt.setTeleopSettings(dt.leftTalon0);
-		dt.setTeleopSettings(dt.leftTalon1);
+		dt.setTeleopSettings();
 		dt.stop();
 	}
 	

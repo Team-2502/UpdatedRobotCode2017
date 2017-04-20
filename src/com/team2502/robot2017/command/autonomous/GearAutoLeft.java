@@ -1,7 +1,6 @@
 package com.team2502.robot2017.command.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class GearAutoLeft extends CommandGroup
 {
@@ -12,6 +11,6 @@ public class GearAutoLeft extends CommandGroup
 	{
 		addSequential(new DriveTimeCommand(1, .85));//this is for distance of 114.3 in
 		addSequential(new NavXMoveCommand(62, 1.25, .4, false));
-		addSequential(new AutoVCommand(5, false, -.2, .3));
+		addSequential(new AutoVisionCommand(5, -.2/.3));
 	}
 }

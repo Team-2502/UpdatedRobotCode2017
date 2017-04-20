@@ -6,7 +6,7 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.team2502.robot2017.OI;
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.RobotMap;
-import com.team2502.robot2017.command.DriveCommand;
+import com.team2502.robot2017.command.teleop.DriveCommand;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -20,7 +20,7 @@ public class DriveTrainSubsystem extends Subsystem
     private static final Pair<Double, Double> SPEED_CONTAINER = new Pair<Double, Double>();
     
     public DriveTrainTransmissionSubsystem DTTS;
-    public com.team2502.robot2017.command.ClimberCommand ClimberCommand;
+    public com.team2502.robot2017.command.teleop.ClimberCommand ClimberCommand;
     
     public final CANTalon leftTalon0; //enc
     public final CANTalon leftTalon1;
@@ -65,6 +65,28 @@ public class DriveTrainSubsystem extends Subsystem
         setTeleopSettings(rightTalon1);
     }
 
+	/**
+	 * Set all talons into auton
+	 */
+	public void setAutonSettings()
+    {
+    	setAutonSettings(leftTalon0);
+	    setAutonSettings(leftTalon1);
+	    setAutonSettings(rightTalon0);
+	    setAutonSettings(rightTalon1);
+    }
+
+    /**
+     * Set all talons into auton
+	 */
+	public void setTeleopSettings()
+	{
+		setTeleopSettings(leftTalon0);
+		setTeleopSettings(leftTalon1);
+		setTeleopSettings(rightTalon0);
+		setTeleopSettings(rightTalon1);
+	}
+
     /**
      * Set the appropriate settings for autonomous
      * @param talon the talon to set the settings of
@@ -95,49 +117,16 @@ public class DriveTrainSubsystem extends Subsystem
         talon.changeControlMode(TalonControlMode.PercentVbus);
         talon.disableControl(); // needed if switching from auton settings
     }
-    
-    public void switchClimbSettings()
-    {
-    	if(isClimbMode)
-    	{
-    		isClimbMode = false;
-    		setTeleopSettings(leftTalon0);
-    		setTeleopSettings(leftTalon1);
-    		setTeleopSettings(rightTalon0);
-    		setTeleopSettings(rightTalon1);
-    	}
-    	else if(!isClimbMode)
-    	{
-    		isClimbMode = true;
-    		leftTalon0.configPeakOutputVoltage(-8.0D, 8.0D);
-        	rightTalon0.configPeakOutputVoltage(-8.0D, 8.0D);
-        	leftTalon1.configPeakOutputVoltage(-8.0D, 8.0D);
-        	rightTalon1.configPeakOutputVoltage(-8.0D, 8.0D);
-    	}
-    }
-    
-    /**
-     * @param talon A talon with an encoder attached to it
-     * @return the position of the encoder
-     */
-    public double getPostition(CANTalon talon) { return talon.getPosition(); }
-    
+
     /**
      * @return the position of the left side of the drivetrain
      */
-    public double getEncLeftPosition() { return leftTalon0.getPosition(); }
-    
-    /**
-     * Get the RPM of a talon with an encoder on it
-     * @param talon the talon in question
-     * @return the RPM of the talon
-     */
-    public double getRPM(CANTalon talon) { return talon.getEncVelocity(); }
-    
+    public double getEncLeftPosition() { return (leftTalon0.getPosition() / 1024) * 4 * Math.PI; }
+
     /**
      * @return the position of the right side of the drivetrain
      */
-    public double getEncRightPosition() { return rightTalon0.getPosition(); }
+    public double getEncRightPosition() { return (rightTalon1.getPosition() / 1024)  * 4 * Math.PI; }
     
     /**
      * @return the average position between the left and right side of the drivetrain

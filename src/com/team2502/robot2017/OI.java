@@ -1,7 +1,9 @@
 package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
-import com.team2502.robot2017.command.autonomous.AutoVCommand;
+import com.team2502.robot2017.command.teleop.TeleopVisionCommand;
+import com.team2502.robot2017.command.teleop.ClimberCommand;
+import com.team2502.robot2017.command.teleop.SwitchDriveTransmissionCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -52,10 +54,13 @@ public final class OI
         ADD_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(true));
         SUB_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(false));
         
-        VISION_ALIGN.toggleWhenPressed(new AutoVCommand(2));
+        VISION_ALIGN.whileHeld(new TeleopVisionCommand(-0.2/3));
+        VISION_ALIGN.whenReleased(new StopDriveCommand());
         
         CLIMBER.whileHeld(new ClimberCommand(ClimberMode.CLIMB));
         CLIMBER.whenReleased(new ClimberCommand(ClimberMode.STOP));
+
+
         
     }
 
