@@ -1,6 +1,7 @@
-package com.team2502.robot2017.command.autonomous;
+package com.team2502.robot2017.command.autonomous.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import com.team2502.robot2017.command.autonomous.*;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class LeftGearAutoBackupG extends CommandGroup

@@ -1,7 +1,8 @@
-package com.team2502.robot2017.command.autonomous;
+package com.team2502.robot2017.command.autonomous.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
+import com.team2502.robot2017.command.autonomous.*;
 
 public class GearAutoRight extends CommandGroup
 {
