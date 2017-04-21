@@ -77,7 +77,6 @@ public final class Robot extends IterativeRobot
 	 */
 	public void autonomousInit() 
 	{
-//		Scheduler.getInstance().add(new GearAutoCenter());
 		Scheduler.getInstance().add(AutoSwitcherSubsystem.getAutoInstance());
 		VISION.turnOnVisionLight();
 	}
