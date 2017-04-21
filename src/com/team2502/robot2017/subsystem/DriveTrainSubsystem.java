@@ -20,7 +20,6 @@ public class DriveTrainSubsystem extends Subsystem
     private static final Pair<Double, Double> SPEED_CONTAINER = new Pair<Double, Double>();
     
     public DriveTrainTransmissionSubsystem DTTS;
-    public com.team2502.robot2017.command.teleop.ClimberCommand ClimberCommand;
     
     public final CANTalon leftTalon0; //enc
     public final CANTalon leftTalon1;
@@ -29,12 +28,10 @@ public class DriveTrainSubsystem extends Subsystem
     private final RobotDrive drive;
     private double lastLeft;
     private double lastRight;
-    public double leftSpeed;
+    private double leftSpeed;
     public double rightSpeed;
     public boolean negative = false;
     public boolean isNegativePressed = false;
-    private boolean isClimbMode = false;
-//    public boolean negMode = false;
 
     public int millisecondsToRunTL = 1000;
     public int millisecondsToRunTR = 1000;
@@ -58,7 +55,6 @@ public class DriveTrainSubsystem extends Subsystem
 
         drive.setSafetyEnabled(true);
 
-        
         DTTS = Robot.DRIVE_TRAIN_GEAR_SWITCH;
         
         setTeleopSettings(leftTalon0);
@@ -93,7 +89,6 @@ public class DriveTrainSubsystem extends Subsystem
      */
     public void setAutonSettings(CANTalon talon)
     {
-    	isClimbMode = false;
         talon.changeControlMode(TalonControlMode.Position);
         talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
         talon.configEncoderCodesPerRev(256);
@@ -109,9 +104,10 @@ public class DriveTrainSubsystem extends Subsystem
      * Set a talon back to teleoperated settings 
      * @param talon the talon in question
      */
+    
+    //WHAT THE HECK IS GOING ON WITH THE ENCODERS???
     public void setTeleopSettings(CANTalon talon)
     {
-    	isClimbMode = false;
         talon.configNominalOutputVoltage(0.0D, -0.0D);
         talon.configPeakOutputVoltage(12.0D, -12.0D);
         talon.changeControlMode(TalonControlMode.PercentVbus);

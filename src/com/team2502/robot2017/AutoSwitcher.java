@@ -17,7 +17,8 @@ class AutoSwitcher
 		
 		RED_SHOOT_AND_GEAR("Red shoot and Gear", ShootAndGearAutoRed.class),
 		BLUE_SHOOT_AND_GEAR("Blue shoot and Gear", ShootAndGearAutoBlue.class),
-		BASELINE("Baseline only", DriveTimeCommand.class);
+		BASELINE("Baseline only", DriveTimeCommand.class),
+	    ENC_DRIVE("Encoder testing", EncoderDrive.class);
 
 		private Class<? extends Command> autoCommand;
 		private String name;
