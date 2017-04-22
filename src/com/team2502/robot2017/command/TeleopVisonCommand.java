@@ -25,7 +25,7 @@ public class TeleopVisonCommand extends Command
     @Override
     protected void initialize()
     {
-        vision.turnOnVisionLight();
+//        vision.turnOnVisionLçight();
     }
 
     protected void smoothSpeed(double offset)

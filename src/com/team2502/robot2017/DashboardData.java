@@ -55,6 +55,7 @@ public final class DashboardData
     
     private static void updateDriveTrain()
     {
+        SmartDashboard.putString("Drive Train is runnning: ", "Swerve");
     	SmartDashboard.putNumber("DT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
         SmartDashboard.putNumber("DT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
         SmartDashboard.putNumber("DT: DriveTrainAveg", Robot.DRIVE_TRAIN.getEncAveg());
