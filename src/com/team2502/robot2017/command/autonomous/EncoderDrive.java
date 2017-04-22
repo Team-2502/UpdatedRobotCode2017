@@ -5,7 +5,11 @@ import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import logger.Log;
 
+<<<<<<< HEAD
 
+=======
+//@Deprecated
+>>>>>>> 380226e050ca9e330c855eaa3a6a8ed270f6d87e
 public class EncoderDrive extends Command
 {
 	private double targetRotLeft = -4.65;

@@ -1,11 +1,5 @@
 package com.team2502.robot2017;
 
-
-import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
-import com.team2502.robot2017.subsystem.DriveTrainTransmissionSubsystem;
-import com.team2502.robot2017.command.autonomous.*;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public final class DashboardData
@@ -41,19 +35,18 @@ public final class DashboardData
     
     private static void updateDriveTrain()
     {
-    	SmartDashboard.putNumber("aDT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
-        SmartDashboard.putNumber("aDT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
-        SmartDashboard.putNumber("aDT: DriveTrainAveg", Robot.DRIVE_TRAIN.getEncAveg());
-
         SmartDashboard.putNumber("DT: leftTalon0", Robot.DRIVE_TRAIN.leftTalon0.getPosition());
 	    SmartDashboard.putNumber("DT: leftTalon1", Robot.DRIVE_TRAIN.leftTalon1.getPosition());
 	    SmartDashboard.putNumber("DT: rightTalon0", Robot.DRIVE_TRAIN.rightTalon0.getPosition());
 	    SmartDashboard.putNumber("DT: rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
+
+    	SmartDashboard.putNumber("DT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
+        SmartDashboard.putNumber("DT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
+        SmartDashboard.putNumber("DT: DriveTrainAveg", Robot.DRIVE_TRAIN.getEncAveg());
     }
 
     private static void updateNavX()
     {
-        SmartDashboard.putString("Good Luck Out There", "--Programmers");
     	SmartDashboard.putNumber("NavX: Yaw", Robot.NAVX.getYaw());
     	SmartDashboard.putNumber("NavX: X Displacement", Robot.NAVX.getDisplacementX());
     	SmartDashboard.putNumber("NavX: Y Displacement", Robot.NAVX.getDisplacementY());

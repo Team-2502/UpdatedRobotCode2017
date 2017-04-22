@@ -75,6 +75,7 @@ public final class Robot extends IterativeRobot
 	 */
 	public void autonomousInit() 
 	{
+
 		Scheduler.getInstance().add(AutoSwitcher.getAutoInstance());
 		VISION.turnOnVisionLight();
 	}
@@ -85,9 +86,9 @@ public final class Robot extends IterativeRobot
 	public void autonomousPeriodic()
 	{
 		Scheduler.getInstance().run();
-		
 		DashboardData.update();
 	}
+	
 	public void teleopInit() { VISION.turnOffVisionLight(); }
 
 	/**
