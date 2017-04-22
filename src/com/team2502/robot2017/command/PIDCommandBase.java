@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public abstract class PIDCommandBase extends Command
 {
 
-	private double output;
-	private PIDController controller;
+	public double output;
+	public PIDController controller;
 	private PIDOutput pidwrite;
 
 	/**
@@ -81,11 +81,6 @@ public abstract class PIDCommandBase extends Command
 	{
 		this(kP, kI, kD, 0.0, source, 50);
 	}
-
-	/**
-	 * @return The instance of the PIDController we made for you and your PID
-	 */
-	public PIDController getController() { return controller; }
 
 	/**
 	 * @return What the PID controller calculated

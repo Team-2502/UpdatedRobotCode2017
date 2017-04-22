@@ -18,23 +18,23 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveTrainSubsystem extends Subsystem
 {
     private static final Pair<Double, Double> SPEED_CONTAINER = new Pair<Double, Double>();
-    
-    public DriveTrainTransmissionSubsystem DTTS;
-    public com.team2502.robot2017.command.teleop.ClimberCommand ClimberCommand;
-    
+
+
     public final CANTalon leftTalon0; //enc
     public final CANTalon leftTalon1;
-    public final CANTalon rightTalon0;
-    public final CANTalon rightTalon1; //enc
+    public final CANTalon rightTalon0; //enc
+    public final CANTalon rightTalon1;
     private final RobotDrive drive;
     private double lastLeft;
     private double lastRight;
-    public double leftSpeed;
-    public double rightSpeed;
-    public boolean negative = false;
-    public boolean isNegativePressed = false;
+
+    private double leftSpeed;
+    private double rightSpeed;
+    private boolean negative = false;
+    private boolean isNegativePressed = false;
     private boolean isClimbMode = false;
-//    public boolean negMode = false;
+
+	private DriveTrainTransmissionSubsystem DTTS;
 
     public int millisecondsToRunTL = 1000;
     public int millisecondsToRunTR = 1000;
@@ -119,12 +119,12 @@ public class DriveTrainSubsystem extends Subsystem
     }
 
     /**
-     * @return the position of the left side of the drivetrain
+     * @return the position of the left side of the drivetrain inches
      */
-    public double getEncLeftPosition() { return (leftTalon0.getPosition() / 1024) * 4 * Math.PI; }
+    public double getEncLeftPosition() { return (leftTalon1.getPosition() / 1024) * 4 * Math.PI; }
 
     /**
-     * @return the position of the right side of the drivetrain
+     * @return the position of the right side of the drivetrain in inches
      */
     public double getEncRightPosition() { return (rightTalon1.getPosition() / 1024)  * 4 * Math.PI; }
     
@@ -183,7 +183,6 @@ public class DriveTrainSubsystem extends Subsystem
     /**
      * Used to gradually increase the speed of the robot.
      *
-     * @param isLeftSide Whether or not it is the left joystick/side
      * @param out The object to store the data in
      * @return the speed of the robot
      */

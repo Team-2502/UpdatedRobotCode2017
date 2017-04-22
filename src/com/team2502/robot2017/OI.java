@@ -54,8 +54,8 @@ public final class OI
         ADD_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(true));
         SUB_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(false));
         
-        VISION_ALIGN.whileHeld(new TeleopVisionCommand(-0.2/3));
-        VISION_ALIGN.whenReleased(new StopDriveCommand());
+        VISION_ALIGN.whileHeld(new TeleopVisionCommand());
+//        VISION_ALIGN.whenReleased(new StopDriveCommand());
         
         CLIMBER.whileHeld(new ClimberCommand(ClimberMode.CLIMB));
         CLIMBER.whenReleased(new ClimberCommand(ClimberMode.STOP));

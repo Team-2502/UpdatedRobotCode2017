@@ -21,6 +21,8 @@ public class ResetEncodersCommand extends InstantCommand
 	protected void initialize()
 	{
 		dt.leftTalon0.setEncPosition(0);
+		dt.leftTalon1.setEncPosition(0);
+		dt.rightTalon0.setEncPosition(0);
 		dt.rightTalon1.setEncPosition(0);
 	}
 
