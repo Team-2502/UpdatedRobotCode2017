@@ -2,12 +2,12 @@ package com.team2502.robot2017;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public final class DashboardData
+final class DashboardData
 {
 
     private DashboardData() {}
     
-    public static void update()
+    static void update()
     {
     	updatePressure();
     	updateDriveTrain();
@@ -15,7 +15,7 @@ public final class DashboardData
         updateShooter();
     }
 
-    public static void setup() {}
+    static void setup() {}
     
     private static void updateShooter()
     {
@@ -35,14 +35,9 @@ public final class DashboardData
     
     private static void updateDriveTrain()
     {
-        SmartDashboard.putNumber("DT: leftTalon0", Robot.DRIVE_TRAIN.leftTalon0.getPosition());
-	    SmartDashboard.putNumber("DT: leftTalon1", Robot.DRIVE_TRAIN.leftTalon1.getPosition());
-	    SmartDashboard.putNumber("DT: rightTalon0", Robot.DRIVE_TRAIN.rightTalon0.getPosition());
-	    SmartDashboard.putNumber("DT: rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
-
-    	SmartDashboard.putNumber("DT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
-        SmartDashboard.putNumber("DT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
-        SmartDashboard.putNumber("DT: DriveTrainAveg", Robot.DRIVE_TRAIN.getEncAveg());
+        SmartDashboard.putNumber("DT: leftTalon0", Robot.DRIVE_TRAIN.leftTalon0.getPosition() / (4 * Math.PI));
+	    SmartDashboard.putNumber("DT: rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition() / (4 * Math.PI));
+	    SmartDashboard.putBoolean("Drive Team will win us the match", true);
     }
 
     private static void updateNavX()

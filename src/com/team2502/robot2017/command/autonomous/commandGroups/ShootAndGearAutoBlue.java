@@ -1,19 +1,20 @@
-package com.team2502.robot2017.command.autonomous;
+package com.team2502.robot2017.command.autonomous.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import com.team2502.robot2017.command.autonomous.*;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class ShootAndGearAutoRed extends CommandGroup
+public class ShootAndGearAutoBlue extends CommandGroup
 {
-    public ShootAndGearAutoRed()
+    public ShootAndGearAutoBlue()
     {
-      addSequential(new ShootAutoBase("red"));
+      addSequential(new ShootAutoBase("blue"));
 
       //Forward
       addSequential(new DriveTimeCommand(.85/1.5, 1));
 
       // Point at gear peg
-      addSequential(new NavXMoveCommand(-75, 1));
+      addSequential(new NavXMoveCommand(75));
 
       // Drive at gear peg
       addSequential(new DriveTimeCommand(0.25, 0.7));
@@ -21,7 +22,7 @@ public class ShootAndGearAutoRed extends CommandGroup
       // Stare at and intimidate the gear peg
       addSequential(new AutoVCommand(2, -.2/.3));
       addSequential(new WaitCommand(1));
-      addSequential(new NavXMoveCommand(10, 0.5)); // wiggle
-      addSequential(new NavXMoveCommand(-20, 0.5)); // woggle
+      addSequential(new NavXMoveCommand(10)); // wiggle
+      addSequential(new NavXMoveCommand(-20)); // woggle
     }
 }

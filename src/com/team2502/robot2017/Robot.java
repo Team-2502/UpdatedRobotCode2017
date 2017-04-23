@@ -77,6 +77,7 @@ public final class Robot extends IterativeRobot
 	{
 
 		Scheduler.getInstance().add(AutoSwitcher.getAutoInstance());
+		NAVX.reset();
 		VISION.turnOnVisionLight();
 	}
 

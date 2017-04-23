@@ -13,7 +13,7 @@ public class ShootCommand extends TimedCommand
      * @param runTime Time to run for in seconds.
      */
 
-    ShootCommand(double runTime, boolean both)
+    public ShootCommand(double runTime, boolean both)
     {
     	super(runTime);
         requires(Robot.SHOOTER);
