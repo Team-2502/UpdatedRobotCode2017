@@ -8,6 +8,6 @@ public class ShootAndBaseLineRed extends CommandGroup
     public ShootAndBaseLineRed()
     {
     	addSequential(new ShootAutoBase("red"));
-        addSequential(new DriveTimeCommand(1, 1));
+        addSequential(new EncoderDrive(80, 4));
     }
 }

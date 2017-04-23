@@ -34,4 +34,7 @@ public class TeleopVisionCommand extends InstantCommand
 
 	}
 
+	@Override
+	protected void interrupted() { dt.stopDriveS(); }
+
 }

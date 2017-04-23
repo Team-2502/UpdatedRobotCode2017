@@ -17,24 +17,25 @@ class ShootAutoBase extends CommandGroup {
 	 */
 	ShootAutoBase(String allianceColor)
 	{
-		double angle = -60;
+		double angle = 135;
 		String red = "RED";
 		String blue = "BLUE";
 		allianceColor = allianceColor.toUpperCase();
 
-		// shoot balls into boiler
-	    addSequential(new ShootCommand(1, false));
-	    addSequential(new ShootCommand(3, true));
+//		// shoot balls into boiler
+//	    addSequential(new ShootCommand(1, false));
+//	    addSequential(new ShootCommand(3, true));
+//
+//	    // FTC align against boiler
 
-	    // FTC align against boiler
-	    addSequential(new DriveTimeCommand(1, 1));
+	    addSequential(new DriveTimeCommand(2, 1, 0));
 	    addSequential(new WaitCommand(0.25));
 	    
 	    // Pull away from boiler
-	    addSequential(new DriveTimeCommand(.5/3, -1)); //TODO: Convert to Encoders
+	    addSequential(new EncoderDrive(-20, 1)); //TODO: Convert to Encoders
 
-	    if(allianceColor.hashCode() == red.hashCode()) { addSequential(new NavXMoveCommand(-angle)); }
-	    else if(allianceColor.hashCode() == blue.hashCode()) { addSequential(new NavXMoveCommand(angle)); }
-		addSequential(new DriveTimeCommand(1.5)); //TODO: Convert to Encoders
+	    if(allianceColor.hashCode() == red.hashCode()) { addSequential(new NavXMoveCommand(-angle, 2)); }
+	    else if(allianceColor.hashCode() == blue.hashCode()) { addSequential(new NavXMoveCommand(angle, 2)); }
+		else { addSequential(new EncoderDrive(100000000, 999999999)); } //TODO: Convert to Encoders
 	}
 }

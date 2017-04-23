@@ -22,17 +22,18 @@ public class NavXMoveCommand extends Command implements PIDOutput
 	/**
 	 * Drive in a straight line for 5 seconds according to the navx.
 	 */
-	private NavXMoveCommand()
+	private NavXMoveCommand(double time)
     {
+    	super(time);
 		requires(Robot.DRIVE_TRAIN);
 	    driveTrain = Robot.DRIVE_TRAIN;
 	    navx = Robot.NAVX;
 
-	    turnController = new PIDController(0.03, 0.00025, 0, 0, navx, this);
+	    turnController = new PIDController(0.02, 0.000007, 0, 0, navx, this);
 		//.0225 , .0002, 0
 	    turnController.setInputRange(-180.0f,  180.0f);
 	    turnController.setOutputRange(-1.0, 1.0);
-	    turnController.setAbsoluteTolerance(2);
+	    turnController.setAbsoluteTolerance(1);
 	    turnController.setContinuous(true);
 	    turnController.disable();
 	}
@@ -42,11 +43,12 @@ public class NavXMoveCommand extends Command implements PIDOutput
 	 * 
 	 * @param angle the angle to turn to.
 	 */
-    public NavXMoveCommand(double angle)
+    public NavXMoveCommand(double angle, double maxtime)
     {
-	    this();
+	    this(maxtime);
         targetYaw = angle;
     }
+
 
 	@Override
 	protected void initialize() 
@@ -75,7 +77,7 @@ public class NavXMoveCommand extends Command implements PIDOutput
 	@Override
 	protected boolean isFinished()
 	{
-		return onTarget && (System.currentTimeMillis() - alignedTime) >= 1000;
+		return isTimedOut() || (onTarget && (System.currentTimeMillis() - alignedTime) >= 1000);
 	}
 
 	@Override

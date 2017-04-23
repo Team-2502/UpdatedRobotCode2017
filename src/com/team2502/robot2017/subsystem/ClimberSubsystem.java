@@ -4,6 +4,7 @@ import com.ctre.CANTalon;
 import com.team2502.robot2017.OI;
 import com.team2502.robot2017.RobotMap;
 
+import com.team2502.robot2017.command.teleop.ClimberDriveCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ClimberSubsystem extends Subsystem
@@ -25,22 +26,15 @@ public class ClimberSubsystem extends Subsystem
      * Set the init default command
      */
     @Override
-    protected void initDefaultCommand() {}
+    protected void initDefaultCommand() { setDefaultCommand(new ClimberDriveCommand()); }
 
 	public void drive()
 	{
-		if(OI.JOYSTICK_FUNCTION.getRawButton(RobotMap.Joystick.Button.CLIMBER))
-		{
-			climberTop.set(1);
-			climberBottom.set(1);
-		}
-		else
-		{
-			climberTop.set(0);
-		}
-		
-		
-		
+		double speed = Math.abs(OI.JOYSTICK_FUNCTION.getY() /*|| OI.JOYSTICK_FUNCTION.getZ()*/);
+
+		if(speed <= 0.1D) { speed = 0; }
+
+		runMotors(speed);
 	}
 	
 	public void runMotors(double speed)

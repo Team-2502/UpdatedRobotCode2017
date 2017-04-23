@@ -84,8 +84,8 @@ public class DriveTrainSubsystem extends Subsystem
         talon.configEncoderCodesPerRev(256);
         talon.reverseSensor(reverseEnc);
         talon.configNominalOutputVoltage(0.0D, -0.0D);
-        talon.configPeakOutputVoltage(12.0D, -12.0D);
-        talon.setPID(0.5, 0.001,50);
+        talon.configPeakOutputVoltage(12.0D, -12.0D);//8
+        talon.setPID(3.7, 0,0); // confirmed working -- miguel certified
         // increase P until
 	    talon.setEncPosition(0);
 	    talon.enableControl();

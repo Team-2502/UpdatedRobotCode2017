@@ -10,8 +10,8 @@ public class GearAutoCenter extends CommandGroup
      */
     public GearAutoCenter() 
     {
-        addSequential(new EncoderDrive(100));
-//        System.out.println("Running Vision [Gear Auto Center]");
-//		addSequential(new AutoVCommand(5, false, -.1, .3));
+        addSequential(new EncoderDrive(50, 1));
+        System.out.println("Running Vision [Gear Auto Center]");
+		addSequential(new AutoVCommand(5, false, -.1, .3));
 	}
 }

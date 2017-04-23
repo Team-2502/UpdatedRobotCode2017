@@ -10,9 +10,11 @@ public class GearAutoRight extends CommandGroup
      */
 	public GearAutoRight() 
 	{
-		addSequential(new EncoderDrive(114.3));
-		addSequential(new NavXMoveCommand(62));
+		addSequential(new EncoderDrive(83, 2));
+		addSequential(new NavXMoveCommand(-60, 2));
 		System.out.println("Running Vision [Gear Auto Right]");
-		addSequential(new AutoVCommand(5, -2/.3));
+		addSequential(new AutoVCommand(3, false, -0.2, 0.3));
+		addSequential(new Wiggle());
+
 	}
 }
