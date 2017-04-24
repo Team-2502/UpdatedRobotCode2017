@@ -31,7 +31,7 @@ public final class OI
 	private static final Button ADD_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.ADD_FLYWHEEL_SPEED);
 	private static final Button SUB_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.SUB_FLYWHEEL_SPEED);
 
-	private static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.VISION_ALIGN);
+//	private static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.VISION_ALIGN);
 
 	private static final Button CLIMBER = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.CLIMBER);
     
@@ -54,11 +54,8 @@ public final class OI
         ADD_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(true));
         SUB_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(false));
         
-        VISION_ALIGN.whileHeld(new TeleopVisionCommand());
+//        VISION_ALIGN.whileHeld(new TeleopVisionCommand());
 
-        
-//        CLIMBER.whileHeld(new ClimberCommand(ClimberMode.CLIMB));
-//        CLIMBER.whenReleased(new ClimberCommand(ClimberMode.STOP));
 
         
     }

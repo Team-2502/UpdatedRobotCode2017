@@ -7,18 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoVCommand extends Command
 {
-    public static DriveTrainSubsystem dt;
-    public static double offset;
-    public double leftSpeed;
-    public double rightSpeed;
-    public static VisionSubsystem vision;
-    double startTime = System.currentTimeMillis();
-    double targetElapsed = 15;
-    static boolean alignOnly = false;
-	static double highSpeed = 0.3;
-	static double lowSpeed = highSpeed/2;
-    double turningFactor = -0.2/3;
-    boolean smoothTurning = false;
+    private static DriveTrainSubsystem dt;
+    private static double offset;
+    private static VisionSubsystem vision;
+    private double startTime = System.currentTimeMillis();
+    private double targetElapsed = 15;
+    private static boolean alignOnly = false;
+    private double highSpeed = 0.3;
+    private double lowSpeed = highSpeed/2;
+    private double turningFactor = -0.2/3;
+    private boolean smoothTurning = false;
     /**
      * Automatic vision-based alignment with shiny objects
      * <br>
@@ -88,38 +86,21 @@ public class AutoVCommand extends Command
     }
 
     @Override
-    protected void interrupted() { end(); }
-    
-    @Override
-    protected void initialize() 
+    protected void initialize()
     {
     	vision.turnOnVisionLight();
     	startTime = System.currentTimeMillis();
     }
 
+    @Override
     protected void execute()
     {
-    	align();
-    }
-
-    private static void align()
-    {
-	    offset = vision.getOffset();
-
-	    if(offset > 0.1) { dt.runMotors(highSpeed, lowSpeed); }
-	    else if(offset < 0.1) { dt.runMotors(-lowSpeed, -highSpeed); }
-	    else if((-0.1 < offset) && (offset < 0.1) && !alignOnly) { dt.runMotors(.5D, -.5D); }
+        vision.align(dt, lowSpeed, highSpeed, alignOnly, true);
     }
 
     @Override
-    protected boolean isFinished()
-    {
-    	if(System.currentTimeMillis() - startTime > targetElapsed)
-    	{
-    		if(alignOnly) { return Math.abs(offset) < 0.1; } // if aligned properly and enough time gone by
-            else{ return true; } // if aligned properly
-    	}
-    	else { return false; } // if not enough time has gone by
+    protected boolean isFinished() {
+        return System.currentTimeMillis() - startTime > targetElapsed && (!alignOnly || Math.abs(offset) < 0.1);
     }
 
     protected void end()
@@ -127,6 +108,7 @@ public class AutoVCommand extends Command
     	dt.stop();
     	vision.turnOffVisionLight();
     }
-    
-    private double getSpeed(double x) { return (-2/(1+(Math.pow(x, 2)/1600))+2); }
+
+    @Override
+    protected void interrupted() { end(); }
 }

@@ -1,18 +1,14 @@
 package com.team2502.robot2017.command.teleop;
 
 import com.team2502.robot2017.Robot;
-import com.team2502.robot2017.command.autonomous.AutoVCommand;
 import com.team2502.robot2017.subsystem.VisionSubsystem;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
-import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.command.Command;
 
-public class TeleopVisionCommand extends InstantCommand
+public class TeleopVisionCommand extends Command
 {
 	VisionSubsystem vision;
 	DriveTrainSubsystem dt;
-	double highSpeed = 0.3;
-	double lowSpeed = highSpeed * -0.2/0.3;
-	double offset;
 
 	public TeleopVisionCommand()
 	{
@@ -24,17 +20,16 @@ public class TeleopVisionCommand extends InstantCommand
 	}
 
 	@Override
-	protected void initialize()
-	{
-		offset = vision.getOffset();
-
-		if(offset > 0.1) { dt.runMotors(highSpeed, lowSpeed); }
-		else if(offset < 0.1) { dt.runMotors(-lowSpeed, -highSpeed); }
-		else { dt.runMotors(highSpeed, -highSpeed); }
-
-	}
+	protected void execute() { vision.align(dt, -0.2, 0.3, false, false); }
 
 	@Override
-	protected void interrupted() { dt.stopDriveS(); }
+	protected boolean isFinished() { return false; }
+
+
+	@Override
+	protected void end() { dt.stopDriveS(); }
+
+	@Override
+	protected void interrupted() { end(); }
 
 }
