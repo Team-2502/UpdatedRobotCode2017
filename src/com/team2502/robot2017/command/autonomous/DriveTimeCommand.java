@@ -8,8 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 @Deprecated
 public class DriveTimeCommand extends Command
 {
-	private double speed = 0.5;
-	private final DriveTrainSubsystem dt;
+	double speedLeft = 0.5;
+	double speedRight = -0.5;
+	final DriveTrainSubsystem dt;
 
 	public DriveTimeCommand(double runtime)
 	{
@@ -21,14 +22,21 @@ public class DriveTimeCommand extends Command
 
 	public DriveTimeCommand(double runtime, double speed)
 	{
+		this(runtime, speed, -speed);
+	}
+
+	public DriveTimeCommand(double runtime, double speedLeft, double speedRight)
+	{
 		this(runtime);
-		this.speed = speed;
+		this.speedLeft = speedLeft;
+		this.speedRight = speedRight;
+
 	}
 
 	@Override
 	protected void execute()
 	{
-		dt.runMotors(speed, -speed);
+		dt.runMotors(speedLeft, speedRight);
 	}
 
 	@Override

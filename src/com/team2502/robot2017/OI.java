@@ -57,8 +57,8 @@ public final class OI
         VISION_ALIGN.whileHeld(new TeleopVisionCommand());
 
         
-        CLIMBER.whileHeld(new ClimberCommand(ClimberMode.CLIMB));
-        CLIMBER.whenReleased(new ClimberCommand(ClimberMode.STOP));
+//        CLIMBER.whileHeld(new ClimberCommand(ClimberMode.CLIMB));
+//        CLIMBER.whenReleased(new ClimberCommand(ClimberMode.STOP));
 
         
     }

@@ -102,7 +102,7 @@ public class AutoVCommand extends Command
     	align();
     }
 
-    public static void align()
+    private static void align()
     {
 	    offset = vision.getOffset();
 

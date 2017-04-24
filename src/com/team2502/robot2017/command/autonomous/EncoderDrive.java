@@ -22,18 +22,18 @@ public class EncoderDrive extends Command
 
 	private DriveTrainSubsystem dt;
 	
-	private EncoderDrive()
+	private EncoderDrive(double time)
 	{
-		super(5);
+		super(time);
 		dt = Robot.DRIVE_TRAIN;
 		requires(Robot.DRIVE_TRAIN);
 	}
 	
-	public EncoderDrive(double inches) { this(inches, inches); }
+	public EncoderDrive(double inches, double maxtime) { this(inches, inches, maxtime); }
 	
-	public EncoderDrive(double inchesLeft, double inchesRight)
+	private EncoderDrive(double inchesLeft, double inchesRight, double time)
 	{	
-		this();
+		this(time);
 
 		targetRotLeft = inchesLeft / (4 * Math.PI);
 		targetRotRight = inchesRight / (4 * Math.PI);
@@ -54,11 +54,11 @@ public class EncoderDrive extends Command
 		SmartDashboard.putNumber("DT: Autonomous encoder ticks needed Left", revLeftL);
 		SmartDashboard.putNumber("DT: Autonomous encoder ticks needed Right", revLeftR);
 
-		if (!onTarget && (revLeftL <= 0.01 && revLeftR <= 0.01))
+		if (!onTarget && (Math.abs(revLeftL) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR && Math.abs(revLeftR) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
 		{
 			onTargetStartTime = System.currentTimeMillis();
 		}
-		else if(onTarget && (revLeftL <= 0.01 && revLeftR <= 0.01))
+		else if(onTarget && (Math.abs(revLeftL) >= RobotMap.Motor.ALLOWABLE_LOOP_ERR && Math.abs(revLeftR) >= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
 		{
 			onTargetStartTime = 0;
 		}
@@ -69,12 +69,18 @@ public class EncoderDrive extends Command
 	}
 
 	@Override
-	protected boolean isFinished() 
+	protected boolean isFinished()
 	{
-
-		return (Math.abs(revLeftR) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR
-				&& Math.abs(revLeftL) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR)
-				&& (System.currentTimeMillis() - onTargetStartTime >= RobotMap.Motor.TIME_TO_STOP);
+		if(isTimedOut())
+		{
+			return true;
+		}
+		else
+		{
+			return (Math.abs(revLeftR) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR
+					&& Math.abs(revLeftL) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR)
+					&& (System.currentTimeMillis() - onTargetStartTime >= RobotMap.Motor.TIME_TO_STOP);
+		}
 
 	}
 	

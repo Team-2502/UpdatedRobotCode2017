@@ -35,8 +35,8 @@ final class DashboardData
     
     private static void updateDriveTrain()
     {
-        SmartDashboard.putNumber("DT: leftTalon0", Robot.DRIVE_TRAIN.leftTalon0.getPosition() / (4 * Math.PI));
-	    SmartDashboard.putNumber("DT: rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition() / (4 * Math.PI));
+        SmartDashboard.putNumber("DT: leftTalon0", Robot.DRIVE_TRAIN.leftTalon0.getPosition());
+	    SmartDashboard.putNumber("DT: rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
 	    SmartDashboard.putBoolean("Drive Team will win us the match", true);
     }
 

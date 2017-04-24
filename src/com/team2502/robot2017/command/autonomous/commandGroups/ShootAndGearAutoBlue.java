@@ -11,18 +11,12 @@ public class ShootAndGearAutoBlue extends CommandGroup
       addSequential(new ShootAutoBase("blue"));
 
       //Forward
-      addSequential(new DriveTimeCommand(.85/1.5, 1));
+      addSequential(new EncoderDrive(53.254, 2));
 
       // Point at gear peg
-      addSequential(new NavXMoveCommand(75));
+      addSequential(new NavXMoveCommand(60, 2));
 
-      // Drive at gear peg
-      addSequential(new DriveTimeCommand(0.25, 0.7));
-
-      // Stare at and intimidate the gear peg
-      addSequential(new AutoVCommand(2, -.2/.3));
-      addSequential(new WaitCommand(1));
-      addSequential(new NavXMoveCommand(10)); // wiggle
-      addSequential(new NavXMoveCommand(-20)); // woggle
+	  addSequential(new AutoVCommand(4, false, -0.2, 0.3));
+      addSequential(new Wiggle());
     }
 }
