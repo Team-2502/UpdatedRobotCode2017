@@ -29,20 +29,10 @@ public class ClimberSubsystem extends Subsystem
 
 	public void drive()
 	{
-		if(OI.JOYSTICK_FUNCTION.getRawButton(RobotMap.Joystick.Button.CLIMBER))
-		{
-			climberTop.set(1);
-			climberBottom.set(1);
-		}
-		else
-		{
-			climberTop.set(0);
-		}
-		
-		
-		
+		climberTop.set(-OI.JOYSTICK_FUNCTION.getY());
+		climberTop.set(-OI.JOYSTICK_FUNCTION.getY());
 	}
-	
+
 	public void runMotors(double speed)
 	{
 		climberTop.set(speed);

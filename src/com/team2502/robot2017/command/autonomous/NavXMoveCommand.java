@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * Turn to a certain angle with the NavX. Is also a good example of using custom PID control
+ */
 public class NavXMoveCommand extends Command implements PIDOutput
 {
 	private double targetYaw;

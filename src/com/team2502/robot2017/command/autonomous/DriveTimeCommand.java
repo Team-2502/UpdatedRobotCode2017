@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 @Deprecated
 public class DriveTimeCommand extends Command
 {
-	double speed = 0.5;
-	final DriveTrainSubsystem dt;
+	private double speed = 0.5;
+	private final DriveTrainSubsystem dt;
 
 	public DriveTimeCommand(double runtime)
 	{
