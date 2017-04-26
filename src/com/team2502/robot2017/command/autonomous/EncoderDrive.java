@@ -44,7 +44,7 @@ public class EncoderDrive extends Command
 	@Override
 	protected void execute()
 	{
-		dt.rightTalon0.set(targetRotRight);
+		dt.rightTalon1.set(targetRotRight);
 		dt.leftTalon0.set(targetRotLeft);
 	}
 
