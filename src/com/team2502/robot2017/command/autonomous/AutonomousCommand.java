@@ -31,7 +31,7 @@ public class AutonomousCommand extends Command
     @Override
     protected void initialize() 
     {
-    	Scheduler.getInstance().add(new ShootCommand(1,9));
+//    	Scheduler.getInstance().add(new ShootCommand(1,9));
     }
 
     @Override
