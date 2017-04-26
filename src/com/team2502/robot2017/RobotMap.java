@@ -62,6 +62,9 @@ public class RobotMap
 		public static final int CLIMBER_TOP = 10;
 		public static final int CLIMBER_BOTTOM = 11;
 
+		public static final int ALLOWABLE_LOOP_ERR = 5; // in encoder pulses
+	    public static final int TIME_TO_STOP = 1500; // amount of milliseconds to be on target to stop contolling with PID
+
         private Motor() {}
     }
 

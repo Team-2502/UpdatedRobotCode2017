@@ -1,13 +1,50 @@
 package com.team2502.robot2017.command.autonomous;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-
+import com.team2502.robot2017.Robot;
+import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
+import edu.wpi.first.wpilibj.command.Command;
 
 // Please use encoders!!!
 @Deprecated
-public class DriveTimeCommand extends CommandGroup
+public class DriveTimeCommand extends Command
 {
-	public DriveTimeCommand(double runTime) { addSequential(new NavXMoveCommand(0, runTime, 0.65, false)); }
-	
-	public DriveTimeCommand(double runTime, double speed) { addSequential(new NavXMoveCommand(0, runTime, speed, false)); }
+	double speedLeft = 0.5;
+	double speedRight = -0.5;
+	final DriveTrainSubsystem dt;
+
+	public DriveTimeCommand(double runtime)
+	{
+		super(runtime);
+		requires(Robot.DRIVE_TRAIN);
+		dt = Robot.DRIVE_TRAIN;
+
+	}
+
+	public DriveTimeCommand(double runtime, double speed)
+	{
+		this(runtime, speed, -speed);
+	}
+
+	public DriveTimeCommand(double runtime, double speedLeft, double speedRight)
+	{
+		this(runtime);
+		this.speedLeft = speedLeft;
+		this.speedRight = speedRight;
+
+	}
+
+	@Override
+	protected void execute()
+	{
+		dt.runMotors(speedLeft, speedRight);
+	}
+
+	@Override
+	protected boolean isFinished()
+	{
+		return isTimedOut();
+	}
+
+	@Override
+	protected void end() { dt.stopDriveS(); }
 }

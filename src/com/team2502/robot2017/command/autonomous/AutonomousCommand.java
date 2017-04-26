@@ -1,7 +1,6 @@
 package com.team2502.robot2017.command.autonomous;
 
 import com.team2502.robot2017.Robot;
-import com.team2502.robot2017.command.autonomous.commandGroups.ShootAutoCommand;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import com.team2502.robot2017.subsystem.ShooterSubsystem;
 import com.team2502.robot2017.subsystem.VisionSubsystem;
@@ -32,7 +31,7 @@ public class AutonomousCommand extends Command
     @Override
     protected void initialize() 
     {
-    	Scheduler.getInstance().add(new ShootAutoCommand(1,9));
+    	Scheduler.getInstance().add(new ShootCommand(1,9));
     }
 
     @Override

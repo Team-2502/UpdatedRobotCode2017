@@ -1,7 +1,6 @@
 package com.team2502.robot2017.command.autonomous.commandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import com.team2502.robot2017.command.autonomous.*;
 
 public class GearAutoLeft extends CommandGroup
@@ -11,10 +10,11 @@ public class GearAutoLeft extends CommandGroup
      */
 	public GearAutoLeft() 
 	{
-		addSequential(new DriveTimeCommand(1, .85));//this is for distance of 114.3 in
-//		addSequential(new NavXMoveCommand(62, 1.25, .4, false));
-		addSequential(new NavXPIDTurn(62));
-		addSequential(new AutoVisionCommand(5, -.2/.3));
-
+		addSequential(new EncoderDrive(80, 1.7));
+		addSequential(new NavXMoveCommand(60, 1));
+		System.out.println("Running Vision [Gear Auto Left]");
+		addSequential(new AutoVCommand(3, false, -0.2, 0.3));
+		addSequential(new NavXMoveCommand(-5, 0.5));
+		addSequential(new NavXMoveCommand(10, 0.5));
 	}
 }

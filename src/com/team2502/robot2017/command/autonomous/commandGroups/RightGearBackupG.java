@@ -11,7 +11,7 @@ public class RightGearBackupG extends CommandGroup
         addSequential(new DriveTimeCommand(1D, .7));
         addSequential(new WaitCommand(1));
         addSequential(new NavXMoveCommand(-60, 4));
-        addSequential(new AutoVisionCommand(2));  
+        addSequential(new AutoVCommand(2));  
     }
 }
     

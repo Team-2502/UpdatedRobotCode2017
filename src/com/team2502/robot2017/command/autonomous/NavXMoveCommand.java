@@ -4,34 +4,41 @@ import com.kauailabs.navx.frc.AHRS;
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class NavXMoveCommand extends Command
+/**
+ * Turn to a certain angle with the NavX. Is also a good example of using custom PID control
+ */
+public class NavXMoveCommand extends Command implements PIDOutput
 {
 	private double targetYaw;
 	private DriveTrainSubsystem driveTrain;
 	private AHRS navx;
-	private double currentYaw;
-	private boolean angleOnly = false;
-	private double runTime;
-	private long startTime;
-	private double deadZone = 1;
-	private double speed;
-	private boolean ifManualSpeed;
-	private double manualSpeed = 0.5;
+	private double turnRate = 0;
+	private PIDController turnController;
+	private long alignedTime;
+	private boolean onTarget = false;
 
 	/**
 	 * Drive in a straight line for 5 seconds according to the navx.
 	 */
-	public NavXMoveCommand()
+	private NavXMoveCommand(double time)
     {
+    	super(time);
 		requires(Robot.DRIVE_TRAIN);
 	    driveTrain = Robot.DRIVE_TRAIN;
 	    navx = Robot.NAVX;
-	    targetYaw = 0;
-	    
-	    this.runTime = (long)  5000;
+
+	    turnController = new PIDController(0.02, 0.000007, 0, 0, navx, this);
+		//.0225 , .0002, 0
+	    turnController.setInputRange(-180.0f,  180.0f);
+	    turnController.setOutputRange(-1.0, 1.0);
+	    turnController.setAbsoluteTolerance(1);
+	    turnController.setContinuous(true);
+	    turnController.disable();
 	}
 	
 	/**
@@ -39,78 +46,41 @@ public class NavXMoveCommand extends Command
 	 * 
 	 * @param angle the angle to turn to.
 	 */
-    public NavXMoveCommand(double angle) 
+    public NavXMoveCommand(double angle, double maxtime)
     {
-	    this();
-        angleOnly = true;
+	    this(maxtime);
         targetYaw = angle;
     }
-    
-    /**
-     * Turn to an angle, and drive on it for some time
-     * @param angle   the angle to turn to
-     * @param runTime the time to drive for
-     */
-    public NavXMoveCommand(double angle, double runTime)
-    {
-        this();
-	    targetYaw = angle;
-	    this.runTime = (runTime*1000);
-    }
-    
-    /**
-     * Turns angle for a curtain amount of time and curtain speed
-     * @param angle - turn a curtain amount
-     * @param runTime - runs for a curtain amount
-     * @param speed - sets curtain amount of speed
-     * @param speedIsForStraightOnly - linear turning or not?
-     */
-    public NavXMoveCommand(double angle, double runTime, double speed, boolean speedIsForStraightOnly)
-    {
-        this();
-        targetYaw = angle;
-        this.runTime = (runTime*1000);
-        ifManualSpeed = !speedIsForStraightOnly;
-        manualSpeed = speed;
-    }
+
 
 	@Override
 	protected void initialize() 
 	{
-		startTime = System.currentTimeMillis();
 	    navx.reset();
+
+		if (!turnController.isEnabled()) {
+			turnController.setSetpoint(targetYaw);
+			turnController.enable();
+		}
+
+		if(turnController.onTarget() && !onTarget)
+		{
+			onTarget = true;
+			alignedTime = System.currentTimeMillis();
+
+		}
 	}
 
 	@Override
 	protected void execute() 
 	{
-		currentYaw = Robot.NAVX.getAngle();
-		if(ifManualSpeed){ speed = manualSpeed;}
-		else{speed = getSpeed(currentYaw - targetYaw);}
-		SmartDashboard.putNumber("NavX: Target yaw", targetYaw);
-		if(Math.abs(currentYaw - targetYaw) > deadZone)
-		{	
-			// right = pos
-			// left = neg
-			if(currentYaw > targetYaw) { driveTrain.runMotors(-speed, -speed); } 
-			else if(currentYaw < targetYaw) { driveTrain.runMotors(speed, speed); }
-		}
-		else { driveTrain.runMotors(speed, -speed); }
+		driveTrain.runMotors(turnRate, turnRate);
 	}
 
 	@Override
 	protected boolean isFinished()
 	{
-		// Will end if time elapsed while at targetYaw or at appropriate distance
-		if(angleOnly) { return Math.abs(currentYaw - targetYaw) > deadZone; }
-		else
-		{ 
-		    if(Math.abs(currentYaw - targetYaw) > deadZone)
-		    {
-		    return System.currentTimeMillis() - startTime > runTime;
-		    }
-		    else { return false; }
-		}
+		return isTimedOut() || (onTarget && (System.currentTimeMillis() - alignedTime) >= 1000);
 	}
 
 	@Override
@@ -118,14 +88,7 @@ public class NavXMoveCommand extends Command
 
 	@Override
 	protected void interrupted() { end(); }
-	
-	/**
-	 * @param  x seconds that have passed since you started turning/
-	 * @return the speed one side of the drive train should go at
-	 */
-	protected double getSpeed(double x)
-	{
-		if(targetYaw == 0){ return manualSpeed; }
-		else { return (-0.5/(1+Math.pow(x, 2)/2000))+0.5; }
-	}
+
+	@Override
+	public void pidWrite(double output) { turnRate = output; }
 }
