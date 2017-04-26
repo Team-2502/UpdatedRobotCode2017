@@ -2,34 +2,31 @@ package com.team2502.robot2017.command.autonomous;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.ShooterSubsystem;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 
-public class ShootCommand extends Command
+public class ShootCommand extends TimedCommand
 {
-    public ShooterSubsystem shooterSubsystem;
-    private double runTime;
-    private long startTime;
-    public boolean both = false;
+    private ShooterSubsystem shooterSubsystem;
+    private boolean both = false;
 
     /**
      * @param runTime Time to run for in seconds.
      */
-    public ShootCommand(double runTime, boolean both)
+
+    ShootCommand(double runTime, boolean both)
     {
-        this.runTime = runTime*1000;
+    	super(runTime);
         requires(Robot.SHOOTER);
         this.shooterSubsystem = Robot.SHOOTER;
         this.both = both;
     }
 
     @Override
-    protected void initialize() { startTime = System.currentTimeMillis(); }
-
-    @Override
-    protected void execute() { if(both) { shooterSubsystem.feed(); } shooterSubsystem.turnOnFlywheel(); }
-
-    @Override
-    protected boolean isFinished() { return (System.currentTimeMillis() - startTime > runTime); }
+    protected void execute()
+    {
+    	if(both) { shooterSubsystem.feed(); }
+    	shooterSubsystem.turnOnFlywheel();
+    }
 
     @Override
     protected void end() { shooterSubsystem.stop(); }

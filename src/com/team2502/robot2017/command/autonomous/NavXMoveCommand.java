@@ -9,19 +9,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class NavXMoveCommand extends Command
 {
-	public double targetYaw;
+	private double targetYaw;
 	private DriveTrainSubsystem driveTrain;
 	private AHRS navx;
-	public double currentYaw;
+	private double currentYaw;
 	private boolean angleOnly = false;
-	public boolean done = false;;
 	private double runTime;
 	private long startTime;
 	private double deadZone = 1;
-	private double elapsedTime;
 	private double speed;
 	private boolean ifManualSpeed;
-	public double manualSpeed = 0.5;
+	private double manualSpeed = 0.5;
+
 	/**
 	 * Drive in a straight line for 5 seconds according to the navx.
 	 */
@@ -29,8 +28,7 @@ public class NavXMoveCommand extends Command
     {
 		requires(Robot.DRIVE_TRAIN);
 	    driveTrain = Robot.DRIVE_TRAIN;
-	    navx = Robot.NAVX;    
-//        navx.reset();
+	    navx = Robot.NAVX;
 	    targetYaw = 0;
 	    
 	    this.runTime = (long)  5000;
@@ -46,7 +44,6 @@ public class NavXMoveCommand extends Command
 	    this();
         angleOnly = true;
         targetYaw = angle;
-//        navx.reset();
     }
     
     /**
@@ -59,7 +56,6 @@ public class NavXMoveCommand extends Command
         this();
 	    targetYaw = angle;
 	    this.runTime = (runTime*1000);
-//	    navx.reset();
     }
     
     /**
@@ -76,7 +72,6 @@ public class NavXMoveCommand extends Command
         this.runTime = (runTime*1000);
         ifManualSpeed = !speedIsForStraightOnly;
         manualSpeed = speed;
-//        navx.reset();
     }
 
 	@Override
@@ -89,7 +84,6 @@ public class NavXMoveCommand extends Command
 	@Override
 	protected void execute() 
 	{
-		elapsedTime = System.currentTimeMillis() - startTime;
 		currentYaw = Robot.NAVX.getAngle();
 		if(ifManualSpeed){ speed = manualSpeed;}
 		else{speed = getSpeed(currentYaw - targetYaw);}

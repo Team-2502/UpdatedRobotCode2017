@@ -15,7 +15,7 @@ public class PressureSensorSubsystem extends Subsystem
     protected void initDefaultCommand() {}
 
 	/**
-	 * Calculates the current pressure based on an algorithm.
+	 * Calculates the current pressure based on a math equation.
 	 *
 	 * @return Current Pressure
 	 */

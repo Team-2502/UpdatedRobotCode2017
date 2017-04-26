@@ -3,16 +3,11 @@ package com.team2502.robot2017.subsystem;
 import com.ctre.CANTalon;
 import com.team2502.robot2017.OI;
 import com.team2502.robot2017.RobotMap;
-import com.team2502.robot2017.command.FlywheelCommand;
+import com.team2502.robot2017.command.teleop.FlywheelCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem
 {
-    public double leftSpeed;
-
-    public boolean negative = false;
-    public boolean isNegativePressed = false;
-    public boolean negMode = false;
    
     public ShooterSubsystem ShooterSubsystem;
 	
@@ -235,7 +230,7 @@ public class ShooterSubsystem extends Subsystem
             agitator.set(-agitatorSpeed);
         }
 
-        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(-agitatorSpeed); }
+        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(agitatorSpeed); }
 
         else
         {

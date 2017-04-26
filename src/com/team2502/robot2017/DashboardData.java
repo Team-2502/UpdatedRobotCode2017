@@ -1,11 +1,10 @@
 package com.team2502.robot2017;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 public final class DashboardData
 {
+
     private DashboardData() {}
     
     public static void update()
@@ -16,26 +15,7 @@ public final class DashboardData
         updateShooter();
     }
 
-    public static void setup()
-    {
-        // versioning
-        try
-        {
-            BufferedReader br = new BufferedReader(new InputStreamReader(DashboardData.class.getResourceAsStream("/version.properties")));
-            String line;
-            while((line = br.readLine()) != null)
-            {
-                if(line.startsWith("version="))
-                {
-                    String[] split = line.split("=");
-                    if((split.length < 2) || (split[1] == null) || split[1].isEmpty()) { throw new Exception(); }
-                    SmartDashboard.putString("Version", split[1]);
-                    break;
-                }
-            }
-            br.close();
-        } catch(Exception e) { }
-    }
+    public static void setup() {}
     
     private static void updateShooter()
     {

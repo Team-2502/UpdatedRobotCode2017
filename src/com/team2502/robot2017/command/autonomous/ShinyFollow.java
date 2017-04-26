@@ -7,5 +7,5 @@ public class ShinyFollow extends CommandGroup
     /**
      * Does a follow  
      */
-    public ShinyFollow() { addSequential(new AutoVCommand(200, false, 0, 0.3)); }
+    public ShinyFollow() { addSequential(new AutoVisionCommand(200, 0.3)); }
 }

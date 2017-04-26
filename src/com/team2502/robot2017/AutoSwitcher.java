@@ -1,4 +1,4 @@
-package com.team2502.robot2017.subsystem;
+package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.autonomous.*;
 import com.team2502.robot2017.command.autonomous.commandGroups.*;
@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class AutoSwitcherSubsystem
+class AutoSwitcher
 {
 	private static SendableChooser<AutoMode> autoChooser;
 	
@@ -39,7 +39,7 @@ public class AutoSwitcherSubsystem
 		}
 	}
 	
-	public static void putToSmartDashboard()
+	static void putToSmartDashboard()
 	{
         autoChooser = new SendableChooser<AutoMode>();
         
@@ -53,5 +53,5 @@ public class AutoSwitcherSubsystem
         SmartDashboard.putData("auto_modes", autoChooser);
     }
 
-    public static Command getAutoInstance() { return autoChooser.getSelected().getInstance(); }
+    static Command getAutoInstance() { return autoChooser.getSelected().getInstance(); }
 }

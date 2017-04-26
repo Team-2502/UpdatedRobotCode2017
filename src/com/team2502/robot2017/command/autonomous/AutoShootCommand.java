@@ -16,15 +16,11 @@ public class AutoShootCommand extends Command
      */
     public AutoShootCommand(double runTime, boolean both)
     {
-        this.runTime = runTime*1000;
-        requires(Robot.SHOOTER);
-        this.shooterSubsystem = Robot.SHOOTER;
-        this.both = both;
+	    this.runTime = runTime * 1000;
+	    requires(Robot.SHOOTER);
+	    this.shooterSubsystem = Robot.SHOOTER;
+	    this.both = both;
     }
-
-    /**
-     * @param runTime Time to run for in seconds.
-     */
 
 
     @Override
@@ -39,14 +35,8 @@ public class AutoShootCommand extends Command
         if(both)
         {
             shooterSubsystem.feed();
-            shooterSubsystem.turnOnFlywheel(); 
-            
         }
-        else        
-        {
-        shooterSubsystem.turnOnFlywheel(); 
-        }
-        
+        shooterSubsystem.turnOnFlywheel();
     }
 
     @Override
