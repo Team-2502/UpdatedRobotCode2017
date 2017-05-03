@@ -13,6 +13,9 @@ import com.team2502.robot2017.OI;
 public class VisionSubsystem extends Subsystem implements PIDSource
 {
     static NetworkTable visionTable;
+
+    boolean isTriggerPressed;
+    boolean visonMode;
     
     private Relay visionLight = new Relay(0);
 
@@ -44,21 +47,24 @@ public class VisionSubsystem extends Subsystem implements PIDSource
      */
     public void align(DriveTrainSubsystem dt, double lowSpeed, double highSpeed, boolean alignOnly, boolean autonomous)
     {
-        if(autonomous || OI.JOYSTICK_DRIVE_LEFT.getRawButton(RobotMap.Joystick.Button.VISION_ALIGN)) {
+        if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(RobotMap.Joystick.Button.VISION_ALIGN) && !isTriggerPressed) { visonMode = !visonMode; }
+        isTriggerPressed = OI.JOYSTICK_DRIVE_LEFT.getRawButton(RobotMap.Joystick.Button.VISION_ALIGN);
+        if(visonMode)
+        {
+//        if(autonomous || OI.JOYSTICK_DRIVE_LEFT.getRawButton(RobotMap.Joystick.Button.VISION_ALIGN)) {
             double offset = getOffset();
 
-            if (offset > 0.1)
+            if(offset > 0.1)
             {
                 dt.runMotors(highSpeed, lowSpeed);
-            }
-            else if (offset < 0.1)
+            } else if(offset < 0.1)
             {
                 dt.runMotors(-lowSpeed, -highSpeed);
-            }
-            else if ((-0.1 < offset) && (offset < 0.1) && !alignOnly)
+            } else if((-0.1 < offset) && (offset < 0.1) && !alignOnly)
             {
                 dt.runMotors(.5D, -.5D);
             }
+//        }
         }
     }
 
