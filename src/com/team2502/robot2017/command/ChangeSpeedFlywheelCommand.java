@@ -2,9 +2,9 @@ package com.team2502.robot2017.command;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.ShooterSubsystem;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 
-public class ChangeSpeedFlywheelCommand extends Command
+public class ChangeSpeedFlywheelCommand extends InstantCommand
 {
     private final ShooterSubsystem shooterSubsystem;
     
@@ -23,17 +23,6 @@ public class ChangeSpeedFlywheelCommand extends Command
     }
 
     @Override
-    protected void initialize() {}
+    protected void initialize() { shooterSubsystem.changeSpeedFlywheel(checkIsAdd); }
 
-    @Override
-    protected void execute() { shooterSubsystem.changeSpeedFlywheel(checkIsAdd); }
-
-    @Override
-    protected boolean isFinished() { return true; }
-
-    @Override
-    protected void end() {}
-
-    @Override
-    protected void interrupted() {}
 }

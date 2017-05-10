@@ -1,14 +1,13 @@
 package com.team2502.robot2017;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
-public final class DashboardData
+final class DashboardData
 {
+
     private DashboardData() {}
     
-    public static void update()
+    static void update()
     {
     	updatePressure();
     	updateDriveTrain();
@@ -16,26 +15,7 @@ public final class DashboardData
         updateShooter();
     }
 
-    public static void setup()
-    {
-        // versioning
-        try
-        {
-            BufferedReader br = new BufferedReader(new InputStreamReader(DashboardData.class.getResourceAsStream("/version.properties")));
-            String line;
-            while((line = br.readLine()) != null)
-            {
-                if(line.startsWith("version="))
-                {
-                    String[] split = line.split("=");
-                    if((split.length < 2) || (split[1] == null) || split[1].isEmpty()) { throw new Exception(); }
-                    SmartDashboard.putString("Version", split[1]);
-                    break;
-                }
-            }
-            br.close();
-        } catch(Exception e) { }
-    }
+    static void setup() {}
     
     private static void updateShooter()
     {
@@ -55,9 +35,9 @@ public final class DashboardData
     
     private static void updateDriveTrain()
     {
-    	SmartDashboard.putNumber("aDT: DriveTrainLeft", Robot.DRIVE_TRAIN.getEncLeftPosition());
-        SmartDashboard.putNumber("aDT: DriveTrainRight", Robot.DRIVE_TRAIN.getEncRightPosition());
-        SmartDashboard.putNumber("aDT: DriveTrainAveg", Robot.DRIVE_TRAIN.getEncAveg());
+        SmartDashboard.putNumber("DT: leftTalon0", Robot.DRIVE_TRAIN.leftTalon0.getPosition());
+	    SmartDashboard.putNumber("DT: rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
+	    SmartDashboard.putBoolean("Drive Team will win us the match", true);
     }
 
     private static void updateNavX()

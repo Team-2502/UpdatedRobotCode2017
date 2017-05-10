@@ -6,8 +6,7 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.team2502.robot2017.OI;
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.RobotMap;
-import com.team2502.robot2017.command.DriveCommand;
-import com.team2502.robot2017.command.ClimberCommand;
+import com.team2502.robot2017.command.teleop.DriveCommand;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,28 +18,22 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveTrainSubsystem extends Subsystem
 {
     private static final Pair<Double, Double> SPEED_CONTAINER = new Pair<Double, Double>();
-    
-    public DriveTrainTransmissionSubsystem DTTS;
-    public ClimberCommand ClimberCommand;
-    
+
+
     public final CANTalon leftTalon0; //enc
     public final CANTalon leftTalon1;
-    public final CANTalon rightTalon0;
-    public final CANTalon rightTalon1; //enc
+    public final CANTalon rightTalon0; //enc
+    public final CANTalon rightTalon1;
     private final RobotDrive drive;
     private double lastLeft;
     private double lastRight;
-    public double leftSpeed;
-    public double rightSpeed;
-    public boolean negative = false;
-    public boolean isNegativePressed = false;
-    private boolean isClimbMode = false;
-//    public boolean negMode = false;
 
-    public int millisecondsToRunTL = 1000;
-    public int millisecondsToRunTR = 1000;
+    private double leftSpeed;
+    private double rightSpeed;
+    private boolean negative = false;
+    private boolean isNegativePressed = false;
 
-    public int m = 1000;
+	private DriveTrainTransmissionSubsystem DTTS;
 
     /**
      * Initialize the drive train subsystem
@@ -56,33 +49,61 @@ public class DriveTrainSubsystem extends Subsystem
         rightTalon1 = new CANTalon(RobotMap.Motor.RIGHT_TALON_1); 
 
         drive = new RobotDrive(leftTalon0, leftTalon1, rightTalon0, rightTalon1);
+
         drive.setSafetyEnabled(true);
-//        drive.setExpiration(.3);
-        
+
         DTTS = Robot.DRIVE_TRAIN_GEAR_SWITCH;
         
         setTeleopSettings(leftTalon0);
         setTeleopSettings(rightTalon1);
     }
 
+	/**
+	 * Set all talons into auton
+	 */
+	public void setAutonSettings()
+    {
+    	setAutonSettings(leftTalon0, false);
+	    leftTalon1.changeControlMode(TalonControlMode.Follower);
+//	    leftTalon1.set(RobotMap.Motor.LEFT_TALON_0);
+
+	    setAutonSettings(rightTalon1, true);
+	    rightTalon0.changeControlMode(TalonControlMode.Follower);
+//	    rightTalon0.set(RobotMap.Motor.RIGHT_TALON_1);
+    }
+
+
     /**
      * Set the appropriate settings for autonomous
      * @param talon the talon to set the settings of
      */
-    public void setAutonSettings(CANTalon talon)
+    public void setAutonSettings(CANTalon talon, boolean reverseEnc)
     {
-    	isClimbMode = false;
         talon.changeControlMode(TalonControlMode.Position);
         talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
         talon.configEncoderCodesPerRev(256);
-        talon.reverseSensor(false);
+        talon.reverseSensor(reverseEnc);
         talon.configNominalOutputVoltage(0.0D, -0.0D);
-        talon.configPeakOutputVoltage(12.0D, -12.0D);
-        talon.setPID(1, 0, 0);
-        talon.enableControl();
-        talon.setEncPosition(0);
+        talon.configPeakOutputVoltage(12.0D, -12.0D);//8
+        talon.setPID(3.7, 0,0); // confirmed working -- miguel certified
+        // increase P until
+	    talon.setEncPosition(0);
+	    talon.enableControl();
     }
-    
+
+
+	/**
+	 * Set all talons into auton
+	 */
+	public void setTeleopSettings()
+	{
+		setTeleopSettings(leftTalon0);
+		setTeleopSettings(leftTalon1);
+		setTeleopSettings(rightTalon0);
+		setTeleopSettings(rightTalon1);
+
+	}
+
     /**
      * Set a talon back to teleoperated settings 
      * @param talon the talon in question
@@ -91,55 +112,21 @@ public class DriveTrainSubsystem extends Subsystem
     //WHAT THE HECK IS GOING ON WITH THE ENCODERS???
     public void setTeleopSettings(CANTalon talon)
     {
-    	isClimbMode = false;
         talon.configNominalOutputVoltage(0.0D, -0.0D);
         talon.configPeakOutputVoltage(12.0D, -12.0D);
         talon.changeControlMode(TalonControlMode.PercentVbus);
         talon.disableControl(); // needed if switching from auton settings
     }
-    
-    public void switchClimbSettings()
-    {
-    	if(isClimbMode)
-    	{
-    		isClimbMode = false;
-    		setTeleopSettings(leftTalon0);
-    		setTeleopSettings(leftTalon1);
-    		setTeleopSettings(rightTalon0);
-    		setTeleopSettings(rightTalon1);
-    	}
-    	else if(!isClimbMode)
-    	{
-    		isClimbMode = true;
-    		leftTalon0.configPeakOutputVoltage(-8.0D, 8.0D);
-        	rightTalon0.configPeakOutputVoltage(-8.0D, 8.0D);
-        	leftTalon1.configPeakOutputVoltage(-8.0D, 8.0D);
-        	rightTalon1.configPeakOutputVoltage(-8.0D, 8.0D);
-    	}
-    }
-    
+
     /**
-     * @param talon A talon with an encoder attached to it
-     * @return the position of the encoder
-     */
-    public double getPostition(CANTalon talon) { return talon.getPosition(); }
-    
-    /**
-     * @return the position of the left side of the drivetrain
+     * @return the position of the left side of the drivetrain inches
      */
     public double getEncLeftPosition() { return leftTalon0.getPosition(); }
-    
+
     /**
-     * Get the RPM of a talon with an encoder on it
-     * @param talon the talon in question
-     * @return the RPM of the talon
+     * @return the position of the right side of the drivetrain in inches
      */
-    public double getRPM(CANTalon talon) { return talon.getEncVelocity(); }
-    
-    /**
-     * @return the position of the right side of the drivetrain
-     */
-    public double getEncRightPosition() { return rightTalon0.getPosition(); }
+    public double getEncRightPosition() { return rightTalon1.getPosition() / 1024; }
     
     /**
      * @return the average position between the left and right side of the drivetrain
@@ -196,7 +183,6 @@ public class DriveTrainSubsystem extends Subsystem
     /**
      * Used to gradually increase the speed of the robot.
      *
-     * @param isLeftSide Whether or not it is the left joystick/side
      * @param out The object to store the data in
      * @return the speed of the robot
      */
@@ -234,15 +220,7 @@ public class DriveTrainSubsystem extends Subsystem
         if(Math.abs(out.left) < 0.05D) { out.left = 0.0D; }
         
         if(Math.abs(out.right) < 0.05D) { out.right = 0.0D; }
-        
-        if(counter % 100 == 0)
-        {
-               System.out.println("joystickLevel: \t" + joystickLevel);
-               System.out.println("out.left: \t\t" + out.left);
-               System.out.println("out.right: \t\t" + out.right);
-               System.out.println("diff: " + diff);
-        }
-        ++counter;
+
         return out;
     }
 

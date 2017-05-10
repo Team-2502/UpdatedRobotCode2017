@@ -19,11 +19,10 @@ public final class Robot extends IterativeRobot
 	public static ActiveIntakeSubsystem ACTIVE;
 	public static DriveTrainTransmissionSubsystem DRIVE_TRAIN_GEAR_SWITCH;
 	public static ClimberSubsystem CLIMBER;
-	public static AutoSwitcherSubsystem AUTOSWITCHER;
 
 	// NavX Subsystem
-	public static final AHRS NAVX = new AHRS(SPI.Port.kMXP);
-	 
+	public static AHRS NAVX;
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -39,11 +38,10 @@ public final class Robot extends IterativeRobot
 		SHOOTER = new ShooterSubsystem();
 		ACTIVE = new ActiveIntakeSubsystem();
 		CLIMBER = new ClimberSubsystem();
-		AUTOSWITCHER = new AutoSwitcherSubsystem();
+		NAVX = new AHRS(SPI.Port.kMXP);
 		
-		AutoSwitcherSubsystem.putToSmartDashboard();
-
-		Robot.CLIMBER.setBrake(true); // when the climber is out the brake is off
+		AutoSwitcher.putToSmartDashboard();
+		
 		DashboardData.setup();
 		OI.init();
 		
@@ -77,8 +75,9 @@ public final class Robot extends IterativeRobot
 	 */
 	public void autonomousInit() 
 	{
-//		Scheduler.getInstance().add(new GearAutoCenter());
-		Scheduler.getInstance().add(AutoSwitcherSubsystem.getAutoInstance());
+
+		Scheduler.getInstance().add(AutoSwitcher.getAutoInstance());
+		NAVX.reset();
 		VISION.turnOnVisionLight();
 	}
 

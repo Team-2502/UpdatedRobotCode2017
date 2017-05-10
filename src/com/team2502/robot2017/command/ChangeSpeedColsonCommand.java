@@ -2,14 +2,18 @@ package com.team2502.robot2017.command;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.ShooterSubsystem;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 
-public class ChangeSpeedColsonCommand extends Command
+public class ChangeSpeedColsonCommand extends InstantCommand
 {
     private final ShooterSubsystem shooterSubsystem;
     
     private boolean checkIsAdd;
 
+	/**
+	 * Instantiate the command that changes the colson's target speed
+	 * @param isAdd Boolean that asks add or subtract?
+	 */
     public ChangeSpeedColsonCommand(boolean isAdd)
     {
         requires(Robot.SHOOTER);
@@ -19,17 +23,5 @@ public class ChangeSpeedColsonCommand extends Command
     }
 
     @Override
-    protected void initialize() {}
-
-    @Override
-    protected void execute() { shooterSubsystem.changeSpeedColson(checkIsAdd); }
-
-    @Override
-    protected boolean isFinished() { return true; }
-
-    @Override
-    protected void end() {}
-
-    @Override
-    protected void interrupted() {}
+    protected void initialize() { shooterSubsystem.changeSpeedColson(checkIsAdd); }
 }

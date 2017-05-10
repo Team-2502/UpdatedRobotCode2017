@@ -1,4 +1,4 @@
-package com.team2502.robot2017.command;
+package com.team2502.robot2017.command.teleop;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.ActiveIntakeSubsystem;
@@ -8,14 +8,14 @@ public class ActiveCommand extends Command
 {
     private final ActiveIntakeSubsystem activeIntakeSubsystem;
 
+    /**
+     * Create an instance of the ActiveCommand
+     */
     public ActiveCommand()
     {
         requires(Robot.ACTIVE);
         activeIntakeSubsystem = Robot.ACTIVE;
     }
-
-    @Override
-    protected void initialize() {}
 
     @Override
     protected void execute() { activeIntakeSubsystem.activeDrive(); }
@@ -27,5 +27,5 @@ public class ActiveCommand extends Command
     protected void end() { activeIntakeSubsystem.stop(); }
 
     @Override
-    protected void interrupted() { activeIntakeSubsystem.stop(); }
+    protected void interrupted() { end(); }
 }

@@ -21,6 +21,7 @@ public class RobotMap
             public static final int VISION_ALIGN = 3;
             
             public static final int CLIMBER =  8;
+            
             public static final int SHOOTER = 1;
             public static final int RESET_ENC_POS = 9; // temporary and only exists for auton development
             
@@ -33,7 +34,7 @@ public class RobotMap
             public static final int SUB_BANEBOT_SPEED = 10;
             public static final int ADD_FLYWHEEL_SPEED = 10;
             public static final int SUB_FLYWHEEL_SPEED = 9;
-			public static final int CLIMB_MODE = UNDEFINED;          
+			       
 
             private Button() {}
         }
@@ -58,6 +59,11 @@ public class RobotMap
         public static final int FEEDER_TALON_1 = 7; //banebot
         public static final int ACTIVE_INTAKE = 8;
         public static final int AGITATOR = 9;
+		public static final int CLIMBER_TOP = 10;
+		public static final int CLIMBER_BOTTOM = 11;
+
+		public static final int ALLOWABLE_LOOP_ERR = 5; // in encoder pulses
+	    public static final int TIME_TO_STOP = 1500; // amount of milliseconds to be on target to stop contolling with PID
 
         private Motor() {}
     }

@@ -7,20 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoVCommand extends Command
 {
-    public static DriveTrainSubsystem dt;
-    public double offset;
-    public double leftSpeed;
-    public double rightSpeed;
-    public boolean inFrontOfGear = false;
-    public boolean reverse = false;
-    public VisionSubsystem vision;
-    double startTime = System.currentTimeMillis();
-    double targetElapsed = 15;
-    boolean alignOnly = false;
-    double highSpeed = 0.3;
-    double lowSpeed = highSpeed/2;
-    double turningFactor = 0.5;
-    boolean smoothTurning = false;
+    private static DriveTrainSubsystem dt;
+    private static double offset;
+    private static VisionSubsystem vision;
+    private double startTime = System.currentTimeMillis();
+    private double targetElapsed = 15;
+    private static boolean alignOnly = false;
+    private double highSpeed = 0.3;
+    private double lowSpeed = highSpeed/2;
+    private double turningFactor = -0.2/3;
+    private boolean smoothTurning = false;
     /**
      * Automatic vision-based alignment with shiny objects
      * <br>
@@ -90,47 +86,21 @@ public class AutoVCommand extends Command
     }
 
     @Override
-    protected void interrupted() { end(); }
-    
-    @Override
-    protected void initialize() 
+    protected void initialize()
     {
     	vision.turnOnVisionLight();
     	startTime = System.currentTimeMillis();
     }
-    
-    protected void linearSpeed(double offset)
-    {
-    	if(offset > 0.1) { dt.runMotors(highSpeed, lowSpeed); }
-        else if(offset < 0.1) { dt.runMotors(-lowSpeed, -highSpeed); }
-        else if((-0.1 < offset) && (offset < 0.1) && !alignOnly) { dt.runMotors(.5D, -.5D); }
-    }
-    
-    protected void smoothSpeed(double offset)
-    {
-    	highSpeed = getSpeed(offset);
-    	if(offset > 0.15) { dt.runMotors(highSpeed, highSpeed * turningFactor); }
-        else if(offset < 0.15) { dt.runMotors(-turningFactor * highSpeed, -highSpeed); }
-        else if((-0.15 < offset) && (offset < 0.15) && !alignOnly) { dt.runMotors(.5D, -.5D); }
-    }
-    
+
     @Override
     protected void execute()
     {
-        offset = vision.getOffset();
-        if(smoothTurning) { smoothSpeed(offset); }
-        else if(!smoothTurning) { linearSpeed(offset); }   
+        vision.align(dt, lowSpeed, highSpeed, alignOnly, true);
     }
 
     @Override
-    protected boolean isFinished()
-    {
-    	if(System.currentTimeMillis() - startTime > targetElapsed)
-    	{
-    		if(alignOnly) { return Math.abs(offset) < 0.1; } // if aligned properly and enough time gone by
-            else{ return true; } // if aligned properly
-    	}
-    	else { return false; } // if not enough time has gone by
+    protected boolean isFinished() {
+        return System.currentTimeMillis() - startTime > targetElapsed && (!alignOnly || Math.abs(offset) < 0.1);
     }
 
     protected void end()
@@ -138,6 +108,7 @@ public class AutoVCommand extends Command
     	dt.stop();
     	vision.turnOffVisionLight();
     }
-    
-    private double getSpeed(double x) { return (-2/(1+(Math.pow(x, 2)/1600))+2); }
+
+    @Override
+    protected void interrupted() { end(); }
 }

@@ -3,16 +3,11 @@ package com.team2502.robot2017.subsystem;
 import com.ctre.CANTalon;
 import com.team2502.robot2017.OI;
 import com.team2502.robot2017.RobotMap;
-import com.team2502.robot2017.command.FlywheelCommand;
+import com.team2502.robot2017.command.teleop.FlywheelCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem
 {
-    public double leftSpeed;
-
-    public boolean negative = false;
-    public boolean isNegativePressed = false;
-    public boolean negMode = false;
    
     public ShooterSubsystem ShooterSubsystem;
 	
@@ -23,8 +18,8 @@ public class ShooterSubsystem extends Subsystem
     
     double targetSpeedFlywheel = 1650;
     double autoTargetSpeed = targetSpeedFlywheel + 50;
-    double agitatorSpeed = 0.75;
-    double colsonSpeed = 0.7;
+    double agitatorSpeed = 1;
+    double colsonSpeed = 1;
     double banebotSpeed = 1400;
     int error = 0;
 
@@ -153,9 +148,10 @@ public class ShooterSubsystem extends Subsystem
      */
     public void feed()
     {
+	    banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
         colsonFeeder.set(colsonSpeed);
         banebotFeeder.set(-banebotSpeed);
-        agitator.set(agitatorSpeed);
+        agitator.set(-agitatorSpeed);
     }
 
     /**
@@ -218,6 +214,7 @@ public class ShooterSubsystem extends Subsystem
     {
         // lets us tell the flywheel go a certain RPM
         flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
+	    banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
 
         // Toggle mode for flywheel. It is bound to button 5 on the Function stick.
         if(OI.JOYSTICK_FUNCTION.getRawButton(5) && !isTriggerPressed) { shooterMode = !shooterMode; }
@@ -232,10 +229,10 @@ public class ShooterSubsystem extends Subsystem
         {
             colsonFeeder.set(colsonSpeed);
             banebotFeeder.set(-banebotSpeed);
-            agitator.set(agitatorSpeed);
+            agitator.set(-agitatorSpeed);
         }
 
-        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(-agitatorSpeed); }
+        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(agitatorSpeed); }
 
         else
         {
@@ -256,6 +253,11 @@ public class ShooterSubsystem extends Subsystem
         colsonFeeder.set(0.0D);
         banebotFeeder.set(0.0D);
         agitator.set(0.0D);
+
+        banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Disabled);
+
+        System.out.println("Stopping shooter and related motors.");
+
 
         isFlywheelActive = false;
         isFeederActive = false;
