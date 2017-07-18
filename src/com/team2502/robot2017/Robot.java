@@ -20,6 +20,8 @@ public final class Robot extends IterativeRobot
 	public static DriveTrainTransmissionSubsystem DRIVE_TRAIN_GEAR_SWITCH;
 	public static ClimberSubsystem CLIMBER;
 
+	public static long SHIFTED;
+
 	// NavX Subsystem
 	public static AHRS NAVX;
 

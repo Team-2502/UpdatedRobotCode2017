@@ -93,7 +93,7 @@ public class DriveTrainSubsystem extends Subsystem
 
 
 	/**
-	 * Set all talons into auton
+	 * Set all talons into telepo
 	 */
 	public void setTeleopSettings()
 	{
@@ -121,17 +121,24 @@ public class DriveTrainSubsystem extends Subsystem
     /**
      * @return the position of the left side of the drivetrain inches
      */
+    @Deprecated
     public double getEncLeftPosition() { return leftTalon0.getPosition(); }
 
     /**
      * @return the position of the right side of the drivetrain in inches
      */
+    @Deprecated
     public double getEncRightPosition() { return rightTalon1.getPosition() / 1024; }
     
     /**
      * @return the average position between the left and right side of the drivetrain
      */
+    @Deprecated
     public double getEncAveg() { return (getEncRightPosition() + getEncLeftPosition())/2; }
+
+    public double turningFactor() { return Math.abs(leftTalon0.getEncVelocity() - rightTalon0.getEncVelocity());}
+
+    public double avgVel() { return (leftTalon0.getEncVelocity() + rightTalon0.getEncVelocity())/2;}
 
     @Override
     protected void initDefaultCommand() { setDefaultCommand(new DriveCommand()); }
@@ -330,5 +337,9 @@ public class DriveTrainSubsystem extends Subsystem
             }
             return false;
         }
+    }
+    public double fpsToRPM(double fps)
+    {
+        return ((fps) * 60 * 12) / (4*Math.PI);
     }
 }
