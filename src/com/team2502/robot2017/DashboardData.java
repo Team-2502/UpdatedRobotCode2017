@@ -35,9 +35,16 @@ final class DashboardData
     
     private static void updateDriveTrain()
     {
-        SmartDashboard.putNumber("DT: leftTalon0", Robot.DRIVE_TRAIN.leftTalon0.getPosition());
+        SmartDashboard.putNumber("DT: leftTalon1", Robot.DRIVE_TRAIN.leftTalon1.getPosition());
 	    SmartDashboard.putNumber("DT: rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
-	    SmartDashboard.putBoolean("Drive Team will win us the match", true);
+	    SmartDashboard.putBoolean("Drive Team will win us the match", false);
+
+	    SmartDashboard.putNumber("DT: Average Speed", Robot.DRIVE_TRAIN.avgVel());
+        SmartDashboard.putNumber("DT: Turning Factor", Robot.DRIVE_TRAIN.turningFactor());
+//        SmartDashboard.putNumber("DT: Threshold above 80", OI.joysThreshold(80, true));
+//        SmartDashboard.putNumber("DT: Threshold below 80", OI.joysThreshold(80, false));
+        SmartDashboard.putNumber("DT: Acceleration in G's", Robot.NAVX.getRawAccelY());
+
     }
 
     private static void updateNavX()

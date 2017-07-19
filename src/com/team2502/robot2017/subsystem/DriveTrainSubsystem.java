@@ -22,8 +22,8 @@ public class DriveTrainSubsystem extends Subsystem
 
     public final CANTalon leftTalon0; //enc
     public final CANTalon leftTalon1;
-    public final CANTalon rightTalon0; //enc
-    public final CANTalon rightTalon1;
+    public final CANTalon rightTalon0;
+    public final CANTalon rightTalon1; //enc
     private final RobotDrive drive;
     private double lastLeft;
     private double lastRight;
@@ -136,9 +136,13 @@ public class DriveTrainSubsystem extends Subsystem
     @Deprecated
     public double getEncAveg() { return (getEncRightPosition() + getEncLeftPosition())/2; }
 
-    public double turningFactor() { return Math.abs(leftTalon0.getEncVelocity() - rightTalon0.getEncVelocity());}
+    public double turningFactor() { return Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY() - OI.JOYSTICK_DRIVE_RIGHT.getY());}
 
-    public double avgVel() { return (leftTalon0.getEncVelocity() + rightTalon0.getEncVelocity())/2;}
+    public double avgVel()
+    {
+//        return (leftTalon0.getEncVelocity() + rightTalon0.getEncVelocity())/2;
+        return Math.abs(rightTalon1.getEncVelocity());
+    }
 
     @Override
     protected void initDefaultCommand() { setDefaultCommand(new DriveCommand()); }

@@ -16,6 +16,10 @@ public class DriveCommand extends Command
     private final DriveTrainSubsystem driveTrainSubsystem;
     private final DriveTrainTransmissionSubsystem transmission;
     private final AHRS navx;
+    private double accel;
+    private double turning;
+    private double speed;
+
 
     public DriveCommand()
     {
@@ -32,41 +36,55 @@ public class DriveCommand extends Command
         driveTrainSubsystem.setTeleopSettings();
     }
 
+    boolean shiftedUp = false;
+
     @Override
     protected void execute() {
         driveTrainSubsystem.drive();
 
 
         // Check that at least 1/2 second has passed since last shifting
-        if((Robot.SHIFTED - System.currentTimeMillis()) >= 500)
+        if((System.currentTimeMillis()-Robot.SHIFTED) >= 500)
         {
-            // Make sure that we're not turning super hard
-            if(driveTrainSubsystem.turningFactor() < 25)
+            if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(RobotMap.Joystick.Button.SWITCH_DRIVE_TRANSMISSION))
             {
-                // Make sure the driver isn't forcing anything
-                if(!OI.JOYSTICK_DRIVE_RIGHT.getRawButton(RobotMap.Joystick.Button.SWITCH_DRIVE_TRANSMISSION))
+                System.out.println("Shifting " + (shiftedUp ? "down" : "up") + " forced by driver.");
+                transmission.setGear(!shiftedUp);
+            }
+            // Make sure the driver isn't forcing anything
+            else
+            {
+                if ( Math.abs(navx.getRawAccelY()) > 0.15 && driveTrainSubsystem.avgVel() > RobotMap.Motor.SHIFT_UP_THRESHOLD && OI.joysThreshold(0.8, true))
                 {
-                    if (navx.getRawAccelY() >= 0.5 && driveTrainSubsystem.avgVel() > RobotMap.Motor.SHIFT_UP_THRESHOLD && OI.joysThreshold(80, true))
+                    if(!shiftedUp)
                     {
-                        System.out.println("Shifting up. . .");
-                        transmission.setGear(true);
-
-                    } else if (navx.getRawAccelY() <= -0.7 && OI.joysThreshold(80, false) && driveTrainSubsystem.avgVel() < driveTrainSubsystem.fpsToRPM(6))
-                    {
-                        System.out.println("Shifting down. . .");
-                        transmission.setGear(false);
-
-                    } else if (OI.joysThreshold(30, false) && driveTrainSubsystem.avgVel() < RobotMap.Motor.SHIFT_DOWN_THRESHOLD)
-                    {
-                        System.out.println("Shifting down. . .");
-                        transmission.setGear(false);
+                        shiftedUp = true;
+                        System.out.println("Shifting up.");
                     }
-                }
-                else
+                    transmission.setGear(true);
+
+                } else if (Math.abs(navx.getRawAccelY()) <= 0.1 && OI.joysThreshold(0.8, false))
                 {
-                    System.out.println("Shifting down forced by driver. . .");
+                    if(shiftedUp)
+                    {
+                        shiftedUp = false;
+                        System.out.println("Shifting down.");
+                    }
+                    transmission.setGear(false);
+
+                } else if (OI.joysThreshold(30, false) && driveTrainSubsystem.avgVel() < RobotMap.Motor.SHIFT_DOWN_THRESHOLD)
+                {
+                    if(shiftedUp)
+                    {
+                        shiftedUp = false;
+                        System.out.println("Shifting down0.");
+                    }
                     transmission.setGear(false);
                 }
+            }
+            // Make sure that we're not turning super hard
+            if(driveTrainSubsystem.turningFactor() < 0.1)
+            {
             }
 
         }

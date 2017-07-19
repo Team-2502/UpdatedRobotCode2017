@@ -70,8 +70,8 @@ public class RobotMap
         public static final int HIGH_GEAR_SPEED = 16;
 
         // RPM
-        public static final double SHIFT_UP_THRESHOLD = ((9.5) * 60 * 12) / (4*Math.PI) ;
-        public static final double SHIFT_DOWN_THRESHOLD = ((8.5) * 60 * 12) / (4*Math.PI);
+        public static final double SHIFT_UP_THRESHOLD = ((5.5) * 60 * 12) / (4*Math.PI) ;
+        public static final double SHIFT_DOWN_THRESHOLD = ((4.5) * 60 * 12) / (4*Math.PI);
 
         private Motor() {}
     }
