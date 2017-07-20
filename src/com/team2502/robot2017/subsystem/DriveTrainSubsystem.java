@@ -342,8 +342,5 @@ public class DriveTrainSubsystem extends Subsystem
             return false;
         }
     }
-    public double fpsToRPM(double fps)
-    {
-        return ((fps) * 60 * 12) / (4*Math.PI);
-    }
+
 }

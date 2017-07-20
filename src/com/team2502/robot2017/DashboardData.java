@@ -37,12 +37,11 @@ final class DashboardData
     {
         SmartDashboard.putNumber("DT: leftTalon1", Robot.DRIVE_TRAIN.leftTalon1.getPosition());
 	    SmartDashboard.putNumber("DT: rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
-	    SmartDashboard.putBoolean("Drive Team will win us the match", false);
+	    SmartDashboard.putBoolean("Drive Team will win us the match", true);
 
 	    SmartDashboard.putNumber("DT: Average Speed", Robot.DRIVE_TRAIN.avgVel());
         SmartDashboard.putNumber("DT: Turning Factor", Robot.DRIVE_TRAIN.turningFactor());
-//        SmartDashboard.putNumber("DT: Threshold above 80", OI.joysThreshold(80, true));
-//        SmartDashboard.putNumber("DT: Threshold below 80", OI.joysThreshold(80, false));
+        SmartDashboard.putBoolean("DT: High gear?", Robot.DRIVE_TRAIN_GEAR_SWITCH.highGear);
         SmartDashboard.putNumber("DT: Acceleration in G's", Robot.NAVX.getRawAccelY());
 
     }
