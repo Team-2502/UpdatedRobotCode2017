@@ -2,28 +2,30 @@ package com.team2502.robot2017;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 final class DashboardData
 {
 
     private DashboardData() {}
-    
+
     static void update()
     {
-    	updatePressure();
-    	updateDriveTrain();
+        updatePressure();
+        updateDriveTrain();
         updateNavX();
         updateShooter();
     }
 
     static void setup() {}
-    
+
     private static void updateShooter()
     {
         SmartDashboard.putNumber("FW: Current Flywheel Speed", Robot.SHOOTER.getSpeedFlywheel());
         SmartDashboard.putNumber("FW: Target Speed", Robot.SHOOTER.getFlywheelTargetSpeed());
         SmartDashboard.putNumber("FW: Loop Error", Robot.SHOOTER.getError());
         SmartDashboard.putNumber("FW: Motor Output", Robot.SHOOTER.getMotorOutput());
-        
+
         SmartDashboard.putNumber("BB: Current Feeder Speed", Robot.SHOOTER.getSpeedFeeder());
         SmartDashboard.putNumber("BB: Target Speed", Robot.SHOOTER.getBanebotTargetSpeed());
         SmartDashboard.putNumber("BB: Loop Error", Robot.SHOOTER.getErrorFeeder());
@@ -32,14 +34,14 @@ final class DashboardData
         SmartDashboard.putNumber("FEED: Colson Target Speed", Robot.SHOOTER.getColsonTargetSpeed());
         SmartDashboard.putNumber("FEED: Banebot Target Speed", Robot.SHOOTER.getBanebotTargetSpeed());
     }
-    
+
     private static void updateDriveTrain()
     {
         SmartDashboard.putNumber("DT: leftTalon1", Robot.DRIVE_TRAIN.leftTalon1.getPosition());
-	    SmartDashboard.putNumber("DT: rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
-	    SmartDashboard.putBoolean("Drive Team will win us the match", true);
+        SmartDashboard.putNumber("DT: rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
+        SmartDashboard.putBoolean("Drive Team will win us the match", ThreadLocalRandom.current().nextBoolean());
 
-	    SmartDashboard.putNumber("DT: Average Speed", Robot.DRIVE_TRAIN.avgVel());
+        SmartDashboard.putNumber("DT: Average Speed", Robot.DRIVE_TRAIN.avgVel());
         SmartDashboard.putNumber("DT: Turning Factor", Robot.DRIVE_TRAIN.turningFactor());
         SmartDashboard.putBoolean("DT: High gear?", Robot.DRIVE_TRAIN_GEAR_SWITCH.highGear);
         SmartDashboard.putNumber("DT: Acceleration in G's", Robot.NAVX.getRawAccelY());
@@ -48,10 +50,10 @@ final class DashboardData
 
     private static void updateNavX()
     {
-    	SmartDashboard.putNumber("NavX: Yaw", Robot.NAVX.getYaw());
-    	SmartDashboard.putNumber("NavX: X Displacement", Robot.NAVX.getDisplacementX());
-    	SmartDashboard.putNumber("NavX: Y Displacement", Robot.NAVX.getDisplacementY());
-    	SmartDashboard.putNumber("NavX: Z Displacement", Robot.NAVX.getDisplacementZ());
+        SmartDashboard.putNumber("NavX: Yaw", Robot.NAVX.getYaw());
+        SmartDashboard.putNumber("NavX: X Displacement", Robot.NAVX.getDisplacementX());
+        SmartDashboard.putNumber("NavX: Y Displacement", Robot.NAVX.getDisplacementY());
+        SmartDashboard.putNumber("NavX: Z Displacement", Robot.NAVX.getDisplacementZ());
     }
 
     private static void updatePressure()

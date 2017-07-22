@@ -5,6 +5,8 @@ import java.io.PrintStream;
 @SuppressWarnings({ "WeakerAccess", "unused", "EmptyCatchBlock", "SameParameterValue" })
 public final class Log
 {
+    private static boolean instantiated = false;
+
     private static boolean debug = false;
 
     private static PrintFormat pf = null;
@@ -18,20 +20,22 @@ public final class Log
         if(tmp != debug) { Log.debug(new StringBuilder(28).append("Logger ").append(tmp ? "dis" : "en").append("abling debug mode.").toString()); }
     }
 
-    public static void createLogger() { createLogger(false, "[timestamp] [type] [caller_class]: msg", "hh:mm:ss"); }
+    public static void createLogger() { createLogger(false, "[timestamp] [type] [caller_class]: msg", "mm:ss:MMMM"); }
 
     public static void createLogger(boolean debug) { createLogger(debug, "[timestamp] [type] [caller_class]: msg", "hh:mm:ss"); }
 
     public static void createLogger(boolean debug, String format, String timeFormat)
     {
+        if(instantiated) { return; }
         pf = new PrintFormat(format, timeFormat);
         setDebugMode(debug || (System.getProperty("debug") != null));
+        instantiated = true;
     }
 
     public static <T> void log(LogType type, T msg, int depth)
     {
         if((type == LogType.DEBUG) && !debug) { return; }
-        if(pf == null) { createLogger(); }
+        if(!instantiated || pf == null) { createLogger(); }
         String out = pf.getPrintString(type.toString(), ClassGetter.getCallerClassName(depth), msg);
         if(type.output instanceof LoggerPrintStream) { ((LoggerPrintStream) type.output).outputln(out); }
         else { type.output.println(out); }
@@ -95,9 +99,11 @@ public final class Log
         public static String getCallerClassName(int depth)
         {
             StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-            StackTraceElement element = elements[BASE_DEPTH + depth];
-            if(element.getClassName().startsWith("kotlin.io.")) { element = elements[BASE_DEPTH + 2 + depth]; }
-            else if(element.getClassName().startsWith("java.lang.Throwable")) { element = elements[BASE_DEPTH + 4 + depth]; }
+            StackTraceElement element = elements[BASE_DEPTH + 4 + depth];
+            /* We're not using kotlin so this check is rather pointless, if using kotlin uncomment & change the above
+               statement to `elements[BASE_DEPTH + depth]`. */
+            /* if(element.getClassName().startsWith("kotlin.io.")) { element = elements[BASE_DEPTH + 2 + depth]; }
+            else if(element.getClassName().startsWith("java.lang.Throwable")) { element = elements[BASE_DEPTH + 4 + depth]; } */
             return element.getClassName();
         }
 

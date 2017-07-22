@@ -1,13 +1,9 @@
 package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
-import com.team2502.robot2017.command.teleop.TeleopVisionCommand;
-import com.team2502.robot2017.command.teleop.ClimberCommand;
-import com.team2502.robot2017.command.teleop.SwitchDriveTransmissionCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import com.team2502.robot2017.subsystem.ClimberSubsystem.ClimberMode;
 
 public final class OI
 {
@@ -35,11 +31,10 @@ public final class OI
 
     private static final Button CLIMBER = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.CLIMBER);
 
-
     static
     {
+        /* Obsolete due to automatic transmission */
 //        SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
-        // Above is obsolete due to automatic transmission
 
         RESET_ENC_POSITION.whenPressed(new ResetEncodersCommand());
 
@@ -56,22 +51,14 @@ public final class OI
         SUB_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(false));
 
 //        VISION_ALIGN.whileHeld(new TeleopVisionCommand());
-
-
     }
 
     public static void init() {}
 
     public static boolean joysThreshold(double threshold, boolean above)
     {
-        if(above)
-        {
-            return Math.abs(OI.JOYSTICK_DRIVE_RIGHT.getY()) > threshold && Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY()) > threshold;
-        }
-        else
-        {
-            return Math.abs(OI.JOYSTICK_DRIVE_RIGHT.getY()) < threshold && Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY()) < threshold;
-        }
+        if(above) { return Math.abs(OI.JOYSTICK_DRIVE_RIGHT.getY()) > threshold && Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY()) > threshold; }
+        else { return Math.abs(OI.JOYSTICK_DRIVE_RIGHT.getY()) < threshold && Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY()) < threshold; }
     }
 
     private OI() {}

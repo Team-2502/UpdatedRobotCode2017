@@ -28,54 +28,56 @@ public class DriveTrainSubsystem extends Subsystem
     private double lastLeft;
     private double lastRight;
 
-    private double leftSpeed;
-    private double rightSpeed;
     private boolean negative = false;
     private boolean isNegativePressed = false;
 
-	private DriveTrainTransmissionSubsystem DTTS;
+    // TODO: Remove if truly unnecessary.
+    private double leftSpeed;
+    private double rightSpeed;
+    private DriveTrainTransmissionSubsystem DTTS;
 
     /**
      * Initialize the drive train subsystem
      */
     public DriveTrainSubsystem()
-    {	
+    {
         lastLeft = 0.0D;
         lastRight = 0.0D;
 
         leftTalon0 = new CANTalon(RobotMap.Motor.LEFT_TALON_0);
         leftTalon1 = new CANTalon(RobotMap.Motor.LEFT_TALON_1);
         rightTalon0 = new CANTalon(RobotMap.Motor.RIGHT_TALON_0);
-        rightTalon1 = new CANTalon(RobotMap.Motor.RIGHT_TALON_1); 
+        rightTalon1 = new CANTalon(RobotMap.Motor.RIGHT_TALON_1);
 
         drive = new RobotDrive(leftTalon0, leftTalon1, rightTalon0, rightTalon1);
 
         drive.setSafetyEnabled(true);
 
         DTTS = Robot.DRIVE_TRAIN_GEAR_SWITCH;
-        
+
         setTeleopSettings(leftTalon0);
         setTeleopSettings(rightTalon1);
     }
 
-	/**
-	 * Set all talons into auton
-	 */
-	public void setAutonSettings()
+    /**
+     * Set all talons into auton
+     */
+    public void setAutonSettings()
     {
-    	setAutonSettings(leftTalon0, false);
-	    leftTalon1.changeControlMode(TalonControlMode.Follower);
+        setAutonSettings(leftTalon0, false);
+        leftTalon1.changeControlMode(TalonControlMode.Follower);
 //	    leftTalon1.set(RobotMap.Motor.LEFT_TALON_0);
 
-	    setAutonSettings(rightTalon1, true);
-	    rightTalon0.changeControlMode(TalonControlMode.Follower);
+        setAutonSettings(rightTalon1, true);
+        rightTalon0.changeControlMode(TalonControlMode.Follower);
 //	    rightTalon0.set(RobotMap.Motor.RIGHT_TALON_1);
     }
 
-
     /**
      * Set the appropriate settings for autonomous
+     *
      * @param talon the talon to set the settings of
+     * @param reverseEnc // TODO: add JavaDoc For this
      */
     public void setAutonSettings(CANTalon talon, boolean reverseEnc)
     {
@@ -85,31 +87,31 @@ public class DriveTrainSubsystem extends Subsystem
         talon.reverseSensor(reverseEnc);
         talon.configNominalOutputVoltage(0.0D, -0.0D);
         talon.configPeakOutputVoltage(12.0D, -12.0D);//8
-        talon.setPID(3.7, 0,0); // confirmed working -- miguel certified
-        // increase P until
-	    talon.setEncPosition(0);
-	    talon.enableControl();
+        /* increase P until */
+        talon.setPID(3.7, 0, 0); /* confirmed working -- Miguel certified */
+        talon.setEncPosition(0);
+        talon.enableControl();
     }
 
-
-	/**
-	 * Set all talons into telepo
-	 */
-	public void setTeleopSettings()
-	{
-		setTeleopSettings(leftTalon0);
-		setTeleopSettings(leftTalon1);
-		setTeleopSettings(rightTalon0);
-		setTeleopSettings(rightTalon1);
-
-	}
+    /**
+     * Set all talons into telepo
+     */
+    public void setTeleopSettings()
+    {
+        setTeleopSettings(leftTalon0);
+        setTeleopSettings(leftTalon1);
+        setTeleopSettings(rightTalon0);
+        setTeleopSettings(rightTalon1);
+    }
 
     /**
-     * Set a talon back to teleoperated settings 
+     * Set a talon back to teleoperated settings
+     *
      * @param talon the talon in question
      */
-    
-    //WHAT THE HECK IS GOING ON WITH THE ENCODERS???
+
+    /* What the is going on with the encoders? */
+    // TODO: Learn how encoders work
     public void setTeleopSettings(CANTalon talon)
     {
         talon.configNominalOutputVoltage(0.0D, -0.0D);
@@ -129,12 +131,12 @@ public class DriveTrainSubsystem extends Subsystem
      */
     @Deprecated
     public double getEncRightPosition() { return rightTalon1.getPosition() / 1024; }
-    
+
     /**
      * @return the average position between the left and right side of the drivetrain
      */
     @Deprecated
-    public double getEncAveg() { return (getEncRightPosition() + getEncLeftPosition())/2; }
+    public double getEncAveg() { return (getEncRightPosition() + getEncLeftPosition()) / 2; }
 
     public double turningFactor() { return Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY() - OI.JOYSTICK_DRIVE_RIGHT.getY());}
 
@@ -155,10 +157,11 @@ public class DriveTrainSubsystem extends Subsystem
     private int logCounter = 0;
 
     @SuppressWarnings({ "SuspiciousNameCombination", "PointlessBooleanExpression", "ConstantConditions" })
+    @Deprecated
     private Pair<Double, Double> getSpeedArcade(Pair<Double, Double> out)
     {
         // Get the base speed of the robot
-        
+
         double yLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
         double leftSpeed = yLevel;
         double rightSpeed = yLevel;
@@ -169,7 +172,7 @@ public class DriveTrainSubsystem extends Subsystem
         if(yLevel < 0.0D) { xLevel = -xLevel;}
 
         if(xLevel > 0.0D) { leftSpeed -= xLevel; }
-        
+
         else if(xLevel < 0.0D) { rightSpeed += xLevel; }
 
 //        if(logCounter++ % 10 == 0 && false)
@@ -179,7 +182,7 @@ public class DriveTrainSubsystem extends Subsystem
 
         // Sets the speed to 0 if the speed is less than 0.05 or larger than -0.05
         if(Math.abs(leftSpeed) < 0.05D) { leftSpeed = 0.0D; }
-        
+
         if(Math.abs(rightSpeed) < 0.05D) { rightSpeed = 0.0D; }
 
         out.left = leftSpeed;
@@ -188,7 +191,8 @@ public class DriveTrainSubsystem extends Subsystem
     }
 
     long counter = 0;
-    
+
+    @Deprecated
     private Pair<Double, Double> getSpeedArcade() { return getSpeedArcade(SPEED_CONTAINER); }
 
     /**
@@ -198,38 +202,38 @@ public class DriveTrainSubsystem extends Subsystem
      * @return the speed of the robot
      */
     private Pair<Double, Double> getSpeed(Pair<Double, Double> out)
-    {	
-    	double joystickLevel;
+    {
+        double joystickLevel;
         // Get the base speed of the robot
         if(negative) { joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY(); }
-        
+
         else { joystickLevel = -OI.JOYSTICK_DRIVE_LEFT.getY(); }
-        
+
         // Only increase the speed by a small amount
         double diff = joystickLevel - lastLeft;
         if(diff > 0.1D) { joystickLevel = lastLeft + 0.1D; }
-        
+
         else if(diff < 0.1D) { joystickLevel = lastLeft - 0.1D; }
-        
+
         lastLeft = joystickLevel;
         out.left = joystickLevel;
-        
+
         if(negative) { joystickLevel = -OI.JOYSTICK_DRIVE_LEFT.getY(); }
-        
+
         else { joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY(); }
-        
+
         diff = joystickLevel - lastRight;
         if(diff > 0.1D) { joystickLevel = lastRight + 0.1D; }
-        
+
         else if(diff < 0.1D) { joystickLevel = lastRight - 0.1D; }
-        
+
         lastRight = joystickLevel;
         out.right = joystickLevel;
-        
+
         // Sets the speed to 0 if the speed is less than 0.05 or larger than
         // -0.05
         if(Math.abs(out.left) < 0.05D) { out.left = 0.0D; }
-        
+
         if(Math.abs(out.right) < 0.05D) { out.right = 0.0D; }
 
         return out;
@@ -243,11 +247,11 @@ public class DriveTrainSubsystem extends Subsystem
 
         //reverse drive
         if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(1) && !isNegativePressed) { negative = !negative; }
-        
+
         isNegativePressed = OI.JOYSTICK_DRIVE_LEFT.getRawButton(1);
-        
-        if (negative) { drive.tankDrive(-speed.left, -speed.right, true); }
-        
+
+        if(negative) { drive.tankDrive(-speed.left, -speed.right, true); }
+
         else { drive.tankDrive(speed.left, speed.right, true); }
     }
 
@@ -257,13 +261,14 @@ public class DriveTrainSubsystem extends Subsystem
      * Drive the robot. The equation x=-y must be true for the robot to drive straight.
      * <br>
      * Make sure to set the motors according to the control mode. In auton, it's position. In teleop, it's percent voltage.
+     *
      * @param x Units for the left side of drivetrain
      * @param y Units for the right side of drivetrain
      */
     public void runMotors(double x, double y) // double z
     {
-    	leftSpeed = x;
-    	rightSpeed = y;
+        leftSpeed = x;
+        rightSpeed = y;
         leftTalon0.set(x);
         leftTalon1.set(x);
         rightTalon0.set(y);
@@ -297,7 +302,10 @@ public class DriveTrainSubsystem extends Subsystem
         Timer.delay(0.3D);
     }
 
-    public enum DriveTypes { DUAL_STICK, ARCADE; }
+    public enum DriveTypes
+    {
+        DUAL_STICK, ARCADE
+    }
 
     @SuppressWarnings("WeakerAccess")
     public static class Pair<L, R>
