@@ -1,30 +1,107 @@
 package com.team2502.robot2017.command.teleop;
 
+import com.kauailabs.navx.frc.AHRS;
+import com.team2502.robot2017.OI;
 import com.team2502.robot2017.Robot;
+import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
+import com.team2502.robot2017.subsystem.DriveTrainTransmissionSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
+import logger.Log;
 
+/**
+ * Takes care of all Drivetrain related operations during Teleop, including automatic shifting
+ * Automatic shifting will:
+ * <li>
+ * <ul>Space out shifting by at least 1/2 second</ul>
+ * <ul>Invert itself if the driver holds a special button</ul>
+ * <ul>Only shift when going mostly straight</ul>
+ * <ul>Shift up if accelerating, going fast, and the driver is pushing hard on the sticks</ul>
+ * <ul>Shift down if the sticks are being pushed but there is no acceleration</ul>
+ * <ul>Shift down if the sticks aren't being pushed hard and the robot is going slow</ul>
+ * </li>
+ */
 public class DriveCommand extends Command
 {
     private final DriveTrainSubsystem driveTrainSubsystem;
+    private final DriveTrainTransmissionSubsystem transmission;
+    private final AHRS navx;
+    private boolean shiftedUp;
 
     public DriveCommand()
     {
         requires(Robot.DRIVE_TRAIN);
+        requires(Robot.DRIVE_TRAIN_GEAR_SWITCH);
         driveTrainSubsystem = Robot.DRIVE_TRAIN;
+        navx = Robot.NAVX;
+        transmission = Robot.DRIVE_TRAIN_GEAR_SWITCH;
+        shiftedUp = false;
     }
 
     @Override
     protected void initialize()
     {
-        driveTrainSubsystem.setTeleopSettings(driveTrainSubsystem.leftTalon0);
-        driveTrainSubsystem.setTeleopSettings(driveTrainSubsystem.rightTalon1);
-        driveTrainSubsystem.setTeleopSettings(driveTrainSubsystem.leftTalon1);
-        driveTrainSubsystem.setTeleopSettings(driveTrainSubsystem.rightTalon0);
+        driveTrainSubsystem.setTeleopSettings();
     }
 
     @Override
-    protected void execute() { driveTrainSubsystem.drive(); }
+    protected void execute()
+    {
+        driveTrainSubsystem.drive();
+
+        /* Check that at least 1/2 second has passed since last shifting */
+        if((System.currentTimeMillis() - Robot.SHIFTED) >= 500)
+        {
+            /* Do the opposite if the driver is forcing a shift */
+            if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(RobotMap.Joystick.Button.SWITCH_DRIVE_TRANSMISSION))
+            {
+                System.out.println("Shifting down forced by driver.");
+                transmission.setGear(false);
+            }
+            else /* If the driver is cool with auto shifting doing its thing */
+            {
+                // Make sure that we're going mostly straight
+                if(driveTrainSubsystem.turningFactor() < 0.1)
+                {
+                    double accel = navx.getRawAccelY();
+                    double speed = driveTrainSubsystem.avgVel();
+
+                    /* Shift up if we are accelerating and going fast and the driver is
+                       putting the joystick at least 80% forward or backward */
+                    if(Math.abs(accel) > 0.15 && speed > RobotMap.Motor.SHIFT_UP_THRESHOLD && OI.joysThreshold(0.8, true))
+                    {
+                        if(!shiftedUp)
+                        {
+                            shiftedUp = true;
+                            Log.info("Shifting up.");
+                            transmission.setGear(true);
+                        }
+                    }
+                    /* If we are not accelerating very fast but the driver is still pushing forward
+                       we shift down because it is probably a pushing match */
+                    else if(!transmission.signsame(accel, driveTrainSubsystem.rightTalon1.getEncVelocity()) && OI.joysThreshold(0.8, false))
+                    {
+                        if(shiftedUp)
+                        {
+                            shiftedUp = false;
+                            Log.info("Shifting down due to sudden deceleration.");
+                            transmission.setGear(false);
+                        }
+                    }
+                    /* If we're going slow and the driver wants it to be that way we shift down */
+                    else if(OI.joysThreshold(30, false) && speed < RobotMap.Motor.SHIFT_DOWN_THRESHOLD)
+                    {
+                        if(shiftedUp)
+                        {
+                            shiftedUp = false;
+                            Log.info("Shifting down.");
+                            transmission.setGear(false);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     protected boolean isFinished() { return false; }
@@ -33,5 +110,5 @@ public class DriveCommand extends Command
     protected void end() { driveTrainSubsystem.stop(); }
 
     @Override
-    protected void interrupted() { driveTrainSubsystem.stop(); }
+    protected void interrupted() { end(); }
 }
