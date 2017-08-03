@@ -10,6 +10,7 @@ import com.team2502.robot2017.command.teleop.DriveCommand;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import logger.Log;
 
 /**
  * Example Implementation, Many changes needed.
@@ -116,6 +117,56 @@ public class DriveTrainSubsystem extends Subsystem
         talon.configPeakOutputVoltage(12.0D, -12.0D);
         talon.changeControlMode(TalonControlMode.PercentVbus);
         talon.disableControl(); // needed if switching from auton settings
+    }
+
+    public void setMotionProfileSettings(CANTalon talon)
+    {
+        talon.changeControlMode(TalonControlMode.MotionProfile);
+        talon.setF(0.27053062082237783);
+        talon.setP(0);
+        talon.setI(0);
+        talon.setD(0);
+    }
+
+    public void setMotionProfileSettings()
+    {
+        setMotionProfileSettings(leftTalon1);
+        setMotionProfileSettings(rightTalon0);
+        setMotionProfileSettings(rightTalon1);
+        setMotionProfileSettings(leftTalon0);
+    }
+
+    public void feedTrajectoryPoints(double[][] profile, int totalCnt)
+    {
+        CANTalon.MotionProfileStatus status = new CANTalon.MotionProfileStatus();
+        rightTalon1.getMotionProfileStatus(status);
+        CANTalon.TrajectoryPoint point = new CANTalon.TrajectoryPoint();
+        if (status.hasUnderrun)
+        {
+            Log.warn("We have underrun!");
+            rightTalon1.clearMotionProfileHasUnderrun();
+        }
+        rightTalon1.clearMotionProfileTrajectories();
+        rightTalon0.clearMotionProfileTrajectories();
+        leftTalon0.clearMotionProfileTrajectories();
+        leftTalon1.clearMotionProfileTrajectories();
+
+
+        for (int i = 0; i < totalCnt; i++)
+        {
+            point.position = profile[i][0];
+            point.velocity = profile[i][1];
+            point.timeDurMs = (int) profile[i][2];
+            point.profileSlotSelect = 0;
+            point.velocityOnly = false;
+            point.zeroPos = (i == 0);
+            point.isLastPoint = (i+1 == totalCnt);
+
+            rightTalon1.pushMotionProfileTrajectory(point);
+            rightTalon0.pushMotionProfileTrajectory(point);
+            leftTalon1.pushMotionProfileTrajectory(point);
+            leftTalon0.pushMotionProfileTrajectory(point);
+        }
     }
 
     /**

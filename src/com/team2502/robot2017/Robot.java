@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import logger.Log;
 
 public final class Robot extends IterativeRobot 
 {
@@ -32,6 +33,7 @@ public final class Robot extends IterativeRobot
 
 	public void robotInit()
 	{
+		Log.createLogger();
 		DRIVE_TRAIN = new DriveTrainSubsystem();
 		DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
 		PRESSURE_SENSOR = new PressureSensorSubsystem();

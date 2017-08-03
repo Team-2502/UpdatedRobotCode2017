@@ -7,6 +7,7 @@ import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import com.team2502.robot2017.subsystem.DriveTrainTransmissionSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
+import logger.Log;
 
 /**
  * Takes care of all Drivetrain related operations during Teleop, including automatic shifting
@@ -57,7 +58,7 @@ public class DriveCommand extends Command
             // Do the opposite if the driver is forcing a shift
             if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(RobotMap.Joystick.Button.SWITCH_DRIVE_TRANSMISSION))
             {
-                System.out.println("Shifting down forced by driver.");
+                Log.warn("Shifting down forced by driver.");
                 transmission.setGear(false);
             }
 
@@ -76,31 +77,25 @@ public class DriveCommand extends Command
                         if(!shiftedUp)
                         {
                             shiftedUp = true;
-                            System.out.println("Shifting up.");
+                            Log.info("Shifting up.");
                         }
                         transmission.setGear(true);
-
                     }
-
-                    // If we are not accelerating very fast but the driver is still pushing forward we shift down because it is probably a pushing match
-                    else if(!transmission.signsame(accel, driveTrainSubsystem.rightTalon1.getEncVelocity()) && OI.joysThreshold(0.8, false))
+                    else if(!transmission.signsame(accel, driveTrainSubsystem.rightTalon1.getEncVelocity()) && OI.joysThreshold(0.8, false)) /* If we are not accelerating very fast but the driver is still pushing forward we shift down because it is probably a pushing match */
                     {
                         if(shiftedUp)
                         {
                             shiftedUp = false;
-                            System.out.println("Shifting down.");
+                            Log.info("Shifting down because you're a bad driver.");
                         }
                         transmission.setGear(false);
-
                     }
-
-                    // If we're going slow and the driver wants it to be that way we shift down
-                    else if(OI.joysThreshold(30, false) && speed < RobotMap.Motor.SHIFT_DOWN_THRESHOLD)
+                    else if(OI.joysThreshold(30, false) && speed < RobotMap.Motor.SHIFT_DOWN_THRESHOLD) /* If we're going slow and the driver wants it to be that way we shift down */
                     {
                         if(shiftedUp)
                         {
                             shiftedUp = false;
-                            System.out.println("Shifting down.");
+                            Log.info("Shifting down because slow.");
                         }
                         transmission.setGear(false);
                     }

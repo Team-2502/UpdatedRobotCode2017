@@ -30,11 +30,12 @@ public class DriveTrainTransmissionSubsystem extends Subsystem
     /**
      * Switch the gear from its current state
      */
-    public void switchGear() {
+    public void switchGear()
+    {
         setGear(highGear = !highGear);
         Robot.SHIFTED = System.currentTimeMillis();
     }
-    
+
     /**
      * @return if we are in high gear
      */
@@ -42,36 +43,47 @@ public class DriveTrainTransmissionSubsystem extends Subsystem
 
     /**
      * Set the transmission to a specific high gear or low gear
+     *
      * @param highGear Boolean saying "do you want to be in high gear?"
      */
-    public void setGear(boolean highGear) {
-        if(this.highGear != highGear){
+    public void setGear(boolean highGear)
+    {
+        if(this.highGear != highGear)
+        {
             Robot.SHIFTED = System.currentTimeMillis();
             switcher.set(this.highGear = highGear);
         }
     }
 
     /**
-     *
      * @param fps The number in feet per second to convert to RPM given wheels of 4 inches in diameter
+     *
      * @return The equivalent RPM
      */
     public double fpsToRPM(double fps)
     {
-        return ((fps) * 60 * 12) / (4*Math.PI);
+        return ((fps) * 180) / (Math.PI);
     }
 
+    /**
+     * @param rpm The number in RPM to convert to feet per second, assuming wheels in 4 inches of diameter
+     *
+     * @return The equivalent feet per second0
+     */
+    public double RPMtofps(double rpm) { return (rpm * Math.PI) / 180; }
+
 
     /**
      * @param x A number
+     *
      * @return The sign of the number
      */
-    public double sign(double x) { return Math.abs(x)/x; }
+    public double sign(double x) { return Math.abs(x) / x; }
 
     /**
-     *
      * @param x A number
      * @param y Another number
+     *
      * @return If the numbers have the same sign
      */
     public boolean signsame(double x, double y) { return sign(x) == sign(y); }

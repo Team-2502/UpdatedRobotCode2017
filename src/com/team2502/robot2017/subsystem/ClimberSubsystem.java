@@ -10,16 +10,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ClimberSubsystem extends Subsystem
 {
     public boolean isBraked = false;
-    public final CANTalon climberTop;
-    public final CANTalon climberBottom;
+    public final CANTalon climberLeft;
+    public final CANTalon climberRight;
 	
     /**
      * Subsystem for climber brake
      */
     public ClimberSubsystem()
     {
-    	climberTop = new CANTalon(RobotMap.Motor.CLIMBER_TOP);
-    	climberBottom = new CANTalon(RobotMap.Motor.CLIMBER_BOTTOM);
+    	climberLeft = new CANTalon(RobotMap.Motor.CLIMBER_LEFT);
+    	climberRight = new CANTalon(RobotMap.Motor.CLIMBER_RIGHT);
     }
 
     /**
@@ -39,14 +39,14 @@ public class ClimberSubsystem extends Subsystem
 
 	public void runMotors(double speed)
 	{
-		climberTop.set(speed);
-		climberBottom.set(speed);
+		climberLeft.set(-speed);
+		climberRight.set(speed);
 	}
 
 	public void stop()
 	{
-		climberTop.set(0);
-		climberBottom.set(0);
+		climberLeft.set(0);
+		climberRight.set(0);
 		
 	}
 	
