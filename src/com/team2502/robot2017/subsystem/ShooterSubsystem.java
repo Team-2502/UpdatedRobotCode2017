@@ -254,7 +254,9 @@ public class ShooterSubsystem extends Subsystem
         banebotFeeder.set(0.0D);
         agitator.set(0.0D);
 
-        banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Disabled);
+        // Causes problems with banebots starting after shooter is turned off
+        // If we want to fix then we would have to enable it somewhere.
+//        banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Disabled);
 
         System.out.println("Stopping shooter and related motors.");
 

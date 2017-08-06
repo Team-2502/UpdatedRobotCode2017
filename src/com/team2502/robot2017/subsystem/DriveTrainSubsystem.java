@@ -348,6 +348,20 @@ public class DriveTrainSubsystem extends Subsystem
         Timer.delay(0.3D);
     }
 
+    public void disabledStop()
+    {
+        rightTalon1.enableBrakeMode(true);
+        rightTalon0.enableBrakeMode(true);
+        leftTalon1.enableBrakeMode(true);
+        leftTalon0.enableBrakeMode(true);
+
+        lastLeft = 0.0D;
+        lastRight = 0.0D;
+        drive.tankDrive(0.0D, 0.0D);
+//        ClimberCommand.setStopped(true);
+        Timer.delay(0.3D);
+    }
+
     public enum DriveTypes { DUAL_STICK, ARCADE; }
 
     @SuppressWarnings("WeakerAccess")
