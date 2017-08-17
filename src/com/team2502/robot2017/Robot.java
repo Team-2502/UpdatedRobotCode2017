@@ -20,6 +20,7 @@ public final class Robot extends IterativeRobot
 	public static ActiveIntakeSubsystem ACTIVE;
 	public static DriveTrainTransmissionSubsystem DRIVE_TRAIN_GEAR_SWITCH;
 	public static ClimberSubsystem CLIMBER;
+	public static HopperSubsystem HOPPER;
 
 	public static long SHIFTED;
 
@@ -42,6 +43,7 @@ public final class Robot extends IterativeRobot
 		SHOOTER = new ShooterSubsystem();
 		ACTIVE = new ActiveIntakeSubsystem();
 		CLIMBER = new ClimberSubsystem();
+		HOPPER = new HopperSubsystem();
 		NAVX = new AHRS(SPI.Port.kMXP);
 		
 		AutoSwitcher.putToSmartDashboard();
