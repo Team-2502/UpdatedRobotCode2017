@@ -51,20 +51,20 @@ public class RobotMap
 
     public static final class Motor
     {
-    	public static final int LEFT_TALON_0 = 2;
-        public static final int LEFT_TALON_1 = 4;
-        public static final int RIGHT_TALON_0 = 1;
-        public static final int RIGHT_TALON_1 = 3;
-        public static final int FLYWHEEL_TALON_0 = 5;
-        public static final int FLYWHEEL_TALON_1 = 12;
-        public static final int FLYWHEEL_TALON_2 = 13;
-        public static final int FLYWHEEL_TALON_3 = 14;
+    	public static final int LEFT_TALON_0 = 10;
+        public static final int LEFT_TALON_1 = 7;
+        public static final int RIGHT_TALON_0 = 12;
+        public static final int RIGHT_TALON_1 = 8;
+        public static final int FLYWHEEL_TALON_0 = 5; //Top left
+        public static final int FLYWHEEL_TALON_1 = 11;//Bottom Left
+        public static final int FLYWHEEL_TALON_2 = 1;//Top Right
+        public static final int FLYWHEEL_TALON_3 = 2;//Bottom Right
         public static final int FEEDER_TALON_0 = 6; //colson
-        public static final int FEEDER_TALON_1 = 7; //banebot
-        public static final int ACTIVE_INTAKE = 8;
-        public static final int AGITATOR = 9;
-		public static final int CLIMBER_LEFT = 10;
-		public static final int CLIMBER_RIGHT = 11;
+        public static final int FEEDER_TALON_1 = 13; //banebot
+        public static final int ACTIVE_INTAKE = 9;
+        public static final int AGITATOR = 10;
+		public static final int CLIMBER_LEFT = 0;
+		public static final int CLIMBER_RIGHT = 3;
 
 		public static final int ALLOWABLE_LOOP_ERR = 5; // in encoder pulses
 	    public static final int TIME_TO_STOP = 1500; // amount of milliseconds to be on target to stop contolling with PID4
