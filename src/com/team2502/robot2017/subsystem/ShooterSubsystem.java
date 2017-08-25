@@ -280,7 +280,7 @@ public class ShooterSubsystem extends Subsystem
         leftFlywheelTalonBottom.changeControlMode(follower);
         rightFlywheelTalonBottom.changeControlMode(follower);
 
-        banebotFeeder.changeControlMode(follower);
+        banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
 
         // Toggle mode for flywheel. It is bound to button 5 on the Function stick.
         if(OI.JOYSTICK_FUNCTION.getRawButton(5) && !isTriggerPressed) { shooterMode = !shooterMode; }
@@ -294,7 +294,7 @@ public class ShooterSubsystem extends Subsystem
         if(OI.JOYSTICK_FUNCTION.getTrigger())
         {
             colsonFeeder.set(colsonSpeed);
-            banebotFeeder.set(-banebotSpeed);
+            banebotFeeder.set(banebotSpeed);
             agitator.set(-agitatorSpeed);
         }
 
