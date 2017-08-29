@@ -51,8 +51,13 @@ public class RobotMap
 
     public static final class Motor
     {
+<<<<<<< HEAD
     	public static final int LEFT_TALON_0 = 12;
         public static final int LEFT_TALON_1 = 14;
+=======
+    	public static final int LEFT_TALON_0 = 4;
+        public static final int LEFT_TALON_1 = 12;
+>>>>>>> origin/develop-ritikm
         public static final int RIGHT_TALON_0 = 8;
         public static final int RIGHT_TALON_1 = 7;
         public static final int FLYWHEEL_TALON_0 = 5; //Top left

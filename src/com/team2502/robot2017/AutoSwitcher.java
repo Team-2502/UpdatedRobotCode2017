@@ -1,5 +1,6 @@
 package com.team2502.robot2017;
 
+import com.team2502.robot2017.command.RunMultipleMotors;
 import com.team2502.robot2017.command.autonomous.*;
 import com.team2502.robot2017.command.autonomous.commandGroups.*;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,7 +24,7 @@ class AutoSwitcher
 		BLUE_SHOOT_AND_BASELINE("Blue shoot and Baseline", ShootAndBaseLineBlue.class),
 
 		BASELINE("Baseline only", DriveTimeCommand.class),
-		TESTAUTO("DO NOT USE ME!", TestAutoCommand.class);
+		TESTAUTO("DO NOT USE ME!", RunMultipleMotors.class);
 
 		private Class<? extends Command> autoCommand;
 		private String name;
