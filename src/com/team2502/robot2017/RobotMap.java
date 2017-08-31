@@ -51,6 +51,7 @@ public class RobotMap
 
     public static final class Motor
     {
+
     	public static final int LEFT_TALON_0 = 4;
         public static final int LEFT_TALON_1 = 12;
         public static final int RIGHT_TALON_0 = 8;
@@ -59,7 +60,7 @@ public class RobotMap
         public static final int FLYWHEEL_TALON_1 = 11;//Bottom Left
         public static final int FLYWHEEL_TALON_2 = 1;//Top Right
         public static final int FLYWHEEL_TALON_3 = 2;//Bottom Right
-        public static final int FEEDER_TALON_0 = 6; //colson
+        public static final int FEEDER_TALON_0 = 6; //colson8
         public static final int FEEDER_TALON_1 = 13; //banebot
         public static final int ACTIVE_INTAKE = 9;
         public static final int AGITATOR = 10;
