@@ -286,7 +286,7 @@ public class ShooterSubsystem extends Subsystem
         if(OI.JOYSTICK_FUNCTION.getRawButton(5) && !isTriggerPressed) { shooterMode = !shooterMode; }
         isTriggerPressed = OI.JOYSTICK_FUNCTION.getRawButton(5);
 
-        if(shooterMode) { setSpeedOnAllFlyWheelMotors(80); }
+        if(shooterMode) { setSpeedOnAllFlyWheelMotors(0.55); }
 
         else { setSpeedOnAllFlyWheelMotors(0); }
 
