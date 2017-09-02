@@ -39,7 +39,7 @@ public class AutoPaths
         for(int i = 0; i < kPathNames.length; ++i)
         {
 
-			TextFileReader reader = new TextFileReader("file://" + kPathNames[i] + ".txt");
+			TextFileReader reader = new TextFileReader("/home/lvuser/path/" + kPathNames[i] + ".txt");
 
 			Path path = deserializer.deserialize(reader.readWholeFile());
 			paths_.put(kPathNames[i], path);

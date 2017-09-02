@@ -4,6 +4,7 @@ import java.io.*;
 
 
 /**
+ * stolen from chez pof
  * Read a text file into a string.
  *
  * @author Jared341
@@ -14,12 +15,12 @@ public class TextFileReader
     private File file_connection_ = null;
     private BufferedReader reader_ = null;
 
-    public TextFileReader(String uri)
+    public TextFileReader(String path)
     {
         try
         {
             // Open the new file
-            file_connection_ = new File(uri);
+            file_connection_ = new File(path);
             if(!file_connection_.exists())
             {
                 System.err.println("Could not find specified file!");
