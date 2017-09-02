@@ -17,7 +17,7 @@ public class RobotMap
         public static final class Button
         {
             public static final int SWITCH_DRIVE_TRANSMISSION = 1;
-            public static final int SWITCH_HOPPER = 2; //TODO: Figure out which button to use
+            public static final int SWITCH_HOPPER = 2;
             public static final int SHOOTER_TOGGLE = 5;
             public static final int VISION_ALIGN = 3;
 
@@ -84,9 +84,9 @@ public class RobotMap
 
     public static final class Solenoid
     {
-        public static final int TRANSMISSION_SWITCH = 0;
+        public static final int TRANSMISSION_SWITCH = 1;
 
-        public static final int HOPPER_SOLENOID = 1;
+        public static final int HOPPER_SOLENOID = 0;
 
         private Solenoid() {}
     }
