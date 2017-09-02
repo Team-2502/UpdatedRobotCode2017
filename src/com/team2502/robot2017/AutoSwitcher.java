@@ -24,7 +24,7 @@ class AutoSwitcher
 		BLUE_SHOOT_AND_BASELINE("Blue shoot and Baseline", ShootAndBaseLineBlue.class),
 
 		BASELINE("Baseline only", DriveTimeCommand.class),
-		TESTAUTO("DO NOT USE ME!", RunMultipleMotors.class);
+		TESTAUTO("Boiler Test auton", BoilerDistCommand.class);
 
 		private Class<? extends Command> autoCommand;
 		private String name;
