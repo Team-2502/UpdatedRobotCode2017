@@ -26,5 +26,8 @@
   <property file="${user.home}/wpilib/java/${version}/ant/build.properties"/>
 
   <import file="${wpilib.ant.dir}/build.xml"/>
+  <target name="deploy-paths">
+    <!-- Send path txt's here -->
+  </target>
 
 </project>
