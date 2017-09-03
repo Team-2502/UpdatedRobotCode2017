@@ -30,7 +30,11 @@
 
     <target name="deploy-paths" depends="get-target-ip">
         <echo>Deploying paths . . .</echo>
-        <scp todir="${username}:${password}@${target}:${deploy.dir}/paths">
+        <!--<sshexec host="${target}" username="${username}" password="${password}" trust="true">-->
+            <!--cd $HOME && rm -rf paths && mkdir paths-->
+        <!--</sshexec>-->
+
+        <scp todir="${username}:${password}@${target}:${deploy.dir}/paths" trust="true">
             <fileset dir="paths">
                 <include name="**/*"/>
             </fileset>

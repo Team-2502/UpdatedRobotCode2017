@@ -45,8 +45,11 @@ final class DashboardData
         if(speed > maxspeed) { maxspeed = speed; }
         else if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(10)) { maxspeed = 0; }
 
-        SmartDashboard.putNumber("DT: leftTalon1", Robot.DRIVE_TRAIN.leftTalon1.getPosition());
+        SmartDashboard.putNumber("DT: leftTalon0", Robot.DRIVE_TRAIN.leftTalon0.getPosition());
         SmartDashboard.putNumber("DT: rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
+
+        SmartDashboard.putNumber("DT: leftTalon1", Robot.DRIVE_TRAIN.leftTalon1.getPosition());
+        SmartDashboard.putNumber("DT: rightTalon0", Robot.DRIVE_TRAIN.rightTalon0.getPosition());
         SmartDashboard.putBoolean("Drive Team will win us the match", true); // if this line gets changed you will be kicked off the github no warning
 
         SmartDashboard.putNumber("DT: Average Speed", speed);
