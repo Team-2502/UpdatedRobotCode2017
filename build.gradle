@@ -58,6 +58,15 @@ task genJavadoc(type: Jar, dependsOn: javadoc) {
   from javadoc.destinationDir
 }
 
+task deploy_paths() {
+    doLast {
+
+// TODO: SCP all files from ./path to lvuser:@roboRIO-2502-frc.local
+    }
+}
+
+task deploy(dependsOn: deploy, deploy_paths) {}
+
 artifacts {
   archives genJavadoc
 }
