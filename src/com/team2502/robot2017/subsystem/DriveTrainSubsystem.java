@@ -170,16 +170,14 @@ public class DriveTrainSubsystem extends Subsystem
     }
 
     /**
-     * @return the position of the left side of the drivetrain inches
+     * @return the position of the left side of the drivetrain in feet
      */
-    @Deprecated
-    public double getEncLeftPosition() { return leftTalon0.getPosition(); }
+    public double getEncLeftPosition() { return (leftTalon0.getPosition() * Math.PI *  4)  / (1024 * 12); }
 
     /**
-     * @return the position of the right side of the drivetrain in inches
+     * @return the position of the right side of the drivetrain in feet
      */
-    @Deprecated
-    public double getEncRightPosition() { return rightTalon1.getPosition() / 1024; }
+    public double getEncRightPosition() { return (rightTalon1.getPosition() * Math.PI * 4) / (1024 * 12); }
     
     /**
      * @return the average position between the left and right side of the drivetrain
@@ -191,8 +189,8 @@ public class DriveTrainSubsystem extends Subsystem
 
     public double avgVel()
     {
-//        return (leftTalon0.getEncVelocity() + rightTalon0.getEncVelocity())/2;
-        return Math.abs(rightTalon1.getEncVelocity());
+        return Math.abs((leftTalon0.getEncVelocity() + rightTalon1.getEncVelocity())/2);
+//        return Math.abs(rightTalon1.getEncVelocity());
     }
 
     @Override
