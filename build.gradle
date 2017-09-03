@@ -1,25 +1,8 @@
-//buildscript {
-//  repositories {
-//  	mavenCentral()
-//  	maven {
-//  		name = "GradleRIO"
-//  		url = "http://dev.imjac.in/maven"
-//  	}
-//
-//  	flatDir name: 'navxDir', dirs: "${System.env.HOME}/wpilib/user/java/lib"
-//
-//  }
-//  dependencies {
-//    classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '4.4.3'	    //+ for latest version		//Change this line if you wish to Update GradleRIO
-//
-//  }
-//}
-
 plugins {
     id "java"
     id "eclipse"
     id "idea"
-    id "jaci.openrio.gradle.GradleRIO" version "2017.1.2"
+    id "jaci.openrio.gradle.GradleRIO" version "2017.2.3"
 }
 
 frc {
@@ -57,15 +40,6 @@ task genJavadoc(type: Jar, dependsOn: javadoc) {
   classifier = 'javadoc'
   from javadoc.destinationDir
 }
-
-task deploy_paths() {
-    doLast {
-
-// TODO: SCP all files from ./path to lvuser:@roboRIO-2502-frc.local
-    }
-}
-
-task deploy(dependsOn: deploy, deploy_paths) {}
 
 artifacts {
   archives genJavadoc
