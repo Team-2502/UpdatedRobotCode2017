@@ -2,14 +2,15 @@ package com.team2502.robot2017;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.team2502.robot2017.subsystem.*;
+import com.team2502.robot2017.trajectory.AutoPaths;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import logger.Log;
+import com.team2502.lib.logger.Log;
 
-public final class Robot extends IterativeRobot 
+public final class Robot extends IterativeRobot
 {
 	// Makes all the stuff
 	public static DriveTrainSubsystem DRIVE_TRAIN;
@@ -27,14 +28,16 @@ public final class Robot extends IterativeRobot
 	// NavX Subsystem
 	public static AHRS NAVX;
 
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
-
 	public void robotInit()
 	{
 		Log.createLogger();
+		AutoPaths.loadPaths();
+
 		DRIVE_TRAIN = new DriveTrainSubsystem();
 		DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
 		PRESSURE_SENSOR = new PressureSensorSubsystem();

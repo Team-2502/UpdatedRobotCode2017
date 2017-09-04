@@ -10,7 +10,7 @@ import com.team2502.robot2017.command.teleop.DriveCommand;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import logger.Log;
+import com.team2502.lib.Pair;
 
 /**
  * Example Implementation, Many changes needed.
@@ -18,79 +18,80 @@ import logger.Log;
 
 public class DriveTrainSubsystem extends Subsystem
 {
-    private static final Pair<Double, Double> SPEED_CONTAINER = new Pair<Double, Double>();
+	private static final Pair<Double, Double> SPEED_CONTAINER = new Pair<Double, Double>();
 
 
-    public final CANTalon leftTalon0; //enc
-    public final CANTalon leftTalon1;
-    public final CANTalon rightTalon0;
-    public final CANTalon rightTalon1; //enc
-    private final RobotDrive drive;
-    private double lastLeft;
-    private double lastRight;
+	public final CANTalon leftTalon0; //enc
+	public final CANTalon leftTalon1;
+	public final CANTalon rightTalon0;
+	public final CANTalon rightTalon1; //enc
+	private final RobotDrive drive;
+	private double lastLeft;
+	private double lastRight;
 
-    private double leftSpeed;
-    private double rightSpeed;
-    private boolean negative = false;
-    private boolean isNegativePressed = false;
+	private double leftSpeed;
+	private double rightSpeed;
+	private boolean negative = false;
+	private boolean isNegativePressed = false;
 
 	private DriveTrainTransmissionSubsystem DTTS;
 
-    /**
-     * Initialize the drive train subsystem
-     */
-    public DriveTrainSubsystem()
-    {	
-        lastLeft = 0.0D;
-        lastRight = 0.0D;
+	/**
+	 * Initialize the drive train subsystem
+	 */
+	public DriveTrainSubsystem()
+	{
+		lastLeft = 0.0D;
+		lastRight = 0.0D;
 
-        leftTalon0 = new CANTalon(RobotMap.Motor.LEFT_TALON_0);
-        leftTalon1 = new CANTalon(RobotMap.Motor.LEFT_TALON_1);
-        rightTalon0 = new CANTalon(RobotMap.Motor.RIGHT_TALON_0);
-        rightTalon1 = new CANTalon(RobotMap.Motor.RIGHT_TALON_1); 
+		leftTalon0 = new CANTalon(RobotMap.Motor.LEFT_TALON_0);
+		leftTalon1 = new CANTalon(RobotMap.Motor.LEFT_TALON_1);
+		rightTalon0 = new CANTalon(RobotMap.Motor.RIGHT_TALON_0);
+		rightTalon1 = new CANTalon(RobotMap.Motor.RIGHT_TALON_1);
 
-        drive = new RobotDrive(leftTalon0, leftTalon1, rightTalon0, rightTalon1);
+		drive = new RobotDrive(leftTalon0, leftTalon1, rightTalon0, rightTalon1);
 
-        drive.setSafetyEnabled(true);
+		drive.setSafetyEnabled(true);
 
-        DTTS = Robot.DRIVE_TRAIN_GEAR_SWITCH;
-        
-        setTeleopSettings(leftTalon0);
-        setTeleopSettings(rightTalon1);
-    }
+		DTTS = Robot.DRIVE_TRAIN_GEAR_SWITCH;
+
+		setTeleopSettings(leftTalon0);
+		setTeleopSettings(rightTalon1);
+	}
 
 	/**
 	 * Set all talons into auton
 	 */
 	public void setAutonSettings()
-    {
-    	setAutonSettings(leftTalon0, false);
-	    leftTalon1.changeControlMode(TalonControlMode.Follower);
+	{
+		setAutonSettings(leftTalon0, false);
+		leftTalon1.changeControlMode(TalonControlMode.Follower);
 //	    leftTalon1.set(RobotMap.Motor.LEFT_TALON_0);
 
-	    setAutonSettings(rightTalon1, true);
-	    rightTalon0.changeControlMode(TalonControlMode.Follower);
+		setAutonSettings(rightTalon1, true);
+		rightTalon0.changeControlMode(TalonControlMode.Follower);
 //	    rightTalon0.set(RobotMap.Motor.RIGHT_TALON_1);
-    }
+	}
 
 
-    /**
-     * Set the appropriate settings for autonomous
-     * @param talon the talon to set the settings of
-     */
-    public void setAutonSettings(CANTalon talon, boolean reverseEnc)
-    {
-        talon.changeControlMode(TalonControlMode.Position);
-        talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-        talon.configEncoderCodesPerRev(256);
-        talon.reverseSensor(reverseEnc);
-        talon.configNominalOutputVoltage(0.0D, -0.0D);
-        talon.configPeakOutputVoltage(12.0D, -12.0D);//8
-        talon.setPID(3.7, 0,0); // confirmed working -- miguel certified
-        // increase P until
-	    talon.setEncPosition(0);
-	    talon.enableControl();
-    }
+	/**
+	 * Set the appropriate settings for autonomous
+	 *
+	 * @param talon the talon to set the settings of
+	 */
+	public void setAutonSettings(CANTalon talon, boolean reverseEnc)
+	{
+		talon.changeControlMode(TalonControlMode.Position);
+		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		talon.configEncoderCodesPerRev(256);
+		talon.reverseSensor(reverseEnc);
+		talon.configNominalOutputVoltage(0.0D, -0.0D);
+		talon.configPeakOutputVoltage(12.0D, -12.0D);//8
+		talon.setPID(3.7, 0, 0); // confirmed working -- miguel certified
+		// increase P until
+		talon.setEncPosition(0);
+		talon.enableControl();
+	}
 
 
 	/**
@@ -105,305 +106,272 @@ public class DriveTrainSubsystem extends Subsystem
 
 	}
 
-    /**
-     * Set a talon back to teleoperated settings 
-     * @param talon the talon in question
-     */
-    
-    //WHAT THE HECK IS GOING ON WITH THE ENCODERS???
-    public void setTeleopSettings(CANTalon talon)
-    {
-        talon.configNominalOutputVoltage(0.0D, -0.0D);
-        talon.configPeakOutputVoltage(12.0D, -12.0D);
-        talon.changeControlMode(TalonControlMode.PercentVbus);
-        talon.disableControl(); // needed if switching from auton settings
-    }
-
-    public void setMotionProfileSettings(CANTalon talon)
-    {
-        talon.changeControlMode(TalonControlMode.MotionProfile);
-        talon.setF(0.27053062082237783);
-        talon.setP(0);
-        talon.setI(0);
-        talon.setD(0);
-    }
-
-    public void setMotionProfileSettings()
-    {
-        setMotionProfileSettings(leftTalon1);
-        setMotionProfileSettings(rightTalon0);
-        setMotionProfileSettings(rightTalon1);
-        setMotionProfileSettings(leftTalon0);
-    }
-
-    public void feedTrajectoryPoints(double[][] profile, int totalCnt)
-    {
-        CANTalon.MotionProfileStatus status = new CANTalon.MotionProfileStatus();
-        rightTalon1.getMotionProfileStatus(status);
-        CANTalon.TrajectoryPoint point = new CANTalon.TrajectoryPoint();
-        if (status.hasUnderrun)
-        {
-            Log.warn("We have underrun!");
-            rightTalon1.clearMotionProfileHasUnderrun();
-        }
-        rightTalon1.clearMotionProfileTrajectories();
-        rightTalon0.clearMotionProfileTrajectories();
-        leftTalon0.clearMotionProfileTrajectories();
-        leftTalon1.clearMotionProfileTrajectories();
+	/**
+	 * Set a talon back to teleoperated settings
+	 *
+	 * @param talon the talon in question
+	 */
+	public void setTeleopSettings(CANTalon talon)
+	{
+		talon.configNominalOutputVoltage(0.0D, -0.0D);
+		talon.configPeakOutputVoltage(12.0D, -12.0D);
+		talon.changeControlMode(TalonControlMode.PercentVbus);
+		talon.disableControl(); // needed if switching from auton settings
+	}
 
 
-        for (int i = 0; i < totalCnt; i++)
-        {
-            point.position = profile[i][0];
-            point.velocity = profile[i][1];
-            point.timeDurMs = (int) profile[i][2];
-            point.profileSlotSelect = 0;
-            point.velocityOnly = false;
-            point.zeroPos = (i == 0);
-            point.isLastPoint = (i+1 == totalCnt);
+	/**
+	 * @return the position of the left side of the drivetrain in feet
+	 */
+	public double getEncLeftPosition()
+	{
+		return (leftTalon0.getPosition() * Math.PI * 4) / (1024 * 12);
+	}
 
-            rightTalon1.pushMotionProfileTrajectory(point);
-            rightTalon0.pushMotionProfileTrajectory(point);
-            leftTalon1.pushMotionProfileTrajectory(point);
-            leftTalon0.pushMotionProfileTrajectory(point);
-        }
-    }
+	/**
+	 * @return the position of the right side of the drivetrain in feet
+	 */
+	public double getEncRightPosition()
+	{
+		return (rightTalon1.getPosition() * Math.PI * 4) / (1024 * 12);
+	}
 
-    /**
-     * @return the position of the left side of the drivetrain in feet
-     */
-    public double getEncLeftPosition() { return (leftTalon0.getPosition() * Math.PI *  4)  / (1024 * 12); }
+	/**
+	 * @return the average position between the left and right side of the drivetrain
+	 */
+	public double getAvgPos()
+	{
+		return (getEncRightPosition() + getEncLeftPosition()) / 2;
+	}
 
-    /**
-     * @return the position of the right side of the drivetrain in feet
-     */
-    public double getEncRightPosition() { return (rightTalon1.getPosition() * Math.PI * 4) / (1024 * 12); }
-    
-    /**
-     * @return the average position between the left and right side of the drivetrain
-     */
-    @Deprecated
-    public double getEncAveg() { return (getEncRightPosition() + getEncLeftPosition())/2; }
+	public double turningFactor()
+	{
+		return Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY() - OI.JOYSTICK_DRIVE_RIGHT.getY());
+	}
 
-    public double turningFactor() { return Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY() - OI.JOYSTICK_DRIVE_RIGHT.getY());}
+	public double avgVel()
+	{
+		return Math.abs((leftTalon0.getEncVelocity() + rightTalon1.getEncVelocity()) / 2);
 
-    public double avgVel()
-    {
-        return Math.abs((leftTalon0.getEncVelocity() + rightTalon1.getEncVelocity())/2);
-//        return Math.abs(rightTalon1.getEncVelocity());
-    }
+	}
 
-    @Override
-    protected void initDefaultCommand() { setDefaultCommand(new DriveCommand()); }
+	@Override
+	protected void initDefaultCommand()
+	{
+		setDefaultCommand(new DriveCommand());
+	}
 
-//    private static void debugSpeed(String format, Object... args)
-//    {
-//        Log.debug(String.format(format, args));
-//    }
 
-    private int logCounter = 0;
+	private int logCounter = 0;
 
-    @SuppressWarnings({ "SuspiciousNameCombination", "PointlessBooleanExpression", "ConstantConditions" })
-    private Pair<Double, Double> getSpeedArcade(Pair<Double, Double> out)
-    {
-        // Get the base speed of the robot
-        
-        double yLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
-        double leftSpeed = yLevel;
-        double rightSpeed = yLevel;
+	@SuppressWarnings({"SuspiciousNameCombination", "PointlessBooleanExpression", "ConstantConditions"})
+	private Pair<Double, Double> getSpeedArcade(Pair<Double, Double> out)
+	{
+		// Get the base speed of the robot
 
-        double xLevel = -OI.JOYSTICK_DRIVE_RIGHT.getX();
+		double yLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
+		double leftSpeed = yLevel;
+		double rightSpeed = yLevel;
 
-        // Should invert the left/right to be more intuitive while driving backwards.
-        if(yLevel < 0.0D) { xLevel = -xLevel;}
+		double xLevel = -OI.JOYSTICK_DRIVE_RIGHT.getX();
 
-        if(xLevel > 0.0D) { leftSpeed -= xLevel; }
-        
-        else if(xLevel < 0.0D) { rightSpeed += xLevel; }
+		// Should invert the left/right to be more intuitive while driving backwards.
+		if (yLevel < 0.0D)
+		{
+			xLevel = -xLevel;
+		}
+
+		if (xLevel > 0.0D)
+		{
+			leftSpeed -= xLevel;
+		} else if (xLevel < 0.0D)
+		{
+			rightSpeed += xLevel;
+		}
 
 //        if(logCounter++ % 10 == 0 && false)
 //        {
 //            debugSpeed("X: %d&nY: %d%nL: %d%nR: %d%n%n", yLevel, xLevel, leftSpeed, rightSpeed);
 //        }
 
-        // Sets the speed to 0 if the speed is less than 0.05 or larger than -0.05
-        if(Math.abs(leftSpeed) < 0.05D) { leftSpeed = 0.0D; }
-        
-        if(Math.abs(rightSpeed) < 0.05D) { rightSpeed = 0.0D; }
+		// Sets the speed to 0 if the speed is less than 0.05 or larger than -0.05
+		if (Math.abs(leftSpeed) < 0.05D)
+		{
+			leftSpeed = 0.0D;
+		}
 
-        out.left = leftSpeed;
-        out.right = rightSpeed;
-        return out;
-    }
+		if (Math.abs(rightSpeed) < 0.05D)
+		{
+			rightSpeed = 0.0D;
+		}
 
-    long counter = 0;
-    
-    private Pair<Double, Double> getSpeedArcade() { return getSpeedArcade(SPEED_CONTAINER); }
+		out.left = leftSpeed;
+		out.right = rightSpeed;
+		return out;
+	}
 
-    /**
-     * Used to gradually increase the speed of the robot.
-     *
-     * @param out The object to store the data in
-     * @return the speed of the robot
-     */
-    private Pair<Double, Double> getSpeed(Pair<Double, Double> out)
-    {	
-    	double joystickLevel;
-        // Get the base speed of the robot
-        if(negative) { joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY(); }
-        
-        else { joystickLevel = -OI.JOYSTICK_DRIVE_LEFT.getY(); }
-        
-        // Only increase the speed by a small amount
-        double diff = joystickLevel - lastLeft;
-        if(diff > 0.1D) { joystickLevel = lastLeft + 0.1D; }
-        
-        else if(diff < 0.1D) { joystickLevel = lastLeft - 0.1D; }
-        
-        lastLeft = joystickLevel;
-        out.left = joystickLevel;
-        
-        if(negative) { joystickLevel = -OI.JOYSTICK_DRIVE_LEFT.getY(); }
-        
-        else { joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY(); }
-        
-        diff = joystickLevel - lastRight;
-        if(diff > 0.1D) { joystickLevel = lastRight + 0.1D; }
-        
-        else if(diff < 0.1D) { joystickLevel = lastRight - 0.1D; }
-        
-        lastRight = joystickLevel;
-        out.right = joystickLevel;
-        
-        // Sets the speed to 0 if the speed is less than 0.05 or larger than
-        // -0.05
-        if(Math.abs(out.left) < 0.05D) { out.left = 0.0D; }
-        
-        if(Math.abs(out.right) < 0.05D) { out.right = 0.0D; }
+	long counter = 0;
 
-        return out;
-    }
+	private Pair<Double, Double> getSpeedArcade()
+	{
+		return getSpeedArcade(SPEED_CONTAINER);
+	}
 
-    private Pair<Double, Double> getSpeed() { return getSpeed(SPEED_CONTAINER); }
+	/**
+	 * Used to gradually increase the speed of the robot.
+	 *
+	 * @param out The object to store the data in
+	 * @return the speed of the robot
+	 */
+	private Pair<Double, Double> getSpeed(Pair<Double, Double> out)
+	{
+		double joystickLevel;
 
-    public void drive()
-    {
-        Pair<Double, Double> speed = getSpeed();
+		// Get the output from the appropriate joystick
+		if (negative)
+		{
+			joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
+		} else
+		{
+			joystickLevel = -OI.JOYSTICK_DRIVE_LEFT.getY();
+		}
 
-        //reverse drive
-        if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(1) && !isNegativePressed) { negative = !negative; }
-        
-        isNegativePressed = OI.JOYSTICK_DRIVE_LEFT.getRawButton(1);
-        
-        if (negative) { drive.tankDrive(-speed.left, -speed.right, true); }
-        
-        else { drive.tankDrive(speed.left, speed.right, true); }
-    }
+		// Only increase the speed by a small amount
 
-    private static final double DELAY_TIME = 5.77D + 43902.0D / 9999900.0D;
+		// Check the difference between the current reading and the last reading
+		double diff = joystickLevel - lastLeft;
 
-    /**
-     * Drive the robot. The equation x=-y must be true for the robot to drive straight.
-     * <br>
-     * Make sure to set the motors according to the control mode. In auton, it's position. In teleop, it's percent voltage.
-     * @param x Units for the left side of drivetrain
-     * @param y Units for the right side of drivetrain
-     */
-    public void runMotors(double x, double y) // double z
-    {
-    	leftSpeed = x;
-    	rightSpeed = y;
-        leftTalon0.set(x);
-        leftTalon1.set(x);
-        rightTalon0.set(y);
-        rightTalon1.set(y);
-        // Timer.delay(DELAY_TIME);
-        // Scheduler.getInstance().add(new WaitCommand(DELAY_TIME));
-        // stopDriveS();
-        //SmartDashboard.putNumber("Autonomous", Robot.AUTO.getTimerStraight());
-    }
+		// Adjust the joystick level if the difference is large enough
+		if (diff > 0.1D)
+		{
+			joystickLevel = lastLeft + 0.1D;
+		} else if (diff < 0.1D)
+		{
+			joystickLevel = lastLeft - 0.1D;
+		}
 
-    /**
-     * Stop driving by setting talons to 0
-     */
-    public void stopDriveS()
-    {
-        leftTalon0.set(0);
-        leftTalon1.set(0);
-        rightTalon0.set(0);
-        rightTalon1.set(0);
-    }
+		// Remember our edited joystick output
+		lastLeft = joystickLevel;
+		out.left = joystickLevel;
 
-    /**
-     * Stop driving
-     */
-    public void stop()
-    {
-        lastLeft = 0.0D;
-        lastRight = 0.0D;
-        drive.tankDrive(0.0D, 0.0D);
+		// Repeat that
+		if (negative)
+		{
+			joystickLevel = -OI.JOYSTICK_DRIVE_LEFT.getY();
+		} else
+		{
+			joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
+		}
+
+		diff = joystickLevel - lastRight;
+		if (diff > 0.1D)
+		{
+			joystickLevel = lastRight + 0.1D;
+		} else if (diff < 0.1D)
+		{
+			joystickLevel = lastRight - 0.1D;
+		}
+
+		lastRight = joystickLevel;
+		out.right = joystickLevel;
+
+		// Sets the speed to 0 if the speed is less than 0.05 or larger than
+		// -0.05
+		if (Math.abs(out.left) < 0.05D)
+		{
+			out.left = 0.0D;
+		}
+
+		if (Math.abs(out.right) < 0.05D)
+		{
+			out.right = 0.0D;
+		}
+
+		return out;
+	}
+
+	private Pair<Double, Double> getSpeed()
+	{
+		return getSpeed(SPEED_CONTAINER);
+	}
+
+	public void drive()
+	{
+		Pair<Double, Double> speed = getSpeed();
+
+		//reverse drive
+		if (OI.JOYSTICK_DRIVE_LEFT.getRawButton(1) && !isNegativePressed)
+		{
+			negative = !negative;
+		}
+
+		isNegativePressed = OI.JOYSTICK_DRIVE_LEFT.getRawButton(1);
+
+		if (negative)
+		{
+			drive.tankDrive(-speed.left, -speed.right, true);
+		} else
+		{
+			drive.tankDrive(speed.left, speed.right, true);
+		}
+	}
+
+	private static final double DELAY_TIME = 5.77D + 43902.0D / 9999900.0D;
+
+	/**
+	 * Drive the robot. The equation x=-y must be true for the robot to drive straight.
+	 * <br>
+	 * Make sure to set the motors according to the control mode. In auton, it's position. In teleop, it's percent voltage.
+	 *
+	 * @param x Units for the left side of drivetrain
+	 * @param y Units for the right side of drivetrain
+	 */
+	public void runMotors(double x, double y) // double z
+	{
+		leftSpeed = x;
+		rightSpeed = y;
+		leftTalon0.set(x);
+		leftTalon1.set(x);
+		rightTalon0.set(y);
+		rightTalon1.set(y);
+
+	}
+
+	/**
+	 * Stop driving by setting talons to 0
+	 */
+	public void stopDriveS()
+	{
+		leftTalon0.set(0);
+		leftTalon1.set(0);
+		rightTalon0.set(0);
+		rightTalon1.set(0);
+	}
+
+	/**
+	 * Stop driving
+	 */
+	public void stop()
+	{
+		lastLeft = 0.0D;
+		lastRight = 0.0D;
+		drive.tankDrive(0.0D, 0.0D);
 //        ClimberCommand.setStopped(true);
-        Timer.delay(0.3D);
-    }
+		Timer.delay(0.3D);
+	}
 
-    public void disabledStop()
-    {
-        rightTalon1.enableBrakeMode(true);
-        rightTalon0.enableBrakeMode(true);
-        leftTalon1.enableBrakeMode(true);
-        leftTalon0.enableBrakeMode(true);
-
-        lastLeft = 0.0D;
-        lastRight = 0.0D;
-        drive.tankDrive(0.0D, 0.0D);
+	public void disabledStop()
+	{
+		lastLeft = 0.0D;
+		lastRight = 0.0D;
+		drive.tankDrive(0.0D, 0.0D);
 //        ClimberCommand.setStopped(true);
-        Timer.delay(0.3D);
-    }
+		Timer.delay(0.3D);
+	}
 
-    public enum DriveTypes { DUAL_STICK, ARCADE; }
-
-    @SuppressWarnings("WeakerAccess")
-    public static class Pair<L, R>
-    {
-        public L left;
-        public R right;
-
-        private String nameL;
-        private String nameR;
-
-        public Pair(L left, R right)
-        {
-            this.left = left;
-            this.right = right;
-            this.nameL = left.getClass().getSimpleName();
-            this.nameR = right.getClass().getSimpleName();
-        }
-
-        public Pair() {}
-
-        @Override
-        public String toString()
-        {
-            return new StringBuilder(100 + nameL.length() + nameR.length()).append("Pair<").append(nameL).append(',')
-                                                                           .append(nameR).append("> { \"left\": \"").append(left).append("\", \"right\": \"").append(right)
-                                                                           .append("\" }").toString();
-        }
-
-        @Override
-        public int hashCode() { return left.hashCode() * 13 + (right == null ? 0 : right.hashCode()); }
-
-        @Override
-        public boolean equals(Object o)
-        {
-            if(this == o) { return true; }
-            if(o instanceof Pair)
-            {
-                Pair pair = (Pair) o;
-                return (left != null ? left.equals(pair.left) : pair.left == null)
-                       && (left != null ? left.equals(pair.left) : pair.left == null);
-            }
-            return false;
-        }
-    }
+	public enum DriveTypes
+	{
+		DUAL_STICK, ARCADE;
+	}
 
 }

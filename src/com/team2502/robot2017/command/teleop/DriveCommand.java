@@ -8,7 +8,7 @@ import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import com.team2502.robot2017.subsystem.DriveTrainTransmissionSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import logger.Log;
+import com.team2502.lib.logger.Log;
 
 /**
  * Takes care of all Drivetrain related operations during Teleop, including automatic shifting

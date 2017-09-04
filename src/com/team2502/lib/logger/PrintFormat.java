@@ -1,4 +1,4 @@
-package logger;
+package com.team2502.lib.logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
