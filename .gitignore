@@ -1,6 +1,9 @@
 *.class
 JDK8/
 
+
+TrajectoryLib/
+
 # Package Files #
 # --- IGNORE --- DO NOT PUT *.jar - Breaks Travis CI
 *.war
