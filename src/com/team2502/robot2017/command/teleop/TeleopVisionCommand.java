@@ -19,8 +19,8 @@ public class TeleopVisionCommand extends Command
         dt = Robot.DRIVE_TRAIN;
     }
 
-    @Override
-    protected void execute() { vision.align(dt, -0.2, 0.3, false, false); }
+	@Override
+	protected void execute() { vision.alignWidth(dt, -0.2, 0.3, false, false); }
 
     @Override
     protected boolean isFinished() { return false; }

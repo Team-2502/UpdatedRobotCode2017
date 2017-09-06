@@ -2,6 +2,7 @@ package com.team2502.robot2017.subsystem;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.RobotMap;
+import com.team2502.robot2017.Robot;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -61,8 +62,15 @@ public class DriveTrainTransmissionSubsystem extends Subsystem
      */
     public double fpsToRPM(double fps)
     {
-        return ((fps) * 60 * 12) / (4 * Math.PI);
+        return ((fps) * 180) / (Math.PI);
     }
+
+    /**
+     * @param rpm The number in RPM to convert to feet per second, assuming wheels in 4 inches of diameter
+     *
+     * @return The equivalent feet per second0
+     */
+    public double RPMtofps(double rpm) { return (rpm * Math.PI) / 180; }
 
 
     /**

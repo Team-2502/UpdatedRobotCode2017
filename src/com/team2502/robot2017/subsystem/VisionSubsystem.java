@@ -44,7 +44,7 @@ public class VisionSubsystem extends Subsystem implements PIDSource
      * @param highSpeed The speed that the faster side should go at
      * @param alignOnly Are we aligning only, or are we also going forward if we are perfect?
      */
-    public void align(DriveTrainSubsystem dt, double lowSpeed, double highSpeed, boolean alignOnly, boolean autonomous)
+    public void alignWidth(DriveTrainSubsystem dt, double lowSpeed, double highSpeed, boolean alignOnly, boolean autonomous)
     {
         if(autonomous || OI.JOYSTICK_DRIVE_LEFT.getRawButton(RobotMap.Joystick.Button.VISION_ALIGN))
         {
@@ -71,6 +71,8 @@ public class VisionSubsystem extends Subsystem implements PIDSource
      */
     public double getFPS() { return visionTable.getNumber("fps", 1023); }
 
+    public double getHeight() { return visionTable.getNumber("height", 1023); }
+    
     public void turnOffVisionLight() { visionLight.set(Relay.Value.kOff); }
 
     public void turnOnVisionLight() { visionLight.set(Relay.Value.kOn); }

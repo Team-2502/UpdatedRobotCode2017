@@ -1,0 +1,3 @@
+[submodule "TrajectoryLib"]
+	path = TrajectoryLib
+	url = https://github.com/Team254/TrajectoryLib.git
