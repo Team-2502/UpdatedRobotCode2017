@@ -6,7 +6,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 final class DashboardData
 {
-
     private DashboardData() {}
 
     static void update()

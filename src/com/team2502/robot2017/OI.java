@@ -59,7 +59,6 @@ public final class OI
         DISABLE_AUTOSHIFTING.whenPressed(new DisableAutoShifting());
 
 //        VISION_ALIGN.whileHeld(new TeleopVisionCommand());
-
     }
 
     public static void init() {}

@@ -11,6 +11,7 @@ public class ResetEncodersCommand extends InstantCommand
     /**
      * Command for resetting the encoder values
      */
+
     public ResetEncodersCommand()
     {
         dt = Robot.DRIVE_TRAIN;

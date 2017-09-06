@@ -15,6 +15,7 @@ public class ChangeSpeedFlywheelCommand extends InstantCommand
      *
      * @param isAdd Boolean to indicate whether to increase or decrease the flywheel speed
      */
+
     public ChangeSpeedFlywheelCommand(boolean isAdd)
     {
         requires(Robot.SHOOTER);

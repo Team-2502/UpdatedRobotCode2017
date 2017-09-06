@@ -12,7 +12,6 @@ public class ShootCommand extends TimedCommand
     /**
      * @param runTime Time to run for in seconds.
      */
-
     public ShootCommand(double runTime, boolean both)
     {
         super(runTime);

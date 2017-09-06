@@ -38,10 +38,7 @@ public class DriveCommand extends Command
     }
 
     @Override
-    protected void initialize()
-    {
-        driveTrainSubsystem.setTeleopSettings();
-    }
+    protected void initialize() { driveTrainSubsystem.setTeleopSettings(); }
 
     private boolean shiftedUp = false;
     private static boolean disabledAutoShifting = false;

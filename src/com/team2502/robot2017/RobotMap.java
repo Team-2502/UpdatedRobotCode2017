@@ -2,7 +2,6 @@ package com.team2502.robot2017;
 
 public class RobotMap
 {
-
     private static final int UNDEFINED = -1;
 
     private RobotMap() {}

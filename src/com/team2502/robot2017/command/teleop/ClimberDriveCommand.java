@@ -22,6 +22,4 @@ public class ClimberDriveCommand extends Command
     {
         return false;
     }
-
-
 }

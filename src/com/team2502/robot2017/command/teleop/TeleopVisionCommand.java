@@ -31,5 +31,4 @@ public class TeleopVisionCommand extends Command
 
     @Override
     protected void interrupted() { end(); }
-
 }

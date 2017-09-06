@@ -23,5 +23,4 @@ public class ClimberCommand extends InstantCommand
     {
         climber.runMotors(mode);
     }
-
 }
