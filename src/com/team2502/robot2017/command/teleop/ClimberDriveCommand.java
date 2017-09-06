@@ -6,22 +6,22 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberDriveCommand extends Command
 {
-	public ClimberDriveCommand()
-	{
-		requires(Robot.CLIMBER);
-	}
+    public ClimberDriveCommand()
+    {
+        requires(Robot.CLIMBER);
+    }
 
-	@Override
-	protected void execute()
-	{
-		Robot.CLIMBER.drive();
-	}
+    @Override
+    protected void execute()
+    {
+        Robot.CLIMBER.drive();
+    }
 
-	@Override
-	protected boolean isFinished()
-	{
-		return false;
-	}
+    @Override
+    protected boolean isFinished()
+    {
+        return false;
+    }
 
 
 }

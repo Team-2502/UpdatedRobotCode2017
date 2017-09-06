@@ -8,43 +8,43 @@ import edu.wpi.first.wpilibj.command.Command;
 @Deprecated
 public class DriveTimeCommand extends Command
 {
-	double speedLeft = 0.5;
-	double speedRight = -0.5;
-	final DriveTrainSubsystem dt;
+    double speedLeft = 0.5;
+    double speedRight = -0.5;
+    final DriveTrainSubsystem dt;
 
-	public DriveTimeCommand(double runtime)
-	{
-		super(runtime);
-		requires(Robot.DRIVE_TRAIN);
-		dt = Robot.DRIVE_TRAIN;
+    public DriveTimeCommand(double runtime)
+    {
+        super(runtime);
+        requires(Robot.DRIVE_TRAIN);
+        dt = Robot.DRIVE_TRAIN;
 
-	}
+    }
 
-	public DriveTimeCommand(double runtime, double speed)
-	{
-		this(runtime, speed, -speed);
-	}
+    public DriveTimeCommand(double runtime, double speed)
+    {
+        this(runtime, speed, -speed);
+    }
 
-	public DriveTimeCommand(double runtime, double speedLeft, double speedRight)
-	{
-		this(runtime);
-		this.speedLeft = speedLeft;
-		this.speedRight = speedRight;
+    public DriveTimeCommand(double runtime, double speedLeft, double speedRight)
+    {
+        this(runtime);
+        this.speedLeft = speedLeft;
+        this.speedRight = speedRight;
 
-	}
+    }
 
-	@Override
-	protected void execute()
-	{
-		dt.runMotors(speedLeft, speedRight);
-	}
+    @Override
+    protected void execute()
+    {
+        dt.runMotors(speedLeft, speedRight);
+    }
 
-	@Override
-	protected boolean isFinished()
-	{
-		return isTimedOut();
-	}
+    @Override
+    protected boolean isFinished()
+    {
+        return isTimedOut();
+    }
 
-	@Override
-	protected void end() { dt.stopDriveS(); }
+    @Override
+    protected void end() { dt.stopDriveS(); }
 }

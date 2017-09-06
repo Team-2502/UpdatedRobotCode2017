@@ -28,7 +28,6 @@ public class DriveCommand extends Command
     private final DriveTrainTransmissionSubsystem transmission;
     private final AHRS navx;
 
-
     public DriveCommand()
     {
         requires(Robot.DRIVE_TRAIN);
@@ -112,7 +111,6 @@ public class DriveCommand extends Command
 
             }
         }
-
     }
 
     @Override

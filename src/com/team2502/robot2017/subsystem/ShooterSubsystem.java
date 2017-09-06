@@ -91,6 +91,7 @@ public class ShooterSubsystem extends Subsystem
         leftFlywheelTalonTop.setI(0.0);
         leftFlywheelTalonTop.setD(0.0);
 
+
         // Set banebot talon and encoder settings
         banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
         banebotFeeder.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
@@ -317,6 +318,7 @@ public class ShooterSubsystem extends Subsystem
         shooterMode = false;
 
         setSpeedOnAllFlyWheelMotors(0.0D);
+
         colsonFeeder.set(0.0D);
         banebotFeeder.set(0.0D);
         agitator.set(0.0D);

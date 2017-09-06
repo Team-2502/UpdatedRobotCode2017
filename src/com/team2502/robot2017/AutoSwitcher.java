@@ -30,6 +30,7 @@ class AutoSwitcher
         TESTAUTO("Boiler Test Vision", BoilerDistCommand.class),
         TESTTRAJECTORY("Test Trajectory", TrajectoryTest.class);
 
+
         private Class<? extends Command> autoCommand;
         private String name;
 
