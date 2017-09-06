@@ -2,6 +2,8 @@ package com.team2502.robot2017;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 final class DashboardData
 {
 
@@ -58,6 +60,7 @@ final class DashboardData
         SmartDashboard.putBoolean("DT: High gear?", Robot.DRIVE_TRAIN_GEAR_SWITCH.highGear);
         SmartDashboard.putNumber("DT: Acceleration in G's", accel);
         SmartDashboard.putNumber("DT: Max acceleration experienced:", maxaccel);
+
 
     }
 

@@ -34,10 +34,12 @@ public class PrintFormat
 
     protected class Timer
     {
-        protected long[] times;
+        protected long[] times; /* [ milli, seconds, minutes, hours, days ] */
         protected long[] lastTimes;
         protected String[] stringTimes;
         protected final long startTime;
+
+        static final boolean USE_SYSTEM_CLOCK = false;
 
         private Timer()
         {
@@ -49,12 +51,12 @@ public class PrintFormat
 
         protected String formatTime()
         {
-            StringBuilder out = new StringBuilder();
+            StringBuilder out = new StringBuilder(format.length());
             for(int i = 0; i < timeOrganizer.length; ++i)
             {
                 if(timeOrganizer[i] == 0) { continue; }
                 if(times[i] == lastTimes[i]) { out.append(stringTimes[i]); }
-                else { out.append(String.format(new StringBuilder("%0").append(timeOrganizer[i]).append('d').toString(), times[i])); }
+                else { out.append(stringTimes[i] = String.format(new StringBuilder(3 + timeOrganizer[i]).append("%0").append(timeOrganizer[i]).append('d').toString(), times[i])); }
                 out.append(':');
             }
             return out.toString().substring(0, out.length() - 1);
@@ -63,12 +65,13 @@ public class PrintFormat
         protected String getTime()
         {
             times[0] = System.currentTimeMillis() - startTime;
-            long thousand = times[2] / 1000;
+            long totalSeconds = times[0] / 1000;
             times[0] %= 1000;
-            times[1] = thousand % 60;
-            times[2] = (thousand / 60) % 60;
-            times[3] = (thousand / 3600) % 24;
-            times[4] = thousand / 86400;
+            times[1] = totalSeconds % 60;
+            times[2] = (totalSeconds / 60) % 60;
+            times[3] = (totalSeconds / 3600) % 24;
+            /* The robot can't run this long, if it is needed uncomment it. */
+//            times[4] = totalSeconds / 86400;
             return formatTime();
         }
     }

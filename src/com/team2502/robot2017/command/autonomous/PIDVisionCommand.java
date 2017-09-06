@@ -28,7 +28,7 @@ public class PIDVisionCommand extends Command implements PIDOutput
         vision = Robot.VISION;
         dt = Robot.DRIVE_TRAIN;
 
-        alignController = new PIDController(0.03, 0.00025, 0, 0, vision, this, 1000/7);
+        alignController = new PIDController(0.03, 0.00025, 0, 0, vision, this, 1000 / 7);
 
         alignController.setInputRange(-40.0f, 40.0f);
         alignController.setOutputRange(-1.0, 1.0);
@@ -61,7 +61,8 @@ public class PIDVisionCommand extends Command implements PIDOutput
     }
 
     @Override
-    protected boolean isFinished() {
+    protected boolean isFinished()
+    {
         return isTimedOut() || (onTarget && System.currentTimeMillis() - alignedTime >= 500);
     }
 
@@ -72,7 +73,8 @@ public class PIDVisionCommand extends Command implements PIDOutput
     protected void interrupted() { end(); }
 
     @Override
-    public void pidWrite(double output) {
+    public void pidWrite(double output)
+    {
         turnRate = output;
     }
 }

@@ -1,11 +1,11 @@
 package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
+
 import com.team2502.robot2017.command.teleop.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import com.team2502.robot2017.subsystem.ClimberSubsystem.ClimberMode;
 
 public final class OI
 {
@@ -35,7 +35,6 @@ public final class OI
 
     private static final Button CLIMBER = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.CLIMBER);
 
-
     static
     {
 //        SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
@@ -60,7 +59,6 @@ public final class OI
         DISABLE_AUTOSHIFTING.whenPressed(new DisableAutoShifting());
 
 //        VISION_ALIGN.whileHeld(new TeleopVisionCommand());
-
 
     }
 

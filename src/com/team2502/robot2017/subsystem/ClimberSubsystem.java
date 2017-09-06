@@ -3,13 +3,13 @@ package com.team2502.robot2017.subsystem;
 import com.ctre.CANTalon;
 import com.team2502.robot2017.OI;
 import com.team2502.robot2017.RobotMap;
-
 import com.team2502.robot2017.command.teleop.ClimberDriveCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ClimberSubsystem extends Subsystem
 {
     public boolean isBraked = false;
+
     public final CANTalon climberLeft;
     public final CANTalon climberRight;
 	
@@ -18,8 +18,10 @@ public class ClimberSubsystem extends Subsystem
      */
     public ClimberSubsystem()
     {
+
     	climberLeft = new CANTalon(RobotMap.Motor.CLIMBER_LEFT);
     	climberRight = new CANTalon(RobotMap.Motor.CLIMBER_RIGHT);
+
     }
 
     /**

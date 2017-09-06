@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import logger.Log;
 
-public final class Robot extends IterativeRobot 
+public final class Robot extends IterativeRobot
 {
 	// Makes all the stuff
 	public static DriveTrainSubsystem DRIVE_TRAIN;
