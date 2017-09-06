@@ -10,7 +10,6 @@ import com.team2502.robot2017.command.teleop.DriveCommand;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import logger.Log;
 
 /**
  * Example Implementation, Many changes needed.
@@ -94,18 +93,16 @@ public class DriveTrainSubsystem extends Subsystem
         talon.enableControl();
     }
 
-
-	/**
-	 * Set all talons into telepo
-	 */
-	public void setTeleopSettings()
-	{
-		setTeleopSettings(leftTalon0);
-		setTeleopSettings(leftTalon1);
-		setTeleopSettings(rightTalon0);
-		setTeleopSettings(rightTalon1);
-
-	}
+    /**
+     * Set all talons into telepo
+     */
+    public void setTeleopSettings()
+    {
+        setTeleopSettings(leftTalon0);
+        setTeleopSettings(leftTalon1);
+        setTeleopSettings(rightTalon0);
+        setTeleopSettings(rightTalon1);
+    }
 
     /**
      * Set a talon back to teleoperated settings
@@ -123,78 +120,30 @@ public class DriveTrainSubsystem extends Subsystem
         talon.disableControl(); // needed if switching from auton settings
     }
 
-    public void setMotionProfileSettings(CANTalon talon)
-    {
-        talon.changeControlMode(TalonControlMode.MotionProfile);
-        talon.setF(0.27053062082237783);
-        talon.setP(0);
-        talon.setI(0);
-        talon.setD(0);
-    }
-
-    public void setMotionProfileSettings()
-    {
-        setMotionProfileSettings(leftTalon1);
-        setMotionProfileSettings(rightTalon0);
-        setMotionProfileSettings(rightTalon1);
-        setMotionProfileSettings(leftTalon0);
-    }
-
-    public void feedTrajectoryPoints(double[][] profile, int totalCnt)
-    {
-        CANTalon.MotionProfileStatus status = new CANTalon.MotionProfileStatus();
-        rightTalon1.getMotionProfileStatus(status);
-        CANTalon.TrajectoryPoint point = new CANTalon.TrajectoryPoint();
-        if (status.hasUnderrun)
-        {
-            Log.warn("We have underrun!");
-            rightTalon1.clearMotionProfileHasUnderrun();
-        }
-        rightTalon1.clearMotionProfileTrajectories();
-        rightTalon0.clearMotionProfileTrajectories();
-        leftTalon0.clearMotionProfileTrajectories();
-        leftTalon1.clearMotionProfileTrajectories();
-
-
-        for (int i = 0; i < totalCnt; i++)
-        {
-            point.position = profile[i][0];
-            point.velocity = profile[i][1];
-            point.timeDurMs = (int) profile[i][2];
-            point.profileSlotSelect = 0;
-            point.velocityOnly = false;
-            point.zeroPos = (i == 0);
-            point.isLastPoint = (i+1 == totalCnt);
-
-            rightTalon1.pushMotionProfileTrajectory(point);
-            rightTalon0.pushMotionProfileTrajectory(point);
-            leftTalon1.pushMotionProfileTrajectory(point);
-            leftTalon0.pushMotionProfileTrajectory(point);
-        }
-    }
+    /**
+     * @return the position of the left side of the drivetrain inches
+     */
+    @Deprecated
+    public double getEncLeftPosition() { return leftTalon0.getPosition(); }
 
     /**
-     * @return the position of the left side of the drivetrain in feet
+     * @return the position of the right side of the drivetrain in inches
      */
-    public double getEncLeftPosition() { return (leftTalon0.getPosition() * Math.PI *  4)  / (1024 * 12); }
-
-    /**
-     * @return the position of the right side of the drivetrain in feet
-     */
-    public double getEncRightPosition() { return (rightTalon1.getPosition() * Math.PI * 4) / (1024 * 12); }
+    @Deprecated
+    public double getEncRightPosition() { return rightTalon1.getPosition() / 1024; }
 
     /**
      * @return the average position between the left and right side of the drivetrain
      */
     @Deprecated
-    public double getEncAveg() { return (getEncRightPosition() + getEncLeftPosition())/2; }
+    public double getEncAveg() { return (getEncRightPosition() + getEncLeftPosition()) / 2; }
 
     public double turningFactor() { return Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY() - OI.JOYSTICK_DRIVE_RIGHT.getY());}
 
     public double avgVel()
     {
-        return Math.abs((leftTalon0.getEncVelocity() + rightTalon1.getEncVelocity())/2);
-//        return Math.abs(rightTalon1.getEncVelocity());
+//        return (leftTalon0.getEncVelocity() + rightTalon0.getEncVelocity())/2;
+        return Math.abs(rightTalon1.getEncVelocity());
     }
 
     @Override
@@ -353,22 +302,10 @@ public class DriveTrainSubsystem extends Subsystem
         Timer.delay(0.3D);
     }
 
-    public void disabledStop()
+    public enum DriveTypes
     {
-        rightTalon1.enableBrakeMode(true);
-        rightTalon0.enableBrakeMode(true);
-        leftTalon1.enableBrakeMode(true);
-        leftTalon0.enableBrakeMode(true);
-
-        lastLeft = 0.0D;
-        lastRight = 0.0D;
-        drive.tankDrive(0.0D, 0.0D);
-//        ClimberCommand.setStopped(true);
-        Timer.delay(0.3D);
+        DUAL_STICK, ARCADE
     }
-
-    public enum DriveTypes { DUAL_STICK, ARCADE; }
-
 
     @SuppressWarnings("WeakerAccess")
     public static class Pair<L, R>
