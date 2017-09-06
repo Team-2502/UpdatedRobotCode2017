@@ -14,10 +14,10 @@ public class PressureSensorSubsystem extends Subsystem
     @Override
     protected void initDefaultCommand() {}
 
-	/**
-	 * Calculates the current pressure based on an algorithm.
-	 *
-	 * @return Current Pressure
-	 */
+    /**
+     * Calculates the current pressure based on a math equation.
+     *
+     * @return Current Pressure
+     */
     public double getPressure() { return (250.0D * (pressureSensor.getAverageVoltage() / INPUT_VOLTAGE)) - 25.0D; }
 }

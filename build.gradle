@@ -1,32 +1,15 @@
-//buildscript {
-//  repositories {
-//  	mavenCentral()
-//  	maven {
-//  		name = "GradleRIO"
-//  		url = "http://dev.imjac.in/maven"
-//  	}
-//
-//  	flatDir name: 'navxDir', dirs: "${System.env.HOME}/wpilib/user/java/lib"
-//
-//  }
-//  dependencies {
-//    classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '4.4.3'	    //+ for latest version		//Change this line if you wish to Update GradleRIO
-//
-//  }
-//}
-
 plugins {
     id "java"
     id "eclipse"
     id "idea"
-    id "jaci.openrio.gradle.GradleRIO" version "2017.1.2"
+    id "jaci.openrio.gradle.GradleRIO" version "2017.2.3"
 }
 
 frc {
     team = "2502"
     robotClass = "com.team2502.robot2017.Robot"     //The class for the main Robot Class. Used in manifest
     //Your FRC team number (e.g. 5333 for team 'Can't C#', or 47 for Chief Delphi)
-    rioIP = "10.25.2.2"                             //Uncomment to specify the IP address of the RIO
+//    rioIP = "10.25.2.37"                             //Uncomment to specify the IP address of the RIO
 }
 
 repositories {

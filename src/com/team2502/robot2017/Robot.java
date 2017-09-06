@@ -7,8 +7,9 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import logger.Log;
 
-public final class Robot extends IterativeRobot 
+public final class Robot extends IterativeRobot
 {
 	// Makes all the stuff
 	public static DriveTrainSubsystem DRIVE_TRAIN;
@@ -19,11 +20,13 @@ public final class Robot extends IterativeRobot
 	public static ActiveIntakeSubsystem ACTIVE;
 	public static DriveTrainTransmissionSubsystem DRIVE_TRAIN_GEAR_SWITCH;
 	public static ClimberSubsystem CLIMBER;
-	public static AutoSwitcherSubsystem AUTOSWITCHER;
+	public static HopperSubsystem HOPPER;
+
+	public static long SHIFTED;
 
 	// NavX Subsystem
-	public static final AHRS NAVX = new AHRS(SPI.Port.kMXP);
-	 
+	public static AHRS NAVX;
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -31,6 +34,7 @@ public final class Robot extends IterativeRobot
 
 	public void robotInit()
 	{
+		Log.createLogger();
 		DRIVE_TRAIN = new DriveTrainSubsystem();
 		DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
 		PRESSURE_SENSOR = new PressureSensorSubsystem();
@@ -39,11 +43,11 @@ public final class Robot extends IterativeRobot
 		SHOOTER = new ShooterSubsystem();
 		ACTIVE = new ActiveIntakeSubsystem();
 		CLIMBER = new ClimberSubsystem();
-		AUTOSWITCHER = new AutoSwitcherSubsystem();
+		HOPPER = new HopperSubsystem();
+		NAVX = new AHRS(SPI.Port.kMXP);
 		
-		AutoSwitcherSubsystem.putToSmartDashboard();
-
-		Robot.CLIMBER.setBrake(true); // when the climber is out the brake is off
+		AutoSwitcher.putToSmartDashboard();
+		
 		DashboardData.setup();
 		OI.init();
 		
@@ -61,7 +65,7 @@ public final class Robot extends IterativeRobot
 	{
 		Scheduler.getInstance().run();
 		DashboardData.update();
-		DRIVE_TRAIN.stop();
+		DRIVE_TRAIN.disabledStop();
 	}
 
 	/**
@@ -77,8 +81,8 @@ public final class Robot extends IterativeRobot
 	 */
 	public void autonomousInit() 
 	{
-//		Scheduler.getInstance().add(new GearAutoCenter());
-		Scheduler.getInstance().add(AutoSwitcherSubsystem.getAutoInstance());
+		Scheduler.getInstance().add(AutoSwitcher.getAutoInstance());
+		NAVX.reset();
 		VISION.turnOnVisionLight();
 	}
 

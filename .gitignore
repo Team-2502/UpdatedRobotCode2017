@@ -1,6 +1,9 @@
 *.class
 JDK8/
 
+
+TrajectoryLib/
+
 # Package Files #
 # --- IGNORE --- DO NOT PUT *.jar - Breaks Travis CI
 *.war
@@ -36,3 +39,4 @@ deploy.sh
 ## Deploy artifact
 dist/FRCUserProgram.jar
 dist/
+/out/
