@@ -76,7 +76,7 @@ public class EncoderDrive extends Command
         {
             return (Math.abs(revLeftR) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR
                     && Math.abs(revLeftL) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR)
-                    && (System.currentTimeMillis() - onTargetStartTime >= RobotMap.Motor.TIME_TO_STOP);
+                   && (System.currentTimeMillis() - onTargetStartTime >= RobotMap.Motor.TIME_TO_STOP);
         }
 
     }
