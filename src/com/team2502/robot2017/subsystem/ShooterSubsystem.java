@@ -20,7 +20,7 @@ public class ShooterSubsystem extends Subsystem
     private final CANTalon banebotFeeder;
     private final CANTalon agitator;
 
-    double targetSpeedFlywheel = 4000;
+    double targetSpeedFlywheel = 3900;
     double autoTargetSpeed = targetSpeedFlywheel + 50;
     double agitatorSpeed = 1;
     double colsonSpeed = 1;

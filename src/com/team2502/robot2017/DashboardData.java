@@ -2,6 +2,8 @@ package com.team2502.robot2017;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 final class DashboardData
 {
 
@@ -33,28 +35,16 @@ final class DashboardData
         SmartDashboard.putNumber("FEED: Banebot Target Speed", Robot.SHOOTER.getBanebotTargetSpeed());
     }
 
-    static double maxaccel = 0D;
-    static double maxspeed = 0D;
     private static void updateDriveTrain()
     {
-        double speed = Robot.DRIVE_TRAIN.rightTalon1.getEncVelocity();
-        double accel = Robot.NAVX.getRawAccelY();
-
-        if(accel > maxaccel) { maxaccel = accel; }
-        else if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(10)) { maxaccel = 0; /*reset*/ }
-        if(speed > maxspeed) { maxspeed = speed; }
-        else if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(10)) { maxspeed = 0; }
-
         SmartDashboard.putNumber("DT: leftTalon1", Robot.DRIVE_TRAIN.leftTalon1.getPosition());
         SmartDashboard.putNumber("DT: rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
-        SmartDashboard.putBoolean("Drive Team will win us the match", true); // if this line gets changed you will be kicked off the github no warning
+        SmartDashboard.putBoolean("Drive Team will win us the match", ThreadLocalRandom.current().nextBoolean());
 
-        SmartDashboard.putNumber("DT: Average Speed", speed);
-        SmartDashboard.putNumber("DT: Max Speed", maxspeed);
+        SmartDashboard.putNumber("DT: Average Speed", Robot.DRIVE_TRAIN.avgVel());
         SmartDashboard.putNumber("DT: Turning Factor", Robot.DRIVE_TRAIN.turningFactor());
         SmartDashboard.putBoolean("DT: High gear?", Robot.DRIVE_TRAIN_GEAR_SWITCH.highGear);
-        SmartDashboard.putNumber("DT: Acceleration in G's", accel);
-        SmartDashboard.putNumber("DT: Max acceleration experienced:", maxaccel);
+        SmartDashboard.putNumber("DT: Acceleration in G's", Robot.NAVX.getRawAccelY());
 
     }
 
@@ -70,22 +60,10 @@ final class DashboardData
     {
         if(Enabler.PRESSURE.enabler[0])
         {
-            if(Enabler.PRESSURE.enabler[1])
-            {
-                SmartDashboard.putNumber("Current Tank Pressure", Robot.PRESSURE_SENSOR.getPressure());
-            }
-            if(Enabler.PRESSURE.enabler[2])
-            {
-                SmartDashboard.putBoolean("Is Compressor Enabled", Robot.COMPRESSOR.enabled());
-            }
-            if(Enabler.PRESSURE.enabler[3])
-            {
-                SmartDashboard.putBoolean("Is Compressor Low", Robot.COMPRESSOR.getPressureSwitchValue());
-            }
-            if(Enabler.PRESSURE.enabler[4])
-            {
-                SmartDashboard.putNumber("Current Air Compression Rate", Robot.COMPRESSOR.getCompressorCurrent());
-            }
+            if(Enabler.PRESSURE.enabler[1]) { SmartDashboard.putNumber("Current Tank Pressure", Robot.PRESSURE_SENSOR.getPressure()); }
+            if(Enabler.PRESSURE.enabler[2]) { SmartDashboard.putBoolean("Is Compressor Enabled", Robot.COMPRESSOR.enabled()); }
+            if(Enabler.PRESSURE.enabler[3]) { SmartDashboard.putBoolean("Is Compressor Low", Robot.COMPRESSOR.getPressureSwitchValue()); }
+            if(Enabler.PRESSURE.enabler[4]) { SmartDashboard.putNumber("Current Air Compression Rate", Robot.COMPRESSOR.getCompressorCurrent()); }
         }
     }
 

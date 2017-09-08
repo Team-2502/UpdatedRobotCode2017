@@ -15,7 +15,7 @@ public class ShootCommand extends TimedCommand
 
     public ShootCommand(double runTime, boolean both)
     {
-    	super(runTime);
+        super(runTime);
         requires(Robot.SHOOTER);
         this.shooterSubsystem = Robot.SHOOTER;
         this.both = both;
@@ -24,8 +24,8 @@ public class ShootCommand extends TimedCommand
     @Override
     protected void execute()
     {
-    	if(both) { shooterSubsystem.feed(); }
-    	shooterSubsystem.turnOnFlywheel();
+        if(both) { shooterSubsystem.feed(); }
+        shooterSubsystem.turnOnFlywheel();
     }
 
     @Override
