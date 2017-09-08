@@ -20,7 +20,7 @@ public class ShooterSubsystem extends Subsystem
     private final CANTalon banebotFeeder;
     private final CANTalon agitator;
 
-    double targetSpeedFlywheel = 1650;
+    double targetSpeedFlywheel = 4000;
     double autoTargetSpeed = targetSpeedFlywheel + 50;
     double agitatorSpeed = 1;
     double colsonSpeed = 1;
@@ -66,9 +66,9 @@ public class ShooterSubsystem extends Subsystem
         leftFlywheelTalonBottom.set(RobotMap.Motor.FLYWHEEL_TALON_0);
         rightFlywheelTalonBottom.set(RobotMap.Motor.FLYWHEEL_TALON_0);
 //
-//        leftFlywheelTalonTop.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-//        leftFlywheelTalonTop.configEncoderCodesPerRev(256);
-//        leftFlywheelTalonTop.reverseSensor(false);
+        leftFlywheelTalonTop.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+        leftFlywheelTalonTop.configEncoderCodesPerRev(256);
+        leftFlywheelTalonTop.reverseSensor(false);
 
         // Configure min and max voltages
         leftFlywheelTalonTop.configNominalOutputVoltage(0.0D, -0.0D);
@@ -178,8 +178,8 @@ public class ShooterSubsystem extends Subsystem
         rightFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -2.0D);
 
         leftFlywheelTalonTop.setProfile(0);
-        leftFlywheelTalonTop.setF(0.21765900);
-        leftFlywheelTalonTop.setP(1.71312500);
+        leftFlywheelTalonTop.setF(0);
+        leftFlywheelTalonTop.setP(0.5);
         leftFlywheelTalonTop.setI(0.0);
         leftFlywheelTalonTop.setD(0.0);
         leftFlywheelTalonTop.set(targetSpeedFlywheel);
@@ -274,7 +274,7 @@ public class ShooterSubsystem extends Subsystem
     public void flywheelDrive()
     {
         // lets us tell the flywheel go a certain RPM
-        leftFlywheelTalonTop.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+        leftFlywheelTalonTop.changeControlMode(CANTalon.TalonControlMode.Speed);
 
         rightFlywheelTalonTop.changeControlMode(follower);
         leftFlywheelTalonBottom.changeControlMode(follower);
@@ -286,7 +286,7 @@ public class ShooterSubsystem extends Subsystem
         if(OI.JOYSTICK_FUNCTION.getRawButton(5) && !isTriggerPressed) { shooterMode = !shooterMode; }
         isTriggerPressed = OI.JOYSTICK_FUNCTION.getRawButton(5);
 
-        if(shooterMode) { setSpeedOnAllFlyWheelMotors(0.55); }
+        if(shooterMode) { setSpeedOnAllFlyWheelMotors(targetSpeedFlywheel); }
 
         else { setSpeedOnAllFlyWheelMotors(0); }
 
