@@ -1,13 +1,10 @@
 package com.team2502.robot2017.command.autonomous;
 
-import com.team2502.robot2017.RobotMap;
-import edu.wpi.first.wpilibj.command.Command;
 import com.team2502.robot2017.Robot;
+import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.PIDController;
-
-import logger.Log;
 
 public class EncoderDrive extends Command
 {
@@ -79,7 +76,7 @@ public class EncoderDrive extends Command
         {
             return (Math.abs(revLeftR) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR
                     && Math.abs(revLeftL) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR)
-                    && (System.currentTimeMillis() - onTargetStartTime >= RobotMap.Motor.TIME_TO_STOP);
+                   && (System.currentTimeMillis() - onTargetStartTime >= RobotMap.Motor.TIME_TO_STOP);
         }
 
     }
