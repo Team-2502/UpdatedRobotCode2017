@@ -18,14 +18,26 @@ public class ActiveCommand extends Command
     }
 
     @Override
-    protected void execute() { activeIntakeSubsystem.activeDrive(); }
+    protected void execute()
+    {
+        activeIntakeSubsystem.activeDrive();
+    }
 
     @Override
-    protected boolean isFinished() { return false; }
+    protected boolean isFinished()
+    {
+        return false;
+    }
 
     @Override
-    protected void end() { activeIntakeSubsystem.stop(); }
+    protected void end()
+    {
+        activeIntakeSubsystem.stop();
+    }
 
     @Override
-    protected void interrupted() { end(); }
+    protected void interrupted()
+    {
+        end();
+    }
 }

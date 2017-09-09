@@ -1,7 +1,7 @@
 package com.team2502.robot2017.subsystem;
 
-import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.Robot;
+import com.team2502.robot2017.RobotMap;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -25,7 +25,9 @@ public class DriveTrainTransmissionSubsystem extends Subsystem
     }
 
     @Override
-    protected void initDefaultCommand() {}
+    protected void initDefaultCommand()
+    {
+    }
 
     /**
      * Switch the gear from its current state
@@ -39,7 +41,10 @@ public class DriveTrainTransmissionSubsystem extends Subsystem
     /**
      * @return if we are in high gear
      */
-    public boolean getGear() { return highGear; }
+    public boolean getGear()
+    {
+        return highGear;
+    }
 
     /**
      * Set the transmission to a specific high gear or low gear
@@ -48,7 +53,7 @@ public class DriveTrainTransmissionSubsystem extends Subsystem
      */
     public void setGear(boolean highGear)
     {
-        if(this.highGear != highGear)
+        if (this.highGear != highGear)
         {
             Robot.SHIFTED = System.currentTimeMillis();
             switcher.set(this.highGear = highGear);
@@ -57,7 +62,6 @@ public class DriveTrainTransmissionSubsystem extends Subsystem
 
     /**
      * @param fps The number in feet per second to convert to RPM given wheels of 4 inches in diameter
-     *
      * @return The equivalent RPM
      */
     public double fpsToRPM(double fps)
@@ -67,24 +71,30 @@ public class DriveTrainTransmissionSubsystem extends Subsystem
 
     /**
      * @param rpm The number in RPM to convert to feet per second, assuming wheels in 4 inches of diameter
-     *
      * @return The equivalent feet per second0
      */
-    public double RPMtofps(double rpm) { return (rpm * Math.PI) / 180; }
+    public double RPMtofps(double rpm)
+    {
+        return (rpm * Math.PI) / 180;
+    }
 
 
     /**
      * @param x A number
-     *
      * @return The sign of the number
      */
-    public double sign(double x) { return Math.abs(x) / x; }
+    public double sign(double x)
+    {
+        return Math.abs(x) / x;
+    }
 
     /**
      * @param x A number
      * @param y Another number
-     *
      * @return If the numbers have the same sign
      */
-    public boolean signsame(double x, double y) { return sign(x) == sign(y); }
+    public boolean signsame(double x, double y)
+    {
+        return sign(x) == sign(y);
+    }
 }

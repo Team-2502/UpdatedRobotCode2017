@@ -10,7 +10,7 @@ public class RunMultipleMotors extends CommandGroup
 {
     public RunMultipleMotors()
     {
-        for(int id = 0; id <= 14; id++)
+        for (int id = 0; id <= 14; id++)
         {
             addSequential(new RunAMotor(id));
             addSequential(new WaitCommand(5));

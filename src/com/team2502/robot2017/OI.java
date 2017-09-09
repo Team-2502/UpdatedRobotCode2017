@@ -1,11 +1,10 @@
 package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
-import com.team2502.robot2017.command.teleop.*;
+import com.team2502.robot2017.command.teleop.SwitchHopperCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import com.team2502.robot2017.subsystem.ClimberSubsystem.ClimberMode;
 
 public final class OI
 {
@@ -64,19 +63,22 @@ public final class OI
 
     }
 
-    public static void init() {}
+    private OI()
+    {
+    }
+
+    public static void init()
+    {
+    }
 
     public static boolean joysThreshold(double threshold, boolean above)
     {
-        if(above)
+        if (above)
         {
             return Math.abs(OI.JOYSTICK_DRIVE_RIGHT.getY()) > threshold && Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY()) > threshold;
-        }
-        else
+        } else
         {
             return Math.abs(OI.JOYSTICK_DRIVE_RIGHT.getY()) < threshold && Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY()) < threshold;
         }
     }
-
-    private OI() {}
 }

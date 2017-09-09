@@ -19,7 +19,9 @@ public class HopperSubsystem extends Subsystem
         out = false;
     }
 
-    protected void initDefaultCommand() {}
+    protected void initDefaultCommand()
+    {
+    }
 
     /**
      * Switch the hopper from its current state
@@ -31,16 +33,16 @@ public class HopperSubsystem extends Subsystem
 
     /**
      * Sets hopper to either in or out
+     *
      * @param out Do you want it to be extended?
      */
     public void setHopper(boolean out)
     {
-        if(this.out != out)
+        if (this.out != out)
         {
             hopper.set(this.out = out);
         }
     }
-
 
 
 }

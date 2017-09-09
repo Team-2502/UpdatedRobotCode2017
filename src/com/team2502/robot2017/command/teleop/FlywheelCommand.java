@@ -2,7 +2,6 @@ package com.team2502.robot2017.command.teleop;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.ShooterSubsystem;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class FlywheelCommand extends Command
@@ -24,14 +23,26 @@ public class FlywheelCommand extends Command
     }
 
     @Override
-    protected void execute() { shooterSubsystem.flywheelDrive(); }
+    protected void execute()
+    {
+        shooterSubsystem.flywheelDrive();
+    }
 
     @Override
-    protected boolean isFinished() { return false; }
+    protected boolean isFinished()
+    {
+        return false;
+    }
 
     @Override
-    protected void end() { shooterSubsystem.stop(); }
+    protected void end()
+    {
+        shooterSubsystem.stop();
+    }
 
     @Override
-    protected void interrupted() { end(); }
+    protected void interrupted()
+    {
+        end();
+    }
 }

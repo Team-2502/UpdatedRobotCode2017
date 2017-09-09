@@ -4,7 +4,9 @@ public class RobotMap
 {
     private static final int UNDEFINED = -1;
 
-    private RobotMap() {}
+    private RobotMap()
+    {
+    }
 
     public static final class Joystick
     {
@@ -12,7 +14,9 @@ public class RobotMap
         public static final int JOYSTICK_DRIVE_RIGHT = 0;
         public static final int JOYSTICK_FUNCTION = 2;
 
-        private Joystick() {}
+        private Joystick()
+        {
+        }
 
         public static final class Button
         {
@@ -21,7 +25,7 @@ public class RobotMap
             public static final int SHOOTER_TOGGLE = 5;
             public static final int VISION_ALIGN = 3;
 
-            public static final int CLIMBER =  8;
+            public static final int CLIMBER = 8;
 
             public static final int SHOOTER = 1;
             public static final int RESET_ENC_POS = 9; // temporary and only exists for auton development
@@ -37,7 +41,9 @@ public class RobotMap
             public static final int SUB_FLYWHEEL_SPEED = 9;
 
 
-            private Button() {}
+            private Button()
+            {
+            }
         }
     }
 
@@ -46,13 +52,15 @@ public class RobotMap
         public static final int PRESSURE_SENSOR = 0;
         public static final int DISTANCE_SENSOR = 1;
 
-        private Electrical() {}
+        private Electrical()
+        {
+        }
     }
 
     public static final class Motor
     {
 
-    	public static final int LEFT_TALON_0 = 4;
+        public static final int LEFT_TALON_0 = 4;
         public static final int LEFT_TALON_1 = 12;
         public static final int RIGHT_TALON_0 = 8;
         public static final int RIGHT_TALON_1 = 7;
@@ -64,22 +72,24 @@ public class RobotMap
         public static final int FEEDER_TALON_1 = 13; //banebot
         public static final int ACTIVE_INTAKE = 9;
         public static final int AGITATOR = 10;
-		public static final int CLIMBER_LEFT = 14;
-		public static final int CLIMBER_RIGHT = 3;
+        public static final int CLIMBER_LEFT = 14;
+        public static final int CLIMBER_RIGHT = 3;
 
-		public static final int ALLOWABLE_LOOP_ERR = 5; // in encoder pulses
-	    public static final int TIME_TO_STOP = 1500; // amount of milliseconds to be on target to stop contolling with PID4
+        public static final int ALLOWABLE_LOOP_ERR = 5; // in encoder pulses
+        public static final int TIME_TO_STOP = 1500; // amount of milliseconds to be on target to stop contolling with PID4
 
         // Feet per second
         public static final int LOW_GEAR_SPEED = 10;
         public static final int HIGH_GEAR_SPEED = 16;
 
         // RPM
-        public static final double SHIFT_UP_THRESHOLD = ((8.5D) * 60 * 12) / (4*Math.PI) ;
-        public static final double SHIFT_DOWN_THRESHOLD = ((8.4D) * 60 * 12) / (4*Math.PI);
+        public static final double SHIFT_UP_THRESHOLD = ((8.5D) * 60 * 12) / (4 * Math.PI);
+        public static final double SHIFT_DOWN_THRESHOLD = ((8.4D) * 60 * 12) / (4 * Math.PI);
         // 850rmpm
 
-        private Motor() {}
+        private Motor()
+        {
+        }
     }
 
     public static final class Solenoid
@@ -88,6 +98,8 @@ public class RobotMap
 
         public static final int HOPPER_SOLENOID = 1;
 
-        private Solenoid() {}
+        private Solenoid()
+        {
+        }
     }
 }

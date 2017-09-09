@@ -8,9 +8,14 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
  */
 public class DisableAutoShifting extends InstantCommand
 {
-    public DisableAutoShifting() {}
+    public DisableAutoShifting()
+    {
+    }
 
     @Override
-    protected void initialize() { DriveCommand.toggleAutoShifting(); }
+    protected void initialize()
+    {
+        DriveCommand.toggleAutoShifting();
+    }
 
 }

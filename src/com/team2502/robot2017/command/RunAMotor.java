@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 public class RunAMotor extends TimedCommand
 {
     CANTalon aMotor;
+
     public RunAMotor(int id)
     {
 
@@ -27,5 +28,8 @@ public class RunAMotor extends TimedCommand
         aMotor.set(0);
     }
 
-    protected void interrupted() { end(); }
+    protected void interrupted()
+    {
+        end();
+    }
 }

@@ -1,13 +1,10 @@
 package com.team2502.robot2017.command.autonomous;
 
-import com.team2502.robot2017.RobotMap;
-import edu.wpi.first.wpilibj.command.Command;
 import com.team2502.robot2017.Robot;
+import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.PIDController;
-
-import logger.Log;
 
 public class EncoderDrive extends Command
 {
@@ -29,7 +26,10 @@ public class EncoderDrive extends Command
         requires(Robot.DRIVE_TRAIN);
     }
 
-    public EncoderDrive(double inches, double maxtime) { this(inches, inches, maxtime); }
+    public EncoderDrive(double inches, double maxtime)
+    {
+        this(inches, inches, maxtime);
+    }
 
     private EncoderDrive(double inchesLeft, double inchesRight, double time)
     {
@@ -54,11 +54,10 @@ public class EncoderDrive extends Command
         SmartDashboard.putNumber("DT: Autonomous encoder ticks needed Left", revLeftL);
         SmartDashboard.putNumber("DT: Autonomous encoder ticks needed Right", revLeftR);
 
-        if(!onTarget && (Math.abs(revLeftL) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR && Math.abs(revLeftR) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
+        if (!onTarget && (Math.abs(revLeftL) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR && Math.abs(revLeftR) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
         {
             onTargetStartTime = System.currentTimeMillis();
-        }
-        else if(onTarget && (Math.abs(revLeftL) >= RobotMap.Motor.ALLOWABLE_LOOP_ERR && Math.abs(revLeftR) >= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
+        } else if (onTarget && (Math.abs(revLeftL) >= RobotMap.Motor.ALLOWABLE_LOOP_ERR && Math.abs(revLeftR) >= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
         {
             onTargetStartTime = 0;
         }
@@ -71,11 +70,10 @@ public class EncoderDrive extends Command
     @Override
     protected boolean isFinished()
     {
-        if(isTimedOut())
+        if (isTimedOut())
         {
             return true;
-        }
-        else
+        } else
         {
             return (Math.abs(revLeftR) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR
                     && Math.abs(revLeftL) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR)
@@ -93,5 +91,8 @@ public class EncoderDrive extends Command
     }
 
     @Override
-    protected void interrupted() { end(); }
+    protected void interrupted()
+    {
+        end();
+    }
 }

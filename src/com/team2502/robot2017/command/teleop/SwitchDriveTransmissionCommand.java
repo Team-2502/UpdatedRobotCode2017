@@ -15,5 +15,8 @@ public class SwitchDriveTransmissionCommand extends InstantCommand
     }
 
     @Override
-    protected void initialize() { driveTrainTransmissionSubsystem.switchGear(); }
+    protected void initialize()
+    {
+        driveTrainTransmissionSubsystem.switchGear();
+    }
 }

@@ -7,22 +7,26 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 public class ChangeSpeedAgitatorCommand extends InstantCommand
 {
     private final ShooterSubsystem shooterSubsystem;
-    
+
     private boolean checkIsAdd;
 
-	/**
-	 * Instantiate the command that changes the agitator's target speed
-	 * @param isAdd Boolean that asks "add or subtract?"
-	 */
-	public ChangeSpeedAgitatorCommand(boolean isAdd)
+    /**
+     * Instantiate the command that changes the agitator's target speed
+     *
+     * @param isAdd Boolean that asks "add or subtract?"
+     */
+    public ChangeSpeedAgitatorCommand(boolean isAdd)
     {
         requires(Robot.SHOOTER);
         shooterSubsystem = Robot.SHOOTER;
-        
+
         checkIsAdd = isAdd;
     }
 
     @Override
-    protected void initialize() { shooterSubsystem.changeSpeedAgitator(checkIsAdd); }
+    protected void initialize()
+    {
+        shooterSubsystem.changeSpeedAgitator(checkIsAdd);
+    }
 
 }
