@@ -2,10 +2,16 @@ package com.team2502.robot2017;
 
 public class RobotMap
 {
+
     private static final int UNDEFINED = -1;
 
     private RobotMap() {}
 
+    public static final class Vision
+    {
+        public static final double TARGET_HEIGHT = 123;
+        public static final double HEIGHT_TOLERANCE = 1;
+    }
     public static final class Joystick
     {
         public static final int JOYSTICK_DRIVE_LEFT = 1;
@@ -52,7 +58,7 @@ public class RobotMap
     public static final class Motor
     {
 
-    	public static final int LEFT_TALON_0 = 4;
+        public static final int LEFT_TALON_0 = 4;
         public static final int LEFT_TALON_1 = 12;
         public static final int RIGHT_TALON_0 = 8;
         public static final int RIGHT_TALON_1 = 7;
@@ -64,11 +70,11 @@ public class RobotMap
         public static final int FEEDER_TALON_1 = 13; //banebot
         public static final int ACTIVE_INTAKE = 9;
         public static final int AGITATOR = 10;
-		public static final int CLIMBER_LEFT = 14;
-		public static final int CLIMBER_RIGHT = 3;
+        public static final int CLIMBER_LEFT = 14;
+        public static final int CLIMBER_RIGHT = 3;
 
-		public static final int ALLOWABLE_LOOP_ERR = 5; // in encoder pulses
-	    public static final int TIME_TO_STOP = 1500; // amount of milliseconds to be on target to stop contolling with PID4
+        public static final int ALLOWABLE_LOOP_ERR = 5; // in encoder pulses
+        public static final int TIME_TO_STOP = 1500; // amount of milliseconds to be on target to stop contolling with PID4
 
         // Feet per second
         public static final int LOW_GEAR_SPEED = 10;
@@ -84,9 +90,9 @@ public class RobotMap
 
     public static final class Solenoid
     {
-        public static final int TRANSMISSION_SWITCH = 0;
+        public static final int TRANSMISSION_SWITCH = 1;
 
-        public static final int HOPPER_SOLENOID = 1;
+        public static final int HOPPER_SOLENOID = 0;
 
         private Solenoid() {}
     }
