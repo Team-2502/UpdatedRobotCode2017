@@ -11,6 +11,14 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class BoilerDistCommand extends Command
 {
+	DriveTrainSubsystem dt;
+	VisionSubsystem camera;
+	double error;
+	double target = RobotMap.Vision.TARGET_HEIGHT;
+	double tolerance;
+	double base_speed = 0.5;
+	boolean done;
+
 	public BoilerDistCommand()
 	{
 		VisionSubsystem camera = Robot.VISION;
@@ -19,29 +27,28 @@ public class BoilerDistCommand extends Command
 		tolerance = RobotMap.Vision.HEIGHT_TOLERANCE;
 		requires(camera);
 		requires(dt);
-		error = 100;
 		done = false;
 	}
-
-	DriveTrainSubsystem dt;
-	VisionSubsystem camera;
-	double error;
-	double target;
-	double tolerance;
-	double base_speed = 0.5;
-	boolean done;
 
 	@Override
 	protected void execute()
 	{
-		error = Math.abs(target - camera.getHeight());
+
+
+
+		error = (target - camera.getHeight());
+				// /Math.abs(target - camera.getHeight());
 		if (error <= tolerance)
 		{
 			done = true;
-		} else
+		} else if (error > 0)
 		{
-			dt.runMotors(0.5 * error, -0.5 * error);
+			dt.runMotors(1, -1);
+		} else if (error < 0)
+		{
+			dt.runMotors(-1, 1);
 		}
+
 	}
 
 	@Override

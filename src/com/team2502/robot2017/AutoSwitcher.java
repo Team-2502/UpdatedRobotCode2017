@@ -13,6 +13,8 @@ class AutoSwitcher
 
     public enum AutoMode
     {
+        BLUE_BOILER("Blue hopper + boiler", BoilerBlue.class),
+        TESTTRAJECTORY("Test Trajectory", TrajectoryTest.class),
         GEAR_CENTER("Center Gear", GearAutoCenter.class),
         GEAR_LEFT("Left Gear", GearAutoLeft.class),
         GEAR_RIGHT("Right Gear", GearAutoRight.class),
@@ -23,12 +25,12 @@ class AutoSwitcher
         BLUE_SHOOT_AND_GEAR("Blue shoot and Gear", ShootAndGearAutoBlue.class),
         BLUE_SHOOT_AND_BASELINE("Blue shoot and Baseline", ShootAndBaseLineBlue.class),
 
-        BLUE_BOILER("Blue hopper + boiler", BoilerBlue.class),
+
         RED_BOILER("Red hopper + boiler", BoilerRed.class),
 
         BASELINE("Baseline only", DriveTimeCommand.class),
-        TESTAUTO("Boiler Test Vision", BoilerDistCommand.class),
-        TESTTRAJECTORY("Test Trajectory", TrajectoryTest.class);
+        TESTAUTO("Boiler Test Vision", BoilerDistCommand.class);
+
 
         private Class<? extends Command> autoCommand;
         private String name;

@@ -2,6 +2,7 @@ package com.team2502.robot2017;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.team2502.robot2017.subsystem.*;
+import com.team2502.robot2017.trajectory.AutoPaths;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
@@ -47,6 +48,7 @@ public final class Robot extends IterativeRobot
 		NAVX = new AHRS(SPI.Port.kMXP);
 		
 		AutoSwitcher.putToSmartDashboard();
+		AutoPaths.loadPaths();
 		
 		DashboardData.setup();
 		OI.init();
@@ -82,6 +84,9 @@ public final class Robot extends IterativeRobot
 	public void autonomousInit() 
 	{
 
+		HOPPER.setHopper(false);
+
+		AutoPaths.loadPaths();
 		Scheduler.getInstance().add(AutoSwitcher.getAutoInstance());
 		NAVX.reset();
 		VISION.turnOnVisionLight();
@@ -96,7 +101,10 @@ public final class Robot extends IterativeRobot
 		DashboardData.update();
 	}
 	
-	public void teleopInit() { VISION.turnOffVisionLight(); }
+	public void teleopInit() {
+		HOPPER.setHopper(false);
+		VISION.turnOffVisionLight();
+	}
 
 	/**
 	 * This function is called periodically during operator control

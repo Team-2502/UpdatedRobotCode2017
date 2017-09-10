@@ -68,7 +68,7 @@ public class TextFileReader
         {
             line = reader_.readLine();
         }
-        catch(IOException e)
+        catch(NullPointerException | IOException e)
         {
             e.printStackTrace();
             closeFile();

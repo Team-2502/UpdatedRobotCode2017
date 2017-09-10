@@ -105,7 +105,7 @@ public class AutoVCommand extends Command
 
     protected void end()
     {
-    	dt.stop();
+        dt.runMotors(0, 0);
     	vision.turnOffVisionLight();
     }
 

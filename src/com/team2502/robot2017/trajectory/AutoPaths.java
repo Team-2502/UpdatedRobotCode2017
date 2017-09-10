@@ -32,7 +32,7 @@ public class AutoPaths
         // Akin to `for kPathName in kPathNames:` in python
         for(String kPathName : kPathNames)
         {
-            TextFileReader reader = new TextFileReader("/home/lvuser/path/" + kPathName + ".txt");
+            TextFileReader reader = new TextFileReader("/home/lvuser/paths/" + kPathName + ".txt");
 
             Path path = deserializer.deserialize(reader.readWholeFile());
             paths_.put(kPathName, path);

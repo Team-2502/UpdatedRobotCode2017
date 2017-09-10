@@ -20,7 +20,7 @@ public class TrajectoryCommand extends Command
     DriveTrainSubsystem dt;
     AHRS navx;
 
-    double direction;
+    double direction = -1;
     double orig_offset;
     double heading;
     double kTurn = -3.0 / 80.0;
@@ -118,8 +118,13 @@ public class TrajectoryCommand extends Command
     {
         leftWheel = new TrajectoryFollower("left");
         rightWheel = new TrajectoryFollower("right");
-        leftWheel.configure(1.5, 0, 0, 1.0 / 15.0, 1.0 / 34.0);
-        rightWheel.configure(1.5, 0, 0, 1.0 / 15.0, 1.0 / 34.0);
+        double kp = 1/34.0F;
+        double ki = 0;
+        double kd = 0;
+        double kv = 1/34.0F;
+        double ka = 1/34.0F;
+        leftWheel.configure(kp, ki, kd, kv, ka);
+        rightWheel.configure(kp, ki, kd, kv, ka);
     }
 
     /**
@@ -161,9 +166,11 @@ public class TrajectoryCommand extends Command
     @Override
     protected void initialize()
     {
+        System.out.println("********************TRAJCOMMAND**************");
+        setFollower();
         reset();
         navx.reset();
-        loadProfile(leftWheelTraj,rightWheelTraj, 1.0);
+        loadProfile(leftWheelTraj,rightWheelTraj, -0.1);
     }
 
     @Override
@@ -185,14 +192,14 @@ public class TrajectoryCommand extends Command
         double angleDiff = Math.toDegrees(angleDiffRads);
 
         double turn = kTurn * angleDiff;
-        dt.runMotors(speedLeft + turn, -1 * (speedRight - turn));
+        dt.runMotors((speedLeft + turn), (speedRight - turn));
 
     }
 
     @Override
     protected boolean isFinished()
     {
-        return leftWheel.isFinishedTrajectory();
+        return leftWheel.isFinishedTrajectory() || rightWheel.isFinishedTrajectory();
     }
 
     @Override

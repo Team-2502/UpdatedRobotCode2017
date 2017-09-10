@@ -9,5 +9,5 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class TrajectoryTest extends CommandGroup
 {
-    public TrajectoryTest() { addSequential(new TrajectoryCommand("Straight", false)); }
+    public TrajectoryTest() { addSequential(new TrajectoryCommand("NotStraight", false)); }
 }
