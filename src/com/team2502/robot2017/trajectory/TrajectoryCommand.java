@@ -170,7 +170,7 @@ public class TrajectoryCommand extends Command
         setFollower();
         reset();
         navx.reset();
-        loadProfile(leftWheelTraj,rightWheelTraj, -0.1);
+        loadProfile(leftWheelTraj,rightWheelTraj, -1);
     }
 
     @Override
