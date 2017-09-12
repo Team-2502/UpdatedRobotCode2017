@@ -8,15 +8,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem
 {
+    public CANTalon.TalonControlMode follower = CANTalon.TalonControlMode.Follower;
 
-    public ShooterSubsystem ShooterSubsystem;
-
-    private final CANTalon flywheelTalon;
+    private final CANTalon leftFlywheelTalonTop;
+    private final CANTalon leftFlywheelTalonBottom;
+    private final CANTalon rightFlywheelTalonTop;
+    private final CANTalon rightFlywheelTalonBottom;
     private final CANTalon colsonFeeder;
     private final CANTalon banebotFeeder;
     private final CANTalon agitator;
 
-    double targetSpeedFlywheel = 1650;
+    double targetSpeedFlywheel = 4000;
     double autoTargetSpeed = targetSpeedFlywheel + 50;
     double agitatorSpeed = 1;
     double colsonSpeed = 1;
@@ -33,7 +35,10 @@ public class ShooterSubsystem extends Subsystem
      */
     public ShooterSubsystem()
     {
-        flywheelTalon = new CANTalon(RobotMap.Motor.FLYWHEEL_TALON_0);
+        leftFlywheelTalonTop = new CANTalon(RobotMap.Motor.FLYWHEEL_TALON_0);
+        leftFlywheelTalonBottom = new CANTalon(RobotMap.Motor.FLYWHEEL_TALON_1);
+        rightFlywheelTalonTop = new CANTalon(RobotMap.Motor.FLYWHEEL_TALON_2);
+        rightFlywheelTalonBottom = new CANTalon(RobotMap.Motor.FLYWHEEL_TALON_3);
         colsonFeeder = new CANTalon(RobotMap.Motor.FEEDER_TALON_0);
         banebotFeeder = new CANTalon(RobotMap.Motor.FEEDER_TALON_1);
         agitator = new CANTalon(RobotMap.Motor.AGITATOR);
@@ -49,21 +54,40 @@ public class ShooterSubsystem extends Subsystem
         this.setDefaultCommand(new FlywheelCommand());
 
         // Set talon and encoder settings
-        flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
-        flywheelTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-        flywheelTalon.configEncoderCodesPerRev(256);
-        flywheelTalon.reverseSensor(false);
+        leftFlywheelTalonTop.changeControlMode(CANTalon.TalonControlMode.Speed);
+
+        rightFlywheelTalonTop.changeControlMode(follower);
+        leftFlywheelTalonBottom.changeControlMode(follower);
+        rightFlywheelTalonBottom.changeControlMode(follower);
+
+        rightFlywheelTalonTop.set(RobotMap.Motor.FLYWHEEL_TALON_0);
+        leftFlywheelTalonBottom.set(RobotMap.Motor.FLYWHEEL_TALON_0);
+        rightFlywheelTalonBottom.set(RobotMap.Motor.FLYWHEEL_TALON_0);
+//
+        leftFlywheelTalonTop.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+        leftFlywheelTalonTop.configEncoderCodesPerRev(256);
+        leftFlywheelTalonTop.reverseSensor(false);
 
         // Configure min and max voltages
-        flywheelTalon.configNominalOutputVoltage(0.0D, -0.0D);
-        flywheelTalon.configPeakOutputVoltage(12.0D, -2.0D);
+        leftFlywheelTalonTop.configNominalOutputVoltage(0.0D, -0.0D);
+        leftFlywheelTalonTop.configPeakOutputVoltage(12.0D, -2.0D);
+
+        leftFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
+        leftFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -2.0D);
+
+        rightFlywheelTalonTop.configNominalOutputVoltage(0.0D, -0.0D);
+        rightFlywheelTalonTop.configPeakOutputVoltage(12.0D, -2.0D);
+
+        rightFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
+        rightFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -2.0D);
+
 
         // Set more encoder settings
-        flywheelTalon.setProfile(0);
-        flywheelTalon.setF(0.21765900);
-        flywheelTalon.setP(1.71312500);
-        flywheelTalon.setI(0.0);
-        flywheelTalon.setD(0.0);
+//        leftFlywheelTalonTop.setProfile(0);
+//        leftFlywheelTalonTop.setF(0.21765900);
+//        leftFlywheelTalonTop.setP(1.71312500);
+//        leftFlywheelTalonTop.setI(0.0);
+//        leftFlywheelTalonTop.setD(0.0);
 
         // Set banebot talon and encoder settings
         banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
@@ -88,7 +112,7 @@ public class ShooterSubsystem extends Subsystem
      *
      * @return The current velocity of the flywheel.
      */
-    public int getSpeedFlywheel() { return flywheelTalon.getEncVelocity(); }
+    public int getSpeedFlywheel() { return leftFlywheelTalonTop.getEncVelocity(); }
 
     /**
      * This information is pulled from the CANTalon class, NOT THE ENCODER CLASS!
@@ -102,7 +126,7 @@ public class ShooterSubsystem extends Subsystem
      *
      * @return The output voltage of the flywheel talon divided by its bus voltage
      */
-    public double getMotorOutput() { return flywheelTalon.getOutputVoltage() / flywheelTalon.getBusVoltage(); }
+    public double getMotorOutput() { return leftFlywheelTalonTop.getOutputVoltage() / leftFlywheelTalonTop.getBusVoltage(); }
 
     /**
      * @return the agitator target speed
@@ -129,18 +153,34 @@ public class ShooterSubsystem extends Subsystem
      */
     public void turnOnFlywheel()
     {
-        flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
-        flywheelTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-        flywheelTalon.configEncoderCodesPerRev(256);
-        flywheelTalon.reverseSensor(false);
-        flywheelTalon.configNominalOutputVoltage(0.0D, -0.0D);
-        flywheelTalon.configPeakOutputVoltage(12.0D, -12.0D);
-        flywheelTalon.setProfile(0);
-        flywheelTalon.setF(0.21765900);
-        flywheelTalon.setP(1.71312500);
-        flywheelTalon.setI(0.0);
-        flywheelTalon.setD(0.0);
-        flywheelTalon.set(targetSpeedFlywheel);
+        leftFlywheelTalonTop.changeControlMode(CANTalon.TalonControlMode.Speed);
+
+        rightFlywheelTalonTop.changeControlMode(follower);
+        leftFlywheelTalonBottom.changeControlMode(follower);
+        rightFlywheelTalonBottom.changeControlMode(follower);
+
+        leftFlywheelTalonTop.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+        leftFlywheelTalonTop.configEncoderCodesPerRev(256);
+        leftFlywheelTalonTop.reverseSensor(false);
+
+        leftFlywheelTalonTop.configNominalOutputVoltage(0.0D, -0.0D);
+        leftFlywheelTalonTop.configPeakOutputVoltage(12.0D, -2.0D);
+
+        leftFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
+        leftFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -2.0D);
+
+        rightFlywheelTalonTop.configNominalOutputVoltage(0.0D, -0.0D);
+        rightFlywheelTalonTop.configPeakOutputVoltage(12.0D, -2.0D);
+
+        rightFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
+        rightFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -2.0D);
+
+        leftFlywheelTalonTop.setProfile(0);
+        leftFlywheelTalonTop.setF(0);
+        leftFlywheelTalonTop.setP(0.5);
+        leftFlywheelTalonTop.setI(0.0);
+        leftFlywheelTalonTop.setD(0.0);
+        leftFlywheelTalonTop.set(targetSpeedFlywheel);
     }
 
     /**
@@ -148,7 +188,7 @@ public class ShooterSubsystem extends Subsystem
      */
     public void feed()
     {
-        banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
+        banebotFeeder.changeControlMode(follower);
         colsonFeeder.set(colsonSpeed);
         banebotFeeder.set(-banebotSpeed);
         agitator.set(-agitatorSpeed);
@@ -162,7 +202,7 @@ public class ShooterSubsystem extends Subsystem
     /**
      * @return Error calculated in the flywheel FPID
      */
-    public int getError() { return flywheelTalon.getClosedLoopError(); }
+    public int getError() { return leftFlywheelTalonTop.getClosedLoopError(); }
 
     /**
      * @return Error calculated in the banebot FPID
@@ -214,28 +254,46 @@ public class ShooterSubsystem extends Subsystem
     }
 
     /**
+     * Sets the speed of all the motors.
+     *
+     * @param Speed speed at which to set the motors at.
+     */
+    public void setSpeedOnAllFlyWheelMotors(double Speed)
+    {
+        leftFlywheelTalonTop.set(Speed);
+//        leftFlywheelTalonBottom.set(-Speed);
+//        rightFlywheelTalonTop.set(Speed);
+//        rightFlywheelTalonBottom.set(-Speed);
+    }
+
+    /**
      * Allow Poorva to press buttons on the joystick to activate the flywheel
      */
     public void flywheelDrive()
     {
         // lets us tell the flywheel go a certain RPM
-        flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
+        leftFlywheelTalonTop.changeControlMode(CANTalon.TalonControlMode.Speed);
+
+        rightFlywheelTalonTop.changeControlMode(follower);
+        leftFlywheelTalonBottom.changeControlMode(follower);
+        rightFlywheelTalonBottom.changeControlMode(follower);
+
         banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
 
         // Toggle mode for flywheel. It is bound to button 5 on the Function stick.
         if(OI.JOYSTICK_FUNCTION.getRawButton(5) && !isTriggerPressed) { shooterMode = !shooterMode; }
         isTriggerPressed = OI.JOYSTICK_FUNCTION.getRawButton(5);
 
-        if(shooterMode) { flywheelTalon.set(targetSpeedFlywheel); }
+        if(shooterMode) { setSpeedOnAllFlyWheelMotors(targetSpeedFlywheel); }
 
-        else { flywheelTalon.set(0); }
+        else { setSpeedOnAllFlyWheelMotors(0); }
 
         //Control for turning on/off the feeding mechanism.
         if(OI.JOYSTICK_FUNCTION.getTrigger())
         {
             colsonFeeder.set(colsonSpeed);
-            banebotFeeder.set(-banebotSpeed);
-            agitator.set(agitatorSpeed);
+            banebotFeeder.set(banebotSpeed);
+            agitator.set(-agitatorSpeed);
         }
 
         else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(agitatorSpeed); }
@@ -255,12 +313,14 @@ public class ShooterSubsystem extends Subsystem
     {
         shooterMode = false;
 
-        flywheelTalon.set(0.0D);
+        setSpeedOnAllFlyWheelMotors(0.0D);
         colsonFeeder.set(0.0D);
         banebotFeeder.set(0.0D);
         agitator.set(0.0D);
 
-        banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Disabled);
+        // Causes problems with banebots starting after shooter is turned off
+        // If we want to fix then we would have to enable it somewhere.
+//        banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Disabled);
 
         System.out.println("Stopping shooter and related motors.");
 

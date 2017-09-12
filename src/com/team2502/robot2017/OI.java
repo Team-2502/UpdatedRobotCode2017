@@ -1,6 +1,7 @@
 package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
+import com.team2502.robot2017.command.teleop.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -12,6 +13,7 @@ public final class OI
     public static final Joystick JOYSTICK_FUNCTION = new Joystick(RobotMap.Joystick.JOYSTICK_FUNCTION);
 
     private static final Button SWITCH_DRIVE_TRANSMISSION = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.SWITCH_DRIVE_TRANSMISSION);
+    private static final Button SWITCH_HOPPER = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.SWITCH_HOPPER);
 
     private static final Button RESET_ENC_POSITION = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.RESET_ENC_POS);
 
@@ -27,6 +29,7 @@ public final class OI
     private static final Button ADD_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.ADD_FLYWHEEL_SPEED);
     private static final Button SUB_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.SUB_FLYWHEEL_SPEED);
 
+    private static final Button DISABLE_AUTOSHIFTING = new JoystickButton(JOYSTICK_DRIVE_RIGHT, 7);
 //	private static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.VISION_ALIGN);
 
     private static final Button CLIMBER = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.CLIMBER);
@@ -35,6 +38,8 @@ public final class OI
     {
         /* Obsolete due to automatic transmission */
 //        SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
+
+        SWITCH_HOPPER.whenPressed(new SwitchHopperCommand());
 
         RESET_ENC_POSITION.whenPressed(new ResetEncodersCommand());
 
@@ -49,6 +54,8 @@ public final class OI
 
         ADD_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(true));
         SUB_FLYWHEEL_SPEED.whenPressed(new ChangeSpeedFlywheelCommand(false));
+
+        DISABLE_AUTOSHIFTING.whenPressed(new DisableAutoShifting());
 
 //        VISION_ALIGN.whileHeld(new TeleopVisionCommand());
     }

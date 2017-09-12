@@ -11,6 +11,7 @@ import logger.Log;
 
 public final class Robot extends IterativeRobot
 {
+
     // Makes all the stuff
     public static DriveTrainSubsystem DRIVE_TRAIN;
     public static PressureSensorSubsystem PRESSURE_SENSOR;
@@ -20,6 +21,7 @@ public final class Robot extends IterativeRobot
     public static ActiveIntakeSubsystem ACTIVE;
     public static DriveTrainTransmissionSubsystem DRIVE_TRAIN_GEAR_SWITCH;
     public static ClimberSubsystem CLIMBER;
+    public static HopperSubsystem HOPPER;
 
     public static long SHIFTED;
 
@@ -41,6 +43,7 @@ public final class Robot extends IterativeRobot
         SHOOTER = new ShooterSubsystem();
         ACTIVE = new ActiveIntakeSubsystem();
         CLIMBER = new ClimberSubsystem();
+        HOPPER = new HopperSubsystem();
         NAVX = new AHRS(SPI.Port.kMXP);
 
         AutoSwitcher.putToSmartDashboard();
@@ -62,7 +65,8 @@ public final class Robot extends IterativeRobot
     {
         Scheduler.getInstance().run();
         DashboardData.update();
-        DRIVE_TRAIN.stop();
+
+        DRIVE_TRAIN.disabledStop();
     }
 
     /**
