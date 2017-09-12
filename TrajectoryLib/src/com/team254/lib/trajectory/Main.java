@@ -50,7 +50,9 @@ public class Main
 
     public static void main(String[] args)
     {
-        String directory = "/home/ritik/Robotics/UpdatedRobotCode2017/paths";
+
+    	System.out.println("Current Directory: " + System.getProperty("user.dir"));
+        String directory = "./paths";
         if(args.length >= 1)
         {
             directory = args[0];
