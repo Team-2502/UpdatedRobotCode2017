@@ -37,3 +37,7 @@ deploy.sh
 dist/FRCUserProgram.jar
 dist/
 /out/
+
+## stufs
+
+node_modules/
