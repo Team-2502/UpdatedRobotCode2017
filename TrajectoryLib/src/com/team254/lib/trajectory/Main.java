@@ -101,7 +101,7 @@ public class Main
 
 	    WaypointSequence hopperTraj = new WaypointSequence(10);
 	    hopperTraj.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-	    hopperTraj.addWaypoint(new WaypointSequence.Waypoint((74/24.0F), ((30/24.0F)), Math.PI/4.0F));
+//	    hopperTraj.addWaypoint(new WaypointSequence.Waypoint((74/24.0F), ((30/24.0F)), Math.PI/4.0F));
 	    hopperTraj.addWaypoint(new WaypointSequence.Waypoint((74/12.0F), ((30/12.0F)), 0));
 	    createPath("HopperTrajectory", hopperTraj);
 
@@ -113,8 +113,8 @@ public class Main
 
 	    WaypointSequence notStraight = new WaypointSequence(10);
 	    notStraight.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-	    notStraight.addWaypoint(new WaypointSequence.Waypoint(5, 0, Math.PI/15));
-	    notStraight.addWaypoint(new WaypointSequence.Waypoint(10, 0, Math.PI/5));
+	    notStraight.addWaypoint(new WaypointSequence.Waypoint(1, 1, Math.PI/4));
+	    notStraight.addWaypoint(new WaypointSequence.Waypoint(2, 2, Math.PI/4));
 	    createPath("NotStraight", notStraight);
 
 

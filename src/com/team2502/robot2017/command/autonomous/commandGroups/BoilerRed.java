@@ -12,7 +12,6 @@ public class BoilerRed extends CommandGroup
 {
 	public BoilerRed()
 	{
-
 		addSequential(new EncoderDrive(10, 1));
 		addSequential(new NavXMoveCommand(-45,1));
 		addSequential(new EncoderDrive(1,2.5));

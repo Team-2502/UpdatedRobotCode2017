@@ -9,7 +9,7 @@ public class RobotMap
 
     public static final class Vision
     {
-    	public static final double TARGET_HEIGHT = 7.0;
+    	public static final double TARGET_HEIGHT = 6.7;
     	public static final double HEIGHT_TOLERANCE = 0.1;
     }
     public static final class Joystick

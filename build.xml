@@ -41,7 +41,7 @@
         </scp>
     </target>
     <target name="deploy" description="Deploy code and paths to the robot"
-            depends="athena-project-build.deploy, deploy-paths">
+            depends="deploy-paths, athena-project-build.deploy">
 
     </target>
 
