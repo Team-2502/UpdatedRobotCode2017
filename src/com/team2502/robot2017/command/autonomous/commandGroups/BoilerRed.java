@@ -1,7 +1,6 @@
 package com.team2502.robot2017.command.autonomous.commandGroups;
 
-import com.team2502.robot2017.command.autonomous.BoilerDistCommand;
-import com.team2502.robot2017.command.autonomous.SetHopperCommand;
+import com.team2502.robot2017.command.autonomous.*;
 import com.team2502.robot2017.trajectory.TrajectoryCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -13,10 +12,13 @@ public class BoilerRed extends CommandGroup
 {
 	public BoilerRed()
 	{
-		addSequential(new TrajectoryCommand("HopperTrajectory", true));
-		addSequential(new SetHopperCommand(true));
-		addSequential(new WaitCommand(0.5));
-		addSequential(new SetHopperCommand(false));
-		addSequential(new BoilerDistCommand());
+
+		addSequential(new EncoderDrive(10, 1));
+		addSequential(new NavXMoveCommand(-45,1));
+		addSequential(new EncoderDrive(1,2.5));
+		addSequential(new CurveMove(.75, 100));
+//		addSequential(new SetHopperCommand(true));
+//		addSequential(new WaitCommand(0.5));
+//		addSequential(new BoilerDistCommand());
 	}
 }
