@@ -44,18 +44,19 @@ public class VisionSubsystem extends Subsystem implements PIDSource
      */
     public void alignWidth(DriveTrainSubsystem dt, double lowSpeed, double highSpeed, boolean alignOnly, boolean autonomous)
     {
+    	double threshold = 0.2;
         if(autonomous || OI.JOYSTICK_DRIVE_LEFT.getRawButton(RobotMap.Joystick.Button.VISION_ALIGN)) {
             double offset = getOffset();
 
-            if (offset > 0.1)
+            if (offset > threshold)
             {
                 dt.runMotors(highSpeed, lowSpeed);
             }
-            else if (offset < 0.1)
+            else if (offset < threshold)
             {
-                dt.runMotors(-lowSpeed, -highSpeed);
+                dt.runMotors(-lowSpeed * offset, -highSpeed * offset);
             }
-            else if ((-0.1 < offset) && (offset < 0.1) && !alignOnly)
+            else if ((-threshold < offset) && (offset < threshold) && !alignOnly)
             {
                 dt.runMotors(.5D, -.5D);
             }

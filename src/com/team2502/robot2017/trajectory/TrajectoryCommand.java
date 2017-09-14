@@ -118,11 +118,11 @@ public class TrajectoryCommand extends Command
     {
         leftWheel = new TrajectoryFollower("left");
         rightWheel = new TrajectoryFollower("right");
-        double kp = 1/34.0F;
+        double kp = 3.7;
         double ki = 0;
         double kd = 0;
-        double kv = 1/34.0F;
-        double ka = 1/34.0F;
+        double kv = 1;
+        double ka = 1;
         leftWheel.configure(kp, ki, kd, kv, ka);
         rightWheel.configure(kp, ki, kd, kv, ka);
     }
@@ -170,7 +170,7 @@ public class TrajectoryCommand extends Command
         setFollower();
         reset();
         navx.reset();
-        loadProfile(leftWheelTraj,rightWheelTraj, -1);
+        loadProfile(leftWheelTraj,rightWheelTraj, 1);
     }
 
     @Override

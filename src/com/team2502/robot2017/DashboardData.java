@@ -52,6 +52,9 @@ final class DashboardData
         SmartDashboard.putNumber("DT: rightTalon0", Robot.DRIVE_TRAIN.rightTalon0.getPosition());
         SmartDashboard.putBoolean("Drive Team will win us the match", true); // if this line gets changed you will be kicked off the github no warning
 
+	    SmartDashboard.putNumber("DT: leftfeet", Robot.DRIVE_TRAIN.getEncLeftPosition());
+	    SmartDashboard.putNumber("DT: rightfeet", Robot.DRIVE_TRAIN.getEncRightPosition());
+
         SmartDashboard.putNumber("DT: Average Speed", speed);
         SmartDashboard.putNumber("DT: Max Speed", maxspeed);
         SmartDashboard.putNumber("DT: Turning Factor", Robot.DRIVE_TRAIN.turningFactor());

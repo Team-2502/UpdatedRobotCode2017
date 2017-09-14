@@ -15,8 +15,6 @@ public class BoilerRed extends CommandGroup
 	{
 		addSequential(new TrajectoryCommand("HopperTrajectory", true));
 		addSequential(new SetHopperCommand(true));
-		addSequential(new WaitCommand(0.5));
-		addSequential(new SetHopperCommand(false));
-		addSequential(new BoilerDistCommand());
+//		addSequential(new BoilerDistCommand());
 	}
 }

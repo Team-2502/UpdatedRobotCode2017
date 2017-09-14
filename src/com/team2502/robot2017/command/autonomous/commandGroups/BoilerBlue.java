@@ -18,8 +18,8 @@ public class BoilerBlue extends CommandGroup
 //		addSequential(new SetHopperCommand(true));
 //		addSequential(new WaitCommand(0.5));
 //		addSequential(new SetHopperCommand(false));
-		addSequential(new BoilerDistCommand());
-		addSequential(new AutoVCommand(2, true));
+		addSequential(new AutoVCommand(4, true, 0.0002, 0.0002));
+		addSequential(new BoilerDistCommand(0.2));
 		System.out.println("Running Boiler Distance Command");
 
 

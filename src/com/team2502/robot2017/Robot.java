@@ -102,7 +102,7 @@ public final class Robot extends IterativeRobot
 	}
 	
 	public void teleopInit() {
-		HOPPER.setHopper(false);
+//		HOPPER.setHopper(false);
 		VISION.turnOffVisionLight();
 	}
 
