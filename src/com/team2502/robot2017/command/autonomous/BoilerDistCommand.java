@@ -21,8 +21,8 @@ public class BoilerDistCommand extends Command
 
     public BoilerDistCommand()
     {
-        VisionSubsystem camera = Robot.VISION;
-        DriveTrainSubsystem dt = Robot.DRIVE_TRAIN;
+        camera = Robot.VISION;
+        dt = Robot.DRIVE_TRAIN;
         target = RobotMap.Vision.TARGET_HEIGHT;
         tolerance = RobotMap.Vision.HEIGHT_TOLERANCE;
         requires(camera);
@@ -31,19 +31,26 @@ public class BoilerDistCommand extends Command
     }
 
     @Override
+    protected void initialize()
+    {
+        dt.setTeleopSettings();
+    }
+
+    @Override
     protected void execute()
     {
         error = (target - camera.getHeight());
+        double speed = 0.1;
         // /Math.abs(target - camera.getHeight());
         if (error <= tolerance)
         {
             done = true;
         } else if (error > 0)
         {
-            dt.runMotors(1, -1);
+            dt.runMotors(speed, -speed);
         } else if (error < 0)
         {
-            dt.runMotors(-1, 1);
+            dt.runMotors(-speed, speed);
         }
 
     }

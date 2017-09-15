@@ -33,51 +33,70 @@ public class EncoderDrive extends Command
         this(time);
 
         targetRotLeft = inchesLeft / (4 * Math.PI);
+//        targetRotLeft = inchesLeft;
         targetRotRight = inchesRight / (4 * Math.PI);
+//        targetRotRight = inchesRight;
     }
 
     @Override
     protected void initialize()
     {
         dt.setAutonSettings();
+        dt.leftTalon0.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
+        dt.rightTalon1.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
+//        dt.leftTalon0.reverseOutput(true);
+//        dt.rightTalon1.reverseOutput(true);
     }
 
     @Override
     protected void execute()
     {
-        revLeftL = dt.leftTalon0.getClosedLoopError();
-        revLeftR = dt.rightTalon1.getClosedLoopError();
+        revLeftL = Math.abs(dt.leftTalon0.getClosedLoopError());
+        revLeftR = Math.abs(dt.rightTalon1.getClosedLoopError());
+
+
 
         SmartDashboard.putNumber("DT: Autonomous encoder ticks needed Left", revLeftL);
         SmartDashboard.putNumber("DT: Autonomous encoder ticks needed Right", revLeftR);
 
-        if(!onTarget && (Math.abs(revLeftL) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR && Math.abs(revLeftR) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
-        {
-            onTargetStartTime = System.currentTimeMillis();
-        }
-        else if(onTarget && (Math.abs(revLeftL) >= RobotMap.Motor.ALLOWABLE_LOOP_ERR && Math.abs(revLeftR) >= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
-        {
-            onTargetStartTime = 0;
-        }
+        System.out.println("Needs to go " + revLeftL);
+//        System.out.println("Time: " + System.currentTimeMillis());
+        System.out.println("Setpoint: " + dt.leftTalon0.getSetpoint());
+//
+//        if(!onTarget && (revLeftL <= RobotMap.Motor.ALLOWABLE_LOOP_ERR && revLeftR <= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
+//        {
+//            onTargetStartTime = System.currentTimeMillis();
+//            onTarget = true;
+//        }
+//        else if(onTarget && (revLeftL >= RobotMap.Motor.ALLOWABLE_LOOP_ERR && revLeftR >= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
+//        {
+//            onTargetStartTime = 0;
+//            onTarget = false;
+//        }
 
 
-        dt.rightTalon1.set(-targetRotRight);
-        dt.leftTalon0.set(targetRotLeft);
+        dt.rightTalon1.set(targetRotRight);
+        dt.leftTalon0.set(-targetRotLeft);
     }
 
     @Override
     protected boolean isFinished()
     {
-        if(isTimedOut())
+//        if(isTimedOut() || revLeftL <= RobotMap.Motor.ALLOWABLE_LOOP_ERR && revLeftR <= RobotMap.Motor.ALLOWABLE_LOOP_ERR)
         {
-            return true;
+//            return true;
+            return isTimedOut();
         }
-        else
-        {
-            return (Math.abs(revLeftR) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR
-                    && Math.abs(revLeftL) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR)
-                   && (System.currentTimeMillis() - onTargetStartTime >= RobotMap.Motor.TIME_TO_STOP);
-        }
+//        else
+//        {
+//            return false;
+//        }
+//        else
+//        {
+//            return (Math.abs(revLeftR) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR
+//                    && Math.abs(revLeftL) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR)
+//                   && (System.currentTimeMillis() - onTargetStartTime >= RobotMap.Motor.TIME_TO_STOP);
+//        }
 
     }
 
@@ -86,7 +105,10 @@ public class EncoderDrive extends Command
     {
         dt.setTeleopSettings();
         System.out.println("Exiting PID");
-        dt.stop();
+//        dt.stopDriveS();
+//        dt.leftTalon0.reverseOutput(false);
+//        dt.rightTalon1.reverseOutput(false);
+        dt.runMotors(0, 0);
     }
 
     @Override

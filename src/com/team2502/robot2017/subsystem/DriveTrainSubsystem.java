@@ -65,13 +65,14 @@ public class DriveTrainSubsystem extends Subsystem
      */
     public void setAutonSettings()
     {
-        setAutonSettings(leftTalon0, false);
-        leftTalon1.changeControlMode(TalonControlMode.Follower);
-//	    leftTalon1.set(RobotMap.Motor.LEFT_TALON_0);
 
-        setAutonSettings(rightTalon1, true);
+        setAutonSettings(leftTalon0, true);
+        leftTalon1.changeControlMode(TalonControlMode.Follower);
+	    leftTalon1.set(RobotMap.Motor.LEFT_TALON_0);
+
+        setAutonSettings(rightTalon1, false);
         rightTalon0.changeControlMode(TalonControlMode.Follower);
-//	    rightTalon0.set(RobotMap.Motor.RIGHT_TALON_1);
+	    rightTalon0.set(RobotMap.Motor.RIGHT_TALON_1);
     }
 
     /**
@@ -87,9 +88,9 @@ public class DriveTrainSubsystem extends Subsystem
         talon.configEncoderCodesPerRev(256);
         talon.reverseSensor(reverseEnc);
         talon.configNominalOutputVoltage(0.0D, -0.0D);
-        talon.configPeakOutputVoltage(12.0D, -12.0D);//8
+        talon.configPeakOutputVoltage(11.0, -11.0);//8
         /* increase P until */
-        talon.setPID(3.7, 0, 0); /* confirmed working -- Miguel certified */
+        talon.setPID(2.5, 0, 0); /* confirmed working -- Miguel certified */
         talon.setEncPosition(0);
         talon.enableControl();
     }
@@ -351,12 +352,13 @@ public class DriveTrainSubsystem extends Subsystem
         Timer.delay(0.3D);
     }
 
+    @Deprecated
     public void disabledStop()
     {
-        rightTalon1.enableBrakeMode(true);
-        rightTalon0.enableBrakeMode(true);
-        leftTalon1.enableBrakeMode(true);
-        leftTalon0.enableBrakeMode(true);
+        rightTalon1.enableBrakeMode(false);
+        rightTalon0.enableBrakeMode(false);
+        leftTalon1.enableBrakeMode(false);
+        leftTalon0.enableBrakeMode(false);
 
         lastLeft = 0.0D;
         lastRight = 0.0D;

@@ -1,11 +1,13 @@
 package com.team2502.robot2017;
 
+import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 final class DashboardData
 {
+    private static DriveTrainSubsystem dt = Robot.DRIVE_TRAIN;
 
     private DashboardData() {}
 
@@ -43,13 +45,17 @@ final class DashboardData
         double speed = Robot.DRIVE_TRAIN.rightTalon1.getEncVelocity();
         double accel = Robot.NAVX.getRawAccelY();
 
+
         if(accel > maxaccel) { maxaccel = accel; }
         else if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(10)) { maxaccel = 0; /*reset*/ }
         if(speed > maxspeed) { maxspeed = speed; }
         else if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(10)) { maxspeed = 0; }
 
-        SmartDashboard.putNumber("DT: leftTalon1", Robot.DRIVE_TRAIN.leftTalon1.getPosition());
-        SmartDashboard.putNumber("DT: rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
+        SmartDashboard.putNumber("DT: aaaaaaaa leftTalon0", dt.getEncLeftPosition());
+        SmartDashboard.putNumber("DT: aaaaaaaa leftTalon1", dt.getEncRightPosition());
+
+        SmartDashboard.putNumber("DT: aaa leftTalon0", Robot.DRIVE_TRAIN.leftTalon0.getPosition());
+        SmartDashboard.putNumber("DT: aaa rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
 
         SmartDashboard.putBoolean("Drive Team will win us the match", true); // if this line gets changed you will be kicked off the github no warning
 
