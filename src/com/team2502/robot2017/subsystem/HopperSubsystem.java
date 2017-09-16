@@ -1,6 +1,8 @@
 package com.team2502.robot2017.subsystem;
 
+import com.team2502.robot2017.OI;
 import com.team2502.robot2017.RobotMap;
+import com.team2502.robot2017.command.teleop.SwitchHopperCommand;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -15,11 +17,11 @@ public class HopperSubsystem extends Subsystem
      */
     public HopperSubsystem()
     {
-        hopper = new Solenoid(RobotMap.Solenoid.HOPPER_SOLENOID);
+        hopper = new Solenoid(1);
         out = false;
     }
 
-    protected void initDefaultCommand() {}
+    protected void initDefaultCommand() {new SwitchHopperCommand();}
 
     /**
      * Switch the hopper from its current state
@@ -27,6 +29,7 @@ public class HopperSubsystem extends Subsystem
     public void switchHopper()
     {
         setHopper(out = !out);
+        System.out.println( out ? "moved hopper out" : "moved hopper in");
     }
 
     /**

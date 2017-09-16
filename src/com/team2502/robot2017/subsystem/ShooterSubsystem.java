@@ -18,7 +18,7 @@ public class ShooterSubsystem extends Subsystem
     private final CANTalon banebotFeeder;
     private final CANTalon agitator;
 
-    double targetSpeedFlywheel = 3760;
+    double targetSpeedFlywheel = 3525;
     double autoTargetSpeed = targetSpeedFlywheel + 50;
     double agitatorSpeed = 1;
     double colsonSpeed = 1;
@@ -177,8 +177,8 @@ public class ShooterSubsystem extends Subsystem
 
         leftFlywheelTalonTop.setProfile(0);
         leftFlywheelTalonTop.setF(0);
-        leftFlywheelTalonTop.setP(0.75);
-        leftFlywheelTalonTop.setI(0.1D);
+        leftFlywheelTalonTop.setP(0.7);
+        leftFlywheelTalonTop.setI(0.0);
         leftFlywheelTalonTop.setD(0.0);
         leftFlywheelTalonTop.set(targetSpeedFlywheel);
     }
@@ -188,7 +188,7 @@ public class ShooterSubsystem extends Subsystem
      */
     public void feed()
     {
-        banebotFeeder.changeControlMode(follower);
+//        banebotFeeder.changeControlMode(follower);
         colsonFeeder.set(colsonSpeed);
         banebotFeeder.set(-banebotSpeed);
         agitator.set(-agitatorSpeed);

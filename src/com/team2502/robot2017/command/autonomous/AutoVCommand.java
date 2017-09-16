@@ -107,6 +107,7 @@ public class AutoVCommand extends Command
     {
         dt.runMotors(0, 0);
         vision.turnOffVisionLight();
+        System.out.println("Did a align");
     }
 
     @Override

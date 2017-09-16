@@ -19,6 +19,7 @@ public class NavXMoveCommand extends Command implements PIDOutput
     private PIDController turnController;
     private long alignedTime;
     private boolean onTarget = false;
+    private boolean reset = true;
 
     /**
      * Drive in a straight line for 5 seconds according to the navx.
@@ -49,12 +50,27 @@ public class NavXMoveCommand extends Command implements PIDOutput
         this(maxtime);
         targetYaw = angle;
     }
+    /**
+     * Turn to an angle, and immediately end once turned.
+     *
+     * @param angle the angle to turn to.
+     */
+    public NavXMoveCommand(double angle, double maxtime, boolean reset)
+    {
+        this(maxtime);
+        targetYaw = angle;
+        this.reset = reset;
+    }
 
 
     @Override
     protected void initialize()
     {
-        navx.reset();
+        if(reset)
+        {
+            navx.reset();
+        }
+
 
         if(!turnController.isEnabled())
         {

@@ -23,6 +23,7 @@ public class SetHopperCommand extends Command
     protected void initialize()
     {
         hopper.setHopper(out);
+        System.out.println("Did a hopper expand");
     }
     @Override
     protected boolean isFinished()

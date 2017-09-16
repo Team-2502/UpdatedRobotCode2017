@@ -1,5 +1,6 @@
 package com.team2502.robot2017.command.autonomous;
 
+import com.ctre.CANTalon;
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
@@ -11,8 +12,13 @@ public class EncoderDrive extends Command
     private double targetRotLeft = -4.65;
     private double targetRotRight = 4.65;
 
+    private double voltageLeft = 12;
+    private double voltageRight = 12;
     private boolean onTarget = false;
     private long onTargetStartTime = 0;
+
+    CANTalon EncTalonLeft;
+    CANTalon EncTalonRight;
 
     private double revLeftL;
     private double revLeftR;
@@ -24,6 +30,8 @@ public class EncoderDrive extends Command
         super(time);
         dt = Robot.DRIVE_TRAIN;
         requires(Robot.DRIVE_TRAIN);
+        EncTalonLeft = dt.leftTalon0;
+        EncTalonRight = dt.rightTalon1;
     }
 
     public EncoderDrive(double inches, double maxtime) { this(inches, inches, maxtime); }
@@ -38,12 +46,26 @@ public class EncoderDrive extends Command
 //        targetRotRight = inchesRight;
     }
 
+    public EncoderDrive(double inchesLeft, double inchesRight, double voltageLeft, double voltageRight, double time)
+    {
+        this(time);
+
+        targetRotLeft = inchesLeft / (4 * Math.PI);
+        targetRotRight = inchesRight / (4 * Math.PI);
+
+        this.voltageLeft = voltageLeft;
+        this.voltageRight = voltageRight;
+    }
+
+
     @Override
     protected void initialize()
     {
+//        dt.setAutonSettingsVolts(EncTalonLeft, true, voltageLeft);
+//        dt.setAutonSettingsVolts(EncTalonRight, false, voltageRight);
         dt.setAutonSettings();
-        dt.leftTalon0.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
-        dt.rightTalon1.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
+        EncTalonLeft.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
+        EncTalonRight.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
 //        dt.leftTalon0.reverseOutput(true);
 //        dt.rightTalon1.reverseOutput(true);
     }
@@ -51,8 +73,8 @@ public class EncoderDrive extends Command
     @Override
     protected void execute()
     {
-        revLeftL = Math.abs(dt.leftTalon0.getClosedLoopError());
-        revLeftR = Math.abs(dt.rightTalon1.getClosedLoopError());
+        revLeftL = Math.abs(EncTalonLeft.getClosedLoopError());
+        revLeftR = Math.abs(EncTalonRight.getClosedLoopError());
 
 
 
@@ -61,7 +83,7 @@ public class EncoderDrive extends Command
 
         System.out.println("Needs to go " + revLeftL);
 //        System.out.println("Time: " + System.currentTimeMillis());
-        System.out.println("Setpoint: " + dt.leftTalon0.getSetpoint());
+        System.out.println("Setpoint: " + EncTalonLeft.getSetpoint());
 //
 //        if(!onTarget && (revLeftL <= RobotMap.Motor.ALLOWABLE_LOOP_ERR && revLeftR <= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
 //        {
@@ -75,8 +97,10 @@ public class EncoderDrive extends Command
 //        }
 
 
-        dt.rightTalon1.set(targetRotRight);
-        dt.leftTalon0.set(-targetRotLeft);
+//        EncTalonRight.set(targetRotRight);
+//        EncTalonLeft.set(-targetRotLeft);
+        EncTalonRight.set(-targetRotRight);
+        EncTalonLeft.set(targetRotLeft);
     }
 
     @Override

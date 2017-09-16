@@ -1,4 +1,4 @@
-package com.team2502.robot2017.command.autonomous;
+package com.team2502.robot2017.command.teleop;
 
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.RobotMap;
@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Created by 64009334 on 9/2/17.
  */
-public class BoilerDistCommand extends Command
+public class TeleopBoilerDist extends Command
 {
     DriveTrainSubsystem dt;
     VisionSubsystem camera;
@@ -19,7 +19,7 @@ public class BoilerDistCommand extends Command
     double base_speed = 0.5;
     boolean done;
 
-    public BoilerDistCommand(double timeout)
+    public TeleopBoilerDist(double timeout)
     {
         super(timeout);
         camera = Robot.VISION;
@@ -31,7 +31,7 @@ public class BoilerDistCommand extends Command
         done = false;
     }
 
-    public BoilerDistCommand()
+    public TeleopBoilerDist()
     {
         camera = Robot.VISION;
         dt = Robot.DRIVE_TRAIN;
@@ -52,18 +52,16 @@ public class BoilerDistCommand extends Command
     @Override
     protected void execute()
     {
+
         error = (target - camera.getHeight());
         double speed = 0.1;
         // /Math.abs(target - camera.getHeight());
-        if(error > tolerance)
+        if (error > tolerance)
         {
-            if (error > 0)
-            {
-                dt.runMotors(speed, -speed);
-            } else if (error < 0)
-            {
-                dt.runMotors(-speed, speed);
-            }
+            dt.runMotors(speed, -speed);
+        } else if (error < -tolerance)
+        {
+            dt.runMotors(-speed, speed);
         }
 
     }
@@ -77,6 +75,6 @@ public class BoilerDistCommand extends Command
     @Override
     protected boolean isFinished()
     {
-        return done || isTimedOut();
+        return false;
     }
 }

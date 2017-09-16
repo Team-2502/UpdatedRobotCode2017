@@ -88,11 +88,17 @@ public class DriveTrainSubsystem extends Subsystem
         talon.configEncoderCodesPerRev(256);
         talon.reverseSensor(reverseEnc);
         talon.configNominalOutputVoltage(0.0D, -0.0D);
-        talon.configPeakOutputVoltage(11.0, -11.0);//8
+        talon.configPeakOutputVoltage(12.0, -12.0);//8
         /* increase P until */
         talon.setPID(2.5, 0, 0); /* confirmed working -- Miguel certified */
         talon.setEncPosition(0);
         talon.enableControl();
+    }
+
+    public void setAutonSettingsVolts(CANTalon talon, boolean reverseEnc, double voltage)
+    {
+        setAutonSettings(talon, reverseEnc);
+        talon.configPeakOutputVoltage(voltage, -voltage);
     }
 
     /**
@@ -231,9 +237,9 @@ public class DriveTrainSubsystem extends Subsystem
 //        }
 
         // Sets the speed to 0 if the speed is less than 0.05 or larger than -0.05
-        if(Math.abs(leftSpeed) < 0.05D) { leftSpeed = 0.0D; }
+        if(Math.abs(leftSpeed) < 0.1D) { leftSpeed = 0.0D; }
 
-        if(Math.abs(rightSpeed) < 0.05D) { rightSpeed = 0.0D; }
+        if(Math.abs(rightSpeed) < 0.1D) { rightSpeed = 0.0D; }
 
         out.left = leftSpeed;
         out.right = rightSpeed;

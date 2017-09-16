@@ -1,6 +1,8 @@
 package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
+import com.team2502.robot2017.command.autonomous.BoilerDistCommand;
+import com.team2502.robot2017.command.autonomous.SetHopperCommand;
 import com.team2502.robot2017.command.teleop.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -30,9 +32,11 @@ public final class OI
     private static final Button SUB_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.SUB_FLYWHEEL_SPEED);
 
     private static final Button DISABLE_AUTOSHIFTING = new JoystickButton(JOYSTICK_DRIVE_RIGHT, 7);
-//	private static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.VISION_ALIGN);
+	private static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.VISION_ALIGN);
+	private static final Button VISION_BOILER = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.VISION_BOILER);
 
     private static final Button CLIMBER = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.CLIMBER);
+
 
     static
     {
@@ -57,7 +61,8 @@ public final class OI
 
         DISABLE_AUTOSHIFTING.whenPressed(new DisableAutoShifting());
 
-//        VISION_ALIGN.whileHeld(new TeleopVisionCommand());
+        VISION_ALIGN.whileHeld(new TeleopVisionCommand());
+        VISION_BOILER.whileHeld(new TeleopBoilerDist());
     }
 
     public static void init() {}

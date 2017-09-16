@@ -10,7 +10,7 @@ public class RobotMap
     public static final class Vision
     {
         public static final double TARGET_HEIGHT = 6.7;
-        public static final double HEIGHT_TOLERANCE = 0.01;
+        public static final double HEIGHT_TOLERANCE = 0.001;
     }
     public static final class Joystick
     {
@@ -23,7 +23,8 @@ public class RobotMap
         public static final class Button
         {
             public static final int SWITCH_DRIVE_TRANSMISSION = 1;
-            public static final int SWITCH_HOPPER = 12; //TODO: Figure out which button to use
+            public static final int SWITCH_HOPPER = 2; //TODO: Figure out which button to use
+            public static final int VISION_BOILER = 3;
             public static final int SHOOTER_TOGGLE = 5;
             public static final int VISION_ALIGN = 3;
             public static final int CLIMBER =  8;
@@ -70,7 +71,7 @@ public class RobotMap
         public static final int CLIMBER_LEFT = 14;
         public static final int CLIMBER_RIGHT = 3;
 
-        public static final int ALLOWABLE_LOOP_ERR = 5; // in encoder pulses
+        public static final int ALLOWABLE_LOOP_ERR = 1; // in encoder pulses
         public static final int TIME_TO_STOP = 1500; // amount of milliseconds to be on target to stop contolling with PID4
 
         // Feet per second
