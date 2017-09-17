@@ -194,6 +194,15 @@ public class ShooterSubsystem extends Subsystem
         agitator.set(-agitatorSpeed);
     }
 
+    public void teleopFeed(boolean neg)
+    {
+//        colsonFeeder.set(neg ? -colsonSpeed: colsonSpeed);
+//        banebotFeeder.set(neg ? banebotSpeed: -banebotSpeed);
+        agitator.set(neg ? agitatorSpeed: -agitatorSpeed);
+
+    }
+
+
     /**
      * @return the target speed
      */

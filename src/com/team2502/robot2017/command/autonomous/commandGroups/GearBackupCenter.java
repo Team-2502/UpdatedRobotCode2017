@@ -11,6 +11,6 @@ public class GearBackupCenter extends CommandGroup
      */
     public GearBackupCenter()
     {
-        addSequential(new EncoderDrive(114.5 - 30, 3));
+        addSequential(new EncoderDrive(114.5 - 30,114.5 - 30, 10, 10, 3));
     }
 }

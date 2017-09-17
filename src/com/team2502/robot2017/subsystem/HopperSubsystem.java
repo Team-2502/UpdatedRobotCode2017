@@ -1,46 +1,56 @@
 package com.team2502.robot2017.subsystem;
 
-import com.team2502.robot2017.OI;
 import com.team2502.robot2017.RobotMap;
-import com.team2502.robot2017.command.teleop.SwitchHopperCommand;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import com.team2502.robot2017.command.teleop.SwitchHopperCommand;
 
+/**
+ * Contains all the code for the Hopper
+ */
 public class HopperSubsystem extends Subsystem
 {
-    public static Solenoid hopper;
+    private static Solenoid switcher;
 
-    boolean out;
+    public boolean out;
 
     /**
-     * Initialize Hopper
+     * Initialize hopper
      */
     public HopperSubsystem()
     {
-        hopper = new Solenoid(1);
+        switcher = new Solenoid(RobotMap.Solenoid.HOPPER_SOLENOID);
         out = false;
     }
 
-    protected void initDefaultCommand() {new SwitchHopperCommand();}
+    @Override
+    protected void initDefaultCommand() { new SwitchHopperCommand();}
 
     /**
      * Switch the hopper from its current state
      */
     public void switchHopper()
     {
-        setHopper(out = !out);
-        System.out.println( out ? "moved hopper out" : "moved hopper in");
+        out = !out;
+        setHopper(out);
+        System.out.println(out ? "Out" : "In");
+    }
+
+    public boolean getOut()
+    {
+        return out;
     }
 
     /**
-     * Sets hopper to either in or out
-     * @param out Do you want it to be extended?
+     * Set the hopper to a specific in or out
+     *
+     * @param out Boolean saying "do you want to be in out/extended?"
      */
     public void setHopper(boolean out)
     {
         if(this.out != out)
         {
-            hopper.set(this.out = out);
+            switcher.set(this.out = out);
         }
     }
 }
