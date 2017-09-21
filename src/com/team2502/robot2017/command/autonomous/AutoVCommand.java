@@ -7,56 +7,52 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoVCommand extends Command
 {
-    public static DriveTrainSubsystem dt;
-    public double offset;
-    public double leftSpeed;
-    public double rightSpeed;
-    public boolean inFrontOfGear = false;
-    public boolean reverse = false;
-    public VisionSubsystem vision;
-    double startTime = System.currentTimeMillis();
-    double targetElapsed = 15;
-    boolean alignOnly = false;
-    double highSpeed = 0.3;
-    double lowSpeed = highSpeed/2;
-    double turningFactor = 0.5;
-    boolean smoothTurning = false;
+    private static DriveTrainSubsystem dt;
+    private static double offset;
+    private static VisionSubsystem vision;
+    private double startTime = System.currentTimeMillis();
+    private double targetElapsed = 15;
+    private static boolean alignOnly = false;
+    private double highSpeed = 0.3;
+    private double lowSpeed = highSpeed/2;
+    private double turningFactor = -0.2/3;
+    private boolean smoothTurning = false;
     /**
      * Automatic vision-based alignment with shiny objects
      * <br>
      * Runs for 2 seconds
      */
     public AutoVCommand(){
-    	this(2);
+        this(2);
     }
-    
+
     /**
      * Automatic vision-based alignment with shiny objects
-     * 
+     *
      * @param runTime How long vision should run for
      */
     public AutoVCommand(double runTime)
     {
         requires(Robot.DRIVE_TRAIN);
         requires(Robot.VISION);
-        
+
         vision = Robot.VISION;
         dt = Robot.DRIVE_TRAIN;
         targetElapsed = runTime*1000;
     }
-    
+
     /**
      * Automatic vision-based alignment with shiny objects
-     *  
+     *
      * @param runTime How long vision should run for
-     * @param align   if it should be in align-only mode
+     * @param align   if it should be in alignWidth-only mode
      */
     public AutoVCommand(double runTime, boolean align)
     {
         this(runTime);
         alignOnly = align;
     }
-    
+
     /**
      * Automatic vision-based alignment with shiny objects
      * <br>
@@ -66,19 +62,19 @@ public class AutoVCommand extends Command
      */
     public AutoVCommand(double runTime, double slowFactor)
     {
-    	this(runTime);
-    	this.turningFactor = slowFactor;
-    	smoothTurning = true;
-    	if(slowFactor == 1) { alignOnly = true; }
+        this(runTime);
+        this.turningFactor = slowFactor;
+        smoothTurning = true;
+        if(slowFactor == 1) { alignOnly = true; }
     }
-    
+
     /**
      * Automatic vision-based alignment with shiny objects.
      * <br>
      * Wiggly Butt - the closer lowSpeed approaches highSpeed the more of a wiggle.
-     * 
+     *
      * @param runTime   How long vision should run for
-     * @param align     if it should be in align-only mode
+     * @param align     if it should be in alignWidth-only mode
      * @param lowSpeed  The lower speed for turning
      * @param highSpeed The higher speed for turning
      */
@@ -90,54 +86,30 @@ public class AutoVCommand extends Command
     }
 
     @Override
-    protected void interrupted() { end(); }
-    
-    @Override
-    protected void initialize() 
+    protected void initialize()
     {
-    	vision.turnOnVisionLight();
-    	startTime = System.currentTimeMillis();
-    }
-    
-    protected void linearSpeed(double offset)
-    {
-    	if(offset > 0.1) { dt.runMotors(highSpeed, lowSpeed); }
-        else if(offset < 0.1) { dt.runMotors(-lowSpeed, -highSpeed); }
-        else if((-0.1 < offset) && (offset < 0.1) && !alignOnly) { dt.runMotors(.5D, -.5D); }
-    }
-    
-    protected void smoothSpeed(double offset)
-    {
-    	highSpeed = getSpeed(offset);
-    	if(offset > 0.15) { dt.runMotors(highSpeed, highSpeed * turningFactor); }
-        else if(offset < 0.15) { dt.runMotors(-turningFactor * highSpeed, -highSpeed); }
-        else if((-0.15 < offset) && (offset < 0.15) && !alignOnly) { dt.runMotors(.5D, -.5D); }
-    }
-    
-    @Override
-    protected void execute()
-    {
-        offset = vision.getOffset();
-        if(smoothTurning) { smoothSpeed(offset); }
-        else if(!smoothTurning) { linearSpeed(offset); }   
+        vision.turnOnVisionLight();
+        startTime = System.currentTimeMillis();
     }
 
     @Override
-    protected boolean isFinished()
+    protected void execute()
     {
-    	if(System.currentTimeMillis() - startTime > targetElapsed)
-    	{
-    		if(alignOnly) { return Math.abs(offset) < 0.1; } // if aligned properly and enough time gone by
-            else{ return true; } // if aligned properly
-    	}
-    	else { return false; } // if not enough time has gone by
+        vision.alignWidth(dt, lowSpeed, highSpeed, alignOnly, true);
+    }
+
+    @Override
+    protected boolean isFinished() {
+        return System.currentTimeMillis() - startTime > targetElapsed && (!alignOnly || Math.abs(offset) < 0.1);
     }
 
     protected void end()
     {
-    	dt.stop();
-    	vision.turnOffVisionLight();
+        dt.runMotors(0, 0);
+        vision.turnOffVisionLight();
+        System.out.println("Did a align");
     }
-    
-    private double getSpeed(double x) { return (-2/(1+(Math.pow(x, 2)/1600))+2); }
+
+    @Override
+    protected void interrupted() { end(); }
 }
