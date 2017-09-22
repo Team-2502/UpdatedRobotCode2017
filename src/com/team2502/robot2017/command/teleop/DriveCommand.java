@@ -24,9 +24,11 @@ import logger.Log;
  */
 public class DriveCommand extends Command
 {
+    private static boolean disabledAutoShifting = false;
     private final DriveTrainSubsystem driveTrainSubsystem;
     private final DriveTrainTransmissionSubsystem transmission;
     private final AHRS navx;
+    private boolean shiftedUp = false;
 
     public DriveCommand()
     {
@@ -38,16 +40,13 @@ public class DriveCommand extends Command
         shiftedUp = false;
     }
 
-    @Override
-    protected void initialize() {driveTrainSubsystem.setTeleopSettings();}
-
-    private boolean shiftedUp = false;
-    private static boolean disabledAutoShifting = false;
-
     public static void toggleAutoShifting()
     {
         disabledAutoShifting = !disabledAutoShifting;
     }
+
+    @Override
+    protected void initialize() {driveTrainSubsystem.setTeleopSettings();}
 
     @Override
     protected void execute()
@@ -55,14 +54,14 @@ public class DriveCommand extends Command
         SmartDashboard.putBoolean("DT: AutoShifting Enabled?", !disabledAutoShifting);
         driveTrainSubsystem.drive();
 
-        if(!disabledAutoShifting)
+        if (!disabledAutoShifting)
         {
             // Check that at least 1/2 second has passed since last shifting
-            if((System.currentTimeMillis() - Robot.SHIFTED) >= 500)
+            if ((System.currentTimeMillis() - Robot.SHIFTED) >= 500)
             {
 
                 // Do the opposite if the driver is forcing a shift
-                if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(RobotMap.Joystick.Button.SWITCH_DRIVE_TRANSMISSION))
+                if (OI.JOYSTICK_DRIVE_RIGHT.getRawButton(RobotMap.Joystick.Button.SWITCH_DRIVE_TRANSMISSION))
                 {
                     Log.warn("Shifting down forced by driver.");
                     transmission.setGear(false);
@@ -71,34 +70,32 @@ public class DriveCommand extends Command
                 else
                 {
                     // Make sure that we're going mostly straight
-                    if(driveTrainSubsystem.turningFactor() < 0.1)
+                    if (driveTrainSubsystem.turningFactor() < 0.1)
                     {
                         double accel = navx.getRawAccelY();
                         double speed = driveTrainSubsystem.avgVel();
 
                         // Shift up if we are accelerating and going fast and the driver is putting the joystick at least 80% forward or backward
-                        if(Math.abs(accel) > 0.15 && speed > RobotMap.Motor.SHIFT_UP_THRESHOLD && OI.joysThreshold(0.8, true))
+                        if (Math.abs(accel) > 0.15 && speed > RobotMap.Motor.SHIFT_UP_THRESHOLD && OI.joysThreshold(0.8, true))
                         {
 
-                            if(!shiftedUp)
+                            if (!shiftedUp)
                             {
                                 shiftedUp = true;
                                 Log.info("Shifting up.");
                             }
                             transmission.setGear(true);
-                        }
-                        else if(!transmission.signsame(accel, driveTrainSubsystem.rightTalon1.getEncVelocity()) && OI.joysThreshold(0.8, false)) /* If we are not accelerating very fast but the driver is still pushing forward we shift down because it is probably a pushing match */
+                        } else if (!transmission.signsame(accel, driveTrainSubsystem.rightTalon1.getEncVelocity()) && OI.joysThreshold(0.8, false)) /* If we are not accelerating very fast but the driver is still pushing forward we shift down because it is probably a pushing match */
                         {
-                            if(shiftedUp)
+                            if (shiftedUp)
                             {
                                 shiftedUp = false;
                                 Log.info("Shifting down because you're a bad driver.");
                             }
                             transmission.setGear(false);
-                        }
-                        else if(OI.joysThreshold(30, false) && speed < RobotMap.Motor.SHIFT_DOWN_THRESHOLD) /* If we're going slow and the driver wants it to be that way we shift down */
+                        } else if (OI.joysThreshold(30, false) && speed < RobotMap.Motor.SHIFT_DOWN_THRESHOLD) /* If we're going slow and the driver wants it to be that way we shift down */
                         {
-                            if(shiftedUp)
+                            if (shiftedUp)
                             {
                                 shiftedUp = false;
                                 Log.info("Shifting down because slow.");

@@ -19,23 +19,22 @@ import logger.Log;
 public class DriveTrainSubsystem extends Subsystem
 {
     private static final Pair<Double, Double> SPEED_CONTAINER = new Pair<Double, Double>();
-
-
+    private static final double DELAY_TIME = 5.77D + 43902.0D / 9999900.0D;
     public final CANTalon leftTalon0; //enc
     public final CANTalon leftTalon1;
     public final CANTalon rightTalon0;
     public final CANTalon rightTalon1; //enc
     private final RobotDrive drive;
+    long counter = 0;
     private double lastLeft;
     private double lastRight;
-
     private boolean negative = false;
     private boolean isNegativePressed = false;
-
     // TODO: Remove if truly unnecessary.
     private double leftSpeed;
     private double rightSpeed;
     private DriveTrainTransmissionSubsystem DTTS;
+    private int logCounter = 0;
 
     /**
      * Initialize the drive train subsystem
@@ -68,17 +67,17 @@ public class DriveTrainSubsystem extends Subsystem
 
         setAutonSettings(leftTalon0, true);
         leftTalon1.changeControlMode(TalonControlMode.Follower);
-	    leftTalon1.set(RobotMap.Motor.LEFT_TALON_0);
+        leftTalon1.set(RobotMap.Motor.LEFT_TALON_0);
 
         setAutonSettings(rightTalon1, false);
         rightTalon0.changeControlMode(TalonControlMode.Follower);
-	    rightTalon0.set(RobotMap.Motor.RIGHT_TALON_1);
+        rightTalon0.set(RobotMap.Motor.RIGHT_TALON_1);
     }
 
     /**
      * Set the appropriate settings for autonomous
      *
-     * @param talon the talon to set the settings of
+     * @param talon      the talon to set the settings of
      * @param reverseEnc // TODO: add JavaDoc For this
      */
     public void setAutonSettings(CANTalon talon, boolean reverseEnc)
@@ -169,7 +168,7 @@ public class DriveTrainSubsystem extends Subsystem
             point.profileSlotSelect = 0;
             point.velocityOnly = false;
             point.zeroPos = (i == 0);
-            point.isLastPoint = (i+1 == totalCnt);
+            point.isLastPoint = (i + 1 == totalCnt);
 
             rightTalon1.pushMotionProfileTrajectory(point);
             rightTalon0.pushMotionProfileTrajectory(point);
@@ -181,7 +180,7 @@ public class DriveTrainSubsystem extends Subsystem
     /**
      * @return the position of the left side of the drivetrain in feet
      */
-    public double getEncLeftPosition() { return (leftTalon0.getPosition() * Math.PI *  4)  / (1024 * 12); }
+    public double getEncLeftPosition() { return (leftTalon0.getPosition() * Math.PI * 4) / (1024 * 12); }
 
     /**
      * @return the position of the right side of the drivetrain in feet
@@ -194,25 +193,23 @@ public class DriveTrainSubsystem extends Subsystem
     @Deprecated
     public double getEncAveg() { return (getEncRightPosition() + getEncLeftPosition()) / 2; }
 
+//    private static void debugSpeed(String format, Object... args)
+//    {
+//        Log.debug(String.format(format, args));
+//    }
+
     public double turningFactor() { return Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY() - OI.JOYSTICK_DRIVE_RIGHT.getY());}
 
     public double avgVel()
     {
-        return Math.abs((leftTalon0.getEncVelocity() + rightTalon1.getEncVelocity())/2);
+        return Math.abs((leftTalon0.getEncVelocity() + rightTalon1.getEncVelocity()) / 2);
 //        return Math.abs(rightTalon1.getEncVelocity());
     }
 
     @Override
     protected void initDefaultCommand() { setDefaultCommand(new DriveCommand()); }
 
-//    private static void debugSpeed(String format, Object... args)
-//    {
-//        Log.debug(String.format(format, args));
-//    }
-
-    private int logCounter = 0;
-
-    @SuppressWarnings({ "SuspiciousNameCombination", "PointlessBooleanExpression", "ConstantConditions" })
+    @SuppressWarnings({"SuspiciousNameCombination", "PointlessBooleanExpression", "ConstantConditions"})
     @Deprecated
     private Pair<Double, Double> getSpeedArcade(Pair<Double, Double> out)
     {
@@ -225,11 +222,9 @@ public class DriveTrainSubsystem extends Subsystem
         double xLevel = -OI.JOYSTICK_DRIVE_RIGHT.getX();
 
         // Should invert the left/right to be more intuitive while driving backwards.
-        if(yLevel < 0.0D) { xLevel = -xLevel;}
+        if (yLevel < 0.0D) { xLevel = -xLevel;}
 
-        if(xLevel > 0.0D) { leftSpeed -= xLevel; }
-
-        else if(xLevel < 0.0D) { rightSpeed += xLevel; }
+        if (xLevel > 0.0D) { leftSpeed -= xLevel; } else if (xLevel < 0.0D) { rightSpeed += xLevel; }
 
 //        if(logCounter++ % 10 == 0 && false)
 //        {
@@ -237,16 +232,14 @@ public class DriveTrainSubsystem extends Subsystem
 //        }
 
         // Sets the speed to 0 if the speed is less than 0.05 or larger than -0.05
-        if(Math.abs(leftSpeed) < 0.1D) { leftSpeed = 0.0D; }
+        if (Math.abs(leftSpeed) < 0.1D) { leftSpeed = 0.0D; }
 
-        if(Math.abs(rightSpeed) < 0.1D) { rightSpeed = 0.0D; }
+        if (Math.abs(rightSpeed) < 0.1D) { rightSpeed = 0.0D; }
 
         out.left = leftSpeed;
         out.right = rightSpeed;
         return out;
     }
-
-    long counter = 0;
 
     @Deprecated
     private Pair<Double, Double> getSpeedArcade() { return getSpeedArcade(SPEED_CONTAINER); }
@@ -261,36 +254,37 @@ public class DriveTrainSubsystem extends Subsystem
     {
         double joystickLevel;
         // Get the base speed of the robot
-        if(negative) { joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY(); }
-
-        else { joystickLevel = -OI.JOYSTICK_DRIVE_LEFT.getY(); }
+        if (negative) { joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY(); } else
+        {
+            joystickLevel = -OI.JOYSTICK_DRIVE_LEFT.getY();
+        }
 
         // Only increase the speed by a small amount
         double diff = joystickLevel - lastLeft;
-        if(diff > 0.1D) { joystickLevel = lastLeft + 0.1D; }
-
-        else if(diff < 0.1D) { joystickLevel = lastLeft - 0.1D; }
+        if (diff > 0.1D) { joystickLevel = lastLeft + 0.1D; } else if (diff < 0.1D) { joystickLevel = lastLeft - 0.1D; }
 
         lastLeft = joystickLevel;
         out.left = joystickLevel;
 
-        if(negative) { joystickLevel = -OI.JOYSTICK_DRIVE_LEFT.getY(); }
-
-        else { joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY(); }
+        if (negative) { joystickLevel = -OI.JOYSTICK_DRIVE_LEFT.getY(); } else
+        {
+            joystickLevel = -OI.JOYSTICK_DRIVE_RIGHT.getY();
+        }
 
         diff = joystickLevel - lastRight;
-        if(diff > 0.1D) { joystickLevel = lastRight + 0.1D; }
-
-        else if(diff < 0.1D) { joystickLevel = lastRight - 0.1D; }
+        if (diff > 0.1D) { joystickLevel = lastRight + 0.1D; } else if (diff < 0.1D)
+        {
+            joystickLevel = lastRight - 0.1D;
+        }
 
         lastRight = joystickLevel;
         out.right = joystickLevel;
 
         // Sets the speed to 0 if the speed is less than 0.05 or larger than
         // -0.05
-        if(Math.abs(out.left) < 0.05D) { out.left = 0.0D; }
+        if (Math.abs(out.left) < 0.05D) { out.left = 0.0D; }
 
-        if(Math.abs(out.right) < 0.05D) { out.right = 0.0D; }
+        if (Math.abs(out.right) < 0.05D) { out.right = 0.0D; }
 
         return out;
     }
@@ -302,16 +296,15 @@ public class DriveTrainSubsystem extends Subsystem
         Pair<Double, Double> speed = getSpeed();
 
         //reverse drive
-        if(OI.JOYSTICK_DRIVE_LEFT.getRawButton(1) && !isNegativePressed) { negative = !negative; }
+        if (OI.JOYSTICK_DRIVE_LEFT.getRawButton(1) && !isNegativePressed) { negative = !negative; }
 
         isNegativePressed = OI.JOYSTICK_DRIVE_LEFT.getRawButton(1);
 
-        if(negative) { drive.tankDrive(-speed.left, -speed.right, true); }
-
-        else { drive.tankDrive(speed.left, speed.right, true); }
+        if (negative) { drive.tankDrive(-speed.left, -speed.right, true); } else
+        {
+            drive.tankDrive(speed.left, speed.right, true);
+        }
     }
-
-    private static final double DELAY_TIME = 5.77D + 43902.0D / 9999900.0D;
 
     /**
      * Drive the robot. The equation x=-y must be true for the robot to drive straight.
@@ -373,7 +366,10 @@ public class DriveTrainSubsystem extends Subsystem
         Timer.delay(0.3D);
     }
 
-    public enum DriveTypes { DUAL_STICK, ARCADE; }
+    public enum DriveTypes
+    {
+        DUAL_STICK, ARCADE;
+    }
 
     @SuppressWarnings("WeakerAccess")
     public static class Pair<L, R>
@@ -408,12 +404,12 @@ public class DriveTrainSubsystem extends Subsystem
         @Override
         public boolean equals(Object o)
         {
-            if(this == o) { return true; }
-            if(o instanceof Pair)
+            if (this == o) { return true; }
+            if (o instanceof Pair)
             {
                 Pair pair = (Pair) o;
                 return (left != null ? left.equals(pair.left) : pair.left == null)
-                       && (left != null ? left.equals(pair.left) : pair.left == null);
+                        && (left != null ? left.equals(pair.left) : pair.left == null);
             }
             return false;
         }

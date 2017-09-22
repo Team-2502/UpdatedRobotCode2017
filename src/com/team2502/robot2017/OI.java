@@ -1,9 +1,9 @@
 package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
-import com.team2502.robot2017.command.autonomous.BoilerDistCommand;
-import com.team2502.robot2017.command.autonomous.SetHopperCommand;
-import com.team2502.robot2017.command.teleop.*;
+import com.team2502.robot2017.command.teleop.SwitchHopperCommand;
+import com.team2502.robot2017.command.teleop.TeleopBoilerDist;
+import com.team2502.robot2017.command.teleop.TeleopVisionCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -32,8 +32,8 @@ public final class OI
     private static final Button SUB_FLYWHEEL_SPEED = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.SUB_FLYWHEEL_SPEED);
 
     private static final Button DISABLE_AUTOSHIFTING = new JoystickButton(JOYSTICK_DRIVE_RIGHT, 7);
-	private static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.VISION_ALIGN);
-	private static final Button VISION_BOILER = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.VISION_BOILER);
+    private static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.VISION_ALIGN);
+    private static final Button VISION_BOILER = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.VISION_BOILER);
 
     private static final Button CLIMBER = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.CLIMBER);
 
@@ -65,13 +65,18 @@ public final class OI
         VISION_BOILER.whileHeld(new TeleopBoilerDist());
     }
 
+    private OI() {}
+
     public static void init() {}
 
     public static boolean joysThreshold(double threshold, boolean above)
     {
-        if(above) { return Math.abs(OI.JOYSTICK_DRIVE_RIGHT.getY()) > threshold && Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY()) > threshold; }
-        else { return Math.abs(OI.JOYSTICK_DRIVE_RIGHT.getY()) < threshold && Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY()) < threshold; }
+        if (above)
+        {
+            return Math.abs(OI.JOYSTICK_DRIVE_RIGHT.getY()) > threshold && Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY()) > threshold;
+        } else
+        {
+            return Math.abs(OI.JOYSTICK_DRIVE_RIGHT.getY()) < threshold && Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY()) < threshold;
+        }
     }
-
-    private OI() {}
 }

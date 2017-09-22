@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SetHopperCommand extends Command
 {
+    HopperSubsystem hopper;
+    boolean out;
     public SetHopperCommand(boolean out)
     {
         hopper = Robot.HOPPER;
@@ -16,15 +18,13 @@ public class SetHopperCommand extends Command
         requires(hopper);
     }
 
-    HopperSubsystem hopper;
-    boolean out;
-
     @Override
     protected void initialize()
     {
         hopper.setHopper(out);
         System.out.println(out ? "Did a Hopper Expand" : "Did a Hopper Contract");
     }
+
     @Override
     protected boolean isFinished()
     {

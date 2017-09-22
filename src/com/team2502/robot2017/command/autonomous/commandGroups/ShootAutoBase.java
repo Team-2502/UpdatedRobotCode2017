@@ -38,8 +38,12 @@ class ShootAutoBase extends CommandGroup
         // Pull away from boiler
         addSequential(new EncoderDrive(-20, 1)); //TODO: Convert to Encoders
 
-        if(allianceColor.hashCode() == red.hashCode()) { addSequential(new NavXMoveCommand(-angle, 2)); }
-        else if(allianceColor.hashCode() == blue.hashCode()) { addSequential(new NavXMoveCommand(angle, 2)); }
-        else { addSequential(new EncoderDrive(100000000, 999999999)); } //TODO: Convert to Encoders
+        if (allianceColor.hashCode() == red.hashCode())
+        {
+            addSequential(new NavXMoveCommand(-angle, 2));
+        } else if (allianceColor.hashCode() == blue.hashCode()) { addSequential(new NavXMoveCommand(angle, 2)); } else
+        {
+            addSequential(new EncoderDrive(100000000, 999999999));
+        } //TODO: Convert to Encoders
     }
 }

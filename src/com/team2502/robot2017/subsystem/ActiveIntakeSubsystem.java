@@ -33,17 +33,15 @@ public class ActiveIntakeSubsystem extends Subsystem
     public void activeDrive()
     {
         //TODO: Do buttons the proper way
-        if(OI.JOYSTICK_FUNCTION.getRawButton(3))
+        if (OI.JOYSTICK_FUNCTION.getRawButton(3))
         {
             activeTalon.set(1);
             shooter.teleopFeed(true);
-        }
-        else if(OI.JOYSTICK_FUNCTION.getRawButton(4))
+        } else if (OI.JOYSTICK_FUNCTION.getRawButton(4))
         {
             activeTalon.set(-1);
             shooter.teleopFeed(false);
-        }
-        else { activeTalon.set(0); }
+        } else { activeTalon.set(0); }
     }
 
     /**

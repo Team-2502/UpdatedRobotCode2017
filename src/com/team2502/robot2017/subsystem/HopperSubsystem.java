@@ -1,9 +1,9 @@
 package com.team2502.robot2017.subsystem;
 
 import com.team2502.robot2017.RobotMap;
+import com.team2502.robot2017.command.teleop.SwitchHopperCommand;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import com.team2502.robot2017.command.teleop.SwitchHopperCommand;
 
 /**
  * Contains all the code for the Hopper
@@ -48,7 +48,7 @@ public class HopperSubsystem extends Subsystem
      */
     public void setHopper(boolean out)
     {
-        if(this.out != out)
+        if (this.out != out)
         {
             switcher.set(this.out = out);
         }

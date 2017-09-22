@@ -24,7 +24,7 @@ public class ShootCommand extends TimedCommand
     @Override
     protected void execute()
     {
-        if(both) { shooterSubsystem.feed(); }
+        if (both) { shooterSubsystem.feed(); }
         shooterSubsystem.turnOnFlywheel();
     }
 

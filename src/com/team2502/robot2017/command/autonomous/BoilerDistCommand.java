@@ -55,7 +55,7 @@ public class BoilerDistCommand extends Command
         error = (target - camera.getHeight());
         double speed = 0.1;
         // /Math.abs(target - camera.getHeight());
-        if(error > tolerance)
+        if (error > tolerance)
         {
             if (error > 0)
             {

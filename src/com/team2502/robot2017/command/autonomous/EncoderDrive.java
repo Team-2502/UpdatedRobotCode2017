@@ -9,17 +9,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class EncoderDrive extends Command
 {
+    CANTalon EncTalonLeft;
+    CANTalon EncTalonRight;
     private double targetRotLeft = -4.65;
     private double targetRotRight = 4.65;
-
     private double voltageLeft = 12;
     private double voltageRight = 12;
     private boolean onTarget = false;
     private long onTargetStartTime = 0;
-
-    CANTalon EncTalonLeft;
-    CANTalon EncTalonRight;
-
     private double revLeftL;
     private double revLeftR;
 
@@ -75,7 +72,6 @@ public class EncoderDrive extends Command
     {
         revLeftL = Math.abs(EncTalonLeft.getClosedLoopError());
         revLeftR = Math.abs(EncTalonRight.getClosedLoopError());
-
 
 
         SmartDashboard.putNumber("DT: Autonomous encoder ticks needed Left", revLeftL);
