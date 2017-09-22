@@ -10,19 +10,21 @@ public class AutoVCommand extends Command
     private static DriveTrainSubsystem dt;
     private static double offset;
     private static VisionSubsystem vision;
+    private static boolean alignOnly = false;
     private double startTime = System.currentTimeMillis();
     private double targetElapsed = 15;
-    private static boolean alignOnly = false;
     private double highSpeed = 0.3;
-    private double lowSpeed = highSpeed/2;
-    private double turningFactor = -0.2/3;
+    private double lowSpeed = highSpeed / 2;
+    private double turningFactor = -0.2 / 3;
     private boolean smoothTurning = false;
+
     /**
      * Automatic vision-based alignment with shiny objects
      * <br>
      * Runs for 2 seconds
      */
-    public AutoVCommand(){
+    public AutoVCommand()
+    {
         this(2);
     }
 
@@ -38,7 +40,7 @@ public class AutoVCommand extends Command
 
         vision = Robot.VISION;
         dt = Robot.DRIVE_TRAIN;
-        targetElapsed = runTime*1000;
+        targetElapsed = runTime * 1000;
     }
 
     /**
@@ -57,6 +59,7 @@ public class AutoVCommand extends Command
      * Automatic vision-based alignment with shiny objects
      * <br>
      * This one is special because it uses a math function to smooth out the turning
+     *
      * @param runTime    How long vision should run for
      * @param slowFactor How much slower the slow side should go.
      */
@@ -65,7 +68,7 @@ public class AutoVCommand extends Command
         this(runTime);
         this.turningFactor = slowFactor;
         smoothTurning = true;
-        if(slowFactor == 1) { alignOnly = true; }
+        if (slowFactor == 1) { alignOnly = true; }
     }
 
     /**
@@ -99,7 +102,8 @@ public class AutoVCommand extends Command
     }
 
     @Override
-    protected boolean isFinished() {
+    protected boolean isFinished()
+    {
         return System.currentTimeMillis() - startTime > targetElapsed && (!alignOnly || Math.abs(offset) < 0.1);
     }
 

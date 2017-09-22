@@ -48,7 +48,7 @@ public class DriveTrainTransmissionSubsystem extends Subsystem
      */
     public void setGear(boolean highGear)
     {
-        if(this.highGear != highGear)
+        if (this.highGear != highGear)
         {
             Robot.SHIFTED = System.currentTimeMillis();
             switcher.set(this.highGear = highGear);

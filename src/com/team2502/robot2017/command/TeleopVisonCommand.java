@@ -2,7 +2,6 @@ package com.team2502.robot2017.command;
 
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import com.team2502.robot2017.subsystem.VisionSubsystem;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TeleopVisonCommand extends Command
@@ -31,9 +30,10 @@ public class TeleopVisonCommand extends Command
     protected void smoothSpeed(double offset)
     {
         highSpeed = getSpeed(offset);
-        if (offset > 0.15){ dt.runMotors(highSpeed, highSpeed * turningFactor); } 
-        else if (offset < 0.15){ dt.runMotors(-turningFactor * highSpeed, -highSpeed); } 
-        else if ((-0.15 < offset) && (offset < 0.15) && !alignOnly){  dt.runMotors(.5D, -.5D); }
+        if (offset > 0.15) { dt.runMotors(highSpeed, highSpeed * turningFactor); } else if (offset < 0.15)
+        {
+            dt.runMotors(-turningFactor * highSpeed, -highSpeed);
+        } else if ((-0.15 < offset) && (offset < 0.15) && !alignOnly) { dt.runMotors(.5D, -.5D); }
     }
 
     @Override

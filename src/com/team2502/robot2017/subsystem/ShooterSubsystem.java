@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem
 {
-    public CANTalon.TalonControlMode follower = CANTalon.TalonControlMode.Follower;
-
     private final CANTalon leftFlywheelTalonTop;
     private final CANTalon leftFlywheelTalonBottom;
     private final CANTalon rightFlywheelTalonTop;
@@ -17,16 +15,15 @@ public class ShooterSubsystem extends Subsystem
     private final CANTalon colsonFeeder;
     private final CANTalon banebotFeeder;
     private final CANTalon agitator;
-
+    public CANTalon.TalonControlMode follower = CANTalon.TalonControlMode.Follower;
+    public boolean isFlywheelActive;
+    public boolean isFeederActive;
     double targetSpeedFlywheel = 3525;
     double autoTargetSpeed = targetSpeedFlywheel + 50;
     double agitatorSpeed = 1;
     double colsonSpeed = 1;
     double banebotSpeed = 1400;
     int error = 0;
-
-    public boolean isFlywheelActive;
-    public boolean isFeederActive;
     private boolean shooterMode = false;
     private boolean isTriggerPressed = false;
 
@@ -198,7 +195,7 @@ public class ShooterSubsystem extends Subsystem
     {
 //        colsonFeeder.set(neg ? -colsonSpeed: colsonSpeed);
 //        banebotFeeder.set(neg ? banebotSpeed: -banebotSpeed);
-        agitator.set(neg ? agitatorSpeed: -agitatorSpeed);
+        agitator.set(neg ? agitatorSpeed : -agitatorSpeed);
 
     }
 
@@ -225,8 +222,8 @@ public class ShooterSubsystem extends Subsystem
      */
     public void changeSpeedAgitator(boolean isAdd)
     {
-        if(isAdd) { agitatorSpeed += 0.05; }
-        if(!isAdd) { agitatorSpeed -= 0.05; }
+        if (isAdd) { agitatorSpeed += 0.05; }
+        if (!isAdd) { agitatorSpeed -= 0.05; }
     }
 
     /**
@@ -236,8 +233,8 @@ public class ShooterSubsystem extends Subsystem
      */
     public void changeSpeedColson(boolean isAdd)
     {
-        if(isAdd) { colsonSpeed += 0.05; }
-        if(!isAdd) { colsonSpeed -= 0.05; }
+        if (isAdd) { colsonSpeed += 0.05; }
+        if (!isAdd) { colsonSpeed -= 0.05; }
     }
 
     /**
@@ -247,8 +244,8 @@ public class ShooterSubsystem extends Subsystem
      */
     public void changeSpeedBanebot(boolean isAdd)
     {
-        if(isAdd) { banebotSpeed += 50; }
-        if(!isAdd) { banebotSpeed -= 50; }
+        if (isAdd) { banebotSpeed += 50; }
+        if (!isAdd) { banebotSpeed -= 50; }
     }
 
     /**
@@ -258,8 +255,8 @@ public class ShooterSubsystem extends Subsystem
      */
     public void changeSpeedFlywheel(boolean isAdd)
     {
-        if(isAdd) { targetSpeedFlywheel += 10; }
-        if(!isAdd) { targetSpeedFlywheel -= 10; }
+        if (isAdd) { targetSpeedFlywheel += 10; }
+        if (!isAdd) { targetSpeedFlywheel -= 10; }
     }
 
     /**
@@ -290,24 +287,18 @@ public class ShooterSubsystem extends Subsystem
         banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
 
         // Toggle mode for flywheel. It is bound to button 5 on the Function stick.
-        if(OI.JOYSTICK_FUNCTION.getRawButton(5) && !isTriggerPressed) { shooterMode = !shooterMode; }
+        if (OI.JOYSTICK_FUNCTION.getRawButton(5) && !isTriggerPressed) { shooterMode = !shooterMode; }
         isTriggerPressed = OI.JOYSTICK_FUNCTION.getRawButton(5);
 
-        if(shooterMode) { setSpeedOnAllFlyWheelMotors(targetSpeedFlywheel); }
-
-        else { setSpeedOnAllFlyWheelMotors(0); }
+        if (shooterMode) { setSpeedOnAllFlyWheelMotors(targetSpeedFlywheel); } else { setSpeedOnAllFlyWheelMotors(0); }
 
         //Control for turning on/off the feeding mechanism.
-        if(OI.JOYSTICK_FUNCTION.getTrigger())
+        if (OI.JOYSTICK_FUNCTION.getTrigger())
         {
             colsonFeeder.set(colsonSpeed);
             banebotFeeder.set(banebotSpeed);
             agitator.set(-agitatorSpeed);
-        }
-
-        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(agitatorSpeed); }
-
-        else
+        } else if (OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(agitatorSpeed); } else
         {
             colsonFeeder.set(0);
             banebotFeeder.set(0);

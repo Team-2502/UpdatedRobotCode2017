@@ -41,13 +41,13 @@ public class PIDVisionCommand extends Command implements PIDOutput
     @Override
     protected void initialize()
     {
-        if(!alignController.isEnabled())
+        if (!alignController.isEnabled())
         {
             alignController.setSetpoint(0);
             alignController.enable();
         }
 
-        if(alignController.onTarget() && !onTarget)
+        if (alignController.onTarget() && !onTarget)
         {
             onTarget = true;
             alignedTime = System.currentTimeMillis();
