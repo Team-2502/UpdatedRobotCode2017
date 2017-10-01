@@ -2,6 +2,7 @@ package com.team2502.robot2017;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.team2502.robot2017.subsystem.*;
+import com.team2502.robot2017.vision.VisionServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
@@ -22,6 +23,7 @@ public final class Robot extends IterativeRobot
     public static DriveTrainTransmissionSubsystem DRIVE_TRAIN_GEAR_SWITCH;
     public static ClimberSubsystem CLIMBER;
     public static HopperSubsystem HOPPER;
+    public static VisionServer VISIONSERVER;
 
     public static long SHIFTED;
 
@@ -36,6 +38,7 @@ public final class Robot extends IterativeRobot
     public void robotInit()
     {
         Log.createLogger();
+        VISIONSERVER = VisionServer.getInstance();
         DRIVE_TRAIN = new DriveTrainSubsystem();
         DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
         PRESSURE_SENSOR = new PressureSensorSubsystem();
@@ -50,6 +53,8 @@ public final class Robot extends IterativeRobot
         AutoSwitcher.putToSmartDashboard();
 
         DashboardData.setup();
+        VISIONSERVER.addVisionUpdateReceiver(VISION);
+        VISIONSERVER.run();
         OI.init();
 
         NAVX.resetDisplacement();
@@ -67,6 +72,7 @@ public final class Robot extends IterativeRobot
         Scheduler.getInstance().run();
         DashboardData.update();
         DRIVE_TRAIN.disabledStop();
+        logVision();
     }
 
     /**
@@ -95,6 +101,7 @@ public final class Robot extends IterativeRobot
     {
         Scheduler.getInstance().run();
         DashboardData.update();
+        logVision();
     }
 
     public void teleopInit() { VISION.turnOffVisionLight(); }
@@ -106,6 +113,7 @@ public final class Robot extends IterativeRobot
     {
         Scheduler.getInstance().run();
         DashboardData.update();
+        logVision();
     }
 
     /**
@@ -115,5 +123,14 @@ public final class Robot extends IterativeRobot
     {
         LiveWindow.run();
         DashboardData.update();
+        logVision();
+    }
+
+    private void logVision()
+    {
+        System.out.println("[Vision] Target Height: " + VISION.getHeight());
+        System.out.println("[Vision] Target Offset: " + VISION.getOffset());
+        System.out.println("[Vision] FPS: " + VISION.getFPS());
+        System.out.println("\n\n\n");
     }
 }

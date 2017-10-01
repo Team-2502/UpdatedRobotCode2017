@@ -1,40 +1,37 @@
 package com.team2502.robot2017.subsystem;
 
+
 import com.team2502.robot2017.OI;
 import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.command.teleop.TeleopVisionCommand;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.Relay;
+import com.team2502.robot2017.vision.TargetInfo;
+import com.team2502.robot2017.vision.VisionUpdate;
+import com.team2502.robot2017.vision.VisionUpdateReceiver;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.Relay;
+
+import java.util.List;
+
 
 // Implementing ITableListener is necessary for having the listener work, do not remove!
-public class VisionSubsystem extends Subsystem implements PIDSource
+public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
 {
-    static NetworkTable visionTable;
+
+    double height;
+    double offset;
+    double fps;
 
     private Relay visionLight = new Relay(0);
 
-    PIDSourceType sourceType = PIDSourceType.kDisplacement;
-
     public VisionSubsystem()
     {
-        NetworkTable.setServerMode();
-        NetworkTable.shutdown();
-        visionTable = NetworkTable.getTable("PiVision");
     }
 
     @Override
     public void initDefaultCommand() { setDefaultCommand(new TeleopVisionCommand()); }
 
-
-    /**
-     * @return the offset calculated by the pi
-     */
-    public double getOffset() { return visionTable.getNumber("robot_offset", 1023); }
-
-    /**
+        /**
      * Align the robot to the shiny thing
      * <br>
      * Does not work if no shiny thing <b>or no Pi</b>
@@ -69,27 +66,50 @@ public class VisionSubsystem extends Subsystem implements PIDSource
     /**
      * @return the FPS of the Pi's vision processing
      */
-    public double getFPS() { return visionTable.getNumber("fps", 1023); }
+    public double getFPS() { return fps; }
+
+    /**
+     * @return the offset calculated by the pi
+     */
+    public double getOffset() { return offset; }
+
+    /**
+     * @return the percieved height of the target
+     */
+    public double getHeight() { return height; }
 
     public void turnOffVisionLight() { visionLight.set(Relay.Value.kOff); }
 
     public void turnOnVisionLight() { visionLight.set(Relay.Value.kOn); }
 
     @Override
-    public void setPIDSourceType(PIDSourceType pidSource)
+    public void gotUpdate(VisionUpdate update)
     {
-        sourceType = pidSource;
+        List<TargetInfo> targets = update.getTargets();
+        try
+        {
+            this.height = targets.get(0).getHeight();
+            this.offset = targets.get(0).getOffset();
+
+            if(this.height == 0)
+            {
+                this.height = 1023;
+            }
+
+            if(this.offset == 0)
+            {
+                this.offset = 1023;
+            }
+        }
+        catch(IndexOutOfBoundsException e)
+        {
+            this.height = 1023;
+            this.offset = 1023;
+        }
+
+
+        this.fps = 1 / (update.getCapturedAgoMs() * 1000);
     }
 
-    @Override
-    public PIDSourceType getPIDSourceType()
-    {
-        return sourceType;
-    }
 
-    @Override
-    public double pidGet()
-    {
-        return getOffset();
-    }
 }

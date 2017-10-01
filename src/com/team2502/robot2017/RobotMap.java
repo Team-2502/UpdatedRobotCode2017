@@ -11,6 +11,7 @@ public class RobotMap
     {
         public static final double TARGET_HEIGHT = 123;
         public static final double HEIGHT_TOLERANCE = 1;
+        public static final int ADB_PORT = 8254;
     }
     public static final class Joystick
     {

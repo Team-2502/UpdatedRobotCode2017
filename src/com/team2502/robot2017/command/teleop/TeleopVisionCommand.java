@@ -13,6 +13,7 @@ public class TeleopVisionCommand extends Command
     public TeleopVisionCommand()
     {
         requires(Robot.VISION);
+        // Sketchy!!!
 //		requires(Robot.DRIVE_TRAIN);
 
         vision = Robot.VISION;
