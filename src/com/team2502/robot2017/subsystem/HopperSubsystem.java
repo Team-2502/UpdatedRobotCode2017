@@ -40,7 +40,4 @@ public class HopperSubsystem extends Subsystem
             hopper.set(this.out = out);
         }
     }
-
-
-
 }
