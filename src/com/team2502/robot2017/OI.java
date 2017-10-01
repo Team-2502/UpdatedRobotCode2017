@@ -2,6 +2,7 @@ package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
 
+import com.team2502.robot2017.command.autonomous.OneMethodCommand;
 import com.team2502.robot2017.command.teleop.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -41,7 +42,8 @@ public final class OI
 //        SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
         // Above is obsolete due to automatic transmission
 
-        SWITCH_HOPPER.whenPressed(new SwitchHopperCommand());
+//        SWITCH_HOPPER.whenPressed(new SwitchHopperCommand());
+        SWITCH_HOPPER.whenPressed(new OneMethodCommand(Robot.HOPPER, (() -> Robot.HOPPER.setHopper(true))));
 
         RESET_ENC_POSITION.whenPressed(new ResetEncodersCommand());
 
