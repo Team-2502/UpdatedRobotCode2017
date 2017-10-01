@@ -25,6 +25,14 @@ public class ShooterSubsystem extends Subsystem
     double banebotSpeed = 1400;
     int error = 0;
 
+    //PID is for Top Left Talon
+    double kF = 0;
+    double kP = 0.68;
+    double kI = 0;
+    double kD = 0.009]
+    ;
+
+
     public boolean isFlywheelActive;
     public boolean isFeederActive;
     private boolean shooterMode = false;
@@ -83,11 +91,10 @@ public class ShooterSubsystem extends Subsystem
 
 
         // Set more encoder settings
-//        leftFlywheelTalonTop.setProfile(0);
-//        leftFlywheelTalonTop.setF(0.21765900);
-//        leftFlywheelTalonTop.setP(1.71312500);
-//        leftFlywheelTalonTop.setI(0.0);
-//        leftFlywheelTalonTop.setD(0.0);
+        leftFlywheelTalonTop.setF(kF);
+        leftFlywheelTalonTop.setP(kP);
+        leftFlywheelTalonTop.setI(kI);
+        leftFlywheelTalonTop.setD(kD);
 
         // Set banebot talon and encoder settings
         banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
@@ -175,12 +182,10 @@ public class ShooterSubsystem extends Subsystem
         rightFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
         rightFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -2.0D);
 
-        leftFlywheelTalonTop.setProfile(0);
-        leftFlywheelTalonTop.setF(0);
-        leftFlywheelTalonTop.setP(0.7);
-        leftFlywheelTalonTop.setI(0.0);
-        leftFlywheelTalonTop.setD(0.0);
-        leftFlywheelTalonTop.set(targetSpeedFlywheel);
+        leftFlywheelTalonTop.setF(kF);
+        leftFlywheelTalonTop.setP(kP);
+        leftFlywheelTalonTop.setI(kI);
+        leftFlywheelTalonTop.setD(kD);
     }
 
     /**
