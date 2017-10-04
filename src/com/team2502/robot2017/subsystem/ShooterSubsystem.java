@@ -29,7 +29,7 @@ public class ShooterSubsystem extends Subsystem
     double kF = 0;
     double kP = 0.68;
     double kI = 0;
-    double kD = 0.009]
+    double kD = 0.009
     ;
 
 
@@ -203,7 +203,7 @@ public class ShooterSubsystem extends Subsystem
     {
 //        colsonFeeder.set(neg ? -colsonSpeed: colsonSpeed);
 //        banebotFeeder.set(neg ? banebotSpeed: -banebotSpeed);
-        agitator.set(neg ? agitatorSpeed: -agitatorSpeed);
+        agitator.set(neg ? -agitatorSpeed: agitatorSpeed);
 
     }
 
@@ -307,10 +307,10 @@ public class ShooterSubsystem extends Subsystem
         {
             colsonFeeder.set(colsonSpeed);
             banebotFeeder.set(banebotSpeed);
-            agitator.set(-agitatorSpeed);
+            agitator.set(agitatorSpeed);
         }
 
-        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(agitatorSpeed); }
+        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(-agitatorSpeed); }
 
         else
         {
