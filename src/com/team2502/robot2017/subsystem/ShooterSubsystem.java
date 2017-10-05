@@ -32,6 +32,7 @@ public class ShooterSubsystem extends Subsystem
     double kD = 0.009;
 
 
+
     public boolean isFlywheelActive;
     public boolean isFeederActive;
     private boolean shooterMode = false;
@@ -202,7 +203,7 @@ public class ShooterSubsystem extends Subsystem
     {
 //        colsonFeeder.set(neg ? -colsonSpeed: colsonSpeed);
 //        banebotFeeder.set(neg ? banebotSpeed: -banebotSpeed);
-        agitator.set(neg ? agitatorSpeed: -agitatorSpeed);
+        agitator.set(neg ? -agitatorSpeed: agitatorSpeed);
 
     }
 
@@ -306,10 +307,10 @@ public class ShooterSubsystem extends Subsystem
         {
             colsonFeeder.set(colsonSpeed);
             banebotFeeder.set(banebotSpeed);
-            agitator.set(-agitatorSpeed);
+            agitator.set(agitatorSpeed);
         }
 
-        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(agitatorSpeed); }
+        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(-agitatorSpeed); }
 
         else
         {
