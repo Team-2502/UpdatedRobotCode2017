@@ -29,8 +29,7 @@ public class ShooterSubsystem extends Subsystem
     double kF = 0;
     double kP = 0.68;
     double kI = 0;
-    double kD = 0.009]
-    ;
+    double kD = 0.009;
 
 
     public boolean isFlywheelActive;
