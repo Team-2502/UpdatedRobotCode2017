@@ -76,8 +76,6 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
      */
     public double getHeight() { return height; }
 
-    public double getHeight() { return visionTable.getNumber("height", 1023); }
-
     public void turnOffVisionLight() { visionLight.set(Relay.Value.kOff); }
 
     public void turnOnVisionLight() { visionLight.set(Relay.Value.kOn); }

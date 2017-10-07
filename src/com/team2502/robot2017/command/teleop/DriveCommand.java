@@ -54,10 +54,6 @@ public class DriveCommand extends Command
         SmartDashboard.putBoolean("DT: AutoShifting Enabled?", !disabledAutoShifting);
         driveTrainSubsystem.drive();
 
-<<<<<<< HEAD
-
-=======
->>>>>>> develop-Mky135
         if(!disabledAutoShifting)
         {
             // Check that at least 1/2 second has passed since last shifting
@@ -82,10 +78,6 @@ public class DriveCommand extends Command
                         // Shift up if we are accelerating and going fast and the driver is putting the joystick at least 80% forward or backward
                         if(Math.abs(accel) > 0.15 && speed > RobotMap.Motor.SHIFT_UP_THRESHOLD && OI.joysThreshold(0.8, true))
                         {
-<<<<<<< HEAD
-=======
-
->>>>>>> develop-Mky135
                             if(!shiftedUp)
                             {
                                 shiftedUp = true;

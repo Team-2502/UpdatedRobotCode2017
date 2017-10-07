@@ -6,26 +6,17 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 
 public class SwitchHopperCommand extends InstantCommand
 {
-<<<<<<< HEAD
-    private final HopperSubsystem hopperSubsystem;
-=======
     private final HopperSubsystem Hopper;
->>>>>>> develop-Mky135
 
     public SwitchHopperCommand()
     {
         requires(Robot.HOPPER);
-<<<<<<< HEAD
-        hopperSubsystem = Robot.HOPPER;
-    }
-
-    @Override
-    protected void initialize() { hopperSubsystem.switchHopper();}
-=======
         Hopper = Robot.HOPPER;
     }
 
     @Override
-    protected void initialize() { Hopper.setHopper(!Hopper.getOut()); }
->>>>>>> develop-Mky135
+    protected void initialize()
+    {
+        Hopper.setHopper(!Hopper.getOut());
+    }
 }
