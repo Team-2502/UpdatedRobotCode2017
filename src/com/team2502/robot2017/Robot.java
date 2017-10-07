@@ -53,8 +53,8 @@ public final class Robot extends IterativeRobot
         AutoSwitcher.putToSmartDashboard();
 
         DashboardData.setup();
-        VISIONSERVER.addVisionUpdateReceiver(VISION);
-        VISIONSERVER.run();
+//        VISIONSERVER.addVisionUpdateReceiver(VISION);
+//        VISIONSERVER.run();
         OI.init();
 
         NAVX.resetDisplacement();
@@ -128,9 +128,14 @@ public final class Robot extends IterativeRobot
 
     private void logVision()
     {
-        System.out.println("[Vision] Target Height: " + VISION.getHeight());
-        System.out.println("[Vision] Target Offset: " + VISION.getOffset());
-        System.out.println("[Vision] FPS: " + VISION.getFPS());
-        System.out.println("\n\n\n");
+
+        if(false)
+        {
+            System.out.println("[Vision] Target Height: " + VISION.getHeight());
+            System.out.println("[Vision] Target Offset: " + VISION.getOffset());
+            System.out.println("[Vision] FPS: " + VISION.getFPS());
+            System.out.println("\n\n\n");
+        }
+
     }
 }
