@@ -36,11 +36,7 @@ public class AdbBridge {
         try {
             Process p = r.exec(cmd);
             p.waitFor();
-        } catch (IOException e) {
-            System.err.println("AdbBridge: Could not run command " + cmd);
-            e.printStackTrace();
-            return false;
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             System.err.println("AdbBridge: Could not run command " + cmd);
             e.printStackTrace();
             return false;
@@ -50,7 +46,7 @@ public class AdbBridge {
 
     public void start() {
         System.out.println("Starting adb");
-        runCommand("start");
+        runCommand("start-server");
     }
 
     public void stop() {

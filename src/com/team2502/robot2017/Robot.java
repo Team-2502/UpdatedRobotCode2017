@@ -38,7 +38,12 @@ public final class Robot extends IterativeRobot
     public void robotInit()
     {
 //        Log.createLogger();
+
+        // This creates a static instance of the server and runs it
+        // If you look in the constructor, it starts a new vision thread
+        // So we don't have to worry about starting it here
         VISIONSERVER = VisionServer.getInstance();
+
         DRIVE_TRAIN = new DriveTrainSubsystem();
         DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
         PRESSURE_SENSOR = new PressureSensorSubsystem();
@@ -53,8 +58,10 @@ public final class Robot extends IterativeRobot
         AutoSwitcher.putToSmartDashboard();
 
         DashboardData.setup();
-//        VISIONSERVER.addVisionUpdateReceiver(VISION);
-//        VISIONSERVER.run();
+
+
+        VISIONSERVER.addVisionUpdateReceiver(VISION);
+
         OI.init();
 
         NAVX.resetDisplacement();
@@ -129,7 +136,7 @@ public final class Robot extends IterativeRobot
     private void logVision()
     {
 
-        if(false)
+        if(true)
         {
             System.out.println("[Vision] Target Height: " + VISION.getHeight());
             System.out.println("[Vision] Target Offset: " + VISION.getOffset());
