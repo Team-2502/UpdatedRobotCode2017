@@ -25,11 +25,10 @@ public class RobotMap
         {
             public static final int SWITCH_DRIVE_TRANSMISSION = 1;
             public static final int SWITCH_HOPPER = 2; //TODO: Figure out which button to use
+            public static final int VISION_BOILER = 3;
             public static final int SHOOTER_TOGGLE = 5;
             public static final int VISION_ALIGN = 3;
-
             public static final int CLIMBER =  8;
-
             public static final int SHOOTER = 1;
             public static final int RESET_ENC_POS = 9; // temporary and only exists for auton development
 
@@ -58,7 +57,6 @@ public class RobotMap
 
     public static final class Motor
     {
-
         public static final int LEFT_TALON_0 = 4;
         public static final int LEFT_TALON_1 = 12;
         public static final int RIGHT_TALON_0 = 8;
@@ -74,7 +72,7 @@ public class RobotMap
         public static final int CLIMBER_LEFT = 14;
         public static final int CLIMBER_RIGHT = 3;
 
-        public static final int ALLOWABLE_LOOP_ERR = 5; // in encoder pulses
+        public static final int ALLOWABLE_LOOP_ERR = 1; // in encoder pulses
         public static final int TIME_TO_STOP = 1500; // amount of milliseconds to be on target to stop contolling with PID4
 
         // Feet per second

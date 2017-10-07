@@ -13,17 +13,20 @@ class AutoSwitcher
 
     public enum AutoMode
     {
+
+        GEAR_BACKUP_CENTER("Center Backup gear", GearBackupCenter.class),
+        BASE_LINE("Base Line", BaseLineAuto.class),
         GEAR_CENTER("Center Gear", GearAutoCenter.class),
         GEAR_LEFT("Left Gear", GearAutoLeft.class),
         GEAR_RIGHT("Right Gear", GearAutoRight.class),
 
-        RED_SHOOT_AND_GEAR("Red shoot and Gear", ShootAndGearAutoRed.class),
-        RED_SHOOT_AND_BASELINE("Red shoot and Baseline", ShootAndBaseLineRed.class),
+//        RED_SHOOT_AND_GEAR("Red shoot and Gear", ShootAndGearAutoRed.class),
+//        RED_SHOOT_AND_BASELINE("Red shoot and Baseline", ShootAndBaseLineRed.class),
+//
+//        BLUE_SHOOT_AND_GEAR("Blue shoot and Gear", ShootAndGearAutoBlue.class),
+//        BLUE_SHOOT_AND_BASELINE("Blue shoot and Baseline", ShootAndBaseLineBlue.class),
 
-        BLUE_SHOOT_AND_GEAR("Blue shoot and Gear", ShootAndGearAutoBlue.class),
-        BLUE_SHOOT_AND_BASELINE("Blue shoot and Baseline", ShootAndBaseLineBlue.class),
-
-        BASELINE("Baseline only", DriveTimeCommand.class),
+        BOILER_RED("Red Boiler", BoilerRed.class),
         TESTAUTO("DO NOT USE ME!", TestAutoCommand.class);
 
         private Class<? extends Command> autoCommand;

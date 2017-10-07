@@ -37,7 +37,7 @@ public final class Robot extends IterativeRobot
 
     public void robotInit()
     {
-        Log.createLogger();
+//        Log.createLogger();
         VISIONSERVER = VisionServer.getInstance();
         DRIVE_TRAIN = new DriveTrainSubsystem();
         DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();

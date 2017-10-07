@@ -18,12 +18,21 @@ public class ShooterSubsystem extends Subsystem
     private final CANTalon banebotFeeder;
     private final CANTalon agitator;
 
-    double targetSpeedFlywheel = 4000;
+    double targetSpeedFlywheel = 3525;
+
     double autoTargetSpeed = targetSpeedFlywheel + 50;
     double agitatorSpeed = 1;
     double colsonSpeed = 1;
     double banebotSpeed = 1400;
     int error = 0;
+
+    //PID is for Top Left Talon
+    double kF = 0;
+    double kP = 0.68;
+    double kI = 0;
+    double kD = 0.009;
+
+
 
     public boolean isFlywheelActive;
     public boolean isFeederActive;
@@ -83,11 +92,11 @@ public class ShooterSubsystem extends Subsystem
 
 
         // Set more encoder settings
-//        leftFlywheelTalonTop.setProfile(0);
-//        leftFlywheelTalonTop.setF(0.21765900);
-//        leftFlywheelTalonTop.setP(1.71312500);
-//        leftFlywheelTalonTop.setI(0.0);
-//        leftFlywheelTalonTop.setD(0.0);
+
+        leftFlywheelTalonTop.setF(kF);
+        leftFlywheelTalonTop.setP(kP);
+        leftFlywheelTalonTop.setI(kI);
+        leftFlywheelTalonTop.setD(kD);
 
         // Set banebot talon and encoder settings
         banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
@@ -175,12 +184,10 @@ public class ShooterSubsystem extends Subsystem
         rightFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
         rightFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -2.0D);
 
-        leftFlywheelTalonTop.setProfile(0);
-        leftFlywheelTalonTop.setF(0);
-        leftFlywheelTalonTop.setP(0.5);
-        leftFlywheelTalonTop.setI(0.0);
-        leftFlywheelTalonTop.setD(0.0);
-        leftFlywheelTalonTop.set(targetSpeedFlywheel);
+        leftFlywheelTalonTop.setF(kF);
+        leftFlywheelTalonTop.setP(kP);
+        leftFlywheelTalonTop.setI(kI);
+        leftFlywheelTalonTop.setD(kD);
     }
 
     /**
@@ -188,11 +195,20 @@ public class ShooterSubsystem extends Subsystem
      */
     public void feed()
     {
-        banebotFeeder.changeControlMode(follower);
+//        banebotFeeder.changeControlMode(follower);
         colsonFeeder.set(colsonSpeed);
         banebotFeeder.set(-banebotSpeed);
         agitator.set(-agitatorSpeed);
     }
+
+    public void teleopFeed(boolean neg)
+    {
+//        colsonFeeder.set(neg ? -colsonSpeed: colsonSpeed);
+//        banebotFeeder.set(neg ? banebotSpeed: -banebotSpeed);
+        agitator.set(neg ? -agitatorSpeed: agitatorSpeed);
+
+    }
+
 
     /**
      * @return the target speed
@@ -293,10 +309,10 @@ public class ShooterSubsystem extends Subsystem
         {
             colsonFeeder.set(colsonSpeed);
             banebotFeeder.set(banebotSpeed);
-            agitator.set(-agitatorSpeed);
+            agitator.set(agitatorSpeed);
         }
 
-        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(agitatorSpeed); }
+        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(-agitatorSpeed); }
 
         else
         {

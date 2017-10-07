@@ -35,27 +35,25 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
      * Align the robot to the shiny thing
      * <br>
      * Does not work if no shiny thing <b>or no Pi</b>
-     *
      * @param dt        An instance of the drivetrain
      * @param lowSpeed  The speed that the slower side should go at
      * @param highSpeed The speed that the faster side should go at
      * @param alignOnly Are we aligning only, or are we also going forward if we are perfect?
      */
-    public void align(DriveTrainSubsystem dt, double lowSpeed, double highSpeed, boolean alignOnly, boolean autonomous)
+    public void alignWidth(DriveTrainSubsystem dt, double lowSpeed, double highSpeed, boolean alignOnly, boolean autonomous)
     {
-        if(autonomous || OI.JOYSTICK_DRIVE_LEFT.getRawButton(RobotMap.Joystick.Button.VISION_ALIGN))
-        {
+        if(autonomous || OI.JOYSTICK_DRIVE_LEFT.getRawButton(RobotMap.Joystick.Button.VISION_ALIGN)) {
             double offset = getOffset();
 
-            if(offset > 0.1)
+            if (offset > 0.1)
             {
                 dt.runMotors(highSpeed, lowSpeed);
             }
-            else if(offset < 0.1)
+            else if (offset < 0.1)
             {
                 dt.runMotors(-lowSpeed, -highSpeed);
             }
-            else if((-0.1 < offset) && (offset < 0.1) && !alignOnly)
+            else if ((-0.1 < offset) && (offset < 0.1) && !alignOnly)
             {
                 dt.runMotors(.5D, -.5D);
             }
@@ -77,6 +75,8 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
      * @return the percieved height of the target
      */
     public double getHeight() { return height; }
+
+    public double getHeight() { return visionTable.getNumber("height", 1023); }
 
     public void turnOffVisionLight() { visionLight.set(Relay.Value.kOff); }
 
