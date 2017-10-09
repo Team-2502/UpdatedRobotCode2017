@@ -136,7 +136,7 @@ public final class Robot extends IterativeRobot
     private void logVision()
     {
 
-        if(true)
+        if(false)
         {
             System.out.println("[Vision] Target Height: " + VISION.getHeight());
             System.out.println("[Vision] Target Offset: " + VISION.getOffset());

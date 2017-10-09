@@ -83,7 +83,13 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
     @Override
     public void gotUpdate(VisionUpdate update)
     {
+        System.out.println("[Vision] Target Height: " + this.height);
+        System.out.println("[Vision] Target Offset: " + this.offset);
+        System.out.println("[Vision] FPS: " + this.fps);
+        System.out.println("\n");
+
         List<TargetInfo> targets = update.getTargets();
+        System.out.println(targets);
         try
         {
             this.height = targets.get(0).getHeight();

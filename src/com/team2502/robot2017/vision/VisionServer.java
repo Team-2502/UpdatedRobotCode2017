@@ -81,6 +81,7 @@ public class VisionServer implements Runnable {
                 VisionUpdate update = VisionUpdate.generateFromJsonString(timestamp, message.getMessage());
                 receivers.removeAll(Collections.singleton(null));
                 if (update.isValid()) {
+//                    System.out.println("An update is valid yay");
                     for (VisionUpdateReceiver receiver : receivers) {
                         receiver.gotUpdate(update);
                     }
