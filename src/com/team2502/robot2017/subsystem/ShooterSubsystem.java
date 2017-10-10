@@ -18,7 +18,7 @@ public class ShooterSubsystem extends Subsystem
     private final CANTalon banebotFeeder;
     private final CANTalon agitator;
 
-    double targetSpeedFlywheel = 3525;
+    double targetSpeedFlywheel = 3275;
 
     double autoTargetSpeed = targetSpeedFlywheel + 50;
     double agitatorSpeed = 1;
@@ -28,9 +28,9 @@ public class ShooterSubsystem extends Subsystem
 
     //PID is for Top Left Talon
     double kF = 0;
-    double kP = 0.68;
-    double kI = 0;
-    double kD = 0.009;
+    double kP = 0.79;
+    double kI = 0.0017;
+    double kD = 1.0;
 
 
 
@@ -79,16 +79,16 @@ public class ShooterSubsystem extends Subsystem
 
         // Configure min and max voltages
         leftFlywheelTalonTop.configNominalOutputVoltage(0.0D, -0.0D);
-        leftFlywheelTalonTop.configPeakOutputVoltage(12.0D, -2.0D);
+        leftFlywheelTalonTop.configPeakOutputVoltage(12.0D, -0.0D);
 
         leftFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
-        leftFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -2.0D);
+        leftFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -0.0D);
 
         rightFlywheelTalonTop.configNominalOutputVoltage(0.0D, -0.0D);
-        rightFlywheelTalonTop.configPeakOutputVoltage(12.0D, -2.0D);
+        rightFlywheelTalonTop.configPeakOutputVoltage(12.0D, -0.0D);
 
         rightFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
-        rightFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -2.0D);
+        rightFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -0.0D);
 
 
         // Set more encoder settings
@@ -173,16 +173,16 @@ public class ShooterSubsystem extends Subsystem
         leftFlywheelTalonTop.reverseSensor(false);
 
         leftFlywheelTalonTop.configNominalOutputVoltage(0.0D, -0.0D);
-        leftFlywheelTalonTop.configPeakOutputVoltage(12.0D, -2.0D);
+        leftFlywheelTalonTop.configPeakOutputVoltage(12.0D, -0.0D);
 
         leftFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
-        leftFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -2.0D);
+        leftFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -0.0D);
 
         rightFlywheelTalonTop.configNominalOutputVoltage(0.0D, -0.0D);
-        rightFlywheelTalonTop.configPeakOutputVoltage(12.0D, -2.0D);
+        rightFlywheelTalonTop.configPeakOutputVoltage(12.0D, -0.0D);
 
         rightFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
-        rightFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -2.0D);
+        rightFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -0.0D);
 
         leftFlywheelTalonTop.setF(kF);
         leftFlywheelTalonTop.setP(kP);
