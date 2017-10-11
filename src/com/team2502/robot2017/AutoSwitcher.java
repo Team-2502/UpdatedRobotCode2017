@@ -1,5 +1,6 @@
 package com.team2502.robot2017;
 
+import com.team2502.robot2017.command.autonomous.BoilerDistCommand;
 import com.team2502.robot2017.command.autonomous.DriveTimeCommand;
 import com.team2502.robot2017.command.autonomous.TestAutoCommand;
 import com.team2502.robot2017.command.autonomous.commandGroups.*;
@@ -13,7 +14,7 @@ class AutoSwitcher
 
     public enum AutoMode
     {
-
+        BOILER_DISTANCE("Boiler Distance", BoilerDistCommand.class),
         GEAR_BACKUP_CENTER("Center Backup gear", GearBackupCenter.class),
         BASE_LINE("Base Line", BaseLineAuto.class),
         GEAR_CENTER("Center Gear", GearAutoCenter.class),

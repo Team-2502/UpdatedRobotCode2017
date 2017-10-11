@@ -83,36 +83,49 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
     @Override
     public void gotUpdate(VisionUpdate update)
     {
-        System.out.println("[Vision] Target Height: " + this.height);
-        System.out.println("[Vision] Target Offset: " + this.offset);
-        System.out.println("[Vision] FPS: " + this.fps);
-        System.out.println("\n");
+//        System.out.println("[Vision] Target Height: " + this.height);
+//        System.out.println("[Vision] Target Offset: " + this.offset);
+//        System.out.println("[Vision] FPS: " + this.fps);
+//        System.out.println("\n");
 
-        List<TargetInfo> targets = update.getTargets();
-        System.out.println(targets);
-        try
-        {
-            this.height = targets.get(0).getHeight();
-            this.offset = targets.get(0).getOffset();
 
-            if(this.height == 0)
-            {
-                this.height = 1023;
-            }
+//        List<TargetInfo> targets = update.getTargets();
+//        System.out.println(targets);
+//        try
+//        {
+//            for (int i = 0; i < update.getTargets().size(); i++) {
+//                TargetInfo target = update.getTargets().get(i);
+//                System.out.println("Target (height, offset): " + target.getHeight() + ", " + target.getOffset());
+//                this.height = target.getHeight();
+//                this.offset = target.getOffset();
+//            }
 
-            if(this.offset == 0)
-            {
-                this.offset = 1023;
-            }
+
+
+//            if(this.height == 0)
+//            {
+//                this.height = 1023;
+//            }
+//
+//            if(this.offset == 0)
+//            {
+//                this.offset = 1023;
+//            }
+//        }
+//        catch(IndexOutOfBoundsException e)
+//        {
+//            this.height = 1023;
+//            this.offset = 1023;
+//        }
+
+
+//        this.fps = 1 / (update.getCapturedAgoMs() * 1000);
+
+        System.out.println("num targets: " + update.getTargets().size());
+        for (int i = 0; i < update.getTargets().size(); i++) {
+            TargetInfo target = update.getTargets().get(i);
+            System.out.println("Target (height, offset): " + target.getHeight() + ", " + target.getOffset());
         }
-        catch(IndexOutOfBoundsException e)
-        {
-            this.height = 1023;
-            this.offset = 1023;
-        }
-
-
-        this.fps = 1 / (update.getCapturedAgoMs() * 1000);
     }
 
 

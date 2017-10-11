@@ -62,7 +62,7 @@ public class VisionUpdate {
             ArrayList<TargetInfo> targetInfos = new ArrayList<>(targets.size());
             for (Object targetObj : targets) {
                 JSONObject target = (JSONObject) targetObj;
-                Optional<Double> y = parseDouble(target, "height");
+                Optional<Double> y = parseDouble(target, "y");
                 Optional<Double> z = parseDouble(target, "z");
                 if (!(y.isPresent() && z.isPresent())) {
                     update.valid = false;
