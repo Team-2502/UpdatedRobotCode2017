@@ -121,10 +121,13 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
 
 //        this.fps = 1 / (update.getCapturedAgoMs() * 1000);
 
+
         System.out.println("num targets: " + update.getTargets().size());
         for (int i = 0; i < update.getTargets().size(); i++) {
             TargetInfo target = update.getTargets().get(i);
-            System.out.println("Target (height, offset): " + target.getHeight() + ", " + target.getOffset());
+            height = target.getHeight();
+            offset = target.getOffset();
+            System.out.println("Target (height, offset): " + height + ", " + offset);
         }
     }
 
