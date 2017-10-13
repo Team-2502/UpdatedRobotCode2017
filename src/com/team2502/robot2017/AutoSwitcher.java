@@ -15,13 +15,13 @@ class AutoSwitcher
 
     public enum AutoMode
     {
-        BOILER_TEST("Boiler Align and Dist", AlignBoiler.class),
-        BOILER_DISTANCE("Boiler Distance", BoilerDistCommand.class),
-        GEAR_BACKUP_CENTER("Center Backup gear", GearBackupCenter.class),
-        BASE_LINE("Base Line", BaseLineAuto.class),
-        GEAR_CENTER("Center Gear", GearAutoCenter.class),
-        GEAR_LEFT("Left Gear", GearAutoLeft.class),
-        GEAR_RIGHT("Right Gear", GearAutoRight.class),
+//        BOILER_TEST("Boiler Align and Dist", AlignBoiler.class),
+//        BOILER_DISTANCE("Boiler Distance", BoilerDistCommand.class),
+//        GEAR_BACKUP_CENTER("Center Backup gear", GearBackupCenter.class),
+//        BASE_LINE("Base Line", BaseLineAuto.class),
+//        GEAR_CENTER("Center Gear", GearAutoCenter.class),
+//        GEAR_LEFT("Left Gear", GearAutoLeft.class),
+//        GEAR_RIGHT("Right Gear", GearAutoRight.class),
 
 //        RED_SHOOT_AND_GEAR("Red shoot and Gear", ShootAndGearAutoRed.class),
 //        RED_SHOOT_AND_BASELINE("Red shoot and Baseline", ShootAndBaseLineRed.class),

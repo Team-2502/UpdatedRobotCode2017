@@ -15,8 +15,5 @@ public class SwitchHopperCommand extends InstantCommand
     }
 
     @Override
-    protected void initialize()
-    {
-        Hopper.setHopper(!Hopper.getOut());
-    }
+    protected void initialize() { Hopper.setHopper(!Hopper.getOut()); }
 }

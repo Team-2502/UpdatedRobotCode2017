@@ -46,12 +46,11 @@ final class DashboardData
         if(accel > maxaccel) { maxaccel = accel; } else if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(10)) { maxaccel = 0; /*reset*/ }
         if(speed > maxspeed) { maxspeed = speed; } else if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(10)) { maxspeed = 0; }
 
+        SmartDashboard.putNumber("DTaa: leftDriveTrain", dt.getEncLeftPosition());
+        SmartDashboard.putNumber("DTaa: rightDriveTrain", dt.getEncRightPosition());
 
-        SmartDashboard.putNumber("DT: aaaaaaaa leftTalon0", dt.getEncLeftPosition());
-        SmartDashboard.putNumber("DT: aaaaaaaa leftTalon1", dt.getEncRightPosition());
-
-        SmartDashboard.putNumber("DT: aaa leftTalon0", Robot.DRIVE_TRAIN.leftTalon0.getPosition());
-        SmartDashboard.putNumber("DT: aaa rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
+        SmartDashboard.putNumber("DT: leftDriveTrain", Robot.DRIVE_TRAIN.leftTalon0.getPosition());
+        SmartDashboard.putNumber("DT: rightDriveTrain", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
 
         boolean ritikOnDriveTeam = true;
         SmartDashboard.putBoolean("Drive Team will win us the match", !ritikOnDriveTeam); // if this line gets changed you will be kicked off the github no warning
