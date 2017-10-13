@@ -1,5 +1,6 @@
 package com.team2502.robot2017;
 
+import com.team2502.robot2017.command.autonomous.AlignBoiler;
 import com.team2502.robot2017.command.autonomous.BoilerDistCommand;
 import com.team2502.robot2017.command.autonomous.DriveTimeCommand;
 import com.team2502.robot2017.command.autonomous.TestAutoCommand;
@@ -14,6 +15,7 @@ class AutoSwitcher
 
     public enum AutoMode
     {
+        BOILER_TEST("Boiler Align and Dist", AlignBoiler.class),
         BOILER_DISTANCE("Boiler Distance", BoilerDistCommand.class),
         GEAR_BACKUP_CENTER("Center Backup gear", GearBackupCenter.class),
         BASE_LINE("Base Line", BaseLineAuto.class),
@@ -42,8 +44,7 @@ class AutoSwitcher
         public Command getInstance()
         {
             Command instance;
-            try { instance = autoCommand.newInstance(); }
-            catch(InstantiationException | IllegalAccessException e) { return null; }
+            try { instance = autoCommand.newInstance(); } catch(InstantiationException | IllegalAccessException e) { return null; }
             return instance;
         }
     }
@@ -54,9 +55,8 @@ class AutoSwitcher
 
         for(int i = 0; i < AutoMode.values().length; i++)
         {
-            AutoMode mode = AutoMode.values()[i];
-            if(i == 0) { autoChooser.addDefault(mode.name, mode); }
-            else { autoChooser.addObject(mode.name, mode); }
+            AutoMode mode = AutoMode.values()[ i ];
+            if(i == 0) { autoChooser.addDefault(mode.name, mode); } else { autoChooser.addObject(mode.name, mode); }
         }
 
         SmartDashboard.putData("auto_modes", autoChooser);

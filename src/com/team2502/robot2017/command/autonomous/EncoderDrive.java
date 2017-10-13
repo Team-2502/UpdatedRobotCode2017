@@ -77,7 +77,6 @@ public class EncoderDrive extends Command
         revLeftR = Math.abs(EncTalonRight.getClosedLoopError());
 
 
-
         SmartDashboard.putNumber("DT: Autonomous encoder ticks needed Left", revLeftL);
         SmartDashboard.putNumber("DT: Autonomous encoder ticks needed Right", revLeftR);
 

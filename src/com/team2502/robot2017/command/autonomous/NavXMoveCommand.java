@@ -50,6 +50,7 @@ public class NavXMoveCommand extends Command implements PIDOutput
         this(maxtime);
         targetYaw = angle;
     }
+
     /**
      * Turn to an angle, and immediately end once turned.
      *

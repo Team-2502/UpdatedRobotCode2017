@@ -31,10 +31,11 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
     @Override
     public void initDefaultCommand() { setDefaultCommand(new TeleopVisionCommand()); }
 
-        /**
+    /**
      * Align the robot to the shiny thing
      * <br>
      * Does not work if no shiny thing <b>or no Pi</b>
+     *
      * @param dt        An instance of the drivetrain
      * @param lowSpeed  The speed that the slower side should go at
      * @param highSpeed The speed that the faster side should go at
@@ -42,18 +43,24 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
      */
     public void alignWidth(DriveTrainSubsystem dt, double lowSpeed, double highSpeed, boolean alignOnly, boolean autonomous)
     {
-        if(autonomous || OI.JOYSTICK_DRIVE_LEFT.getRawButton(RobotMap.Joystick.Button.VISION_ALIGN)) {
-            double offset = getOffset();
+        double kP = 0.0024;
+        double tolerance = 0.05;
+        double minimumSpeed = 0.22;
 
-            if (offset > 0.1)
+        if(autonomous || OI.JOYSTICK_DRIVE_LEFT.getRawButton(RobotMap.Joystick.Button.VISION_ALIGN))
+        {
+            double offset = getOffset();
+            double sign = offset / Math.abs(offset);
+
+            if(offset > tolerance)
             {
-                dt.runMotors(highSpeed, lowSpeed);
-            }
-            else if (offset < 0.1)
+//                dt.runMotors(highSpeed, lowSpeed);
+                dt.runMotors(Math.max(minimumSpeed, offset * kP), Math.max(minimumSpeed, offset * kP));
+            } else if(offset < -tolerance)
             {
-                dt.runMotors(-lowSpeed, -highSpeed);
-            }
-            else if ((-0.1 < offset) && (offset < 0.1) && !alignOnly)
+//                dt.runMotors(-lowSpeed, -highSpeed);
+                dt.runMotors(-Math.max(minimumSpeed, Math.abs(offset * kP)), -Math.max(Math.abs(offset * kP), minimumSpeed));
+            } else if((-0.1 < offset) && (offset < 0.1) && !alignOnly)
             {
                 dt.runMotors(.5D, -.5D);
             }
@@ -83,52 +90,15 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
     @Override
     public void gotUpdate(VisionUpdate update)
     {
-//        System.out.println("[Vision] Target Height: " + this.height);
-//        System.out.println("[Vision] Target Offset: " + this.offset);
-//        System.out.println("[Vision] FPS: " + this.fps);
-//        System.out.println("\n");
-
-
-//        List<TargetInfo> targets = update.getTargets();
-//        System.out.println(targets);
-//        try
-//        {
-//            for (int i = 0; i < update.getTargets().size(); i++) {
-//                TargetInfo target = update.getTargets().get(i);
-//                System.out.println("Target (height, offset): " + target.getHeight() + ", " + target.getOffset());
-//                this.height = target.getHeight();
-//                this.offset = target.getOffset();
-//            }
-
-
-
-//            if(this.height == 0)
-//            {
-//                this.height = 1023;
-//            }
-//
-//            if(this.offset == 0)
-//            {
-//                this.offset = 1023;
-//            }
-//        }
-//        catch(IndexOutOfBoundsException e)
-//        {
-//            this.height = 1023;
-//            this.offset = 1023;
-//        }
-
-
-//        this.fps = 1 / (update.getCapturedAgoMs() * 1000);
-
-
         System.out.println("num targets: " + update.getTargets().size());
-        for (int i = 0; i < update.getTargets().size(); i++) {
+        for(int i = 0; i < update.getTargets().size(); i++)
+        {
             TargetInfo target = update.getTargets().get(i);
             height = target.getHeight();
             offset = target.getOffset();
             System.out.println("Target (height, offset): " + height + ", " + offset);
         }
+
     }
 
 

@@ -43,10 +43,8 @@ final class DashboardData
         double speed = Robot.DRIVE_TRAIN.rightTalon1.getEncVelocity();
         double accel = Robot.NAVX.getRawAccelY();
 
-        if(accel > maxaccel) { maxaccel = accel; }
-        else if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(10)) { maxaccel = 0; /*reset*/ }
-        if(speed > maxspeed) { maxspeed = speed; }
-        else if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(10)) { maxspeed = 0; }
+        if(accel > maxaccel) { maxaccel = accel; } else if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(10)) { maxaccel = 0; /*reset*/ }
+        if(speed > maxspeed) { maxspeed = speed; } else if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(10)) { maxspeed = 0; }
 
 
         SmartDashboard.putNumber("DT: aaaaaaaa leftTalon0", dt.getEncLeftPosition());
@@ -55,7 +53,8 @@ final class DashboardData
         SmartDashboard.putNumber("DT: aaa leftTalon0", Robot.DRIVE_TRAIN.leftTalon0.getPosition());
         SmartDashboard.putNumber("DT: aaa rightTalon1", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
 
-        SmartDashboard.putBoolean("Drive Team will win us the match", true); // if this line gets changed you will be kicked off the github no warning
+        boolean ritikOnDriveTeam = true;
+        SmartDashboard.putBoolean("Drive Team will win us the match", !ritikOnDriveTeam); // if this line gets changed you will be kicked off the github no warning
 
         SmartDashboard.putNumber("DT: Average Speed", speed);
         SmartDashboard.putNumber("DT: Max Speed", maxspeed);
@@ -76,21 +75,21 @@ final class DashboardData
 
     private static void updatePressure()
     {
-        if(Enabler.PRESSURE.enabler[0])
+        if(Enabler.PRESSURE.enabler[ 0 ])
         {
-            if(Enabler.PRESSURE.enabler[1])
+            if(Enabler.PRESSURE.enabler[ 1 ])
             {
                 SmartDashboard.putNumber("Current Tank Pressure", Robot.PRESSURE_SENSOR.getPressure());
             }
-            if(Enabler.PRESSURE.enabler[2])
+            if(Enabler.PRESSURE.enabler[ 2 ])
             {
                 SmartDashboard.putBoolean("Is Compressor Enabled", Robot.COMPRESSOR.enabled());
             }
-            if(Enabler.PRESSURE.enabler[3])
+            if(Enabler.PRESSURE.enabler[ 3 ])
             {
                 SmartDashboard.putBoolean("Is Compressor Low", Robot.COMPRESSOR.getPressureSwitchValue());
             }
-            if(Enabler.PRESSURE.enabler[4])
+            if(Enabler.PRESSURE.enabler[ 4 ])
             {
                 SmartDashboard.putNumber("Current Air Compression Rate", Robot.COMPRESSOR.getCompressorCurrent());
             }

@@ -324,6 +324,9 @@ public class DriveTrainSubsystem extends Subsystem
      */
     public void runMotors(double x, double y) // double z
     {
+        System.out.println("Left Speed:  " + x);
+        System.out.println("Right Speed:  " + y);
+        System.out.println("\n\n");
         leftSpeed = x;
         rightSpeed = y;
         leftTalon0.set(x);

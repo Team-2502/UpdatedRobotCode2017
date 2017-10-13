@@ -9,10 +9,12 @@ public class RobotMap
 
     public static final class Vision
     {
-        public static final double TARGET_HEIGHT = 123;
+        public static final double TARGET_HEIGHT = 32;
         public static final double HEIGHT_TOLERANCE = 1;
         public static final int ADB_PORT = 8254;
+        public static final int ALIGNED_OFFSET = UNDEFINED;
     }
+
     public static final class Joystick
     {
         public static final int JOYSTICK_DRIVE_LEFT = 1;
@@ -28,7 +30,7 @@ public class RobotMap
             public static final int VISION_BOILER = 3;
             public static final int SHOOTER_TOGGLE = 5;
             public static final int VISION_ALIGN = 3;
-            public static final int CLIMBER =  8;
+            public static final int CLIMBER = 8;
             public static final int SHOOTER = 1;
             public static final int RESET_ENC_POS = 9; // temporary and only exists for auton development
 
@@ -80,8 +82,8 @@ public class RobotMap
         public static final int HIGH_GEAR_SPEED = 16;
 
         // RPM
-        public static final double SHIFT_UP_THRESHOLD = ((8.5D) * 60 * 12) / (4*Math.PI) ;
-        public static final double SHIFT_DOWN_THRESHOLD = ((8.4D) * 60 * 12) / (4*Math.PI);
+        public static final double SHIFT_UP_THRESHOLD = ((8.5D) * 60 * 12) / (4 * Math.PI);
+        public static final double SHIFT_DOWN_THRESHOLD = ((8.4D) * 60 * 12) / (4 * Math.PI);
         // 850rmpm
 
         private Motor() {}
