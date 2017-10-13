@@ -192,6 +192,8 @@ public class ShooterSubsystem extends Subsystem
         leftFlywheelTalonTop.setP(kP);
         leftFlywheelTalonTop.setI(kI);
         leftFlywheelTalonTop.setD(kD);
+
+        leftFlywheelTalonTop.set(autoTargetSpeed);
     }
 
     /**
@@ -201,8 +203,8 @@ public class ShooterSubsystem extends Subsystem
     {
 //        banebotFeeder.changeControlMode(follower);
         colsonFeeder.set(colsonSpeed);
-        banebotFeeder.set(-banebotSpeed);
-        agitator.set(-agitatorSpeed);
+        banebotFeeder.set(banebotSpeed);
+        agitator.set(agitatorSpeed);
     }
 
     public void teleopFeed(boolean neg)

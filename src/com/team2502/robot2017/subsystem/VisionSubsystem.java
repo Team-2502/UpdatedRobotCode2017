@@ -43,7 +43,7 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
      */
     public void alignWidth(DriveTrainSubsystem dt, double lowSpeed, double highSpeed, boolean alignOnly, boolean autonomous)
     {
-        double kP = 0.0024;
+        double kP = 0.0021;
         double tolerance = 0.05;
         double minimumSpeed = 0.22;
 
