@@ -1,9 +1,6 @@
 package com.team2502.robot2017;
 
-import com.team2502.robot2017.command.autonomous.AlignBoiler;
-import com.team2502.robot2017.command.autonomous.BoilerDistCommand;
-import com.team2502.robot2017.command.autonomous.DriveTimeCommand;
-import com.team2502.robot2017.command.autonomous.TestAutoCommand;
+import com.team2502.robot2017.command.autonomous.*;
 import com.team2502.robot2017.command.autonomous.commandGroups.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -29,7 +26,9 @@ class AutoSwitcher
 //        BLUE_SHOOT_AND_GEAR("Blue shoot and Gear", ShootAndGearAutoBlue.class),
 //        BLUE_SHOOT_AND_BASELINE("Blue shoot and Baseline", ShootAndBaseLineBlue.class),
 
+        BOILER_BLUE("Blue Boiler", BoilerBlue.class),
         BOILER_RED("Red Boiler", BoilerRed.class),
+        BASE_LINE("Base line (Don't use please, it'll make programmers sad)", BaseLineAuto.class),
         TESTAUTO("DO NOT USE ME!", TestAutoCommand.class);
 
         private Class<? extends Command> autoCommand;

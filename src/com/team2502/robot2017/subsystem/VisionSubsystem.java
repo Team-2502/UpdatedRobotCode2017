@@ -21,11 +21,31 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
     double height;
     double offset;
     double fps;
+    double logCounter = 0;
 
     private Relay visionLight = new Relay(0);
 
     public VisionSubsystem()
     {
+    }
+
+    /**
+     * Same as Math.sqrt but absolute values the number first
+     * @param a the number
+     * @return its square root
+     */
+    private double sqrt(double a)
+    {
+//        return Math.sqrt(Math.abs(a));
+        return a;
+    }
+
+    private double f(double x, double kp)
+    {
+//        double result = Math.abs((1)/(1 + Math.pow(Math.E, x/50))) + 0.1;
+        double result = x * x;
+        System.out.println(result);
+        return Math.max(result, 0.22 / kp);
     }
 
     @Override
@@ -44,8 +64,10 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
     public void alignWidth(DriveTrainSubsystem dt, double lowSpeed, double highSpeed, boolean alignOnly, boolean autonomous)
     {
         double kP = 0.0021;
-        double tolerance = 0.05;
+//        double kP = 1;
+        double tolerance = 5;
         double minimumSpeed = 0.22;
+        double px_to_ticks = 1.89;
 
         if(autonomous || OI.JOYSTICK_DRIVE_LEFT.getRawButton(RobotMap.Joystick.Button.VISION_ALIGN))
         {
@@ -55,11 +77,19 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
             if(offset > tolerance)
             {
 //                dt.runMotors(highSpeed, lowSpeed);
-                dt.runMotors(Math.max(minimumSpeed, offset * kP), Math.max(minimumSpeed, offset * kP));
+                dt.runMotors(Math.max(minimumSpeed, sqrt(offset * kP)), Math.max(minimumSpeed, sqrt(offset * kP)));
+//                dt.runMotors(f(offset, kP), f(offset, kP));
+
+//                dt.rightTalon1.set(offset * px_to_ticks);
+//                dt.leftTalon0.set(offset * px_to_ticks);
             } else if(offset < -tolerance)
             {
 //                dt.runMotors(-lowSpeed, -highSpeed);
-                dt.runMotors(-Math.max(minimumSpeed, Math.abs(offset * kP)), -Math.max(Math.abs(offset * kP), minimumSpeed));
+                dt.runMotors(-Math.max(minimumSpeed, Math.abs(sqrt(offset * kP))), -Math.max(sqrt(offset * kP), minimumSpeed));
+//                dt.runMotors(f(offset, kP), f(offset, kP));
+
+//                dt.rightTalon1.set(offset * (px_to_ticks));
+//                dt.leftTalon0.set(offset * (px_to_ticks));
             } else if((-0.1 < offset) && (offset < 0.1) && !alignOnly)
             {
                 dt.runMotors(.5D, -.5D);
@@ -87,16 +117,24 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
 
     public void turnOnVisionLight() { visionLight.set(Relay.Value.kOn); }
 
+
     @Override
     public void gotUpdate(VisionUpdate update)
     {
-        System.out.println("num targets: " + update.getTargets().size());
+        logCounter++;
+        if(logCounter % 10 == 1)
+        {
+            System.out.println("num targets: " + update.getTargets().size());
+        }
         for(int i = 0; i < update.getTargets().size(); i++)
         {
             TargetInfo target = update.getTargets().get(i);
             height = target.getHeight();
             offset = target.getOffset();
-            System.out.println("Target (height, offset): " + height + ", " + offset);
+            if(logCounter % 10 == 1)
+            {
+                System.out.println("Target (height, offset): " + height + ", " + offset);
+            }
         }
 
     }

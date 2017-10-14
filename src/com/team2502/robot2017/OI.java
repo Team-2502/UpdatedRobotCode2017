@@ -2,6 +2,7 @@ package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
 
+import com.team2502.robot2017.command.autonomous.AlignBoiler;
 import com.team2502.robot2017.command.autonomous.OneMethodCommand;
 
 import com.team2502.robot2017.command.teleop.*;
@@ -66,8 +67,9 @@ public final class OI
 
         DISABLE_AUTOSHIFTING.whenPressed(new DisableAutoShifting());
 
-        VISION_ALIGN.whileHeld(new TeleopVisionCommand());
-        VISION_BOILER.whileHeld(new TeleopBoilerDist());
+        VISION_ALIGN.whenPressed(new AlignBoiler());
+//        VISION_ALIGN.whileHeld(new TeleopVisionCommand());
+//        VISION_BOILER.whileHeld(new TeleopBoilerDist());
     }
 
     public static void init() {}

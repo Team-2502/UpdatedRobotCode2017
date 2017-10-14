@@ -11,19 +11,20 @@ public class BoilerRed extends CommandGroup
 {
     public BoilerRed()
     {
-//        addSequential(new EncoderDrive(43.27, 65.73, 5.5, 10, 500));
-        double alignspeed = 0.4;
         addSequential(new NavXResetCommand());
-        addSequential(new EncoderDrive(-48.413,-68.28, 8, 10, 2));
-        addSequential(new EncoderDrive(-(5.7*12), -(4.2*12), 10, 6, 2));
-        addSequential(new EncoderDrive(10,.1));
-        addParallel(new SetHopperCommand(true));
+        addSequential(new EncoderDrive(-48.413,-68.28, 8, 10, 1.35)); //First curve
+        addSequential(new EncoderDrive(-(4.85*12), -(3.75*12), 10.5, 6.5, 1.32)); //Second curve to hopper .74
+        addParallel(new SetHopperCommand(true)); // Expand hopper
+        addSequential(new EncoderDrive(-10,10, .15));
+        addSequential(new EncoderDrive(100,.4)); // Move forward to get more balls
 
-        //left: -50.413      right: -66.280
+        //left: -48.413      right: -68.28
+        //left: -(5.7*12)    right: -(4.2*12)
 
         addSequential(new AlignBoiler());
-		addSequential(new ShootCommand(.5, false));
+        addParallel(new ShootCommand(.5, false));
 		addSequential(new ShootCommand(10, true));
+		addSequential(new SetHopperCommand(false));
 
     }
 }

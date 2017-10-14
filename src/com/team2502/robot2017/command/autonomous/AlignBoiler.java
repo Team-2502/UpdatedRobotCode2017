@@ -6,7 +6,7 @@ public class AlignBoiler extends CommandGroup
 {
     public AlignBoiler()
     {
-        addSequential(new AutoVCommand(4, true));
+        addSequential(new AutoVCommand(1, true));
         addSequential(new BoilerDistCommand(1));
     }
 }

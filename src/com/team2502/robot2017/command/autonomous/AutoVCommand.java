@@ -90,6 +90,11 @@ public class AutoVCommand extends Command
     protected void initialize()
     {
         vision.turnOnVisionLight();
+//        dt.setAutonSettings();
+
+//        dt.setAutonSettingsVolts(dt.leftTalon0, true, 6);
+//        dt.setAutonSettingsVolts(dt.rightTalon1, false, 6);
+
         startTime = System.currentTimeMillis();
     }
 
@@ -108,6 +113,7 @@ public class AutoVCommand extends Command
     protected void end()
     {
         dt.runMotors(0, 0);
+        dt.setTeleopSettings();
         vision.turnOffVisionLight();
         System.out.println("Did a align");
     }

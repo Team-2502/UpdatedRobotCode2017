@@ -79,6 +79,7 @@ public final class Robot extends IterativeRobot
         Scheduler.getInstance().run();
         DashboardData.update();
         DRIVE_TRAIN.disabledStop();
+        HOPPER.setHopper(false);
         logVision();
     }
 
