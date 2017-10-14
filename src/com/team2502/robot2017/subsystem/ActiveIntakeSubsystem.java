@@ -36,12 +36,12 @@ public class ActiveIntakeSubsystem extends Subsystem
         if(OI.JOYSTICK_FUNCTION.getRawButton(3))
         {
             activeTalon.set(1);
-            shooter.teleopFeed(true);
+//            shooter.teleopFeed(true);
         }
         else if(OI.JOYSTICK_FUNCTION.getRawButton(4))
         {
             activeTalon.set(-1);
-            shooter.teleopFeed(false);
+//            shooter.teleopFeed(false);
         }
         else { activeTalon.set(0); }
     }

@@ -25,6 +25,7 @@ public class SetHopperCommand extends Command
         hopper.setHopper(out);
         System.out.println(out ? "Did a Hopper Expand" : "Did a Hopper Contract");
     }
+
     @Override
     protected boolean isFinished()
     {

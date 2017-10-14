@@ -18,9 +18,9 @@ public class ShooterSubsystem extends Subsystem
     private final CANTalon banebotFeeder;
     private final CANTalon agitator;
 
-    double targetSpeedFlywheel = 2975;
+    double targetSpeedFlywheel = 3005;
 
-    double autoTargetSpeed = targetSpeedFlywheel + 50;
+    double autoTargetSpeed = targetSpeedFlywheel - 50;
     double agitatorSpeed = 1;
     double colsonSpeed = 1;
     double banebotSpeed = 1400;
@@ -31,7 +31,6 @@ public class ShooterSubsystem extends Subsystem
     double kP = 0.79;
     double kI = 0.0017;
     double kD = 1.0;
-
 
 
     public boolean isFlywheelActive;
@@ -90,6 +89,11 @@ public class ShooterSubsystem extends Subsystem
         rightFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
         rightFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -0.0D);
 
+        // Disables brakes
+        leftFlywheelTalonBottom.enableBrakeMode(false);
+        leftFlywheelTalonTop.enableBrakeMode(false);
+        rightFlywheelTalonBottom.enableBrakeMode(false);
+        rightFlywheelTalonTop.enableBrakeMode(false);
 
         // Set more encoder settings
 
@@ -188,6 +192,8 @@ public class ShooterSubsystem extends Subsystem
         leftFlywheelTalonTop.setP(kP);
         leftFlywheelTalonTop.setI(kI);
         leftFlywheelTalonTop.setD(kD);
+
+        leftFlywheelTalonTop.set(autoTargetSpeed);
     }
 
     /**
@@ -197,15 +203,15 @@ public class ShooterSubsystem extends Subsystem
     {
 //        banebotFeeder.changeControlMode(follower);
         colsonFeeder.set(colsonSpeed);
-        banebotFeeder.set(-banebotSpeed);
-        agitator.set(-agitatorSpeed);
+        banebotFeeder.set(banebotSpeed);
+        agitator.set(agitatorSpeed);
     }
 
     public void teleopFeed(boolean neg)
     {
 //        colsonFeeder.set(neg ? -colsonSpeed: colsonSpeed);
 //        banebotFeeder.set(neg ? banebotSpeed: -banebotSpeed);
-        agitator.set(neg ? -agitatorSpeed: agitatorSpeed);
+        agitator.set(neg ? -agitatorSpeed : agitatorSpeed);
 
     }
 
@@ -300,9 +306,7 @@ public class ShooterSubsystem extends Subsystem
         if(OI.JOYSTICK_FUNCTION.getRawButton(5) && !isTriggerPressed) { shooterMode = !shooterMode; }
         isTriggerPressed = OI.JOYSTICK_FUNCTION.getRawButton(5);
 
-        if(shooterMode) { setSpeedOnAllFlyWheelMotors(targetSpeedFlywheel); }
-
-        else { setSpeedOnAllFlyWheelMotors(0); }
+        if(shooterMode) { setSpeedOnAllFlyWheelMotors(targetSpeedFlywheel); } else { setSpeedOnAllFlyWheelMotors(0); }
 
         //Control for turning on/off the feeding mechanism.
         if(OI.JOYSTICK_FUNCTION.getTrigger())
@@ -310,11 +314,7 @@ public class ShooterSubsystem extends Subsystem
             colsonFeeder.set(colsonSpeed);
             banebotFeeder.set(banebotSpeed);
             agitator.set(agitatorSpeed);
-        }
-
-        else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(-agitatorSpeed); }
-
-        else
+        } else if(OI.JOYSTICK_FUNCTION.getRawButton(12)) { agitator.set(-agitatorSpeed); } else
         {
             colsonFeeder.set(0);
             banebotFeeder.set(0);

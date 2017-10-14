@@ -1,7 +1,6 @@
 package com.team2502.robot2017;
 
-import com.team2502.robot2017.command.autonomous.DriveTimeCommand;
-import com.team2502.robot2017.command.autonomous.TestAutoCommand;
+import com.team2502.robot2017.command.autonomous.*;
 import com.team2502.robot2017.command.autonomous.commandGroups.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -13,12 +12,13 @@ class AutoSwitcher
 
     public enum AutoMode
     {
-
-        GEAR_BACKUP_CENTER("Center Backup gear", GearBackupCenter.class),
-        BASE_LINE("Base Line", BaseLineAuto.class),
-        GEAR_CENTER("Center Gear", GearAutoCenter.class),
-        GEAR_LEFT("Left Gear", GearAutoLeft.class),
-        GEAR_RIGHT("Right Gear", GearAutoRight.class),
+//        BOILER_TEST("Boiler Align and Dist", AlignBoiler.class),
+//        BOILER_DISTANCE("Boiler Distance", BoilerDistCommand.class),
+//        GEAR_BACKUP_CENTER("Center Backup gear", GearBackupCenter.class),
+//        BASE_LINE("Base Line", BaseLineAuto.class),
+//        GEAR_CENTER("Center Gear", GearAutoCenter.class),
+//        GEAR_LEFT("Left Gear", GearAutoLeft.class),
+//        GEAR_RIGHT("Right Gear", GearAutoRight.class),
 
 //        RED_SHOOT_AND_GEAR("Red shoot and Gear", ShootAndGearAutoRed.class),
 //        RED_SHOOT_AND_BASELINE("Red shoot and Baseline", ShootAndBaseLineRed.class),
@@ -26,7 +26,9 @@ class AutoSwitcher
 //        BLUE_SHOOT_AND_GEAR("Blue shoot and Gear", ShootAndGearAutoBlue.class),
 //        BLUE_SHOOT_AND_BASELINE("Blue shoot and Baseline", ShootAndBaseLineBlue.class),
 
+        BOILER_BLUE("Blue Boiler", BoilerBlue.class),
         BOILER_RED("Red Boiler", BoilerRed.class),
+        BASE_LINE("Base line (Don't use please, it'll make programmers sad)", BaseLineAuto.class),
         TESTAUTO("DO NOT USE ME!", TestAutoCommand.class);
 
         private Class<? extends Command> autoCommand;
@@ -41,8 +43,7 @@ class AutoSwitcher
         public Command getInstance()
         {
             Command instance;
-            try { instance = autoCommand.newInstance(); }
-            catch(InstantiationException | IllegalAccessException e) { return null; }
+            try { instance = autoCommand.newInstance(); } catch(InstantiationException | IllegalAccessException e) { return null; }
             return instance;
         }
     }
@@ -53,9 +54,8 @@ class AutoSwitcher
 
         for(int i = 0; i < AutoMode.values().length; i++)
         {
-            AutoMode mode = AutoMode.values()[i];
-            if(i == 0) { autoChooser.addDefault(mode.name, mode); }
-            else { autoChooser.addObject(mode.name, mode); }
+            AutoMode mode = AutoMode.values()[ i ];
+            if(i == 0) { autoChooser.addDefault(mode.name, mode); } else { autoChooser.addObject(mode.name, mode); }
         }
 
         SmartDashboard.putData("auto_modes", autoChooser);

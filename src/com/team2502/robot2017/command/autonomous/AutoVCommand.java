@@ -14,15 +14,15 @@ public class AutoVCommand extends Command
     private double targetElapsed = 15;
     private static boolean alignOnly = false;
     private double highSpeed = 0.3;
-    private double lowSpeed = highSpeed/2;
-    private double turningFactor = -0.2/3;
-    private boolean smoothTurning = false;
+    private double lowSpeed = 0.3;
+
     /**
      * Automatic vision-based alignment with shiny objects
      * <br>
      * Runs for 2 seconds
      */
-    public AutoVCommand(){
+    public AutoVCommand()
+    {
         this(2);
     }
 
@@ -38,7 +38,7 @@ public class AutoVCommand extends Command
 
         vision = Robot.VISION;
         dt = Robot.DRIVE_TRAIN;
-        targetElapsed = runTime*1000;
+        targetElapsed = runTime * 1000;
     }
 
     /**
@@ -57,14 +57,15 @@ public class AutoVCommand extends Command
      * Automatic vision-based alignment with shiny objects
      * <br>
      * This one is special because it uses a math function to smooth out the turning
+     *
      * @param runTime    How long vision should run for
      * @param slowFactor How much slower the slow side should go.
      */
     public AutoVCommand(double runTime, double slowFactor)
     {
         this(runTime);
-        this.turningFactor = slowFactor;
-        smoothTurning = true;
+
+
         if(slowFactor == 1) { alignOnly = true; }
     }
 
@@ -89,6 +90,11 @@ public class AutoVCommand extends Command
     protected void initialize()
     {
         vision.turnOnVisionLight();
+//        dt.setAutonSettings();
+
+//        dt.setAutonSettingsVolts(dt.leftTalon0, true, 6);
+//        dt.setAutonSettingsVolts(dt.rightTalon1, false, 6);
+
         startTime = System.currentTimeMillis();
     }
 
@@ -99,13 +105,15 @@ public class AutoVCommand extends Command
     }
 
     @Override
-    protected boolean isFinished() {
+    protected boolean isFinished()
+    {
         return System.currentTimeMillis() - startTime > targetElapsed && (!alignOnly || Math.abs(offset) < 0.1);
     }
 
     protected void end()
     {
         dt.runMotors(0, 0);
+        dt.setTeleopSettings();
         vision.turnOffVisionLight();
         System.out.println("Did a align");
     }

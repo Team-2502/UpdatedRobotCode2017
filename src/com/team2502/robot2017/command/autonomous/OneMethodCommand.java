@@ -11,6 +11,7 @@ public class OneMethodCommand extends InstantCommand
 {
 
     final Runnable method;
+
     /**
      * Fun fact: All method references and lambda expressions are Runnables
      * <br  /><br  />
@@ -22,8 +23,9 @@ public class OneMethodCommand extends InstantCommand
      * <br  /><br  />
      * new OneMethodCommand(Robot.HOPPER, (() -> Robot.Hopper.setHopper(true)));
      * <br  /><hr  />
+     *
      * @param subsystem The subsystem to require
-     * @param method The method from subsystem to run
+     * @param method    The method from subsystem to run
      */
     public OneMethodCommand(Subsystem subsystem, Runnable method)
     {

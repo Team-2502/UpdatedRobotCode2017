@@ -36,7 +36,7 @@ public class EncoderDrive extends Command
 
     public EncoderDrive(double inches, double maxtime) { this(inches, inches, maxtime); }
 
-    private EncoderDrive(double inchesLeft, double inchesRight, double time)
+    public EncoderDrive(double inchesLeft, double inchesRight, double time)
     {
         this(time);
 
@@ -75,7 +75,6 @@ public class EncoderDrive extends Command
     {
         revLeftL = Math.abs(EncTalonLeft.getClosedLoopError());
         revLeftR = Math.abs(EncTalonRight.getClosedLoopError());
-
 
 
         SmartDashboard.putNumber("DT: Autonomous encoder ticks needed Left", revLeftL);

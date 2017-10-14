@@ -16,7 +16,6 @@ public class BoilerDistCommand extends Command
     double error;
     double target = RobotMap.Vision.TARGET_HEIGHT;
     double tolerance;
-    double base_speed = 0.5;
     boolean done;
 
     public BoilerDistCommand(double timeout)
@@ -46,21 +45,20 @@ public class BoilerDistCommand extends Command
     protected void initialize()
     {
         dt.setTeleopSettings();
-
     }
 
     @Override
     protected void execute()
     {
         error = (target - camera.getHeight());
-        double speed = 0.1;
+        double speed = 0.2;
         // /Math.abs(target - camera.getHeight());
         if(error > tolerance)
         {
-            if (error > 0)
+            if(error > 0)
             {
                 dt.runMotors(speed, -speed);
-            } else if (error < 0)
+            } else if(error < 0)
             {
                 dt.runMotors(-speed, speed);
             }

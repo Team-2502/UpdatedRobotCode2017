@@ -11,25 +11,20 @@ public class BoilerRed extends CommandGroup
 {
     public BoilerRed()
     {
-//        addSequential(new EncoderDrive(43.27, 65.73, 5.5, 10, 500));
-        double alignspeed = 0.4;
         addSequential(new NavXResetCommand());
-        addSequential(new EncoderDrive(58.732, 44.848, 11, 6.5, 2));
-        addSequential(new EncoderDrive(10.5, .1));
-        addSequential(new EncoderDrive(34.7, 54.3, 7, 11, 1.5));
-        addSequential(new EncoderDrive(-7, -7, 9,9,  .2));
+        addSequential(new EncoderDrive(-48.413,-68.28, 8, 10, 1.35)); //First curve
+        addSequential(new EncoderDrive(-(4.85*12), -(3.75*12), 10.5, 6.5, 1.32)); //Second curve to hopper .74
+        addParallel(new SetHopperCommand(true)); // Expand hopper
+        addSequential(new EncoderDrive(-10,10, .15));
+        addSequential(new EncoderDrive(100,.4)); // Move forward to get more balls
 
-        addSequential(new SetHopperCommand(true));
-        addParallel(new ActiveIntakeCommand(5));
+        //left: -48.413      right: -68.28
+        //left: -(5.7*12)    right: -(4.2*12)
 
-        addSequential(new NavXMoveCommand(0, 1));
-
-        addSequential(new AutoVCommand(2, true, alignspeed, alignspeed));
-
-		addSequential(new BoilerDistCommand(2));
-
-		addSequential(new ShootCommand(.5, false));
+        addSequential(new AlignBoiler());
+        addParallel(new ShootCommand(.5, false));
 		addSequential(new ShootCommand(10, true));
+		addSequential(new SetHopperCommand(false));
 
     }
 }

@@ -2,6 +2,7 @@ package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.*;
 
+import com.team2502.robot2017.command.autonomous.AlignBoiler;
 import com.team2502.robot2017.command.autonomous.OneMethodCommand;
 
 import com.team2502.robot2017.command.teleop.*;
@@ -34,8 +35,8 @@ public final class OI
 
     private static final Button DISABLE_AUTOSHIFTING = new JoystickButton(JOYSTICK_DRIVE_RIGHT, 7);
 
-	private static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.VISION_ALIGN);
-	private static final Button VISION_BOILER = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.VISION_BOILER);
+    private static final Button VISION_ALIGN = new JoystickButton(JOYSTICK_DRIVE_LEFT, RobotMap.Joystick.Button.VISION_ALIGN);
+    private static final Button VISION_BOILER = new JoystickButton(JOYSTICK_DRIVE_RIGHT, RobotMap.Joystick.Button.VISION_BOILER);
 
     private static final Button CLIMBER = new JoystickButton(JOYSTICK_FUNCTION, RobotMap.Joystick.Button.CLIMBER);
 
@@ -66,8 +67,9 @@ public final class OI
 
         DISABLE_AUTOSHIFTING.whenPressed(new DisableAutoShifting());
 
-        VISION_ALIGN.whileHeld(new TeleopVisionCommand());
-        VISION_BOILER.whileHeld(new TeleopBoilerDist());
+        VISION_ALIGN.whenPressed(new AlignBoiler());
+//        VISION_ALIGN.whileHeld(new TeleopVisionCommand());
+//        VISION_BOILER.whileHeld(new TeleopBoilerDist());
     }
 
     public static void init() {}
@@ -77,8 +79,7 @@ public final class OI
         if(above)
         {
             return Math.abs(OI.JOYSTICK_DRIVE_RIGHT.getY()) > threshold && Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY()) > threshold;
-        }
-        else
+        } else
         {
             return Math.abs(OI.JOYSTICK_DRIVE_RIGHT.getY()) < threshold && Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY()) < threshold;
         }
