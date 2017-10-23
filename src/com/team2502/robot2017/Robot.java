@@ -84,6 +84,7 @@ public final class Robot extends IterativeRobot
         DRIVE_TRAIN.disabledStop();
         HOPPER.setHopper(false);
         logVision();
+        fileWriting();
     }
 
     /**
@@ -113,6 +114,7 @@ public final class Robot extends IterativeRobot
         Scheduler.getInstance().run();
         DashboardData.update();
         logVision();
+        fileWriting();
     }
 
     public void teleopInit() { VISION.turnOffVisionLight(); }
@@ -125,6 +127,7 @@ public final class Robot extends IterativeRobot
         Scheduler.getInstance().run();
         DashboardData.update();
         logVision();
+        fileWriting();
     }
 
     /**
@@ -135,6 +138,7 @@ public final class Robot extends IterativeRobot
         LiveWindow.run();
         DashboardData.update();
         logVision();
+        fileWriting();
     }
 
     private void logVision()
