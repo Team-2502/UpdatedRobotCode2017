@@ -47,7 +47,7 @@ public final class OI
         // Above is obsolete due to automatic transmission
 
 //        SWITCH_HOPPER.whenPressed(new SwitchHopperCommand());
-        SWITCH_HOPPER.whenPressed(new OneMethodCommand(Robot.HOPPER, (() -> Robot.HOPPER.setHopper(true))));
+//        SWITCH_HOPPER.whenPressed(new OneMethodCommand(Robot.HOPPER, (() -> Robot.HOPPER.setHopper(true))));
 
         SWITCH_HOPPER.whenPressed(new SwitchHopperCommand());
 
