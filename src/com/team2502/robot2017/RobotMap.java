@@ -1,5 +1,7 @@
 package com.team2502.robot2017;
 
+import java.util.ArrayList;
+
 public class RobotMap
 {
 
@@ -97,5 +99,14 @@ public class RobotMap
         public static final int HOPPER_SOLENOID = 1;
 
         private Solenoid() {}
+    }
+
+    public static final class Files
+    {
+        public static int FilesMade = 0;
+
+        public static ArrayList LoopErrorArray = new ArrayList();
+
+        private Files() {}
     }
 }

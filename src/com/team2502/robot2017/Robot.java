@@ -1,6 +1,7 @@
 package com.team2502.robot2017;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.team2502.robot2017.file.FileData;
 import com.team2502.robot2017.subsystem.*;
 import com.team2502.robot2017.vision.VisionServer;
 import edu.wpi.first.wpilibj.Compressor;
@@ -24,6 +25,7 @@ public final class Robot extends IterativeRobot
     public static ClimberSubsystem CLIMBER;
     public static HopperSubsystem HOPPER;
     public static VisionServer VISIONSERVER;
+    public static FileData FILEDATA;
 
     public static long SHIFTED;
 
@@ -54,6 +56,7 @@ public final class Robot extends IterativeRobot
         CLIMBER = new ClimberSubsystem();
         HOPPER = new HopperSubsystem();
         NAVX = new AHRS(SPI.Port.kMXP);
+        FILEDATA = new FileData();
 
         AutoSwitcher.putToSmartDashboard();
 
@@ -144,6 +147,16 @@ public final class Robot extends IterativeRobot
             System.out.println("[Vision] FPS: " + VISION.getFPS());
             System.out.println("\n\n\n");
         }
+    }
 
+    private void fileWriting()
+    {
+        String fileName = "";
+        if((System.currentTimeMillis() % 5000) == 0)
+        {
+            FileData.newFile(fileName);
+        }
+        RobotMap.Files.LoopErrorArray.add(SHOOTER.getError());
+        FileData.writeTimeAndValuesToFile(FILEDATA.FileName, System.currentTimeMillis(),"LOOP ERROR", RobotMap.Files.LoopErrorArray );
     }
 }
