@@ -333,8 +333,6 @@ public class DriveTrainSubsystem extends Subsystem
         leftTalon1.set(x);
         rightTalon0.set(y);
         rightTalon1.set(y);
-        // Timer.delay(DELAY_TIME);
-        // Scheduler.getInstance().add(new WaitCommand(DELAY_TIME));
         // stopDriveS();
         //SmartDashboard.putNumber("Autonomous", Robot.AUTO.getTimerStraight());
     }
@@ -358,8 +356,6 @@ public class DriveTrainSubsystem extends Subsystem
         lastLeft = 0.0D;
         lastRight = 0.0D;
         drive.tankDrive(0.0D, 0.0D);
-//        ClimberCommand.setStopped(true);
-        Timer.delay(0.3D);
     }
 
     @Deprecated
