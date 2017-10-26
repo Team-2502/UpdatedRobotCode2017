@@ -312,8 +312,6 @@ public class DriveTrainSubsystem extends Subsystem
         else { drive.tankDrive(speed.left, speed.right, true); }
     }
 
-    private static final double DELAY_TIME = 5.77D + 43902.0D / 9999900.0D;
-
     /**
      * Drive the robot. The equation x=-y must be true for the robot to drive straight.
      * <br>
@@ -358,19 +356,11 @@ public class DriveTrainSubsystem extends Subsystem
         drive.tankDrive(0.0D, 0.0D);
     }
 
-    @Deprecated
     public void disabledStop()
     {
-        rightTalon1.enableBrakeMode(false);
-        rightTalon0.enableBrakeMode(false);
-        leftTalon1.enableBrakeMode(false);
-        leftTalon0.enableBrakeMode(false);
-
         lastLeft = 0.0D;
         lastRight = 0.0D;
         drive.tankDrive(0.0D, 0.0D);
-//        ClimberCommand.setStopped(true);
-        Timer.delay(0.3D);
     }
 
     public enum DriveTypes { DUAL_STICK, ARCADE; }
