@@ -11,8 +11,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import logger.Log;
 
-public final class Robot extends IterativeRobot
-{
+public final class Robot extends IterativeRobot {
 
     // Makes all the stuff
     public static DriveTrainSubsystem DRIVE_TRAIN;
@@ -36,7 +35,6 @@ public final class Robot extends IterativeRobot
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-
     public void robotInit()
     {
 //        Log.createLogger();
@@ -62,7 +60,6 @@ public final class Robot extends IterativeRobot
 
         DashboardData.setup();
 
-
         VISIONSERVER.addVisionUpdateReceiver(VISION);
 
         OI.init();
@@ -83,7 +80,6 @@ public final class Robot extends IterativeRobot
         DashboardData.update();
         DRIVE_TRAIN.disabledStop();
         HOPPER.setHopper(false);
-        logVision();
         fileWriting();
     }
 
@@ -100,7 +96,6 @@ public final class Robot extends IterativeRobot
      */
     public void autonomousInit()
     {
-
         Scheduler.getInstance().add(AutoSwitcher.getAutoInstance());
         NAVX.reset();
         VISION.turnOnVisionLight();
@@ -143,24 +138,20 @@ public final class Robot extends IterativeRobot
 
     private void logVision()
     {
-
-        if(false)
-        {
+//        if (false) {
             System.out.println("[Vision] Target Height: " + VISION.getHeight());
             System.out.println("[Vision] Target Offset: " + VISION.getOffset());
             System.out.println("[Vision] FPS: " + VISION.getFPS());
             System.out.println("\n\n\n");
-        }
+//        }
     }
 
-    private void fileWriting()
-    {
-        String fileName = "";
-        if((System.currentTimeMillis() % 5000) == 0)
-        {
-            FileData.newFile(fileName);
-        }
+    private void fileWriting() {
+        String fileName = "/home/lvuser/PIDLOG";
+//        String fileName = "/home/lvuser/pid_logs/PIDLOG";
+        if ((System.currentTimeMillis() % 5000) == 0) { FileData.newFile(fileName); }
+
         RobotMap.Files.LoopErrorArray.add(SHOOTER.getError());
-        FileData.writeTimeAndValuesToFile(FILEDATA.FileName, System.currentTimeMillis(),"LOOP ERROR", RobotMap.Files.LoopErrorArray );
+        FileData.writeTimeAndValuesToFile(FILEDATA.FileName, System.currentTimeMillis(), "LOOP ERROR", RobotMap.Files.LoopErrorArray);
     }
 }
