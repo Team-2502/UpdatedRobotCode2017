@@ -17,7 +17,7 @@ public class FileData
      */
     public static void newFile(String fileName)
     {
-        FileName = fileName + RobotMap.Files.FilesMade + ".txt";
+        FileName = fileName + RobotMap.Files.FilesMade + ".csv";
         file = new File(FileName);
         RobotMap.Files.FilesMade++;
     }
@@ -27,8 +27,9 @@ public class FileData
         WriteToFile data = new WriteToFile(fileName, true);
         try
         {
-            data.writeToFile("Time: " + time);
-            data.writeToFile(arrayName + ": " + String.valueOf(values));
+//            data.writeToFile("Loop Error,");
+            data.writeToFile(String.valueOf(time) + ", ");
+            data.writeToFile(String.valueOf(values.get(values.size()-1)) + ", ");
         } catch(IOException e)
         {
             System.out.println(e.getMessage());
