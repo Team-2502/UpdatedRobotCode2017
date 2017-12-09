@@ -21,12 +21,6 @@ public class TeleopVisonCommand extends Command
     double turningFactor = 0.5;
     boolean smoothTurning = false;
 
-    @Override
-    protected void initialize()
-    {
-//        vision.turnOnVisionLçight();
-    }
-
     protected void smoothSpeed(double offset)
     {
         highSpeed = getSpeed(offset);

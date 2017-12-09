@@ -9,14 +9,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class EncoderDrive extends Command
 {
-    CANTalon EncTalonLeft;
-    CANTalon EncTalonRight;
-    private double targetRotLeft = -4.65;
-    private double targetRotRight = 4.65;
-    private double voltageLeft = 12;
-    private double voltageRight = 12;
-    private boolean onTarget = false;
-    private long onTargetStartTime = 0;
+    CANTalon encTalonLeft;
+    CANTalon encTalonRight;
+    private double targetRevolutionsLeft = -RobotMap.Constants.REVOLUTIONS_TO_AIRSHIP;
+    private double targetRevolutionsRight = RobotMap.Constants.REVOLUTIONS_TO_AIRSHIP;
     private double revLeftL;
     private double revLeftR;
 
@@ -27,107 +23,53 @@ public class EncoderDrive extends Command
         super(time);
         dt = Robot.DRIVE_TRAIN;
         requires(Robot.DRIVE_TRAIN);
-        EncTalonLeft = dt.leftTalon0;
-        EncTalonRight = dt.rightTalon1;
+        encTalonLeft = dt.leftTalon0;
+        encTalonRight = dt.rightTalon1;
     }
 
     public EncoderDrive(double inches, double maxtime) { this(inches, inches, maxtime); }
 
-    private EncoderDrive(double inchesLeft, double inchesRight, double time)
+    public EncoderDrive(double inchesLeft, double inchesRight, double time)
     {
         this(time);
 
-        targetRotLeft = inchesLeft / (4 * Math.PI);
-//        targetRotLeft = inchesLeft;
-        targetRotRight = inchesRight / (4 * Math.PI);
-//        targetRotRight = inchesRight;
+        targetRevolutionsLeft = inchesLeft / (RobotMap.Constants.WHEEL_DIAMETER * Math.PI);
+        targetRevolutionsRight = inchesRight / (RobotMap.Constants.WHEEL_DIAMETER * Math.PI);
     }
-
-    public EncoderDrive(double inchesLeft, double inchesRight, double voltageLeft, double voltageRight, double time)
-    {
-        this(time);
-
-        targetRotLeft = inchesLeft / (4 * Math.PI);
-        targetRotRight = inchesRight / (4 * Math.PI);
-
-        this.voltageLeft = voltageLeft;
-        this.voltageRight = voltageRight;
-    }
-
 
     @Override
     protected void initialize()
     {
-//        dt.setAutonSettingsVolts(EncTalonLeft, true, voltageLeft);
-//        dt.setAutonSettingsVolts(EncTalonRight, false, voltageRight);
         dt.setAutonSettings();
-        EncTalonLeft.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
-        EncTalonRight.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
-//        dt.leftTalon0.reverseOutput(true);
-//        dt.rightTalon1.reverseOutput(true);
+        encTalonLeft.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
+        encTalonRight.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
     }
 
     @Override
     protected void execute()
     {
-        revLeftL = Math.abs(EncTalonLeft.getClosedLoopError());
-        revLeftR = Math.abs(EncTalonRight.getClosedLoopError());
-
+        revLeftL = Math.abs(encTalonLeft.getClosedLoopError());
+        revLeftR = Math.abs(encTalonRight.getClosedLoopError());
 
         SmartDashboard.putNumber("DT: Autonomous encoder ticks needed Left", revLeftL);
         SmartDashboard.putNumber("DT: Autonomous encoder ticks needed Right", revLeftR);
 
-        System.out.println("Needs to go " + revLeftL);
-//        System.out.println("Time: " + System.currentTimeMillis());
-        System.out.println("Setpoint: " + EncTalonLeft.getSetpoint());
-//
-//        if(!onTarget && (revLeftL <= RobotMap.Motor.ALLOWABLE_LOOP_ERR && revLeftR <= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
-//        {
-//            onTargetStartTime = System.currentTimeMillis();
-//            onTarget = true;
-//        }
-//        else if(onTarget && (revLeftL >= RobotMap.Motor.ALLOWABLE_LOOP_ERR && revLeftR >= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
-//        {
-//            onTargetStartTime = 0;
-//            onTarget = false;
-//        }
-
-
-//        EncTalonRight.set(targetRotRight);
-//        EncTalonLeft.set(-targetRotLeft);
-        EncTalonRight.set(-targetRotRight);
-        EncTalonLeft.set(targetRotLeft);
+        encTalonRight.set(-targetRevolutionsRight);
+        encTalonLeft.set(targetRevolutionsLeft);
     }
 
     @Override
     protected boolean isFinished()
     {
-//        if(isTimedOut() || revLeftL <= RobotMap.Motor.ALLOWABLE_LOOP_ERR && revLeftR <= RobotMap.Motor.ALLOWABLE_LOOP_ERR)
         {
-//            return true;
             return isTimedOut();
         }
-//        else
-//        {
-//            return false;
-//        }
-//        else
-//        {
-//            return (Math.abs(revLeftR) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR
-//                    && Math.abs(revLeftL) <= RobotMap.Motor.ALLOWABLE_LOOP_ERR)
-//                   && (System.currentTimeMillis() - onTargetStartTime >= RobotMap.Motor.TIME_TO_STOP);
-//        }
-
     }
 
     @Override
     protected void end()
     {
         dt.setTeleopSettings();
-        System.out.println("Exiting PID");
-//        dt.stopDriveS();
-//        dt.leftTalon0.reverseOutput(false);
-//        dt.rightTalon1.reverseOutput(false);
         dt.runMotors(0, 0);
     }
 

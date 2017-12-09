@@ -33,7 +33,6 @@ public final class Robot extends IterativeRobot
      */
     public void robotInit()
     {
-//        Log.createLogger();
         DRIVE_TRAIN = new DriveTrainSubsystem();
         DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
         PRESSURE_SENSOR = new PressureSensorSubsystem();

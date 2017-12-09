@@ -26,11 +26,7 @@ class ShootAutoBase extends CommandGroup
         String blue = "BLUE";
         allianceColor = allianceColor.toUpperCase();
 
-//		// shoot balls into boiler
-//	    addSequential(new ShootCommand(1, false));
-//	    addSequential(new ShootCommand(3, true));
-//
-//	    // FTC align against boiler
+	    // FTC align against boiler
 
         addSequential(new DriveTimeCommand(2, 1, 0));
         addSequential(new WaitCommand(0.25));

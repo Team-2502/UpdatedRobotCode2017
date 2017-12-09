@@ -6,17 +6,13 @@ import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import com.team2502.robot2017.subsystem.VisionSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * Created by 64009334 on 9/2/17.
- */
 public class BoilerDistCommand extends Command
 {
     DriveTrainSubsystem dt;
     VisionSubsystem camera;
     double error;
-    double target = RobotMap.Vision.TARGET_HEIGHT;
+    double target;
     double tolerance;
-    double base_speed = 0.5;
     boolean done;
 
     public BoilerDistCommand(double timeout)
@@ -54,7 +50,6 @@ public class BoilerDistCommand extends Command
     {
         error = (target - camera.getHeight());
         double speed = 0.1;
-        // /Math.abs(target - camera.getHeight());
         if (error > tolerance)
         {
             if (error > 0)

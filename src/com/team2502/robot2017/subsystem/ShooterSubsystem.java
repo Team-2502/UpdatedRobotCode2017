@@ -78,14 +78,6 @@ public class ShooterSubsystem extends Subsystem
         rightFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
         rightFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -2.0D);
 
-
-        // Set more encoder settings
-//        leftFlywheelTalonTop.setProfile(0);
-//        leftFlywheelTalonTop.setF(0.21765900);
-//        leftFlywheelTalonTop.setP(1.71312500);
-//        leftFlywheelTalonTop.setI(0.0);
-//        leftFlywheelTalonTop.setD(0.0);
-
         // Set banebot talon and encoder settings
         banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
         banebotFeeder.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
@@ -320,7 +312,6 @@ public class ShooterSubsystem extends Subsystem
 
         // Causes problems with banebots starting after shooter is turned off
         // If we want to fix then we would have to enable it somewhere.
-//        banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Disabled);
 
         System.out.println("Stopping shooter and related motors.");
 

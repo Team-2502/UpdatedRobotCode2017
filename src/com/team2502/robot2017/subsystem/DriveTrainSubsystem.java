@@ -322,10 +322,6 @@ public class DriveTrainSubsystem extends Subsystem
         leftTalon1.set(x);
         rightTalon0.set(y);
         rightTalon1.set(y);
-        // Timer.delay(DELAY_TIME);
-        // Scheduler.getInstance().add(new WaitCommand(DELAY_TIME));
-        // stopDriveS();
-        //SmartDashboard.putNumber("Autonomous", Robot.AUTO.getTimerStraight());
     }
 
     /**
