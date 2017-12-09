@@ -5,6 +5,7 @@ import com.team2502.robot2017.RobotMap;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class FileData
 {
@@ -25,11 +26,26 @@ public class FileData
     public static void writeTimeAndValuesToFile(String fileName, long time, String arrayName, ArrayList values)
     {
         WriteToFile data = new WriteToFile(fileName, true);
+
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(time);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(time);
+
+
         try
         {
-//            data.writeToFile("Loop Error,");
-            data.writeToFile(String.valueOf(time) + ", ");
-            data.writeToFile(String.valueOf(values.get(values.size()-1)) + ", ");
+            if (time < 1000)
+            {
+                data.writeToFile(String.valueOf(time) + ", " + "Loop Error:" + String.valueOf(values.get(values.size() - 1)) + ", ");
+            }
+            else if(seconds < 60)
+            {
+                data.writeToFile(String.valueOf(seconds) + ": " + String.valueOf(time % 1000) + ", " + "Loop Error:" + String.valueOf(values.get(values.size() - 1)) + ", ");
+            }
+            else
+            {
+                data.writeToFile(String.valueOf(minutes) + ": " + String.valueOf(seconds) + ": " + String.valueOf(time % 1000) + ", " + "Loop Error:" + String.valueOf(values.get(values.size() - 1)) + ", ");
+            }
+
         } catch(IOException e)
         {
             System.out.println(e.getMessage());

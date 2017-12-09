@@ -80,7 +80,7 @@ public final class Robot extends IterativeRobot {
         DashboardData.update();
         DRIVE_TRAIN.disabledStop();
         HOPPER.setHopper(false);
-        fileWriting();
+//        fileWriting();
     }
 
     /**
@@ -147,9 +147,13 @@ public final class Robot extends IterativeRobot {
     }
 
     private void fileWriting() {
+//        System.out.println(SHOOTER.getError());
+//        System.out.println(FILEDATA.FileName + System.currentTimeMillis() + "LOOP ERROR" + RobotMap.Files.LoopErrorArray);
+
+
         String fileName = "/home/lvuser/PIDLOG";
 //        String fileName = "/home/lvuser/pid_logs/PIDLOG";
-        if ((System.currentTimeMillis() % 5000) == 0) { FileData.newFile(fileName); }
+        if ((System.currentTimeMillis() % 10000) == 0) { FileData.newFile(fileName); }
 
         RobotMap.Files.LoopErrorArray.add(SHOOTER.getError());
         FileData.writeTimeAndValuesToFile(FILEDATA.FileName, System.currentTimeMillis(), "LOOP ERROR", RobotMap.Files.LoopErrorArray);
