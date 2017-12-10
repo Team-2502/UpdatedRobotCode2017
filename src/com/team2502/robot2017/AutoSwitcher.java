@@ -28,8 +28,8 @@ class AutoSwitcher
 
         BOILER_BLUE("Blue Boiler", BoilerBlue.class),
         BOILER_RED("Red Boiler", BoilerRed.class),
-        BASE_LINE("Base line (Don't use please, it'll make programmers sad)", BaseLineAuto.class),
-        TESTAUTO("DO NOT USE ME!", TestAutoCommand.class);
+        BASE_LINE("Base line (Don't use please, it'll make programmers sad)", BaseLineAuto.class);
+//        TESTAUTO("DO NOT USE ME!", TestAutoCommand.class);
 
         private Class<? extends Command> autoCommand;
         private String name;

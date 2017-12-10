@@ -68,7 +68,7 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
         double tolerance = 5;
         double minimumSpeed = 0.22;
         double px_to_ticks = 1.89;
-
+//
         if(autonomous || OI.JOYSTICK_DRIVE_LEFT.getRawButton(RobotMap.Joystick.Button.VISION_ALIGN))
         {
             double offset = getOffset();
@@ -90,9 +90,6 @@ public class VisionSubsystem extends Subsystem implements VisionUpdateReceiver
 
 //                dt.rightTalon1.set(offset * (px_to_ticks));
 //                dt.leftTalon0.set(offset * (px_to_ticks));
-            } else if((-0.1 < offset) && (offset < 0.1) && !alignOnly)
-            {
-                dt.runMotors(.5D, -.5D);
             }
         }
     }

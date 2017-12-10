@@ -8,7 +8,7 @@ public class BoilerBlue extends CommandGroup
     public BoilerBlue()
     {
         addSequential(new NavXResetCommand());
-        addSequential(new EncoderDrive(-68.28, -48.413, 10, 8, 1.35)); //First curve
+        addSequential(new EncoderDrive(-62, -42, 10, 8, 1.4)); //First curve
         addSequential(new EncoderDrive(-(3.75*12), -(4.85*12), 6.5, 10.5, 1.32)); //Second curve to hopper .74
         addParallel(new SetHopperCommand(true)); // Expand hopper
         addSequential(new EncoderDrive(10,-10, .15));

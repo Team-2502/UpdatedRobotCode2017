@@ -75,8 +75,11 @@ public class DriveCommand extends Command
                         double accel = navx.getRawAccelY();
                         double speed = driveTrainSubsystem.avgVel();
 
+                        Log.info("Speed: " + speed);
+                        Log.info("Above thresh: " + OI.joysThreshold(0.8, true));
+
                         // Shift up if we are accelerating and going fast and the driver is putting the joystick at least 80% forward or backward
-                        if(Math.abs(accel) > 0.15 && speed > RobotMap.Motor.SHIFT_UP_THRESHOLD && OI.joysThreshold(0.8, true))
+                        if(/*Math.abs(accel) > 0.15 && */ speed > RobotMap.Motor.SHIFT_UP_THRESHOLD && OI.joysThreshold(0.8, true))
                         {
                             if(!shiftedUp)
                             {
@@ -85,16 +88,16 @@ public class DriveCommand extends Command
                             }
                             transmission.setGear(true);
                         }
-                        else if(!transmission.signsame(accel, driveTrainSubsystem.rightTalon1.getEncVelocity()) && OI.joysThreshold(0.8, false)) /* If we are not accelerating very fast but the driver is still pushing forward we shift down because it is probably a pushing match */
-                        {
-                            if(shiftedUp)
-                            {
-                                shiftedUp = false;
-                                Log.info("Shifting down because you're a bad driver.");
-                            }
-                            transmission.setGear(false);
-                        }
-                        else if(OI.joysThreshold(30, false) && speed < RobotMap.Motor.SHIFT_DOWN_THRESHOLD) /* If we're going slow and the driver wants it to be that way we shift down */
+//                        else if(!transmission.signsame(accel, driveTrainSubsystem.rightTalon1.getEncVelocity()) && OI.joysThreshold(0.8, false)) /* If we are not accelerating very fast but the driver is still pushing forward we shift down because it is probably a pushing match */
+//                        {
+//                            if(shiftedUp)
+//                            {
+//                                shiftedUp = false;
+//                                Log.info("Shifting down because you're a bad driver.");
+//                            }
+//                            transmission.setGear(false);
+//                        }
+                        else if(OI.joysThreshold(30, false) || speed < RobotMap.Motor.SHIFT_DOWN_THRESHOLD) /* If we're going slow and the driver wants it to be that way we shift down */
                         {
                             if(shiftedUp)
                             {
