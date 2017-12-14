@@ -1,4 +1,4 @@
-package com.team2502.robot2017.command.autonomous.commandGroups;
+package com.team2502.robot2017.command.autonomous.group;
 
 import com.team2502.robot2017.command.autonomous.*;
 import edu.wpi.first.wpilibj.command.CommandGroup;

@@ -1,7 +1,7 @@
 package com.team2502.robot2017;
 
 import com.team2502.robot2017.command.autonomous.TestAutoCommand;
-import com.team2502.robot2017.command.autonomous.commandGroups.*;
+import com.team2502.robot2017.command.autonomous.group.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,7 +12,7 @@ class AutoSwitcher
 
     static void putToSmartDashboard()
     {
-        autoChooser = new SendableChooser<AutoMode>();
+        autoChooser = new SendableChooser<>();
 
         for (int i = 0; i < AutoMode.values().length; i++)
         {
@@ -28,32 +28,31 @@ class AutoSwitcher
     public enum AutoMode
     {
 
-        GEAR_BACKUP_CENTER("Center Backup gear", GearBackupCenter.class),
-        BASE_LINE("Base Line", BaseLineAuto.class),
-        GEAR_CENTER("Center Gear", GearAutoCenter.class),
-        GEAR_LEFT("Left Gear", GearAutoLeft.class),
-        GEAR_RIGHT("Right Gear", GearAutoRight.class),
+        GEAR_BACKUP_CENTER("Center Backup gear", GearBackupCenter::new),
+        BASE_LINE("Base Line", BaseLineAuto::new),
+        GEAR_CENTER("Center Gear", GearAutoCenter::new),
+        GEAR_LEFT("Left Gear", GearAutoLeft::new),
+        GEAR_RIGHT("Right Gear", GearAutoRight::new),
 
-        BOILER_RED("Red Boiler", BoilerRed.class),
-        TESTAUTO("DO NOT USE ME!", TestAutoCommand.class);
+        BOILER_RED("Red Boiler", BoilerRed::new),
+        TESTAUTO("DO NOT USE ME!", TestAutoCommand::new);
 
-        private Class<? extends Command> autoCommand;
+        private CommandFactory commandFactory;
         private String name;
 
-        AutoMode(String name, Class<? extends Command> autoCommand)
+        AutoMode(String name, CommandFactory commandFactory)
         {
-            this.autoCommand = autoCommand;
+            this.commandFactory = commandFactory;
             this.name = name;
         }
 
         public Command getInstance()
         {
-            Command instance;
-            try { instance = autoCommand.newInstance(); } catch (InstantiationException | IllegalAccessException e)
-            {
-                return null;
-            }
-            return instance;
+            return commandFactory.getInstance();
         }
+    }
+
+    private interface CommandFactory{
+        Command getInstance();
     }
 }
