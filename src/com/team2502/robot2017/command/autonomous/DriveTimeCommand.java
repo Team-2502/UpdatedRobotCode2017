@@ -4,8 +4,10 @@ import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-// Please use encoders!!!
-@Deprecated
+/**
+ *  Use encoders instead.
+ *  @deprecated
+ */
 public class DriveTimeCommand extends Command
 {
     final DriveTrainSubsystem dt;

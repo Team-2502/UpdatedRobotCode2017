@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 public class ShootCommand extends TimedCommand
 {
     private ShooterSubsystem shooterSubsystem;
-    private boolean both = false;
+    private boolean both;
 
     /**
      * @param runTime Time to run for in seconds.
+     * @param both if both shooters shoul
      */
-
     public ShootCommand(double runTime, boolean both)
     {
         super(runTime);

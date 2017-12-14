@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Vision alignment with PID
+ * @deprecated
  */
 public class PIDVisionCommand extends Command implements PIDOutput
 {

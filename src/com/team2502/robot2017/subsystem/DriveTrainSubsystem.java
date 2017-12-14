@@ -25,16 +25,12 @@ public class DriveTrainSubsystem extends Subsystem
     public final CANTalon rightTalon0;
     public final CANTalon rightTalon1; //enc
     private final RobotDrive drive;
-    long counter = 0;
     private double lastLeft;
     private double lastRight;
     private boolean negative = false;
     private boolean isNegativePressed = false;
-    // TODO: Remove if truly unnecessary.
     private double leftSpeed;
     private double rightSpeed;
-    private DriveTrainTransmissionSubsystem DTTS;
-    private int logCounter = 0;
 
     /**
      * Initialize the drive train subsystem
@@ -52,8 +48,6 @@ public class DriveTrainSubsystem extends Subsystem
         drive = new RobotDrive(leftTalon0, leftTalon1, rightTalon0, rightTalon1);
 
         drive.setSafetyEnabled(true);
-
-        DTTS = Robot.DRIVE_TRAIN_GEAR_SWITCH;
 
         setTeleopSettings(leftTalon0);
         setTeleopSettings(rightTalon1);
@@ -89,7 +83,7 @@ public class DriveTrainSubsystem extends Subsystem
         talon.configNominalOutputVoltage(0.0D, -0.0D);
         talon.configPeakOutputVoltage(12.0, -12.0);//8
         /* increase P until */
-        talon.setPID(2.5, 0, 0); /* confirmed working -- Miguel certified */
+        talon.setPID(2.5, 0, 0); // confirmed working -- Miguel certified
         talon.setEncPosition(0);
         talon.enableControl();
     }
@@ -193,17 +187,11 @@ public class DriveTrainSubsystem extends Subsystem
     @Deprecated
     public double getEncAveg() { return (getEncRightPosition() + getEncLeftPosition()) / 2; }
 
-//    private static void debugSpeed(String format, Object... args)
-//    {
-//        Log.debug(String.format(format, args));
-//    }
-
     public double turningFactor() { return Math.abs(OI.JOYSTICK_DRIVE_LEFT.getY() - OI.JOYSTICK_DRIVE_RIGHT.getY());}
 
     public double avgVel()
     {
         return Math.abs((leftTalon0.getEncVelocity() + rightTalon1.getEncVelocity()) / 2);
-//        return Math.abs(rightTalon1.getEncVelocity());
     }
 
     @Override
@@ -225,11 +213,6 @@ public class DriveTrainSubsystem extends Subsystem
         if (yLevel < 0.0D) { xLevel = -xLevel;}
 
         if (xLevel > 0.0D) { leftSpeed -= xLevel; } else if (xLevel < 0.0D) { rightSpeed += xLevel; }
-
-//        if(logCounter++ % 10 == 0 && false)
-//        {
-//            debugSpeed("X: %d&nY: %d%nL: %d%nR: %d%n%n", yLevel, xLevel, leftSpeed, rightSpeed);
-//        }
 
         // Sets the speed to 0 if the speed is less than 0.05 or larger than -0.05
         if (Math.abs(leftSpeed) < 0.1D) { leftSpeed = 0.0D; }

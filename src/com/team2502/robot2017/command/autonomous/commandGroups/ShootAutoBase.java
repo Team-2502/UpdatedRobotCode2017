@@ -1,8 +1,8 @@
 package com.team2502.robot2017.command.autonomous.commandGroups;
 
 import com.team2502.robot2017.command.autonomous.DriveTimeCommand;
-import com.team2502.robot2017.command.autonomous.EncoderDrive;
-import com.team2502.robot2017.command.autonomous.NavXMoveCommand;
+import com.team2502.robot2017.command.autonomous.EncoderDriveCommand;
+import com.team2502.robot2017.command.autonomous.NavXRotateCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
@@ -32,14 +32,14 @@ class ShootAutoBase extends CommandGroup
         addSequential(new WaitCommand(0.25));
 
         // Pull away from boiler
-        addSequential(new EncoderDrive(-20, 1)); //TODO: Convert to Encoders
+        addSequential(new EncoderDriveCommand(-20, 1)); //TODO: Convert to Encoders
 
         if (allianceColor.hashCode() == red.hashCode())
         {
-            addSequential(new NavXMoveCommand(-angle, 2));
-        } else if (allianceColor.hashCode() == blue.hashCode()) { addSequential(new NavXMoveCommand(angle, 2)); } else
+            addSequential(new NavXRotateCommand(-angle, 2));
+        } else if (allianceColor.hashCode() == blue.hashCode()) { addSequential(new NavXRotateCommand(angle, 2)); } else
         {
-            addSequential(new EncoderDrive(100000000, 999999999));
+            addSequential(new EncoderDriveCommand(100000000, 999999999));
         } //TODO: Convert to Encoders
     }
 }

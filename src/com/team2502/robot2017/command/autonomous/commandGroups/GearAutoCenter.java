@@ -1,7 +1,7 @@
 package com.team2502.robot2017.command.autonomous.commandGroups;
 
-import com.team2502.robot2017.command.autonomous.AutoVCommand;
-import com.team2502.robot2017.command.autonomous.EncoderDrive;
+import com.team2502.robot2017.command.autonomous.AutoVisionCommand;
+import com.team2502.robot2017.command.autonomous.EncoderDriveCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class GearAutoCenter extends CommandGroup
@@ -11,8 +11,8 @@ public class GearAutoCenter extends CommandGroup
      */
     public GearAutoCenter()
     {
-        addSequential(new EncoderDrive(50, 1));
+        addSequential(new EncoderDriveCommand(50, 1));
         System.out.println("Running Vision [Gear Auto Center]");
-        addSequential(new AutoVCommand(5, false, -.1, .3));
+        addSequential(new AutoVisionCommand(5, false, -.1, .3));
     }
 }

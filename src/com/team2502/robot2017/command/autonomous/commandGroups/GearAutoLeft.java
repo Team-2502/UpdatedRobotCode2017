@@ -1,8 +1,8 @@
 package com.team2502.robot2017.command.autonomous.commandGroups;
 
-import com.team2502.robot2017.command.autonomous.AutoVCommand;
-import com.team2502.robot2017.command.autonomous.EncoderDrive;
-import com.team2502.robot2017.command.autonomous.NavXMoveCommand;
+import com.team2502.robot2017.command.autonomous.AutoVisionCommand;
+import com.team2502.robot2017.command.autonomous.EncoderDriveCommand;
+import com.team2502.robot2017.command.autonomous.NavXRotateCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class GearAutoLeft extends CommandGroup
@@ -12,11 +12,11 @@ public class GearAutoLeft extends CommandGroup
      */
     public GearAutoLeft()
     {
-        addSequential(new EncoderDrive(80, 1.7));
-        addSequential(new NavXMoveCommand(60, 1));
+        addSequential(new EncoderDriveCommand(80, 1.7));
+        addSequential(new NavXRotateCommand(60, 1));
         System.out.println("Running Vision [Gear Auto Left]");
-        addSequential(new AutoVCommand(3, false, -0.2, 0.3));
-        addSequential(new NavXMoveCommand(-5, 0.5));
-        addSequential(new NavXMoveCommand(10, 0.5));
+        addSequential(new AutoVisionCommand(3, false, -0.2, 0.3));
+        addSequential(new NavXRotateCommand(-5, 0.5));
+        addSequential(new NavXRotateCommand(10, 0.5));
     }
 }
