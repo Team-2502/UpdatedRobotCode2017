@@ -34,12 +34,6 @@ class AutoSwitcher
         GEAR_LEFT("Left Gear", GearAutoLeft.class),
         GEAR_RIGHT("Right Gear", GearAutoRight.class),
 
-//        RED_SHOOT_AND_GEAR("Red shoot and Gear", ShootAndGearAutoRed.class),
-//        RED_SHOOT_AND_BASELINE("Red shoot and Baseline", ShootAndBaseLineRed.class),
-//
-//        BLUE_SHOOT_AND_GEAR("Blue shoot and Gear", ShootAndGearAutoBlue.class),
-//        BLUE_SHOOT_AND_BASELINE("Blue shoot and Baseline", ShootAndBaseLineBlue.class),
-
         BOILER_RED("Red Boiler", BoilerRed.class),
         TESTAUTO("DO NOT USE ME!", TestAutoCommand.class);
 

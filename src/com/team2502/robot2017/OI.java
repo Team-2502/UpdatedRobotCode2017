@@ -40,8 +40,6 @@ public final class OI
 
     static
     {
-        /* Obsolete due to automatic transmission */
-//        SWITCH_DRIVE_TRANSMISSION.whenPressed(new SwitchDriveTransmissionCommand());
 
         SWITCH_HOPPER.whenPressed(new SwitchHopperCommand());
 

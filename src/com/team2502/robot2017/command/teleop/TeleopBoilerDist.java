@@ -6,9 +6,6 @@ import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import com.team2502.robot2017.subsystem.VisionSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * Created by 64009334 on 9/2/17.
- */
 public class TeleopBoilerDist extends Command
 {
     DriveTrainSubsystem dt;

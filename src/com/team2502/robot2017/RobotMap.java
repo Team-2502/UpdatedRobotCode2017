@@ -7,6 +7,11 @@ public class RobotMap
 
     private RobotMap() {}
 
+    public static final class Constants {
+        public static final double WHEEL_DIAMETER = 4;
+        public static final double REVOLUTIONS_TO_AIRSHIP = 18.60 / WHEEL_DIAMETER;
+    }
+
     public static final class Vision
     {
         public static final double TARGET_HEIGHT = 6.7;

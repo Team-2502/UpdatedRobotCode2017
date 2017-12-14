@@ -10,7 +10,6 @@ public class TestAutoCommand extends CommandGroup
     public TestAutoCommand()
     {
         addSequential(new NavXMoveCommand(90, 3));
-//	    addSequential(new EncoderDrive(90, 10));
     }
 
 }   

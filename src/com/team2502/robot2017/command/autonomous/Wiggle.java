@@ -2,9 +2,6 @@ package com.team2502.robot2017.command.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- * Created by 64009334 on 4/23/17.
- */
 public class Wiggle extends CommandGroup
 {
     public Wiggle()
