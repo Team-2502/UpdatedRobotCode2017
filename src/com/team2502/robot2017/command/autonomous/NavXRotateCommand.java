@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Turn to a certain angle with the NavX. Is also a good example of using custom PID control
  */
-public class NavXMoveCommand extends Command implements PIDOutput
+public class NavXRotateCommand extends Command implements PIDOutput
 {
     private double targetYaw;
     private DriveTrainSubsystem driveTrain;
@@ -24,7 +24,7 @@ public class NavXMoveCommand extends Command implements PIDOutput
     /**
      * Drive in a straight line for 5 seconds according to the navx.
      */
-    private NavXMoveCommand(double time)
+    private NavXRotateCommand(double time)
     {
         super(time);
         requires(Robot.DRIVE_TRAIN);
@@ -45,7 +45,7 @@ public class NavXMoveCommand extends Command implements PIDOutput
      *
      * @param angle the angle to turn to.
      */
-    public NavXMoveCommand(double angle, double maxtime)
+    public NavXRotateCommand(double angle, double maxtime)
     {
         this(maxtime);
         targetYaw = angle;
@@ -56,7 +56,7 @@ public class NavXMoveCommand extends Command implements PIDOutput
      *
      * @param angle the angle to turn to.
      */
-    public NavXMoveCommand(double angle, double maxtime, boolean reset)
+    public NavXRotateCommand(double angle, double maxtime, boolean reset)
     {
         this(maxtime);
         targetYaw = angle;

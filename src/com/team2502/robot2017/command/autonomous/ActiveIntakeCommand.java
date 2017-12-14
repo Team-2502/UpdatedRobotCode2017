@@ -3,6 +3,9 @@ package com.team2502.robot2017.command.autonomous;
 import com.team2502.robot2017.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * ActiveIntakeCommand is a command for drawin
+ */
 public class ActiveIntakeCommand extends Command
 {
     public ActiveIntakeCommand(double timeout)

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class BoilerDistCommand extends Command
 {
-    DriveTrainSubsystem dt;
+    DriveTrainSubsystem driveTrainSubsystem;
     VisionSubsystem camera;
     double error;
     double target;
@@ -19,30 +19,29 @@ public class BoilerDistCommand extends Command
     {
         super(timeout);
         camera = Robot.VISION;
-        dt = Robot.DRIVE_TRAIN;
+        driveTrainSubsystem = Robot.DRIVE_TRAIN;
         target = RobotMap.Vision.TARGET_HEIGHT;
         tolerance = RobotMap.Vision.HEIGHT_TOLERANCE;
         requires(camera);
-        requires(dt);
+        requires(driveTrainSubsystem);
         done = false;
     }
 
     public BoilerDistCommand()
     {
         camera = Robot.VISION;
-        dt = Robot.DRIVE_TRAIN;
+        driveTrainSubsystem = Robot.DRIVE_TRAIN;
         target = RobotMap.Vision.TARGET_HEIGHT;
         tolerance = RobotMap.Vision.HEIGHT_TOLERANCE;
         requires(camera);
-        requires(dt);
+        requires(driveTrainSubsystem);
         done = false;
     }
 
     @Override
     protected void initialize()
     {
-        dt.setTeleopSettings();
-
+        driveTrainSubsystem.setTeleopSettings();
     }
 
     @Override
@@ -54,10 +53,10 @@ public class BoilerDistCommand extends Command
         {
             if (error > 0)
             {
-                dt.runMotors(speed, -speed);
+                driveTrainSubsystem.runMotors(speed, -speed);
             } else if (error < 0)
             {
-                dt.runMotors(-speed, speed);
+                driveTrainSubsystem.runMotors(-speed, speed);
             }
         }
 

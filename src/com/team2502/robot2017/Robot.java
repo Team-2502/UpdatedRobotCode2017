@@ -80,7 +80,6 @@ public final class Robot extends IterativeRobot
      */
     public void autonomousInit()
     {
-
         Scheduler.getInstance().add(AutoSwitcher.getAutoInstance());
         NAVX.reset();
         VISION.turnOnVisionLight();

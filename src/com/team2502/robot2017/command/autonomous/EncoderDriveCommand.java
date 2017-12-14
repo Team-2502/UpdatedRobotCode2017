@@ -7,7 +7,10 @@ import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class EncoderDrive extends Command
+/**
+ * EncoderDriveCommand is a command for longitudinal (translational forward or backward) movement of the robot.
+ */
+public class EncoderDriveCommand extends Command
 {
     CANTalon encTalonLeft;
     CANTalon encTalonRight;
@@ -16,20 +19,24 @@ public class EncoderDrive extends Command
     private double revLeftL;
     private double revLeftR;
 
-    private DriveTrainSubsystem dt;
+    private DriveTrainSubsystem driveTrainSubsystem;
 
-    private EncoderDrive(double time)
+    /**
+     *
+     * @param timeout the timeout in seconds for the command
+     */
+    private EncoderDriveCommand(double timeout)
     {
-        super(time);
-        dt = Robot.DRIVE_TRAIN;
+        super(timeout);
+        driveTrainSubsystem = Robot.DRIVE_TRAIN;
         requires(Robot.DRIVE_TRAIN);
-        encTalonLeft = dt.leftTalon0;
-        encTalonRight = dt.rightTalon1;
+        encTalonLeft = driveTrainSubsystem.leftTalon0;
+        encTalonRight = driveTrainSubsystem.rightTalon1;
     }
 
-    public EncoderDrive(double inches, double maxtime) { this(inches, inches, maxtime); }
+    public EncoderDriveCommand(double inches, double maxtime) { this(inches, inches, maxtime); }
 
-    public EncoderDrive(double inchesLeft, double inchesRight, double time)
+    public EncoderDriveCommand(double inchesLeft, double inchesRight, double time)
     {
         this(time);
 
@@ -40,7 +47,7 @@ public class EncoderDrive extends Command
     @Override
     protected void initialize()
     {
-        dt.setAutonSettings();
+        driveTrainSubsystem.setAutonSettings();
         encTalonLeft.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
         encTalonRight.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
     }
@@ -69,8 +76,8 @@ public class EncoderDrive extends Command
     @Override
     protected void end()
     {
-        dt.setTeleopSettings();
-        dt.runMotors(0, 0);
+        driveTrainSubsystem.setTeleopSettings();
+        driveTrainSubsystem.runMotors(0, 0);
     }
 
     @Override

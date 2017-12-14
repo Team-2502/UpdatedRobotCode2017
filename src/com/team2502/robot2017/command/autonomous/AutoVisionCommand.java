@@ -5,7 +5,10 @@ import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
 import com.team2502.robot2017.subsystem.VisionSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AutoVCommand extends Command
+/**
+ * Automatic vision-based alignment with shiny objects
+ */
+public class AutoVisionCommand extends Command
 {
     private static DriveTrainSubsystem dt;
     private static double offset;
@@ -18,12 +21,10 @@ public class AutoVCommand extends Command
     private double turningFactor = -0.2 / 3;
     private boolean smoothTurning = false;
 
-    /**
-     * Automatic vision-based alignment with shiny objects
-     * <br>
+    /*
      * Runs for 2 seconds
      */
-    public AutoVCommand()
+    public AutoVisionCommand()
     {
         this(2);
     }
@@ -33,7 +34,7 @@ public class AutoVCommand extends Command
      *
      * @param runTime How long vision should run for
      */
-    public AutoVCommand(double runTime)
+    public AutoVisionCommand(double runTime)
     {
         requires(Robot.DRIVE_TRAIN);
         requires(Robot.VISION);
@@ -49,7 +50,7 @@ public class AutoVCommand extends Command
      * @param runTime How long vision should run for
      * @param align   if it should be in alignWidth-only mode
      */
-    public AutoVCommand(double runTime, boolean align)
+    public AutoVisionCommand(double runTime, boolean align)
     {
         this(runTime);
         alignOnly = align;
@@ -63,7 +64,7 @@ public class AutoVCommand extends Command
      * @param runTime    How long vision should run for
      * @param slowFactor How much slower the slow side should go.
      */
-    public AutoVCommand(double runTime, double slowFactor)
+    public AutoVisionCommand(double runTime, double slowFactor)
     {
         this(runTime);
         this.turningFactor = slowFactor;
@@ -81,7 +82,7 @@ public class AutoVCommand extends Command
      * @param lowSpeed  The lower speed for turning
      * @param highSpeed The higher speed for turning
      */
-    public AutoVCommand(double runTime, boolean align, double lowSpeed, double highSpeed)
+    public AutoVisionCommand(double runTime, boolean align, double lowSpeed, double highSpeed)
     {
         this(runTime, align);
         this.lowSpeed = lowSpeed;

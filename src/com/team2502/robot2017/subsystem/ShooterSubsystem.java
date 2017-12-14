@@ -19,11 +19,9 @@ public class ShooterSubsystem extends Subsystem
     public boolean isFlywheelActive;
     public boolean isFeederActive;
     double targetSpeedFlywheel = 3525;
-    double autoTargetSpeed = targetSpeedFlywheel + 50;
     double agitatorSpeed = 1;
     double colsonSpeed = 1;
     double banebotSpeed = 1400;
-    int error = 0;
     private boolean shooterMode = false;
     private boolean isTriggerPressed = false;
 
@@ -60,7 +58,7 @@ public class ShooterSubsystem extends Subsystem
         rightFlywheelTalonTop.set(RobotMap.Motor.FLYWHEEL_TALON_0);
         leftFlywheelTalonBottom.set(RobotMap.Motor.FLYWHEEL_TALON_0);
         rightFlywheelTalonBottom.set(RobotMap.Motor.FLYWHEEL_TALON_0);
-//
+
         leftFlywheelTalonTop.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
         leftFlywheelTalonTop.configEncoderCodesPerRev(256);
         leftFlywheelTalonTop.reverseSensor(false);
@@ -177,7 +175,6 @@ public class ShooterSubsystem extends Subsystem
      */
     public void feed()
     {
-//        banebotFeeder.changeControlMode(follower);
         colsonFeeder.set(colsonSpeed);
         banebotFeeder.set(-banebotSpeed);
         agitator.set(-agitatorSpeed);
@@ -185,8 +182,6 @@ public class ShooterSubsystem extends Subsystem
 
     public void teleopFeed(boolean neg)
     {
-//        colsonFeeder.set(neg ? -colsonSpeed: colsonSpeed);
-//        banebotFeeder.set(neg ? banebotSpeed: -banebotSpeed);
         agitator.set(neg ? agitatorSpeed : -agitatorSpeed);
 
     }
@@ -254,14 +249,11 @@ public class ShooterSubsystem extends Subsystem
     /**
      * Sets the speed of all the motors.
      *
-     * @param Speed speed at which to set the motors at.
+     * @param speed speed at which to set the motors at.
      */
-    public void setSpeedOnAllFlyWheelMotors(double Speed)
+    public void setSpeedOnAllFlyWheelMotors(double speed)
     {
-        leftFlywheelTalonTop.set(Speed);
-//        leftFlywheelTalonBottom.set(-Speed);
-//        rightFlywheelTalonTop.set(Speed);
-//        rightFlywheelTalonBottom.set(-Speed);
+        leftFlywheelTalonTop.set(speed);
     }
 
     /**

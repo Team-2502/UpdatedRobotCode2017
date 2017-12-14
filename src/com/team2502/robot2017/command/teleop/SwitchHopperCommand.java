@@ -6,14 +6,14 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 
 public class SwitchHopperCommand extends InstantCommand
 {
-    private final HopperSubsystem Hopper;
+    private final HopperSubsystem hopper;
 
     public SwitchHopperCommand()
     {
         requires(Robot.HOPPER);
-        Hopper = Robot.HOPPER;
+        hopper = Robot.HOPPER;
     }
 
     @Override
-    protected void initialize() { Hopper.setHopper(!Hopper.getOut()); }
+    protected void initialize() { hopper.setHopper(!hopper.getOut()); }
 }

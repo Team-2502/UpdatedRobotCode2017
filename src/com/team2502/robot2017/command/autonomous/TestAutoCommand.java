@@ -9,7 +9,7 @@ public class TestAutoCommand extends CommandGroup
      */
     public TestAutoCommand()
     {
-        addSequential(new NavXMoveCommand(90, 3));
+        addSequential(new NavXRotateCommand(90, 3));
     }
 
 }   
