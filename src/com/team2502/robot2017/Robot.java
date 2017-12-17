@@ -7,6 +7,14 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public final class Robot extends IterativeRobot
 {
@@ -33,6 +41,16 @@ public final class Robot extends IterativeRobot
      */
     public void robotInit()
     {
+        try
+        {
+            FileReader fileReader = new FileReader(new File("data/checksum"));
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            SmartDashboard.putString("Checksum",bufferedReader.readLine());
+            fileReader.close();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         DRIVE_TRAIN = new DriveTrainSubsystem();
         DRIVE_TRAIN_GEAR_SWITCH = new DriveTrainTransmissionSubsystem();
         PRESSURE_SENSOR = new PressureSensorSubsystem();
