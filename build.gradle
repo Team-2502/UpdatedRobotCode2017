@@ -1,27 +1,10 @@
-//buildscript {
-//  repositories {
-//  	mavenCentral()
-//  	maven {
-//  		name = "GradleRIO"
-//  		url = "http://dev.imjac.in/maven"
-//  	}
-//
-//  	flatDir name: 'navxDir', dirs: "${System.env.HOME}/wpilib/user/java/lib"
-//
-//  }
-//  dependencies {
-//    classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '4.4.3'	    //+ for latest version		//Change this line if you wish to Update GradleRIO
-//
-//  }
-//}
-
 plugins {
     id "java"
     id "eclipse"
     id "idea"
     id "jaci.openrio.gradle.GradleRIO" version "2017.11.17"
+    id 'com.palantir.git-version' version "0.10.0"
 }
-
 
 def TEAM = 2502
 def ROBOT_CLASS = "com.team2502.robot2017.Robot"
@@ -41,7 +24,6 @@ deploy {
     }
 }
 
-
 repositories {
     mavenCentral()
 }
@@ -50,6 +32,19 @@ dependencies {
     compile wpilib()
     compile ctre()
     compile navx()
+}
+
+compileJava.doFirst {
+    version gitVersion()
+    def details = versionDetails()
+    def gitHash = details.gitHash
+    File dir = new File("data")
+    dir.mkdirs();
+    File file = new File(dir,"checksum")
+    file.createNewFile()
+    FileWriter fileWriter = new FileWriter(file)
+    fileWriter.write(gitHash)
+    fileWriter.close()
 }
 
 def robotManifest = {
