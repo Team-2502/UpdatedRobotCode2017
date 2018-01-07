@@ -12,7 +12,7 @@ public class FileTesting
     {
         for(int q=0; q<2; q++)
         {
-            FileData.newFile("/Users/*/Documents/Text");
+            FileData.newFile("Documents/Logs/Text");
 
             for(int i = 1; i <= 10; i++)
             {
