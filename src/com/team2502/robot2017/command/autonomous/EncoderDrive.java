@@ -1,6 +1,6 @@
 package com.team2502.robot2017.command.autonomous;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.subsystem.DriveTrainSubsystem;
@@ -17,8 +17,8 @@ public class EncoderDrive extends Command
     private boolean onTarget = false;
     private long onTargetStartTime = 0;
 
-    CANTalon EncTalonLeft;
-    CANTalon EncTalonRight;
+    WPI_TalonSRX EncTalonLeft;
+    WPI_TalonSRX EncTalonRight;
 
     private double revLeftL;
     private double revLeftR;
@@ -64,8 +64,8 @@ public class EncoderDrive extends Command
 //        dt.setAutonSettingsVolts(EncTalonLeft, true, voltageLeft);
 //        dt.setAutonSettingsVolts(EncTalonRight, false, voltageRight);
         dt.setAutonSettings();
-        EncTalonLeft.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
-        EncTalonRight.setAllowableClosedLoopErr(RobotMap.Motor.ALLOWABLE_LOOP_ERR);
+        EncTalonLeft.configAllowableClosedloopError(0, RobotMap.Motor.ALLOWABLE_LOOP_ERR, RobotMap.Motor.INIT_TIMEOUT);
+        EncTalonRight.configAllowableClosedloopError(0, RobotMap.Motor.ALLOWABLE_LOOP_ERR, RobotMap.Motor.INIT_TIMEOUT);
 //        dt.leftTalon0.reverseOutput(true);
 //        dt.rightTalon1.reverseOutput(true);
     }
@@ -73,8 +73,8 @@ public class EncoderDrive extends Command
     @Override
     protected void execute()
     {
-        revLeftL = Math.abs(EncTalonLeft.getClosedLoopError());
-        revLeftR = Math.abs(EncTalonRight.getClosedLoopError());
+        revLeftL = Math.abs(EncTalonLeft.getClosedLoopError(0));
+        revLeftR = Math.abs(EncTalonRight.getClosedLoopError(0));
 
 
         SmartDashboard.putNumber("DT: Autonomous encoder ticks needed Left", revLeftL);
@@ -82,7 +82,7 @@ public class EncoderDrive extends Command
 
         System.out.println("Needs to go " + revLeftL);
 //        System.out.println("Time: " + System.currentTimeMillis());
-        System.out.println("Setpoint: " + EncTalonLeft.getSetpoint());
+        System.out.println("Setpoint: " + EncTalonLeft.getSelectedSensorPosition(0));
 //
 //        if(!onTarget && (revLeftL <= RobotMap.Motor.ALLOWABLE_LOOP_ERR && revLeftR <= RobotMap.Motor.ALLOWABLE_LOOP_ERR))
 //        {

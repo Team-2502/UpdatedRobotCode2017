@@ -85,7 +85,7 @@ public class DriveCommand extends Command
                             }
                             transmission.setGear(true);
                         }
-                        else if(!transmission.signsame(accel, driveTrainSubsystem.rightTalon1.getEncVelocity()) && OI.joysThreshold(0.8, false)) /* If we are not accelerating very fast but the driver is still pushing forward we shift down because it is probably a pushing match */
+                        else if(!transmission.signsame(accel, driveTrainSubsystem.rightTalon1.getSelectedSensorVelocity(0)) && OI.joysThreshold(0.8, false)) /* If we are not accelerating very fast but the driver is still pushing forward we shift down because it is probably a pushing match */
                         {
                             if(shiftedUp)
                             {

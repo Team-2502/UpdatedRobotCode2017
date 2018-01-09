@@ -1,6 +1,9 @@
 package com.team2502.robot2017.subsystem;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.team2502.robot2017.OI;
 import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.command.teleop.FlywheelCommand;
@@ -8,15 +11,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterSubsystem extends Subsystem
 {
-    public CANTalon.TalonControlMode follower = CANTalon.TalonControlMode.Follower;
+    public ControlMode follower = ControlMode.Follower;
 
-    private final CANTalon leftFlywheelTalonTop;
-    private final CANTalon leftFlywheelTalonBottom;
-    private final CANTalon rightFlywheelTalonTop;
-    private final CANTalon rightFlywheelTalonBottom;
-    private final CANTalon colsonFeeder;
-    private final CANTalon banebotFeeder;
-    private final CANTalon agitator;
+    private final WPI_TalonSRX leftFlywheelTalonTop;
+    private final WPI_TalonSRX leftFlywheelTalonBottom;
+    private final WPI_TalonSRX rightFlywheelTalonTop;
+    private final WPI_TalonSRX rightFlywheelTalonBottom;
+    private final WPI_TalonSRX colsonFeeder;
+    private final WPI_TalonSRX banebotFeeder;
+    private final WPI_TalonSRX agitator;
 
     double targetSpeedFlywheel = 3005;
 
@@ -43,13 +46,13 @@ public class ShooterSubsystem extends Subsystem
      */
     public ShooterSubsystem()
     {
-        leftFlywheelTalonTop = new CANTalon(RobotMap.Motor.FLYWHEEL_TALON_0);
-        leftFlywheelTalonBottom = new CANTalon(RobotMap.Motor.FLYWHEEL_TALON_1);
-        rightFlywheelTalonTop = new CANTalon(RobotMap.Motor.FLYWHEEL_TALON_2);
-        rightFlywheelTalonBottom = new CANTalon(RobotMap.Motor.FLYWHEEL_TALON_3);
-        colsonFeeder = new CANTalon(RobotMap.Motor.FEEDER_TALON_0);
-        banebotFeeder = new CANTalon(RobotMap.Motor.FEEDER_TALON_1);
-        agitator = new CANTalon(RobotMap.Motor.AGITATOR);
+        leftFlywheelTalonTop = new WPI_TalonSRX(RobotMap.Motor.FLYWHEEL_TALON_0);
+        leftFlywheelTalonBottom = new WPI_TalonSRX(RobotMap.Motor.FLYWHEEL_TALON_1);
+        rightFlywheelTalonTop = new WPI_TalonSRX(RobotMap.Motor.FLYWHEEL_TALON_2);
+        rightFlywheelTalonBottom = new WPI_TalonSRX(RobotMap.Motor.FLYWHEEL_TALON_3);
+        colsonFeeder = new WPI_TalonSRX(RobotMap.Motor.FEEDER_TALON_0);
+        banebotFeeder = new WPI_TalonSRX(RobotMap.Motor.FEEDER_TALON_1);
+        agitator = new WPI_TalonSRX(RobotMap.Motor.AGITATOR);
     }
 
 
@@ -62,62 +65,70 @@ public class ShooterSubsystem extends Subsystem
         this.setDefaultCommand(new FlywheelCommand());
 
         // Set talon and encoder settings
-        leftFlywheelTalonTop.changeControlMode(CANTalon.TalonControlMode.Speed);
+        leftFlywheelTalonTop.set(ControlMode.Velocity,0);
 
-        rightFlywheelTalonTop.changeControlMode(follower);
-        leftFlywheelTalonBottom.changeControlMode(follower);
-        rightFlywheelTalonBottom.changeControlMode(follower);
+        rightFlywheelTalonTop.set(follower,0);
+        leftFlywheelTalonBottom.set(follower,0);
+        rightFlywheelTalonBottom.set(follower,0);
 
         rightFlywheelTalonTop.set(RobotMap.Motor.FLYWHEEL_TALON_0);
         leftFlywheelTalonBottom.set(RobotMap.Motor.FLYWHEEL_TALON_0);
         rightFlywheelTalonBottom.set(RobotMap.Motor.FLYWHEEL_TALON_0);
 //
-        leftFlywheelTalonTop.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-        leftFlywheelTalonTop.configEncoderCodesPerRev(256);
-        leftFlywheelTalonTop.reverseSensor(false);
+        leftFlywheelTalonTop.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,RobotMap.Motor.INIT_TIMEOUT );
+        leftFlywheelTalonTop.setSensorPhase(false);
 
         // Configure min and max voltages
-        leftFlywheelTalonTop.configNominalOutputVoltage(0.0D, -0.0D);
-        leftFlywheelTalonTop.configPeakOutputVoltage(12.0D, -0.0D);
+        leftFlywheelTalonTop.configNominalOutputForward(0, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonTop.configNominalOutputReverse(0, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonTop.configPeakOutputForward(1, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonTop.configPeakOutputReverse(1, RobotMap.Motor.INIT_TIMEOUT);
 
-        leftFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
-        leftFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -0.0D);
 
-        rightFlywheelTalonTop.configNominalOutputVoltage(0.0D, -0.0D);
-        rightFlywheelTalonTop.configPeakOutputVoltage(12.0D, -0.0D);
+        leftFlywheelTalonBottom.configNominalOutputForward(0, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonBottom.configNominalOutputForward(0, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonBottom.configPeakOutputForward(1, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonBottom.configPeakOutputReverse(1, RobotMap.Motor.INIT_TIMEOUT);
 
-        rightFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
-        rightFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -0.0D);
+        rightFlywheelTalonTop.configNominalOutputForward(0, RobotMap.Motor.INIT_TIMEOUT);
+        rightFlywheelTalonTop.configNominalOutputReverse(0, RobotMap.Motor.INIT_TIMEOUT);
+        rightFlywheelTalonTop.configPeakOutputForward(1, RobotMap.Motor.INIT_TIMEOUT);
+        rightFlywheelTalonTop.configPeakOutputReverse(1, RobotMap.Motor.INIT_TIMEOUT);
+
+        rightFlywheelTalonBottom.configNominalOutputForward(0, RobotMap.Motor.INIT_TIMEOUT);
+        rightFlywheelTalonBottom.configNominalOutputReverse(0, RobotMap.Motor.INIT_TIMEOUT);
+        rightFlywheelTalonBottom.configPeakOutputForward(1, RobotMap.Motor.INIT_TIMEOUT);
+        rightFlywheelTalonBottom.configPeakOutputReverse(1, RobotMap.Motor.INIT_TIMEOUT);
 
         // Disables brakes
-        leftFlywheelTalonBottom.enableBrakeMode(false);
-        leftFlywheelTalonTop.enableBrakeMode(false);
-        rightFlywheelTalonBottom.enableBrakeMode(false);
-        rightFlywheelTalonTop.enableBrakeMode(false);
+        leftFlywheelTalonBottom.setNeutralMode(NeutralMode.Coast);
+        leftFlywheelTalonTop.setNeutralMode(NeutralMode.Coast);
+        rightFlywheelTalonBottom.setNeutralMode(NeutralMode.Coast);
+        rightFlywheelTalonTop.setNeutralMode(NeutralMode.Coast);
 
         // Set more encoder settings
 
-        leftFlywheelTalonTop.setF(kF);
-        leftFlywheelTalonTop.setP(kP);
-        leftFlywheelTalonTop.setI(kI);
-        leftFlywheelTalonTop.setD(kD);
+        leftFlywheelTalonTop.config_kF(0, kF, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonTop.config_kP(0, kP, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonTop.config_kI(0, kI, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonTop.config_kD(0, kD, RobotMap.Motor.INIT_TIMEOUT);
 
         // Set banebot talon and encoder settings
-        banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
-        banebotFeeder.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-        banebotFeeder.configEncoderCodesPerRev(256);
-        banebotFeeder.reverseSensor(false);
+        banebotFeeder.set(ControlMode.Velocity,0 );
+        banebotFeeder.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0, RobotMap.Motor.INIT_TIMEOUT);
+        banebotFeeder.setSensorPhase(false);
 
         // set banebot min and max voltages
-        banebotFeeder.configNominalOutputVoltage(0.0D, -0.0D);
-        banebotFeeder.configPeakOutputVoltage(12.0D, -12.0D);
+        banebotFeeder.configNominalOutputForward(0, RobotMap.Motor.INIT_TIMEOUT);
+        banebotFeeder.configNominalOutputReverse(0, RobotMap.Motor.INIT_TIMEOUT);
+        banebotFeeder.configPeakOutputForward(1, RobotMap.Motor.INIT_TIMEOUT);
+        banebotFeeder.configPeakOutputReverse(1, RobotMap.Motor.INIT_TIMEOUT);
 
         // set fpid for the banebot
-        banebotFeeder.setProfile(0);
-        banebotFeeder.setF(0.0);
-        banebotFeeder.setP(0.7);
-        banebotFeeder.setI(0.0);
-        banebotFeeder.setD(0.0);
+        banebotFeeder.config_kF(0, 0, RobotMap.Motor.INIT_TIMEOUT);
+        banebotFeeder.config_kP(0, 0.7, RobotMap.Motor.INIT_TIMEOUT);
+        banebotFeeder.config_kI(0, 0, RobotMap.Motor.INIT_TIMEOUT);
+        banebotFeeder.config_kD(0, 0, RobotMap.Motor.INIT_TIMEOUT);
     }
 
     /**
@@ -125,21 +136,21 @@ public class ShooterSubsystem extends Subsystem
      *
      * @return The current velocity of the flywheel.
      */
-    public int getSpeedFlywheel() { return leftFlywheelTalonTop.getEncVelocity(); }
+    public int getSpeedFlywheel() { return leftFlywheelTalonTop.getSelectedSensorVelocity(0); }
 
     /**
      * This information is pulled from the CANTalon class, NOT THE ENCODER CLASS!
      *
      * @return The current velocity of the banebot feeder.
      */
-    public int getSpeedFeeder() { return banebotFeeder.getEncVelocity(); }
+    public int getSpeedFeeder() { return banebotFeeder.getSelectedSensorVelocity(0); }
 
     /**
      * This information is pulled from the CANTalon class, NOT THE ENCODER CLASS!
      *
      * @return The output voltage of the flywheel talon divided by its bus voltage
      */
-    public double getMotorOutput() { return leftFlywheelTalonTop.getOutputVoltage() / leftFlywheelTalonTop.getBusVoltage(); }
+    public double getMotorOutput() { return leftFlywheelTalonTop.getMotorOutputVoltage() / leftFlywheelTalonTop.getBusVoltage(); }
 
     /**
      * @return the agitator target speed
@@ -166,32 +177,52 @@ public class ShooterSubsystem extends Subsystem
      */
     public void turnOnFlywheel()
     {
-        leftFlywheelTalonTop.changeControlMode(CANTalon.TalonControlMode.Speed);
+        leftFlywheelTalonTop.set(ControlMode.Velocity, 0);
+        rightFlywheelTalonTop.set(follower,0);
+        leftFlywheelTalonBottom.set(follower,0);
+        rightFlywheelTalonBottom.set(follower,0);
 
-        rightFlywheelTalonTop.changeControlMode(follower);
-        leftFlywheelTalonBottom.changeControlMode(follower);
-        rightFlywheelTalonBottom.changeControlMode(follower);
+        rightFlywheelTalonTop.set(RobotMap.Motor.FLYWHEEL_TALON_0);
+        leftFlywheelTalonBottom.set(RobotMap.Motor.FLYWHEEL_TALON_0);
+        rightFlywheelTalonBottom.set(RobotMap.Motor.FLYWHEEL_TALON_0);
+//
+        leftFlywheelTalonTop.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,RobotMap.Motor.INIT_TIMEOUT );
+        leftFlywheelTalonTop.setSensorPhase(false);
 
-        leftFlywheelTalonTop.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-        leftFlywheelTalonTop.configEncoderCodesPerRev(256);
-        leftFlywheelTalonTop.reverseSensor(false);
+        // Configure min and max voltages
+        leftFlywheelTalonTop.configNominalOutputForward(0, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonTop.configNominalOutputReverse(0, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonTop.configPeakOutputForward(1, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonTop.configPeakOutputReverse(1, RobotMap.Motor.INIT_TIMEOUT);
 
-        leftFlywheelTalonTop.configNominalOutputVoltage(0.0D, -0.0D);
-        leftFlywheelTalonTop.configPeakOutputVoltage(12.0D, -0.0D);
 
-        leftFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
-        leftFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -0.0D);
+        leftFlywheelTalonBottom.configNominalOutputForward(0, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonBottom.configNominalOutputForward(0, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonBottom.configPeakOutputForward(1, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonBottom.configPeakOutputReverse(1, RobotMap.Motor.INIT_TIMEOUT);
 
-        rightFlywheelTalonTop.configNominalOutputVoltage(0.0D, -0.0D);
-        rightFlywheelTalonTop.configPeakOutputVoltage(12.0D, -0.0D);
+        rightFlywheelTalonTop.configNominalOutputForward(0, RobotMap.Motor.INIT_TIMEOUT);
+        rightFlywheelTalonTop.configNominalOutputReverse(0, RobotMap.Motor.INIT_TIMEOUT);
+        rightFlywheelTalonTop.configPeakOutputForward(1, RobotMap.Motor.INIT_TIMEOUT);
+        rightFlywheelTalonTop.configPeakOutputReverse(1, RobotMap.Motor.INIT_TIMEOUT);
 
-        rightFlywheelTalonBottom.configNominalOutputVoltage(0.0D, -0.0D);
-        rightFlywheelTalonBottom.configPeakOutputVoltage(12.0D, -0.0D);
+        rightFlywheelTalonBottom.configNominalOutputForward(0, RobotMap.Motor.INIT_TIMEOUT);
+        rightFlywheelTalonBottom.configNominalOutputReverse(0, RobotMap.Motor.INIT_TIMEOUT);
+        rightFlywheelTalonBottom.configPeakOutputForward(1, RobotMap.Motor.INIT_TIMEOUT);
+        rightFlywheelTalonBottom.configPeakOutputReverse(1, RobotMap.Motor.INIT_TIMEOUT);
 
-        leftFlywheelTalonTop.setF(kF);
-        leftFlywheelTalonTop.setP(kP);
-        leftFlywheelTalonTop.setI(kI);
-        leftFlywheelTalonTop.setD(kD);
+        // Disables brakes
+        leftFlywheelTalonBottom.setNeutralMode(NeutralMode.Coast);
+        leftFlywheelTalonTop.setNeutralMode(NeutralMode.Coast);
+        rightFlywheelTalonBottom.setNeutralMode(NeutralMode.Coast);
+        rightFlywheelTalonTop.setNeutralMode(NeutralMode.Coast);
+
+        // Set more encoder settings
+
+        leftFlywheelTalonTop.config_kF(0, kF, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonTop.config_kP(0, kP, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonTop.config_kI(0, kI, RobotMap.Motor.INIT_TIMEOUT);
+        leftFlywheelTalonTop.config_kD(0, kD, RobotMap.Motor.INIT_TIMEOUT);
 
         leftFlywheelTalonTop.set(autoTargetSpeed);
     }
@@ -224,12 +255,12 @@ public class ShooterSubsystem extends Subsystem
     /**
      * @return Error calculated in the flywheel FPID
      */
-    public int getError() { return leftFlywheelTalonTop.getClosedLoopError(); }
+    public int getError() { return leftFlywheelTalonTop.getClosedLoopError(0); }
 
     /**
      * @return Error calculated in the banebot FPID
      */
-    public int getErrorFeeder() { return banebotFeeder.getClosedLoopError(); }
+    public int getErrorFeeder() { return banebotFeeder.getClosedLoopError(0); }
 
     /**
      * Change the speed of the agitator
@@ -294,13 +325,13 @@ public class ShooterSubsystem extends Subsystem
     public void flywheelDrive()
     {
         // lets us tell the flywheel go a certain RPM
-        leftFlywheelTalonTop.changeControlMode(CANTalon.TalonControlMode.Speed);
+        leftFlywheelTalonTop.set(ControlMode.Velocity, 0);
 
-        rightFlywheelTalonTop.changeControlMode(follower);
-        leftFlywheelTalonBottom.changeControlMode(follower);
-        rightFlywheelTalonBottom.changeControlMode(follower);
+        rightFlywheelTalonTop.set(follower, 0);
+        leftFlywheelTalonBottom.set(follower, 0);
+        rightFlywheelTalonBottom.set(follower, 0);
 
-        banebotFeeder.changeControlMode(CANTalon.TalonControlMode.Speed);
+        banebotFeeder.set(ControlMode.Velocity, 0);
 
         // Toggle mode for flywheel. It is bound to button 5 on the Function stick.
         if(OI.JOYSTICK_FUNCTION.getRawButton(5) && !isTriggerPressed) { shooterMode = !shooterMode; }

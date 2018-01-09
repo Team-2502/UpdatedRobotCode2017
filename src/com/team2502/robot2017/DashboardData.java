@@ -40,7 +40,7 @@ final class DashboardData
 
     private static void updateDriveTrain()
     {
-        double speed = Robot.DRIVE_TRAIN.rightTalon1.getEncVelocity();
+        double speed = Robot.DRIVE_TRAIN.rightTalon1.getSelectedSensorVelocity(0);
         double accel = Robot.NAVX.getRawAccelY();
 
         if(accel > maxaccel) { maxaccel = accel; } else if(OI.JOYSTICK_DRIVE_RIGHT.getRawButton(10)) { maxaccel = 0; /*reset*/ }
@@ -49,8 +49,8 @@ final class DashboardData
         SmartDashboard.putNumber("DTaa: leftDriveTrain", dt.getEncLeftPosition());
         SmartDashboard.putNumber("DTaa: rightDriveTrain", dt.getEncRightPosition());
 
-        SmartDashboard.putNumber("DT: leftDriveTrain", Robot.DRIVE_TRAIN.leftTalon0.getPosition());
-        SmartDashboard.putNumber("DT: rightDriveTrain", Robot.DRIVE_TRAIN.rightTalon1.getPosition());
+        SmartDashboard.putNumber("DT: leftDriveTrain", Robot.DRIVE_TRAIN.leftTalon0.getSelectedSensorPosition(0));
+        SmartDashboard.putNumber("DT: rightDriveTrain", Robot.DRIVE_TRAIN.rightTalon1.getSelectedSensorPosition(0));
 
         boolean ritikOnDriveTeam = true;
         SmartDashboard.putBoolean("Drive Team will win us the match", !ritikOnDriveTeam); // if this line gets changed you will be kicked off the github no warning

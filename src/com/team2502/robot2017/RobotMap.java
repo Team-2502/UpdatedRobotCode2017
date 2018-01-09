@@ -85,6 +85,7 @@ public class RobotMap
         // RPM
         public static final double SHIFT_UP_THRESHOLD = ((8.5D) * 60 * 12) / (4 * Math.PI);
         public static final double SHIFT_DOWN_THRESHOLD = ((8.4D) * 60 * 12) / (4 * Math.PI);
+        public static final int INIT_TIMEOUT = 10;
         // 850rmpm
 
         private Motor() {}

@@ -1,6 +1,6 @@
 package com.team2502.robot2017.subsystem;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.team2502.robot2017.OI;
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.RobotMap;
@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ActiveIntakeSubsystem extends Subsystem
 {
-    public CANTalon activeTalon;
+    public WPI_TalonSRX activeTalon;
     ShooterSubsystem shooter;
 
     /**
@@ -17,7 +17,7 @@ public class ActiveIntakeSubsystem extends Subsystem
      */
     public ActiveIntakeSubsystem()
     {
-        activeTalon = new CANTalon(RobotMap.Motor.ACTIVE_INTAKE);
+        activeTalon = new WPI_TalonSRX(RobotMap.Motor.ACTIVE_INTAKE);
         shooter = Robot.SHOOTER;
     }
 

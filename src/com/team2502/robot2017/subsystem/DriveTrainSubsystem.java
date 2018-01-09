@@ -1,15 +1,18 @@
 package com.team2502.robot2017.subsystem;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.team2502.robot2017.OI;
 import com.team2502.robot2017.Robot;
 import com.team2502.robot2017.RobotMap;
 import com.team2502.robot2017.command.teleop.DriveCommand;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import logger.Log;
 
 /**
@@ -21,11 +24,13 @@ public class DriveTrainSubsystem extends Subsystem
     private static final Pair<Double, Double> SPEED_CONTAINER = new Pair<Double, Double>();
 
 
-    public final CANTalon leftTalon0; //enc
-    public final CANTalon leftTalon1;
-    public final CANTalon rightTalon0;
-    public final CANTalon rightTalon1; //enc
-    private final RobotDrive drive;
+    public final WPI_TalonSRX leftTalon0; //enc
+    public final WPI_TalonSRX leftTalon1;
+    public final WPI_TalonSRX rightTalon0;
+    public final WPI_TalonSRX rightTalon1; //enc
+    private final DifferentialDrive drive;
+    public final SpeedControllerGroup leftDrive;
+    public final SpeedControllerGroup rightDrive;
     private double lastLeft;
     private double lastRight;
 
@@ -45,14 +50,18 @@ public class DriveTrainSubsystem extends Subsystem
         lastLeft = 0.0D;
         lastRight = 0.0D;
 
-        leftTalon0 = new CANTalon(RobotMap.Motor.LEFT_TALON_0);
-        leftTalon1 = new CANTalon(RobotMap.Motor.LEFT_TALON_1);
-        rightTalon0 = new CANTalon(RobotMap.Motor.RIGHT_TALON_0);
-        rightTalon1 = new CANTalon(RobotMap.Motor.RIGHT_TALON_1);
+        leftTalon0 = new WPI_TalonSRX(RobotMap.Motor.LEFT_TALON_0);
+        leftTalon1 = new WPI_TalonSRX(RobotMap.Motor.LEFT_TALON_1);
+        rightTalon0 = new WPI_TalonSRX(RobotMap.Motor.RIGHT_TALON_0);
+        rightTalon1 = new WPI_TalonSRX(RobotMap.Motor.RIGHT_TALON_1);
 
-        drive = new RobotDrive(leftTalon0, leftTalon1, rightTalon0, rightTalon1);
+        leftDrive = new SpeedControllerGroup(leftTalon0, leftTalon1);
+        rightDrive = new SpeedControllerGroup(rightTalon0, rightTalon1);
+
+        drive = new DifferentialDrive(leftDrive, rightDrive);
 
         drive.setSafetyEnabled(true);
+        setTeleopSettings();
 
         DTTS = Robot.DRIVE_TRAIN_GEAR_SWITCH;
 
@@ -67,11 +76,11 @@ public class DriveTrainSubsystem extends Subsystem
     {
 
         setAutonSettings(leftTalon0, true);
-        leftTalon1.changeControlMode(TalonControlMode.Follower);
+        leftTalon1.set(ControlMode.Follower, 0);
 	    leftTalon1.set(RobotMap.Motor.LEFT_TALON_0);
 
         setAutonSettings(rightTalon1, false);
-        rightTalon0.changeControlMode(TalonControlMode.Follower);
+        rightTalon0.set(ControlMode.Follower, 0);
 	    rightTalon0.set(RobotMap.Motor.RIGHT_TALON_1);
     }
 
@@ -81,24 +90,30 @@ public class DriveTrainSubsystem extends Subsystem
      * @param talon the talon to set the settings of
      * @param reverseEnc // TODO: add JavaDoc For this
      */
-    public void setAutonSettings(CANTalon talon, boolean reverseEnc)
+    public void setAutonSettings(WPI_TalonSRX talon, boolean reverseEnc)
     {
-        talon.changeControlMode(TalonControlMode.Position);
-        talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-        talon.configEncoderCodesPerRev(256);
-        talon.reverseSensor(reverseEnc);
-        talon.configNominalOutputVoltage(0.0D, -0.0D);
-        talon.configPeakOutputVoltage(12.0, -12.0);//8
+        talon.set(ControlMode.Position, 0);
+        talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,RobotMap.Motor.INIT_TIMEOUT);
+        talon.setSensorPhase(reverseEnc);
+        talon.configNominalOutputForward(0, RobotMap.Motor.INIT_TIMEOUT);
+        talon.configNominalOutputReverse(0, RobotMap.Motor.INIT_TIMEOUT);
+        talon.configPeakOutputForward(1, RobotMap.Motor.INIT_TIMEOUT);
+        talon.configPeakOutputReverse(1, RobotMap.Motor.INIT_TIMEOUT);
         /* increase P until */
-        talon.setPID(2.5, 0, 0); /* confirmed working -- Miguel certified */
-        talon.setEncPosition(0);
-        talon.enableControl();
+        talon.config_kP(0,2.5, RobotMap.Motor.INIT_TIMEOUT);
+        talon.config_kI(0,2.5, RobotMap.Motor.INIT_TIMEOUT);
+        talon.config_kD(0, 0, RobotMap.Motor.INIT_TIMEOUT); /* confirmed working -- Miguel certified */
+        talon.setSelectedSensorPosition(0, 0, RobotMap.Motor.INIT_TIMEOUT);
+//        talon.enableControl();
+
     }
 
-    public void setAutonSettingsVolts(CANTalon talon, boolean reverseEnc, double voltage)
+    public void setAutonSettingsVolts(WPI_TalonSRX talon, boolean reverseEnc, double voltage)
     {
         setAutonSettings(talon, reverseEnc);
-        talon.configPeakOutputVoltage(voltage, -voltage);
+        voltage = voltage/12;
+        talon.configPeakOutputForward(voltage, RobotMap.Motor.INIT_TIMEOUT);
+        talon.configPeakOutputReverse(voltage, RobotMap.Motor.INIT_TIMEOUT);
     }
 
     /**
@@ -121,73 +136,34 @@ public class DriveTrainSubsystem extends Subsystem
 
     /* What the is going on with the encoders? */
     // TODO: Learn how encoders work
-    public void setTeleopSettings(CANTalon talon)
+    public void setTeleopSettings(WPI_TalonSRX talon)
     {
-        talon.configNominalOutputVoltage(0.0D, -0.0D);
-        talon.configPeakOutputVoltage(12.0D, -12.0D);
-        talon.changeControlMode(TalonControlMode.PercentVbus);
-        talon.disableControl(); // needed if switching from auton settings
+        talon.configNominalOutputForward(0.0D, RobotMap.Motor.INIT_TIMEOUT);
+        talon.configNominalOutputReverse(0.0D, RobotMap.Motor.INIT_TIMEOUT);
+        talon.configPeakOutputForward(1.0D, RobotMap.Motor.INIT_TIMEOUT);
+        talon.configPeakOutputReverse(-1.0D, RobotMap.Motor.INIT_TIMEOUT);
+        talon.set(ControlMode.PercentOutput, 0);
+//        talon.disableControl(); // needed if switching from auton settings
     }
 
-    public void setMotionProfileSettings(CANTalon talon)
+    public void setMotionProfileSettings(WPI_TalonSRX talon)
     {
-        talon.changeControlMode(TalonControlMode.MotionProfile);
-        talon.setF(0.27053062082237783);
-        talon.setP(0);
-        talon.setI(0);
-        talon.setD(0);
-    }
-
-    public void setMotionProfileSettings()
-    {
-        setMotionProfileSettings(leftTalon1);
-        setMotionProfileSettings(rightTalon0);
-        setMotionProfileSettings(rightTalon1);
-        setMotionProfileSettings(leftTalon0);
-    }
-
-    public void feedTrajectoryPoints(double[][] profile, int totalCnt)
-    {
-        CANTalon.MotionProfileStatus status = new CANTalon.MotionProfileStatus();
-        rightTalon1.getMotionProfileStatus(status);
-        CANTalon.TrajectoryPoint point = new CANTalon.TrajectoryPoint();
-        if (status.hasUnderrun)
-        {
-            Log.warn("We have underrun!");
-            rightTalon1.clearMotionProfileHasUnderrun();
-        }
-        rightTalon1.clearMotionProfileTrajectories();
-        rightTalon0.clearMotionProfileTrajectories();
-        leftTalon0.clearMotionProfileTrajectories();
-        leftTalon1.clearMotionProfileTrajectories();
-
-
-        for (int i = 0; i < totalCnt; i++)
-        {
-            point.position = profile[i][0];
-            point.velocity = profile[i][1];
-            point.timeDurMs = (int) profile[i][2];
-            point.profileSlotSelect = 0;
-            point.velocityOnly = false;
-            point.zeroPos = (i == 0);
-            point.isLastPoint = (i+1 == totalCnt);
-
-            rightTalon1.pushMotionProfileTrajectory(point);
-            rightTalon0.pushMotionProfileTrajectory(point);
-            leftTalon1.pushMotionProfileTrajectory(point);
-            leftTalon0.pushMotionProfileTrajectory(point);
-        }
+        talon.set(ControlMode.MotionProfile, 0);
+        talon.config_kF(0, 0.27053062082237783, RobotMap.Motor.INIT_TIMEOUT);
+        talon.config_kP(0,0, RobotMap.Motor.INIT_TIMEOUT);
+        talon.config_kI(0,0, RobotMap.Motor.INIT_TIMEOUT);
+        talon.config_kD(0,0, RobotMap.Motor.INIT_TIMEOUT);
     }
 
     /**
      * @return the position of the left side of the drivetrain in inches
      */
-    public double getEncLeftPosition() { return (leftTalon0.getPosition() * Math.PI *  4)  / (1024); }
+    public double getEncLeftPosition() { return (leftTalon0.getSelectedSensorPosition(0) * Math.PI *  4)  / (1024); }
 
     /**
      * @return the position of the right side of the drivetrain in inches
      */
-    public double getEncRightPosition() { return (rightTalon1.getPosition() * Math.PI * 4) / (1024); }
+    public double getEncRightPosition() { return (rightTalon1.getSelectedSensorPosition(0) * Math.PI * 4) / (1024); }
 
     /**
      * @return the average position between the left and right side of the drivetrain
@@ -199,7 +175,7 @@ public class DriveTrainSubsystem extends Subsystem
 
     public double avgVel()
     {
-        return Math.abs((leftTalon0.getEncVelocity() + rightTalon1.getEncVelocity())/2);
+        return Math.abs((leftTalon0.getSelectedSensorVelocity(0) + rightTalon1.getSelectedSensorVelocity(0))/2);
 //        return Math.abs(rightTalon1.getEncVelocity());
     }
 
