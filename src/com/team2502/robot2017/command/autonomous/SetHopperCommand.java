@@ -1,7 +1,6 @@
 package com.team2502.robot2017.command.autonomous;
 
 import com.team2502.robot2017.Robot;
-import com.team2502.robot2017.subsystem.HopperSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
